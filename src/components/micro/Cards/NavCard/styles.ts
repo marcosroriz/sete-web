@@ -44,15 +44,16 @@ export const Container = styled.div`
                     & > svg {
                         width: 100%;
                         height: 100%;
-                        display: inline-block;
+                        display: block;
                     }
                     & > img {
                         width: 100%;
-                        display: inline-block;
+                        display: block;
                     }
                 }
 
                 @media (max-width: 525px) {
+                    padding: 15px 5px;
                     span {
                         display: none;
                     }

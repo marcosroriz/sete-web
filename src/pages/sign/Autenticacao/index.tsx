@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavCardProvider } from "hooks/NavCardContext";
 
-import { FaSignInAlt, FaQuestionCircle, FaRegRegistered } from "react-icons/fa";
+import { FaSignInAlt, FaQuestionCircle, FaRegRegistered, FaCogs } from "react-icons/fa";
 
 const NavCardTabs = [
     {
@@ -23,10 +23,10 @@ const NavCardTabs = [
     {
         name: "Proxy",
         component: <div>Olá Proxy</div>,
-        icon: <FaRegRegistered />,
+        icon: <FaCogs />,
     },
 ];
-export type NavCardTabNames = "Login" | "Recuperar Senha" | "Registrar";
+export type NavCardTabNames = "Login" | "Recuperar Senha" | "Registrar" | "Proxy";
 
 const Autenticacao: React.FC = () => {
     return <NavCardProvider tabs={NavCardTabs} />;

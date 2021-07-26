@@ -12,14 +12,14 @@ const NavCard: React.FC = () => {
             <Tabs id="nav-card" variant="pills" activeKey={currentTab} onSelect={(k) => setCurrentTab(k || "")}>
                 {tabs.map((tab) => (
                     <Tab
-                        eventKey={tab.name.replaceAll(" ", "_")}
+                        eventKey={tab.id ? tab.id : tab.name.replaceAll(" ", "_")}
                         title={
                             <>
                                 <div className="nav-card-item-icon">{tab.icon}</div>
                                 <span>{tab.name}</span>
                             </>
                         }
-                        key={tab.name.replaceAll(" ", "_")}
+                        key={tab.id ? tab.id : tab.name.replaceAll(" ", "_")}
                     >
                         {tab.component}
                     </Tab>
