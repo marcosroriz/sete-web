@@ -1,29 +1,27 @@
 import React from "react";
+import { FaSignInAlt, FaQuestionCircle, FaRegRegistered } from "react-icons/fa";
 
 import { NavCardProvider } from "hooks/NavCardContext";
 
-import { FaSignInAlt, FaQuestionCircle, FaRegRegistered, FaCogs } from "react-icons/fa";
+import Login from "./Login";
+import RecuperarSenha from "./RecuperarSenha";
+import Registrar from "./Registrar";
 
 const NavCardTabs = [
     {
         name: "Login",
-        component: <div>Olá Login</div>,
+        component: <Login />,
         icon: <FaSignInAlt />,
     },
     {
         name: "Recuperar Senha",
-        component: <div>Olá Recuperar</div>,
+        component: <RecuperarSenha />,
         icon: <FaQuestionCircle />,
     },
     {
         name: "Registrar",
-        component: <div>Olá Registrar</div>,
+        component: <Registrar />,
         icon: <FaRegRegistered />,
-    },
-    {
-        name: "Proxy",
-        component: <div>Olá Proxy</div>,
-        icon: <FaCogs />,
     },
 ];
 export type NavCardTabNames = "Login" | "Recuperar Senha" | "Registrar" | "Proxy";
