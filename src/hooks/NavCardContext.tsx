@@ -2,49 +2,42 @@ import React from "react";
 
 import NavCard from "components/micro/Cards/NavCard";
 
-export type Tab = {
+type NavCardTabProps = {
     id?: string;
     name: string;
     icon: React.ReactNode;
-    component: React.ReactNode;
+    children: React.ReactNode;
 };
 
 type NavCardData = {
-    tabs: Tab[];
-    currentTab: string;
-    setCurrentTab: React.Dispatch<React.SetStateAction<string>>;
-};
-
-type NavCardProviderProps = {
-    tabs: Tab[];
+    step: number;
+    tabs: NavCardTabProps[];
+    currentTab: NavCardTabProps;
+    setStep: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const NavCardContext = React.createContext({} as NavCardData);
 
-export const NavCardProvider: React.FC<NavCardProviderProps> = ({ tabs }) => {
-    const [currentTab, setCurrentTab] = React.useState<string>(tabs[0].id || tabs[0].name || "");
+export const NavCardTab: React.FC<NavCardTabProps> = ({ children }) => {
+    return <>{children}</>;
+};
+
+export const NavCardProvider: React.FC = ({ children }) => {
+    const childrenArray = React.Children.toArray(children) as React.ReactElement<NavCardTabProps>[];
+    const tabs = childrenArray.map((child) => child.props);
+    const [step, setStep] = React.useState<number>(0);
+    const currentTab = tabs[step];
     return (
-        <NavCardContext.Provider value={{ tabs, currentTab, setCurrentTab }}>
+        <NavCardContext.Provider value={{ tabs, currentTab, step, setStep }}>
             <NavCard />
         </NavCardContext.Provider>
     );
 };
 
-type UseNavCardType<T> = {
-    tabs: Tab[];
-    currentTab: T;
-    setCurrentTab: React.Dispatch<React.SetStateAction<T>>;
-};
-
-export function useNavCard<T = string>(): UseNavCardType<T> {
+export function useNavCard<T = string>(): NavCardData {
     const context = React.useContext(NavCardContext);
     if (!context) {
         throw new Error("O NavCard deve ser usado entre um contexto");
     }
-    const { currentTab, setCurrentTab, tabs } = context;
-    return {
-        tabs: tabs,
-        currentTab: currentTab as unknown as T,
-        setCurrentTab: setCurrentTab as unknown as React.Dispatch<React.SetStateAction<T>>,
-    };
+    return context;
 }
