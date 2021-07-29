@@ -6,19 +6,11 @@ import { useFormNavCard } from "hooks/FormNavCardContext";
 import { Container } from "./styles";
 
 const FormNavCard: React.FC = () => {
-    const { formRef, tabs, step, setStep } = useFormNavCard();
+    const { tabs, step, changeStep } = useFormNavCard();
 
     return (
         <Container>
-            <Tabs
-                id="nav-card"
-                variant="pills"
-                activeKey={step}
-                onSelect={(k) => {
-                    setStep(Number(k));
-                    formRef.current?.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-                }}
-            >
+            <Tabs id="nav-card" variant="pills" activeKey={step} onSelect={(k) => changeStep(Number(k))}>
                 {tabs.map((tab, index) => (
                     <Tab
                         eventKey={index}
