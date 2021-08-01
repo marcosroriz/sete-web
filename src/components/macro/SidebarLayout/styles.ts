@@ -13,10 +13,11 @@ export const Nav = styled.nav`
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    padding: 25px 3px;
+    padding: 25px 0px;
 
     background-color: var(--color-white);
     background-color: var(--color-black);
+    overflow: auto;
 
     .nav-logo {
         max-width: 150px;
@@ -39,16 +40,19 @@ type NavItemProps = {
 
 export const NavItem = styled.div<NavItemProps>`
     ${({ isProfile }) =>
-        isProfile &&
-        css`
+        isProfile
+            ? css`
             padding: 4px 0px;
-            margin-bottom: 15px;
+            margin-bottom: 17px;
 
             background-color: #6c7280;
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-right: none;
             border-left: none;
-        }`}
+        }`
+            : css`
+                  padding: 0px 3px;
+              `}
     & + div {
         margin-top: 5px;
     }
@@ -62,9 +66,8 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
     padding: 4px 1px 0px 1px;
     li {
         a {
-            display: block;
             width: 100%;
-            padding: 13px 25px;
+            padding: 13px 30px;
 
             color: var(--color-white);
             font-weight: 400;
@@ -73,7 +76,6 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
             text-decoration: none;
             text-transform: capitalize;
 
-            border-radius: 2px;
             transition: all 0.1s linear;
 
             &.isActive {
@@ -85,11 +87,19 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
             ${({ isProfile }) =>
                 isProfile
                     ? css`
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
                         background-color: transparent;
+                        svg {
+                            margin-right: 17px;
+                        }
                     }`
                     : css`
+                          display: block;
                           background-color: rgba(127, 133, 146, 0.9);
                           &:hover {
+                              border-radius: 0px 4px 4px 0px;
                               background-color: rgba(127, 133, 146, 1);
                               border-right: 5px solid var(--color-white);
                           }
@@ -109,9 +119,11 @@ export const Section = styled.section`
     flex-direction: column;
 
     min-height: 100vh;
+
+    background-color: rgba(239, 242, 247, 0.4);
 `;
 
 export const ChildrenContainer = styled.div`
     flex: 1 1;
-    padding: 35px 10% 0px 10%;
+    padding: 25px 10% 0px 10%;
 `;

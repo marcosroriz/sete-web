@@ -15,6 +15,21 @@ export default createGlobalStyle`
         --color-light-grey: #e7e7e7;
     }
 
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+        width: 6px;
+        background: #ffbc31ed;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #6b6b6b;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #ffaa00ed;
+    }
+    /* SCROLLBAR */
+
     /* RESET CSS */
     * {
         box-sizing: border-box;

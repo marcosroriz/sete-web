@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 type ContainerProps = {
     thinBorder: boolean;
@@ -18,7 +18,7 @@ export const Container = styled.footer<ContainerProps>`
         }
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: ${({ thinBorder }) => (thinBorder ? "1200px" : "860px")}) {
         .container {
             .row {
                 & > div {
@@ -32,6 +32,7 @@ export const Container = styled.footer<ContainerProps>`
             }
         }
     }
+
     @media (max-width: 400px) {
         padding: 5px 0px;
         .footer-logo {
