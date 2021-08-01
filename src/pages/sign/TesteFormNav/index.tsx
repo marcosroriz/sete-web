@@ -4,6 +4,7 @@ import { FaSignInAlt, FaQuestionCircle, FaRegRegistered } from "react-icons/fa";
 
 import { FormNavCardProvider, FormNavCardTab } from "hooks/FormNavCardContext";
 
+import SidebarLayout from "components/macro/SidebarLayout";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
@@ -28,25 +29,27 @@ const Autenticacao: React.FC = () => {
         sexo: "",
     };
     return (
-        <FormNavCardProvider
-            initialValues={initialValues}
-            onSubmit={async (values) => {
-                await sleep(500);
-                console.log("values", values);
-            }}
-        >
-            <FormNavCardTab name="StepOne" icon={<FaSignInAlt />} validationSchema={sepOneSchema}>
-                <StepOne />
-            </FormNavCardTab>
+        <SidebarLayout>
+            <FormNavCardProvider
+                initialValues={initialValues}
+                onSubmit={async (values) => {
+                    await sleep(500);
+                    console.log("values", values);
+                }}
+            >
+                <FormNavCardTab name="StepOne" icon={<FaSignInAlt />} validationSchema={sepOneSchema}>
+                    <StepOne />
+                </FormNavCardTab>
 
-            <FormNavCardTab name="StepTwo" icon={<FaQuestionCircle />} validationSchema={stepTwo}>
-                <StepTwo />
-            </FormNavCardTab>
+                <FormNavCardTab name="StepTwo" icon={<FaQuestionCircle />} validationSchema={stepTwo}>
+                    <StepTwo />
+                </FormNavCardTab>
 
-            <FormNavCardTab name="StepThree" icon={<FaRegRegistered />}>
-                <StepThree />
-            </FormNavCardTab>
-        </FormNavCardProvider>
+                <FormNavCardTab name="StepThree" icon={<FaRegRegistered />}>
+                    <StepThree />
+                </FormNavCardTab>
+            </FormNavCardProvider>
+        </SidebarLayout>
     );
 };
 

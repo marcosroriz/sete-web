@@ -4,10 +4,15 @@ export default createGlobalStyle`
     :root {
         --font-primary: 'Roboto', sans-serif;
         --font-secondary: 'Open Sans', sans-serif;
+        --font-tertiary: 'Roboto Condensed', sans-serif;
         --size-max-width: 1320px;
         --color-white: #ffffff;
         --color-orange: orange;
+        --color-black: #414550;
+        --color-light-black: #464a56;
+        --color-lightest-black: #576071;
         --color-grey: #6b6b6b;
+        --color-light-grey: #e7e7e7;
     }
 
     /* RESET CSS */

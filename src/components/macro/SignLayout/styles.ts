@@ -1,21 +1,5 @@
 import styled from "styled-components";
 
-import BackgroundImage from "assets/images/entry-bg.jpg";
-
-export const ImageContainer = styled.div`
-    width: 100%;
-    min-height: 100vh;
-    height: 100%;
-
-    position: fixed;
-    z-index: 0;
-
-    background-image: url(${BackgroundImage});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-`;
-
 export const Container = styled.div`
     display: flex;
     align-items: center;
@@ -71,42 +55,4 @@ export const ChildrenContainer = styled.div`
     max-width: 890px;
     margin-top: 16px;
     padding: 0px 12px;
-`;
-
-export const Footer = styled.footer`
-    width: 100%;
-    padding: 10px 0px;
-
-    border-top: 5px solid var(--color-orange);
-    background-color: var(--color-white);
-
-    .footer-logo {
-        img {
-            margin: 0 auto;
-            height: 55px;
-        }
-    }
-
-    @media (max-width: 860px) {
-        .container {
-            .row {
-                & > div {
-                    width: 100%;
-                }
-            }
-        }
-        .footer-logo {
-            img {
-                height: 40px;
-            }
-        }
-    }
-    @media (max-width: 400px) {
-        padding: 5px 0px;
-        .footer-logo {
-            img {
-                height: 30px;
-            }
-        }
-    }
 `;
