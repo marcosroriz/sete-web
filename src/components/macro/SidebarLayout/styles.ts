@@ -1,9 +1,31 @@
 import styled, { css } from "styled-components";
 
+export const mediaQuery = {
+    mobile: "(max-width: 1000px)",
+};
+
+export const HamburgerContainer = styled.div`
+    /* background-color: var(--color-black); */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 3px;
+    z-index: 110;
+`;
+
 export const Container = styled.div`
     padding-left: 270px;
+
+    @media ${mediaQuery.mobile} {
+        padding-left: 0px;
+    }
 `;
-export const Nav = styled.nav`
+
+type NavProps = {
+    menuIsOpened?: boolean;
+};
+
+export const Nav = styled.nav<NavProps>`
     position: fixed;
     top: 0px;
     left: 0px;
@@ -15,7 +37,6 @@ export const Nav = styled.nav`
     height: 100%;
     padding: 25px 0px;
 
-    background-color: var(--color-white);
     background-color: var(--color-black);
     overflow: auto;
 
@@ -32,6 +53,46 @@ export const Nav = styled.nav`
     .nav-items {
         margin-top: 20px;
     }
+
+    @media ${mediaQuery.mobile} {
+        padding: 55px 0px 25px 0px;
+        transition: all 0.4s ease;
+        ${({ menuIsOpened }) =>
+            menuIsOpened
+                ? css`
+                      left: 0px;
+                      visibility: visible;
+                  `
+                : css`
+                      left: -120%;
+                      visibility: hidden;
+                  `}
+    }
+`;
+
+type NavOverlayProps = {
+    menuIsOpened?: boolean;
+};
+
+export const NavOverlay = styled.div<NavOverlayProps>`
+    position: fixed;
+
+    width: 100%;
+    max-height: 100vh;
+    height: 100%;
+
+    transition: all 0.2s ease;
+
+    ${({ menuIsOpened }) =>
+        menuIsOpened
+            ? css`
+                  z-index: 95;
+                  background-color: rgba(0, 0, 0, 0.2);
+              `
+            : css`
+                  z-index: -1;
+                  background-color: rgba(0, 0, 0, 0);
+              `}
 `;
 
 type NavItemProps = {
@@ -125,5 +186,8 @@ export const Section = styled.section`
 
 export const ChildrenContainer = styled.div`
     flex: 1 1;
-    padding: 25px 10% 0px 10%;
+    padding: 25px 10% 25px 10%;
+    @media ${mediaQuery.mobile} {
+        padding: 90px 10% 25px 10%;
+    }
 `;

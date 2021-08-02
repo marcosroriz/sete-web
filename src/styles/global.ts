@@ -8,6 +8,7 @@ export default createGlobalStyle`
         --size-max-width: 1320px;
         --color-white: #ffffff;
         --color-orange: orange;
+        --color-yellow: gold;
         --color-black: #414550;
         --color-light-black: #464a56;
         --color-lightest-black: #576071;

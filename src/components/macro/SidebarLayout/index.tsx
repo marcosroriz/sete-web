@@ -1,7 +1,10 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import { FaAddressBook, FaUsers, FaSyncAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaAddressBook, FaUsers, FaSignOutAlt } from "react-icons/fa";
+import { Spin as Hamburger } from "hamburger-react";
+
+import { useMediaQuery } from "hooks/MediaQuery";
 
 import BackgroundImage from "../BackgroundImage";
 import Footer from "../Footer";
@@ -18,12 +21,15 @@ import IconRelatorios from "assets/icons/sidebar-relatorios.svg";
 import IconRotas from "assets/icons/sidebar-rotas.svg";
 import IconSenso from "assets/icons/sidebar-senso.png";
 
-import { Container, Nav, Section, ChildrenContainer, NavItem, NavItemBody } from "./styles";
+import { Container, Nav, NavOverlay, Section, ChildrenContainer, NavItem, NavItemBody, HamburgerContainer, mediaQuery } from "./styles";
 
 const SidebarLayout: React.FC = ({ children }) => {
+    const matches = useMediaQuery(mediaQuery.mobile);
+    const [menuIsOpened, setMenuIsOpened] = React.useState<boolean>(false);
+
     const [activeKey, setAtiveKey] = React.useState("");
     React.useEffect(() => {
-        setAtiveKey("0");
+        //setAtiveKey("0");
     }, []);
     const changeAccordionKey = React.useCallback(
         (key: string) => {
@@ -31,15 +37,30 @@ const SidebarLayout: React.FC = ({ children }) => {
         },
         [setAtiveKey],
     );
+
     return (
         <>
             <BackgroundImage />
             <Container>
-                <Nav>
+                {matches && (
+                    <>
+                        <HamburgerContainer>
+                            <Hamburger
+                                toggled={menuIsOpened}
+                                toggle={setMenuIsOpened}
+                                color="var(--color-yellow)"
+                                hideOutline={false}
+                                label="Abrir/Fechar Menu"
+                            />
+                        </HamburgerContainer>
+                        <NavOverlay menuIsOpened={menuIsOpened} onClick={() => setMenuIsOpened(false)} />
+                    </>
+                )}
+                <Nav menuIsOpened={menuIsOpened} aria-hidden={!menuIsOpened}>
                     <div className="nav-logo">
-                        <a href="/form">
+                        <Link to="/form">
                             <img src={LogoSete} alt="Sistema Eletrônico de Gestão do Transporte Escolar" />
-                        </a>
+                        </Link>
                     </div>
                     <Accordion activeKey={activeKey} className="nav-items">
                         <NavItem isProfile>
@@ -56,12 +77,6 @@ const SidebarLayout: React.FC = ({ children }) => {
                                         <NavLink to="/" exact activeClassName="isActive">
                                             <FaUsers size={17} />
                                             Outros Usuários
-                                        </NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to="/" exact activeClassName="isActive">
-                                            <FaSyncAlt size={17} />
-                                            Sincronizar
                                         </NavLink>
                                     </li>
                                     <li>

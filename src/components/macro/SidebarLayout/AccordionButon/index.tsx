@@ -8,11 +8,12 @@ type AccordionButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     isActive?: boolean;
     icon: string;
     name: string;
+    ref?: React.RefObject<HTMLButtonElement>;
 };
 
-const AccordionButton: React.FC<AccordionButtonProps> = ({ icon, name, isActive = false, isProfile = false, children, ...props }) => {
+const AccordionButton: React.FC<AccordionButtonProps> = ({ icon, name, ref, isActive = false, isProfile = false, children, ...props }) => {
     return (
-        <ButtonContainer {...props} isActive={isActive} isProfile={isProfile}>
+        <ButtonContainer {...props} ref={ref} isActive={isActive} isProfile={isProfile}>
             <div className="accordion-content">
                 <div className="accordion-img-container">
                     <img src={icon} alt="" />
