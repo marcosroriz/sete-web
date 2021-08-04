@@ -11,7 +11,7 @@ const StepOne: React.FC = () => {
 
     return (
         <Container>
-            <FormikInputText label="Nome" name="nome" />
+            <FormikInputText label="Nome" name="nome" labelOnLeft />
             <FormikInputText label="Email" name="email" />
         </Container>
     );

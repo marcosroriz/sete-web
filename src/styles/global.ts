@@ -14,6 +14,10 @@ export default createGlobalStyle`
         --color-lightest-black: #576071;
         --color-grey: #6b6b6b;
         --color-light-grey: #e7e7e7;
+        --color-red: #FB404B;
+        --color-light-red: #f5c7c7;
+        --color-lightest-red: #ffe4e4;
+        --color-green: #87CB16;
     }
 
     /* SCROLLBAR */
@@ -89,4 +93,8 @@ export default createGlobalStyle`
         -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
     }
     /* RESET CSS */
+
+    .form-control, .form-control:focus {
+        border-width: 2px;
+    }
 `;

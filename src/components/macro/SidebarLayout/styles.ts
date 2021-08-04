@@ -4,9 +4,12 @@ export const mediaQuery = {
     mobile: "(max-width: 1000px)",
 };
 
-export const HamburgerContainer = styled.div`
-    /* background-color: var(--color-black); */
-    position: absolute;
+type HamburgerContainerProps = {
+    menuIsOpened?: boolean;
+};
+
+export const HamburgerContainer = styled.div<HamburgerContainerProps>`
+    ${({ menuIsOpened }) => (menuIsOpened ? "position: absolute;" : "position: fixed;")}
     top: 10px;
     left: 10px;
     border-radius: 3px;
@@ -21,11 +24,11 @@ export const Container = styled.div`
     }
 `;
 
-type NavProps = {
+type NavContainerProps = {
     menuIsOpened?: boolean;
 };
 
-export const Nav = styled.nav<NavProps>`
+export const NavContainer = styled.nav<NavContainerProps>`
     position: fixed;
     top: 0px;
     left: 0px;
@@ -61,11 +64,15 @@ export const Nav = styled.nav<NavProps>`
             menuIsOpened
                 ? css`
                       left: 0px;
-                      visibility: visible;
+                      .nav-content {
+                          visibility: visible;
+                      }
                   `
                 : css`
-                      left: -120%;
-                      visibility: hidden;
+                      left: -100%;
+                      .nav-content {
+                          visibility: hidden;
+                      }
                   `}
     }
 `;
