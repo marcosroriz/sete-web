@@ -42,10 +42,10 @@ const SidebarLayout: React.FC = ({ children }) => {
         <>
             <BackgroundImage />
             <Container>
-                {matches && <NavOverlay menuIsOpened={menuIsOpened} onClick={() => setMenuIsOpened(false)} />}
-                <NavContainer menuIsOpened={menuIsOpened}>
-                    {matches && (
-                        <HamburgerContainer menuIsOpened={menuIsOpened}>
+                {matches && (
+                    <>
+                        <NavOverlay menuIsOpened={menuIsOpened} onClick={() => setMenuIsOpened(false)} />
+                        <HamburgerContainer menuIsOpened={menuIsOpened} style={{ zIndex: 100 }}>
                             <Hamburger
                                 toggled={menuIsOpened}
                                 toggle={setMenuIsOpened}
@@ -54,8 +54,21 @@ const SidebarLayout: React.FC = ({ children }) => {
                                 label="Abrir/Fechar Menu"
                             />
                         </HamburgerContainer>
-                    )}
+                    </>
+                )}
+                <NavContainer menuIsOpened={menuIsOpened}>
                     <nav className="nav-content" aria-hidden={!menuIsOpened}>
+                        {matches && (
+                            <HamburgerContainer menuIsOpened={menuIsOpened}>
+                                <Hamburger
+                                    toggled={menuIsOpened}
+                                    toggle={setMenuIsOpened}
+                                    color="var(--color-yellow)"
+                                    hideOutline={false}
+                                    label="Abrir/Fechar Menu"
+                                />
+                            </HamburgerContainer>
+                        )}
                         <div className="nav-logo">
                             <Link to="/form">
                                 <img src={LogoSete} alt="Sistema Eletrônico de Gestão do Transporte Escolar" />

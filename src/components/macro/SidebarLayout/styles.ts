@@ -9,7 +9,7 @@ type HamburgerContainerProps = {
 };
 
 export const HamburgerContainer = styled.div<HamburgerContainerProps>`
-    ${({ menuIsOpened }) => (menuIsOpened ? "position: absolute;" : "position: fixed;")}
+    position: absolute;
     top: 10px;
     left: 10px;
     border-radius: 3px;

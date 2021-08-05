@@ -54,5 +54,6 @@ export const ChildrenContainer = styled.div`
     width: 100%;
     max-width: 890px;
     margin-top: 16px;
+    margin-bottom: 16px;
     padding: 0px 12px;
 `;

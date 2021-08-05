@@ -93,8 +93,4 @@ export default createGlobalStyle`
         -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
     }
     /* RESET CSS */
-
-    .form-control, .form-control:focus {
-        border-width: 2px;
-    }
 `;
