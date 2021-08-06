@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -6,7 +7,7 @@ import FormikInputText from "components/micro/Inputs/FormikInputText";
 import FormikInputNumberFormat from "components/micro/Inputs/FormikInputNumberFormat";
 import FormikInputSelect from "components/micro/Inputs/FormikInputSelect";
 
-import { Container, Form, mediaQuery } from "./styles";
+import { InputsContainer, Form, mediaQuery } from "./styles";
 
 const schema = yup.object().shape({
     cpf: yup.string().required("alou muyndo").min(2, "Olá mundo"),
@@ -29,7 +30,7 @@ const Registrar: React.FC = () => {
             {({ handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
                     <p>Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
-                    <Container>
+                    <InputsContainer>
                         <FormikInputText label="NOME COMPLETO:" name="nome" placeholder="Digite seu nome" isHorizontal={mediaQuery.mobile} thinBorder />
                         <FormikInputNumberFormat
                             label="CPF:"
@@ -57,23 +58,45 @@ const Registrar: React.FC = () => {
                         />
                         <FormikInputText label="SENHA:" name="senha" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
                         <FormikInputText label="REPETIR SENHA:" name="rep_senha" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
-                    </Container>
-                    <p>Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
-                    <Container>
+                    </InputsContainer>
+                    <p className="city-divider">Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
+                    <InputsContainer>
                         <FormikInputSelect
-                            label="ESTADO:"
+                            label="ESTADO OU DISTRITO:"
                             name="estado"
-                            placeholder="Estado"
+                            placeholder="Selecione um Estado"
                             options={[
                                 { value: "1", label: "Olá mundo" },
                                 { value: "2", label: "Olá" },
                                 { value: "3", label: "Olá mndo" },
                                 { value: "4", label: "Olá mo" },
+                                { value: "4", label: "Olá mo" },
+                                { value: "4", label: "Olá mo" },
                             ]}
                             isHorizontal={mediaQuery.mobile}
                             thinBorder
                         />
-                    </Container>
+                        <FormikInputSelect
+                            label="MUNICÍPIO:"
+                            name="municipio"
+                            placeholder="Selecione um Município"
+                            options={[
+                                { value: "1", label: "Olá mundo" },
+                                { value: "2", label: "Olá" },
+                                { value: "3", label: "Olá mndo" },
+                                { value: "4", label: "Olá mo" },
+                                { value: "4", label: "Olá mo" },
+                                { value: "4", label: "Olá mo" },
+                            ]}
+                            isHorizontal={mediaQuery.mobile}
+                            thinBorder
+                        />
+                        <div className="submit-container">
+                            <Button variant="warning" className="btn-fill">
+                                Registrar
+                            </Button>
+                        </div>
+                    </InputsContainer>
                 </Form>
             )}
         </Formik>

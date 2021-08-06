@@ -14,8 +14,6 @@ export const Container = styled.div`
     z-index: 5;
 
     background-color: rgba(10, 0, 0, 0.3);
-
-    overflow: auto;
 `;
 
 export const Section = styled.section`
@@ -54,6 +52,6 @@ export const ChildrenContainer = styled.div`
     width: 100%;
     max-width: 890px;
     margin-top: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 30px;
     padding: 0px 12px;
 `;

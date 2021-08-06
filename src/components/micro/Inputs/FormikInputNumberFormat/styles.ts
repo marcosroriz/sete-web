@@ -48,8 +48,12 @@ type InputFieldProps = {
 export const InputField = styled.div<InputFieldProps>`
     flex: 1;
     input {
-        width: 100%;
         display: block;
+
+        width: 100%;
+        height: auto;
+        padding: 0.375rem 0.75rem;
+
         font-size: 14px;
         color: var(--color-black);
         ${({ isInvalid }) =>

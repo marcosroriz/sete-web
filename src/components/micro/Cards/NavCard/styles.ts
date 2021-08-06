@@ -31,6 +31,10 @@ export const Container = styled.div`
                 font-size: 13px;
                 text-transform: uppercase;
 
+                &:hover {
+                    background-color: #e5e5e5;
+                }
+
                 &.active {
                     color: gold;
                     border-top: 3px solid gold;

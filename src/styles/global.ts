@@ -93,4 +93,6 @@ export default createGlobalStyle`
         -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
     }
     /* RESET CSS */
+
+    /* RESET LIGHTBOOTSTRAP */
 `;

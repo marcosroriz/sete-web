@@ -14,12 +14,22 @@ export type FormikInputSelectProps = React.SelectHTMLAttributes<HTMLSelectElemen
     name: string;
     options: SelectOptions[];
     placeholder: string;
+    menuPlacement?: "auto" | "bottom" | "top";
     isHorizontal?: boolean | string;
     thinBorder?: boolean;
     containerClassName?: string;
 };
 
-const FormikInputSelect: React.FC<FormikInputSelectProps> = ({ label, containerClassName, options, placeholder, isHorizontal, thinBorder, ...props }) => {
+const FormikInputSelect: React.FC<FormikInputSelectProps> = ({
+    label,
+    containerClassName,
+    options,
+    menuPlacement = "auto",
+    placeholder,
+    isHorizontal,
+    thinBorder,
+    ...props
+}) => {
     const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder });
     const [, meta] = useField(props.name);
     const { setFieldValue, setFieldTouched, values } = useFormikContext();
@@ -50,9 +60,10 @@ const FormikInputSelect: React.FC<FormikInputSelectProps> = ({ label, containerC
                     onBlur={handleBlur}
                     className="select"
                     options={options}
+                    menuPlacement={menuPlacement}
                     classNamePrefix="form-control"
                     aria-invalid={meta.touched && !!meta.error}
-                    noOptionsMessage={(str) => "Valor não Encontrado"}
+                    noOptionsMessage={() => "Valor não Encontrado"}
                     {...(props as any)}
                 />
                 <span>{meta.touched && meta.error}</span>

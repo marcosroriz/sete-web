@@ -5,6 +5,7 @@ import Routes from "routes";
 
 import GlobalStyles from "styles/global";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "styles/light-bootstrap-dashboard-react.min.css";
 
 const App: React.FC = () => {
     return (
