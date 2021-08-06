@@ -16,7 +16,7 @@ const Autenticacao: React.FC = () => {
                     <Login />
                 </NavCardTab>
 
-                <NavCardTab name="Reacuperar Senha" icon={<FaQuestionCircle />}>
+                <NavCardTab name="Recuperar Senha" icon={<FaQuestionCircle />}>
                     <RecuperarSenha />
                 </NavCardTab>
 
