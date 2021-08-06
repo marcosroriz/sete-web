@@ -9,6 +9,10 @@ export const Container = styled.div`
     max-width: 500px;
     width: 100%;
     margin: 16px auto 0px auto;
+
+    & > div + div {
+        margin-top: 7px;
+    }
 `;
 
 export const Form = styled(FormikForm)`
