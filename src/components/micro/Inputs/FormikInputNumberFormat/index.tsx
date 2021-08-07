@@ -36,7 +36,7 @@ const FormikInputNumberFormat: React.FC<FormikInputNumberFormatProps> = ({
                 setFieldValue(props.name, values.value);
             }
         },
-        [setFieldValue, removed],
+        [setFieldValue, setPhoneFormat],
     );
     return (
         <Container

@@ -7,6 +7,7 @@ export default createGlobalStyle`
         --font-tertiary: 'Roboto Condensed', sans-serif;
         --size-max-width: 1320px;
         --color-white: #ffffff;
+        --color-dark-orange: #ffbc67;
         --color-orange: orange;
         --color-yellow: gold;
         --color-black: #414550;

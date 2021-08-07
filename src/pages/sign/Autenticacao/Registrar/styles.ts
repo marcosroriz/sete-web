@@ -11,9 +11,9 @@ export const Form = styled(FormikForm)`
     p {
         line-height: 25px;
         color: #868e96;
-        margin: 0px 0px 25px 0px;
+        margin: 0px 0px 15px 0px;
         &.city-divider {
-            margin-top: 10px;
+            margin-top: 6px;
         }
     }
     label {
@@ -42,11 +42,11 @@ export const InputsContainer = styled.div`
 
             width: 270px;
             margin: 0 auto;
-            padding: 2px 16px;
+            padding: 4px 16px;
         }
     }
 
     & > div + div {
-        margin-top: 7px;
+        margin-top: 10px;
     }
 `;

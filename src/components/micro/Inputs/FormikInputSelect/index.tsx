@@ -32,7 +32,7 @@ const FormikInputSelect: React.FC<FormikInputSelectProps> = ({
 }) => {
     const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder });
     const [, meta] = useField(props.name);
-    const { setFieldValue, setFieldTouched, values } = useFormikContext();
+    const { setFieldValue, setFieldTouched } = useFormikContext();
     const handleSelectChange = React.useCallback(
         (value: SelectOptions) => {
             setFieldValue(props.name, value.value);
@@ -44,7 +44,6 @@ const FormikInputSelect: React.FC<FormikInputSelectProps> = ({
         setFieldTouched(props.name, true);
     }, [setFieldTouched]);
 
-    React.useEffect(() => console.log(values), [values]);
     return (
         <Container
             className={containerClassName}

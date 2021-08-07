@@ -6,6 +6,7 @@ import * as yup from "yup";
 import FormikInputText from "components/micro/Inputs/FormikInputText";
 import FormikInputNumberFormat from "components/micro/Inputs/FormikInputNumberFormat";
 import FormikInputSelect from "components/micro/Inputs/FormikInputSelect";
+import BlockToastCard from "components/micro/Cards/BlockToastCard";
 
 import { InputsContainer, Form, mediaQuery } from "./styles";
 
@@ -21,6 +22,7 @@ const Registrar: React.FC = () => {
         <Formik
             initialValues={{
                 cpf: "",
+                rep_email: "",
                 rep_senha: "",
                 estado: "",
             }}
@@ -30,6 +32,10 @@ const Registrar: React.FC = () => {
             {({ handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
                     <p>Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
+                    <BlockToastCard
+                        type="warning"
+                        text="Recomenda-se a utilização do e-mail INSTITUCIONAL para liberação do cadastro o mais rápido possível."
+                    />
                     <InputsContainer>
                         <FormikInputText label="NOME COMPLETO:" name="nome" placeholder="Digite seu nome" isHorizontal={mediaQuery.mobile} thinBorder />
                         <FormikInputNumberFormat
@@ -48,7 +54,7 @@ const Registrar: React.FC = () => {
                             isHorizontal={mediaQuery.mobile}
                             thinBorder
                         />
-                        <FormikInputText label="E-MAIL:" name="email" placeholder="Endereço de e-mail" isHorizontal={mediaQuery.mobile} thinBorder />
+                        <FormikInputText label="E-MAIL:" name="email_reg" placeholder="Endereço de e-mail" isHorizontal={mediaQuery.mobile} thinBorder />
                         <FormikInputText
                             label="REPETIR E-MAIL:"
                             name="rep_email"
@@ -56,7 +62,7 @@ const Registrar: React.FC = () => {
                             isHorizontal={mediaQuery.mobile}
                             thinBorder
                         />
-                        <FormikInputText label="SENHA:" name="senha" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
+                        <FormikInputText label="SENHA:" name="senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
                         <FormikInputText label="REPETIR SENHA:" name="rep_senha" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
                     </InputsContainer>
                     <p className="city-divider">Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
@@ -92,7 +98,7 @@ const Registrar: React.FC = () => {
                             thinBorder
                         />
                         <div className="submit-container">
-                            <Button variant="warning" className="btn-fill">
+                            <Button variant="warning" className="btn-fill" type="submit">
                                 Registrar
                             </Button>
                         </div>

@@ -31,7 +31,9 @@ export const Container = styled.div`
                 font-size: 13px;
                 text-transform: uppercase;
 
-                &:hover {
+                &:hover,
+                &:focus-within,
+                &:focus {
                     background-color: #e5e5e5;
                 }
 
