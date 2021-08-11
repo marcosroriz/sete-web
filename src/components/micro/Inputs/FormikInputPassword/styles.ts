@@ -43,47 +43,24 @@ type InputFieldProps = {
     isInvalid?: boolean;
     isTouched?: boolean;
     thinBorder?: boolean;
-    isPlaceholder?: boolean;
 };
 
 export const InputField = styled.div<InputFieldProps>`
     flex: 1;
-    .select .form-control__control {
+    position: relative;
+    .form-control {
+        display: block;
+
         width: 100%;
-        min-height: auto;
-        height: 35px;
+        height: auto;
+        padding: 0.375rem 2.25rem 0.375rem 0.75rem;
 
-        font-weight: 400;
         font-size: 14px;
-        line-height: 1.5;
-        ${({ isInvalid, isPlaceholder }) =>
-            isInvalid
-                ? css`
-                      border-color: var(--color-red);
-                      .form-control__single-value {
-                          color: var(--color-red);
-                      }
-                  `
-                : isPlaceholder
-                ? css`
-                      border-color: #ced4da;
-                      .form-control__single-value {
-                          color: rgba(65, 69, 80, 0.4);
-                          font-weight: 500;
-                      }
-                  `
-                : css`
-                      border-color: #ced4da;
-                      .form-control__single-value {
-                          color: var(--color-black);
-                      }
-                  `}
-
+        ${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red); color: var(--color-red);" : "color: var(--color-black);")}
         ${({ thinBorder }) => (thinBorder ? "border-width: 1px;" : "border-width: 2px;")}
-        box-shadow: none;
         transition: all 0.1s linear;
 
-        &.form-control__control--is-focused {
+        &:focus {
             ${({ isInvalid, isTouched }) =>
                 !isTouched
                     ? css`
@@ -98,19 +75,21 @@ export const InputField = styled.div<InputFieldProps>`
                           color: var(--color-red);
                       `
                     : css`
+                          color: var(--color-green);
                           border-color: #ced4da;
-                          border-bottom-color: var(--color-green);
+                          border-bottom-color: #87cb16;
                           box-shadow: none;
-                          .form-control__single-value {
-                              color: var(--color-green);
-                          }
                       `}
             background-color: var(--color-white);
             outline: 0;
         }
 
-        .form-control__indicator {
-            padding: 0px 8px;
+        &:focus ~ .form-toggle > svg {
+            ${({ isInvalid, isTouched }) => (!isTouched ? "color: #ced4da;" : isInvalid ? "color: var(--color-red);" : "color: var(--color-green);")}
+        }
+        &::placeholder {
+            color: rgba(65, 69, 80, 0.4);
+            font-weight: 500;
         }
     }
     .form-error {
@@ -123,5 +102,19 @@ export const InputField = styled.div<InputFieldProps>`
         color: var(--color-red);
         font-size: 12px;
         font-family: var(--font-tertiary);
+    }
+    .form-toggle {
+        position: absolute;
+        right: 10px;
+        top: 9px;
+        width: 18px;
+
+        cursor: pointer;
+        user-select: none;
+        svg {
+            ${({ isInvalid }) => (isInvalid ? "color: var(--color-red);" : "color: var(--color-black);")}
+            width: 100%;
+            height: 100%;
+        }
     }
 `;

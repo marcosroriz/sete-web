@@ -47,7 +47,7 @@ type InputFieldProps = {
 
 export const InputField = styled.div<InputFieldProps>`
     flex: 1;
-    input {
+    .form-control {
         display: block;
 
         width: 100%;
@@ -55,13 +55,7 @@ export const InputField = styled.div<InputFieldProps>`
         padding: 0.375rem 0.75rem;
 
         font-size: 14px;
-        color: var(--color-black);
-        ${({ isInvalid }) =>
-            isInvalid &&
-            `
-                border-color: var(--color-red);
-                color: var(--color-red);
-            `}
+        ${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red); color: var(--color-red);" : "color: var(--color-black);")}
         ${({ thinBorder }) => (thinBorder ? "border-width: 1px;" : "border-width: 2px;")}
         transition: all 0.1s linear;
 
@@ -93,7 +87,7 @@ export const InputField = styled.div<InputFieldProps>`
             font-weight: 500;
         }
     }
-    span {
+    .form-error {
         width: 100%;
         display: block;
 

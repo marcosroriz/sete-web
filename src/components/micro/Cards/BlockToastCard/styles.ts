@@ -45,8 +45,8 @@ export const Container = styled.div<ContainerProps>`
     }
 
     .toast-button {
-        width: 25px;
-        height: 25px;
+        width: 22px;
+        height: 22px;
         padding: 0px;
 
         background-color: transparent;

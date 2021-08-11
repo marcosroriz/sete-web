@@ -18,6 +18,7 @@ export type FormikInputNumberFormatProps = React.InputHTMLAttributes<HTMLInputEl
 const FormikInputNumberFormat: React.FC<FormikInputNumberFormatProps> = ({
     label,
     format,
+    name,
     isFormated = true,
     containerClassName,
     isHorizontal,
@@ -25,15 +26,15 @@ const FormikInputNumberFormat: React.FC<FormikInputNumberFormatProps> = ({
     ...props
 }) => {
     const [phoneFormat, setPhoneFormat] = React.useState("(##) ####-#####");
-    const [{ onChange: removed, ...field }, meta] = useField(props.name);
+    const [{ onChange: removed, ...field }, meta] = useField(name);
     const { setFieldValue } = useFormikContext();
     const handleInputChange = React.useCallback(
         (values: NumberFormatValues): void => {
             !format && values.value.length === 11 ? setPhoneFormat("(##) #####-####") : setPhoneFormat("(##) ####-#####");
             if (isFormated) {
-                setFieldValue(props.name, values.formattedValue.trimRight());
+                setFieldValue(name, values.formattedValue.trimRight());
             } else {
-                setFieldValue(props.name, values.value);
+                setFieldValue(name, values.value);
             }
         },
         [setFieldValue, setPhoneFormat],
@@ -44,17 +45,17 @@ const FormikInputNumberFormat: React.FC<FormikInputNumberFormatProps> = ({
             isHorizontal={!!isHorizontal}
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
-            <label htmlFor={props.name}>{label}</label>
+            <label htmlFor={name}>{label}</label>
             <InputField isTouched={meta.touched} isInvalid={meta.touched && !!meta.error} thinBorder={thinBorder}>
                 <NumberFormat
                     {...field}
                     {...props}
                     className="form-control"
-                    id={props.name}
+                    id={name}
                     onValueChange={handleInputChange}
                     format={format ? format : phoneFormat}
                 />
-                <span>{meta.touched && meta.error}</span>
+                <span className="form-error">{meta.touched && meta.error}</span>
             </InputField>
         </Container>
     );

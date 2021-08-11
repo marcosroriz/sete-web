@@ -1,34 +1,33 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { Formik } from "formik";
-import * as yup from "yup";
 
 import FormikInputText from "components/micro/Inputs/FormikInputText";
+import FormikInputPassword from "components/micro/Inputs/FormikInputPassword";
 import FormikInputNumberFormat from "components/micro/Inputs/FormikInputNumberFormat";
 import FormikInputSelect from "components/micro/Inputs/FormikInputSelect";
 import BlockToastCard from "components/micro/Cards/BlockToastCard";
 
+import { registrarSchema } from "validators/sign/Autenticacao";
+
 import { InputsContainer, Form, mediaQuery } from "./styles";
 
-const schema = yup.object().shape({
-    cpf: yup.string().required("alou muyndo").min(2, "Olá mundo"),
-    rep_senha: yup.string().required("alou muyndo").min(2, "Olá mundo"),
-    estado: yup.string().required("Definido").min(1, "Olá mundo"),
-});
+const registrarInitialValues = {
+    nome: "",
+    cpf: "",
+    telefone: "",
+    email_reg: "",
+    rep_email_reg: "",
+    senha_reg: "",
+    rep_senha_reg: "",
+    estado: "",
+    municipio: "",
+};
 
 const Registrar: React.FC = () => {
-    const handleFormSubmit = React.useCallback(() => console.log("submit"), []);
+    const handleFormSubmit = React.useCallback((values: any) => console.log("submit", values), []);
     return (
-        <Formik
-            initialValues={{
-                cpf: "",
-                rep_email: "",
-                rep_senha: "",
-                estado: "",
-            }}
-            onSubmit={handleFormSubmit}
-            validationSchema={schema}
-        >
+        <Formik initialValues={registrarInitialValues} onSubmit={handleFormSubmit} validationSchema={registrarSchema}>
             {({ handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
                     <p>Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
@@ -57,13 +56,13 @@ const Registrar: React.FC = () => {
                         <FormikInputText label="E-MAIL:" name="email_reg" placeholder="Endereço de e-mail" isHorizontal={mediaQuery.mobile} thinBorder />
                         <FormikInputText
                             label="REPETIR E-MAIL:"
-                            name="rep_email"
+                            name="rep_email_reg"
                             placeholder="Endereço de e-mail"
                             isHorizontal={mediaQuery.mobile}
                             thinBorder
                         />
-                        <FormikInputText label="SENHA:" name="senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
-                        <FormikInputText label="REPETIR SENHA:" name="rep_senha" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
+                        <FormikInputPassword label="SENHA:" name="senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
+                        <FormikInputPassword label="REPETIR SENHA:" name="rep_senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
                     </InputsContainer>
                     <p className="city-divider">Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
                     <InputsContainer>
@@ -75,8 +74,6 @@ const Registrar: React.FC = () => {
                                 { value: "1", label: "Olá mundo" },
                                 { value: "2", label: "Olá" },
                                 { value: "3", label: "Olá mndo" },
-                                { value: "4", label: "Olá mo" },
-                                { value: "4", label: "Olá mo" },
                                 { value: "4", label: "Olá mo" },
                             ]}
                             isHorizontal={mediaQuery.mobile}
@@ -90,8 +87,6 @@ const Registrar: React.FC = () => {
                                 { value: "1", label: "Olá mundo" },
                                 { value: "2", label: "Olá" },
                                 { value: "3", label: "Olá mndo" },
-                                { value: "4", label: "Olá mo" },
-                                { value: "4", label: "Olá mo" },
                                 { value: "4", label: "Olá mo" },
                             ]}
                             isHorizontal={mediaQuery.mobile}

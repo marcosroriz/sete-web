@@ -22,6 +22,7 @@ export type FormikInputSelectProps = React.SelectHTMLAttributes<HTMLSelectElemen
 
 const FormikInputSelect: React.FC<FormikInputSelectProps> = ({
     label,
+    name,
     containerClassName,
     options,
     menuPlacement = "auto",
@@ -31,17 +32,17 @@ const FormikInputSelect: React.FC<FormikInputSelectProps> = ({
     ...props
 }) => {
     const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder });
-    const [, meta] = useField(props.name);
+    const [, meta] = useField(name);
     const { setFieldValue, setFieldTouched } = useFormikContext();
     const handleSelectChange = React.useCallback(
         (value: SelectOptions) => {
-            setFieldValue(props.name, value.value);
+            setFieldValue(name, value.value);
             setSelectValue(value);
         },
         [setSelectValue, setFieldValue],
     );
     const handleBlur = React.useCallback(() => {
-        setFieldTouched(props.name, true);
+        setFieldTouched(name, true);
     }, [setFieldTouched]);
 
     return (
@@ -50,10 +51,10 @@ const FormikInputSelect: React.FC<FormikInputSelectProps> = ({
             isHorizontal={!!isHorizontal}
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
-            <label htmlFor={props.name}>{label}</label>
+            <label htmlFor={name}>{label}</label>
             <InputField isTouched={meta.touched} isInvalid={meta.touched && !!meta.error} thinBorder={thinBorder} isPlaceholder={selectValue.value === ""}>
                 <ReactSelect
-                    id={props.name}
+                    id={name}
                     value={selectValue}
                     onChange={handleSelectChange}
                     onBlur={handleBlur}
@@ -65,7 +66,7 @@ const FormikInputSelect: React.FC<FormikInputSelectProps> = ({
                     noOptionsMessage={() => "Valor não Encontrado"}
                     {...(props as any)}
                 />
-                <span>{meta.touched && meta.error}</span>
+                <span className="form-error">{meta.touched && meta.error}</span>
             </InputField>
         </Container>
     );

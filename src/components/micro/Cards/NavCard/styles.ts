@@ -31,6 +31,8 @@ export const Container = styled.div`
                 font-size: 13px;
                 text-transform: uppercase;
 
+                user-select: none;
+
                 &:hover,
                 &:focus-within,
                 &:focus {
