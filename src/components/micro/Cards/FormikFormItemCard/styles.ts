@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+export const mediaQuery = {
+    mobile: "(max-width: 525px)",
+};
+
 type ContainerProps = {
     isRequired?: boolean;
     isInvalid?: boolean;
@@ -58,5 +62,9 @@ export const Container = styled.div<ContainerProps>`
         flex: 1;
         margin-bottom: -15px;
         margin-left: 30px;
+    }
+
+    @media ${mediaQuery.mobile} {
+        padding: 25px 20px 25px 0px;
     }
 `;

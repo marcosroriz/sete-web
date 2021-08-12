@@ -38,7 +38,6 @@
         "react/prop-types": 0,
         "no-unused-vars": "off",
         "react/jsx-props-no-spreading": "off",
-        "prettier.endOfLine": "off",
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-explicit-any": "off",
