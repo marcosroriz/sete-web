@@ -13,7 +13,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
     width: 100%;
     padding: 10px 30px;
 
-    color: var(--color-white);
+    color: var(--color-white-50);
     font-family: var(--font-primary);
     font-size: 12px;
     font-weight: 600;
@@ -33,9 +33,9 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
               `
             : css`
                   text-transform: uppercase;
-                  background-color: ${isActive ? "var(--color-lightest-black)" : "var(--color-light-black)"};
+                  background-color: ${isActive ? "var(--color-black-300)" : "var(--color-black-450)"};
                   &:hover {
-                      background-color: var(--color-lightest-black);
+                      background-color: var(--color-black-300);
                   }
               `}
 

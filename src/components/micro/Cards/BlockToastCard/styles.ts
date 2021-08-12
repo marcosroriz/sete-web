@@ -39,7 +39,7 @@ export const Container = styled.div<ContainerProps>`
             display: block;
             margin-left: 20px;
 
-            color: var(--color-white);
+            color: var(--color-white-50);
             font-size: 14px;
         }
     }

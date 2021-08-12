@@ -18,7 +18,9 @@ type FormNavCardData = {
     currentTab: FormCardTabProps;
     isSubmitting: boolean;
     setStep: React.Dispatch<React.SetStateAction<number>>;
-    changeStep: (newStep?: number) => void;
+    gotoStep: (newStep?: number) => void;
+    nextStep: () => void;
+    previousStep: () => void;
 };
 
 type FormNavCardProviderProps = FormikConfig<FormikValues> & {};
@@ -37,7 +39,19 @@ export const FormNavCardProvider: React.FC<FormNavCardProviderProps> = ({ childr
     const currentTab = tabs[step];
     const isLastStep = step === tabs.length - 1;
 
-    const changeStep = React.useCallback(
+    const nextStep = React.useCallback(() => {
+        if (step < tabs.length) {
+            formRef.current?.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+        }
+    }, [formRef, step, setStep]);
+
+    const previousStep = React.useCallback(() => {
+        if (step > -1) {
+            setStep(step - 1);
+        }
+    }, [step, setStep]);
+
+    const gotoStep = React.useCallback(
         (newStep?: number): void => {
             if (newStep !== undefined && step - newStep >= 0) {
                 setStep(newStep);
@@ -62,7 +76,7 @@ export const FormNavCardProvider: React.FC<FormNavCardProviderProps> = ({ childr
             validationSchema={currentTab.validationSchema}
         >
             {({ isSubmitting }) => (
-                <FormNavCardContext.Provider value={{ formRef, isSubmitting, tabs, currentTab, step, setStep, changeStep }}>
+                <FormNavCardContext.Provider value={{ formRef, isSubmitting, tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
                     <Form ref={formRef}>
                         <FormNavCard />
                     </Form>

@@ -9,7 +9,7 @@ export const Container = styled.footer<ContainerProps>`
     padding: 10px 0px;
 
     ${({ thinBorder }) => (thinBorder ? "border-top: 1px solid var(--color-light-grey);" : "border-top: 5px solid var(--color-orange);")}
-    background-color: var(--color-white);
+    background-color: var(--color-white-50);
 
     .footer-logo {
         img {

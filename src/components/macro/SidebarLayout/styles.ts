@@ -40,7 +40,7 @@ export const NavContainer = styled.nav<NavContainerProps>`
     height: 100%;
     padding: 25px 0px;
 
-    background-color: var(--color-black);
+    background-color: var(--color-black-500);
     overflow: auto;
 
     .nav-logo {
@@ -137,7 +137,7 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
             width: 100%;
             padding: 13px 30px;
 
-            color: var(--color-white);
+            color: var(--color-white-50);
             font-weight: 400;
             font-size: 14px;
             font-family: var(--font-tertiary);
@@ -169,7 +169,7 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
                           &:hover {
                               border-radius: 0px 4px 4px 0px;
                               background-color: rgba(127, 133, 146, 1);
-                              border-right: 5px solid var(--color-white);
+                              border-right: 5px solid var(--color-white-50);
                           }
                       `}
         }

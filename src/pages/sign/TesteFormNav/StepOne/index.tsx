@@ -1,6 +1,7 @@
 import React from "react";
 
 import FormikInputText from "components/micro/Inputs/FormikInputText";
+import FormikFormItemCard from "components/micro/Cards/FormikFormItemCard";
 
 import { useFormNavCard } from "hooks/FormNavCardContext";
 
@@ -11,8 +12,12 @@ const StepOne: React.FC = () => {
 
     return (
         <Container>
-            <FormikInputText label="Nome" name="nome" isHorizontal />
-            <FormikInputText label="Email" name="email" />
+            <FormikFormItemCard name="nome" required>
+                <FormikInputText label="NOME" name="nome" isHorizontal />
+            </FormikFormItemCard>
+            <FormikFormItemCard name="email">
+                <FormikInputText label="EMAIL" name="email" isHorizontal />
+            </FormikFormItemCard>
         </Container>
     );
 };

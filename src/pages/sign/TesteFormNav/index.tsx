@@ -13,7 +13,6 @@ const sleep = (time: number) => new Promise((acc) => setTimeout(acc, time));
 
 const sepOneSchema = yup.object().shape({
     nome: yup.string().required("Este campo e obrigatório"),
-    email: yup.string().required("Este campo é obrigatório").email("Este campo é um email"),
 });
 
 const stepTwo = yup.object().shape({

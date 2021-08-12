@@ -14,6 +14,9 @@ type NavCardData = {
     tabs: NavCardTabProps[];
     currentTab: NavCardTabProps;
     setStep: React.Dispatch<React.SetStateAction<number>>;
+    gotoStep: (newStep?: number) => void;
+    nextStep: () => void;
+    previousStep: () => void;
 };
 
 export const NavCardContext = React.createContext({} as NavCardData);
@@ -23,12 +26,35 @@ export const NavCardTab: React.FC<NavCardTabProps> = ({ children }) => {
 };
 
 export const NavCardProvider: React.FC = ({ children }) => {
+    const [step, setStep] = React.useState<number>(0);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<NavCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
-    const [step, setStep] = React.useState<number>(0);
-    const currentTab = tabs[step];
+    const currentTab = React.useMemo(() => tabs[step], [step]);
+
+    const nextStep = React.useCallback(() => {
+        if (step < tabs.length) {
+            setStep(step + 1);
+        }
+    }, [step, setStep]);
+
+    const previousStep = React.useCallback(() => {
+        if (step > -1) {
+            setStep(step - 1);
+        }
+    }, [step, setStep]);
+
+    const gotoStep = React.useCallback(
+        (newStep?: number): void => {
+            if (newStep !== undefined) {
+                newStep > -1 && newStep < tabs.length && setStep(newStep);
+                return;
+            }
+            nextStep();
+        },
+        [setStep, nextStep, previousStep],
+    );
     return (
-        <NavCardContext.Provider value={{ tabs, currentTab, step, setStep }}>
+        <NavCardContext.Provider value={{ tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
             <NavCard />
         </NavCardContext.Provider>
     );

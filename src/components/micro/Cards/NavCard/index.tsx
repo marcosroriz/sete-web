@@ -6,11 +6,11 @@ import { useNavCard } from "hooks/NavCardContext";
 import { Container } from "./styles";
 
 const NavCard: React.FC = () => {
-    const { tabs, step, setStep } = useNavCard();
+    const { tabs, step, gotoStep } = useNavCard();
 
     return (
         <Container>
-            <Tabs id="nav-card" variant="pills" activeKey={step} onSelect={(k) => setStep(Number(k))}>
+            <Tabs id="nav-card" variant="pills" activeKey={step} onSelect={(k) => gotoStep(Number(k))}>
                 {tabs.map((tab, index) => (
                     <Tab
                         eventKey={index}

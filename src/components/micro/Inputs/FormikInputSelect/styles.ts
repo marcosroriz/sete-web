@@ -35,7 +35,7 @@ export const Container = styled.div<ContainerProps>`
     label {
         font-weight: 500;
         font-size: 14px;
-        color: var(--color-grey);
+        color: var(--color-grey-500);
     }
 `;
 
@@ -59,9 +59,9 @@ export const InputField = styled.div<InputFieldProps>`
         ${({ isInvalid, isPlaceholder }) =>
             isInvalid
                 ? css`
-                      border-color: var(--color-red);
+                      border-color: var(--color-red-500);
                       .form-control__single-value {
-                          color: var(--color-red);
+                          color: var(--color-red-500);
                       }
                   `
                 : isPlaceholder
@@ -75,7 +75,7 @@ export const InputField = styled.div<InputFieldProps>`
                 : css`
                       border-color: #ced4da;
                       .form-control__single-value {
-                          color: var(--color-black);
+                          color: var(--color-black-500);
                       }
                   `}
 
@@ -94,8 +94,8 @@ export const InputField = styled.div<InputFieldProps>`
                     : isInvalid
                     ? css`
                           box-shadow: 0 0 0 0.15rem rgb(251 64 75 / 25%);
-                          border-color: var(--color-red);
-                          color: var(--color-red);
+                          border-color: var(--color-red-500);
+                          color: var(--color-red-500);
                       `
                     : css`
                           border-color: #ced4da;
@@ -105,7 +105,7 @@ export const InputField = styled.div<InputFieldProps>`
                               color: var(--color-green);
                           }
                       `}
-            background-color: var(--color-white);
+            background-color: var(--color-white-50);
             outline: 0;
         }
 
@@ -120,7 +120,7 @@ export const InputField = styled.div<InputFieldProps>`
         margin-top: 5px;
         height: 10px;
 
-        color: var(--color-red);
+        color: var(--color-red-500);
         font-size: 12px;
         font-family: var(--font-tertiary);
     }

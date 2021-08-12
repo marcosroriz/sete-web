@@ -28,8 +28,8 @@ const Registrar: React.FC = () => {
     const handleFormSubmit = React.useCallback((values: any) => console.log("submit", values), []);
     return (
         <Formik initialValues={registrarInitialValues} onSubmit={handleFormSubmit} validationSchema={registrarSchema}>
-            {({ handleSubmit }) => (
-                <Form onSubmit={handleSubmit}>
+            {() => (
+                <Form>
                     <p>Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
                     <BlockToastCard
                         type="warning"

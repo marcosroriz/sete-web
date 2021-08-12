@@ -23,6 +23,7 @@ const FormikInputPassword: React.FC<FormikInputPasswordProps> = ({ label, name, 
         },
         [setTogglePassword],
     );
+
     return (
         <Container
             className={containerClassName}

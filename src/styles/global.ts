@@ -6,18 +6,24 @@ export default createGlobalStyle`
         --font-secondary: 'Open Sans', sans-serif;
         --font-tertiary: 'Roboto Condensed', sans-serif;
         --size-max-width: 1320px;
-        --color-white: #ffffff;
         --color-dark-orange: #ffbc67;
         --color-orange: orange;
         --color-yellow: gold;
-        --color-black: #414550;
-        --color-light-black: #464a56;
-        --color-lightest-black: #576071;
-        --color-grey: #6b6b6b;
-        --color-light-grey: #e7e7e7;
-        --color-red: #FB404B;
-        --color-light-red: #f5c7c7;
-        --color-lightest-red: #ffe4e4;
+        --color-black-500: #414550;
+        --color-black-450: #464a56;
+        --color-black-300: #576071;
+        --color-white-150: #f9f9f9;
+        --color-white-100: #fbfbfb;
+        --color-white-50: #ffffff;
+        --color-grey-500: #6b6b6b;
+        --color-grey-400: #888888;
+        --color-grey-300: #9e9e9e;
+        --color-grey-150: #ece6e6;
+        --color-grey-100: #e7e7e7;
+        --color-grey-50: #efefef;
+        --color-red-500: #FB404B;
+        --color-red-100: #f5c7c7;
+        --color-red-50: #ffe4e4;
         --color-green: #87CB16;
     }
 

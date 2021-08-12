@@ -29,12 +29,12 @@ const BlockToastCard: React.FC<BlockToastCardProps> = ({ type, text }) => {
                             <Container type={type}>
                                 <div className="toast-text">
                                     <div className="text-icon">
-                                        <FaExclamationCircle size={40} color="var(--color-white)" />
+                                        <FaExclamationCircle size={40} color="var(--color-white-50)" />
                                     </div>
                                     <span>{text}</span>
                                 </div>
                                 <button className="toast-button" type="button" onClick={() => setIsOpened(false)}>
-                                    <FaRegTimesCircle size={40} color="var(--color-white)" />
+                                    <FaRegTimesCircle size={40} color="var(--color-white-50)" />
                                 </button>
                             </Container>
                         </animated.div>

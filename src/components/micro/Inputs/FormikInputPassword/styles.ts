@@ -35,7 +35,7 @@ export const Container = styled.div<ContainerProps>`
     label {
         font-weight: 500;
         font-size: 14px;
-        color: var(--color-grey);
+        color: var(--color-grey-500);
     }
 `;
 
@@ -56,7 +56,7 @@ export const InputField = styled.div<InputFieldProps>`
         padding: 0.375rem 2.25rem 0.375rem 0.75rem;
 
         font-size: 14px;
-        ${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red); color: var(--color-red);" : "color: var(--color-black);")}
+        ${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red-500); color: var(--color-red-500);" : "color: var(--color-black);")}
         ${({ thinBorder }) => (thinBorder ? "border-width: 1px;" : "border-width: 2px;")}
         transition: all 0.1s linear;
 
@@ -71,21 +71,21 @@ export const InputField = styled.div<InputFieldProps>`
                     : isInvalid
                     ? css`
                           box-shadow: 0 0 0 0.15rem rgb(251 64 75 / 25%);
-                          border-color: var(--color-red);
-                          color: var(--color-red);
+                          border-color: var(--color-red-500);
+                          color: var(--color-red-500);
                       `
                     : css`
                           color: var(--color-green);
                           border-color: #ced4da;
-                          border-bottom-color: #87cb16;
+                          border-bottom-color: var(--color-green);
                           box-shadow: none;
                       `}
-            background-color: var(--color-white);
+            background-color: var(--color-white-50);
             outline: 0;
         }
 
         &:focus ~ .form-toggle > svg {
-            ${({ isInvalid, isTouched }) => (!isTouched ? "color: #ced4da;" : isInvalid ? "color: var(--color-red);" : "color: var(--color-green);")}
+            ${({ isInvalid, isTouched }) => isTouched && !isInvalid && "color: var(--color-green);"}
         }
         &::placeholder {
             color: rgba(65, 69, 80, 0.4);
@@ -99,7 +99,7 @@ export const InputField = styled.div<InputFieldProps>`
         margin-top: 5px;
         height: 10px;
 
-        color: var(--color-red);
+        color: var(--color-red-500);
         font-size: 12px;
         font-family: var(--font-tertiary);
     }
@@ -112,7 +112,7 @@ export const InputField = styled.div<InputFieldProps>`
         cursor: pointer;
         user-select: none;
         svg {
-            ${({ isInvalid }) => (isInvalid ? "color: var(--color-red);" : "color: var(--color-black);")}
+            ${({ isInvalid }) => (isInvalid ? "color: var(--color-red-500);" : "color: var(--color-grey-300);")}
             width: 100%;
             height: 100%;
         }
