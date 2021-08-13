@@ -1,12 +1,12 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 
-import { useFormNavCard } from "hooks/FormNavCardContext";
+import { useReactHookNavCard } from "hooks/ReactHookNavCardContext";
 
 import { Container } from "./styles";
 
-const FormNavCard: React.FC = () => {
-    const { tabs, step, gotoStep } = useFormNavCard();
+const ReactHookNavCard: React.FC = () => {
+    const { tabs, step, gotoStep } = useReactHookNavCard();
 
     return (
         <Container>
@@ -30,4 +30,4 @@ const FormNavCard: React.FC = () => {
     );
 };
 
-export default FormNavCard;
+export default ReactHookNavCard;

@@ -2,7 +2,7 @@ import React from "react";
 import * as yup from "yup";
 import { FaSignInAlt, FaQuestionCircle, FaRegRegistered } from "react-icons/fa";
 
-import { FormNavCardProvider, FormNavCardTab } from "hooks/FormNavCardContext";
+import { FormikNavCardProvider, FormikNavCardTab } from "hooks/FormikNavCardContext";
 
 import SidebarLayout from "components/macro/SidebarLayout";
 import StepOne from "./StepOne";
@@ -29,25 +29,25 @@ const Autenticacao: React.FC = () => {
     };
     return (
         <SidebarLayout>
-            <FormNavCardProvider
+            <FormikNavCardProvider
                 initialValues={initialValues}
                 onSubmit={async (values) => {
                     await sleep(500);
                     console.log("values", values);
                 }}
             >
-                <FormNavCardTab name="StepOne" icon={<FaSignInAlt />} validationSchema={sepOneSchema}>
+                <FormikNavCardTab name="StepOne" icon={<FaSignInAlt />} validationSchema={sepOneSchema}>
                     <StepOne />
-                </FormNavCardTab>
+                </FormikNavCardTab>
 
-                <FormNavCardTab name="StepTwo" icon={<FaQuestionCircle />} validationSchema={stepTwo}>
+                <FormikNavCardTab name="StepTwo" icon={<FaQuestionCircle />} validationSchema={stepTwo}>
                     <StepTwo />
-                </FormNavCardTab>
+                </FormikNavCardTab>
 
-                <FormNavCardTab name="StepThree" icon={<FaRegRegistered />}>
+                <FormikNavCardTab name="StepThree" icon={<FaRegRegistered />}>
                     <StepThree />
-                </FormNavCardTab>
-            </FormNavCardProvider>
+                </FormikNavCardTab>
+            </FormikNavCardProvider>
         </SidebarLayout>
     );
 };

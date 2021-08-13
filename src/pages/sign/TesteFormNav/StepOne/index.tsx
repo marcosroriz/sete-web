@@ -3,12 +3,12 @@ import React from "react";
 import FormikInputText from "components/micro/Inputs/FormikInputText";
 import FormikFormItemCard from "components/micro/Cards/FormikFormItemCard";
 
-import { useFormNavCard } from "hooks/FormNavCardContext";
+import { useFormikNavCard } from "hooks/FormikNavCardContext";
 
 import { Container } from "./styles";
 
 const StepOne: React.FC = () => {
-    const { tabs, currentTab } = useFormNavCard();
+    const { tabs, currentTab } = useFormikNavCard();
 
     return (
         <Container>

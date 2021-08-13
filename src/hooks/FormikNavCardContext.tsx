@@ -1,9 +1,9 @@
 import React from "react";
 import { Formik, Form, FormikConfig, FormikValues } from "formik";
 
-import FormNavCard from "components/micro/Cards/FormNavCard";
+import FormikNavCard from "components/micro/Cards/FormikNavCard";
 
-type FormCardTabProps = {
+type FormikCardTabProps = {
     id?: string;
     name: string;
     icon: React.ReactNode;
@@ -11,11 +11,11 @@ type FormCardTabProps = {
     children: React.ReactNode;
 };
 
-type FormNavCardData = {
+type FormikNavCardData = {
     formRef: React.RefObject<HTMLFormElement>;
-    tabs: FormCardTabProps[];
+    tabs: FormikCardTabProps[];
     step: number;
-    currentTab: FormCardTabProps;
+    currentTab: FormikCardTabProps;
     isSubmitting: boolean;
     setStep: React.Dispatch<React.SetStateAction<number>>;
     gotoStep: (newStep?: number) => void;
@@ -23,17 +23,17 @@ type FormNavCardData = {
     previousStep: () => void;
 };
 
-type FormNavCardProviderProps = FormikConfig<FormikValues> & {};
+type FormikNavCardProviderProps = FormikConfig<FormikValues> & {};
 
-export const FormNavCardContext = React.createContext({} as FormNavCardData);
+export const FormikNavCardContext = React.createContext({} as FormikNavCardData);
 
-export const FormNavCardTab: React.FC<FormCardTabProps> = ({ children }) => {
+export const FormikNavCardTab: React.FC<FormikCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-export const FormNavCardProvider: React.FC<FormNavCardProviderProps> = ({ children, onSubmit, ...props }) => {
+export const FormikNavCardProvider: React.FC<FormikNavCardProviderProps> = ({ children, onSubmit, ...props }) => {
     const formRef = React.useRef<HTMLFormElement>(null);
-    const childrenArray = React.Children.toArray(children) as React.ReactElement<FormCardTabProps>[];
+    const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
     const [step, setStep] = React.useState<number>(0);
     const currentTab = tabs[step];
@@ -76,20 +76,20 @@ export const FormNavCardProvider: React.FC<FormNavCardProviderProps> = ({ childr
             validationSchema={currentTab.validationSchema}
         >
             {({ isSubmitting }) => (
-                <FormNavCardContext.Provider value={{ formRef, isSubmitting, tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
+                <FormikNavCardContext.Provider value={{ formRef, isSubmitting, tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
                     <Form ref={formRef}>
-                        <FormNavCard />
+                        <FormikNavCard />
                     </Form>
-                </FormNavCardContext.Provider>
+                </FormikNavCardContext.Provider>
             )}
         </Formik>
     );
 };
 
-export function useFormNavCard(): FormNavCardData {
-    const context = React.useContext(FormNavCardContext);
+export function useFormikNavCard(): FormikNavCardData {
+    const context = React.useContext(FormikNavCardContext);
     if (!context) {
-        throw new Error("O FormNavCard deve ser usado entre um contexto");
+        throw new Error("O FormikNavCard deve ser usado entre um contexto");
     }
     return context;
 }

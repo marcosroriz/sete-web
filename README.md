@@ -40,3 +40,4 @@ São grandes componentes que são persistidos em várias páginas (Header, Foote
 - Alert;
 - AuthContext;
 - Tables;
+${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red-500); color: var(--color-red-500);" : "color: var(--color-black-500);")}
