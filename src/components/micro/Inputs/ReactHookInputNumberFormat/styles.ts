@@ -55,7 +55,6 @@ export const InputField = styled.div<InputFieldProps>`
         padding: 0.375rem 0.75rem;
 
         font-size: 14px;
-        ${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red-500); color: var(--color-red-500);" : "color: var(--color-black-500);")}
         ${({ thinBorder }) => (thinBorder ? "&, &:focus { border-width: 1px; }" : "&, &:focus { border-width: 2px; }")}
         transition: all 0.1s linear;
 

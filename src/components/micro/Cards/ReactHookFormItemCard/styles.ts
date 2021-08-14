@@ -7,6 +7,7 @@ export const mediaQuery = {
 type ContainerProps = {
     isRequired?: boolean;
     isInvalid?: boolean;
+    hasOnlyChild?: boolean;
 };
 
 export const Container = styled.div<ContainerProps>`
@@ -60,7 +61,8 @@ export const Container = styled.div<ContainerProps>`
 
     .form-item-content {
         flex: 1;
-        margin-bottom: -15px;
+        ${({ hasOnlyChild }) => (hasOnlyChild ? "margin-bottom: -15px;" : "margin-bottom: 0px;")}
+
         margin-left: 30px;
     }
 

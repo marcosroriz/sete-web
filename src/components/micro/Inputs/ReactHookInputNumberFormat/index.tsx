@@ -39,14 +39,13 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
                 ? setDynamicFormatMask(format[1])
                 : setDynamicFormatMask(format[0]);
             if (isFormated) {
-                setValue(name, values.formattedValue.trimRight());
+                setValue(name, values.formattedValue.trimRight(), { shouldValidate: true });
             } else {
-                setValue(name, values.value);
+                setValue(name, values.value, { shouldValidate: true });
             }
         },
         [setValue, setDynamicFormatMask],
     );
-
     return (
         <Container
             className={containerClassName}

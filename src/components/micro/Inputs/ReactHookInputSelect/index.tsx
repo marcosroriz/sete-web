@@ -41,7 +41,7 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     const { onChange: removed1, onBlur: removed2, ...registerField } = register(name);
     const handleSelectChange = React.useCallback(
         (value: SelectOptions) => {
-            setValue(name, value.value);
+            setValue(name, value.value, { shouldValidate: true });
             setSelectValue(value);
         },
         [setSelectValue, setValue],

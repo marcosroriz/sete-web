@@ -4,17 +4,23 @@ import { useFormContext } from "react-hook-form";
 import { Container } from "./styles";
 
 type ReactHookFormItemCardProps = {
-    name: string;
+    name?: string;
     required?: boolean;
     containerClassName?: string;
 };
 
 const ReactHookFormItemCard: React.FC<ReactHookFormItemCardProps> = ({ required, name, containerClassName, children }) => {
+    const firstChild = React.Children.only(children) as React.ReactElement<{ name: string }>;
     const {
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     return (
-        <Container isRequired={required} isInvalid={touchedFields[name] && !!errors[name]} className={containerClassName ? containerClassName : ""}>
+        <Container
+            isRequired={required}
+            isInvalid={!!errors[name || firstChild.props.name]}
+            className={containerClassName ? containerClassName : ""}
+            hasOnlyChild={!name}
+        >
             <div className="form-item-label">
                 <span>{required ? "OBRIGATÓRIO" : "OPTATIVO"}</span>
             </div>

@@ -11,15 +11,15 @@ import Footer from "../Footer";
 import AccordionButton from "./AccordionButon";
 
 import LogoSete from "assets/images/logo-sete-w.png";
-import IconPerfil from "assets/icons/sidebar-perfil.svg";
-import IconAlunos from "assets/icons/sidebar-alunos.svg";
-import IconEscolas from "assets/icons/sidebar-escolas.svg";
-import IconFornecedores from "assets/icons/sidebar-fornecedores.svg";
-import IconFrotas from "assets/icons/sidebar-frotas.svg";
-import IconMotoristas from "assets/icons/sidebar-motoristas.svg";
-import IconRelatorios from "assets/icons/sidebar-relatorios.svg";
-import IconRotas from "assets/icons/sidebar-rotas.svg";
-import IconSenso from "assets/icons/sidebar-senso.png";
+import IconPerfil from "assets/icons/sidebar/sidebar-perfil.svg";
+import IconAlunos from "assets/icons/sidebar/sidebar-alunos.svg";
+import IconEscolas from "assets/icons/sidebar/sidebar-escolas.svg";
+import IconFornecedores from "assets/icons/sidebar/sidebar-fornecedores.svg";
+import IconFrotas from "assets/icons/sidebar/sidebar-frotas.svg";
+import IconMotoristas from "assets/icons/sidebar/sidebar-motoristas.svg";
+import IconRelatorios from "assets/icons/sidebar/sidebar-relatorios.svg";
+import IconRotas from "assets/icons/sidebar/sidebar-rotas.svg";
+import IconSenso from "assets/icons/sidebar/sidebar-senso.png";
 
 import { Container, NavContainer, NavOverlay, Section, ChildrenContainer, NavItem, NavItemBody, HamburgerContainer, mediaQuery } from "./styles";
 

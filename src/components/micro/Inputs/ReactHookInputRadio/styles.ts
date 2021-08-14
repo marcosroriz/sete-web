@@ -2,9 +2,8 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
     display: block;
-    width: 100%;
 
-    .checkbox-error {
+    .radio-error {
         width: 100%;
         display: block;
 
@@ -19,13 +18,13 @@ export const Container = styled.div`
 const positionStyle = {
     right: css`
         flex-direction: row;
-        .checkbox-field {
+        .radio-field {
             margin-right: 12px;
         }
     `,
     left: css`
         flex-direction: row-reverse;
-        .checkbox-field {
+        .radio-field {
             margin-left: 12px;
         }
     `,

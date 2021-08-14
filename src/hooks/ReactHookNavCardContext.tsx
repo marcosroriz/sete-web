@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm, FormProvider, SubmitHandler, FieldValues } from "react-hook-form";
+import { useForm, FormProvider, SubmitHandler, FieldValues, UseFormProps } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -24,7 +24,7 @@ type ReactHookNavCardData = {
     previousStep: () => void;
 };
 
-type ReactHookNavCardProviderProps<T> = {
+type ReactHookNavCardProviderProps<T> = UseFormProps & {
     children: React.ReactNode;
     onSubmit: SubmitHandler<T>;
 };
@@ -35,7 +35,7 @@ export const ReactHookNavCardTab: React.FC<ReactHookCardTabProps> = ({ children 
     return <>{children}</>;
 };
 
-export const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit }: ReactHookNavCardProviderProps<T>): JSX.Element => {
+export const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, ...props }: ReactHookNavCardProviderProps<T>): JSX.Element => {
     const formRef = React.useRef<HTMLFormElement>(null);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<ReactHookCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -44,8 +44,8 @@ export const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSu
     const isLastStep = step === tabs.length - 1;
 
     const methods = useForm({
-        mode: "onChange",
         resolver: yupResolver(currentTab.validationSchema || yup.object().shape({})),
+        ...props,
     });
 
     const nextStep = React.useCallback(() => {
