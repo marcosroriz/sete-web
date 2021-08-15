@@ -3,6 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAuth } from "contexts/Auth";
+import { useAlertModal } from "hooks/AlertModal";
+import { useError } from "hooks/Errors";
 import { loginSchema } from "validators/sign";
 
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -16,13 +18,22 @@ type FormValues = {
 };
 
 const Login: React.FC = () => {
+    const { clearModal, createModal } = useAlertModal();
+    const { errorHandler } = useError();
     const { signIn } = useAuth();
+
     const methods = useForm<FormValues>({
         resolver: yupResolver(loginSchema),
     });
     const handleFormSubmit = React.useCallback(async (data: FormValues) => {
-        await signIn(data);
-        console.log("submit", data);
+        try {
+            createModal();
+            console.log("submit", data);
+            await signIn(data);
+            clearModal();
+        } catch (err) {
+            errorHandler(err, { title: "Falha ao Realizar login" });
+        }
     }, []);
     return (
         <FormProvider {...methods}>
