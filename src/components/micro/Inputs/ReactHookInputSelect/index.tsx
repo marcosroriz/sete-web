@@ -38,7 +38,7 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
         setFocus,
         formState: { errors, touchedFields },
     } = useFormContext();
-    const { onChange: removed1, onBlur: removed2, ...registerField } = register(name);
+    const { onChange: removed1, ...registerField } = register(name);
     const handleSelectChange = React.useCallback(
         (value: SelectOptions) => {
             setValue(name, value.value, { shouldValidate: true });
@@ -46,10 +46,9 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
         },
         [setSelectValue, setValue],
     );
-    const handleBlur = React.useCallback(() => {
+    const handleSelectFocus = React.useCallback(() => {
         setFocus(name);
     }, [setFocus]);
-
     return (
         <Container
             className={containerClassName}
@@ -62,7 +61,7 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
                     id={name}
                     value={selectValue}
                     onChange={handleSelectChange}
-                    onBlur={handleBlur}
+                    onFocus={handleSelectFocus}
                     className="select"
                     options={options}
                     menuPlacement={menuPlacement}
@@ -72,7 +71,7 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
                     {...registerField}
                     {...(props as any)}
                 />
-                <span className="form-error">{errors[name]}</span>
+                <span className="form-error">{errors[name]?.message}</span>
             </InputField>
         </Container>
     );

@@ -1,106 +1,106 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { Formik } from "formik";
+import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import FormikInputText from "components/micro/Inputs/FormikInputText";
-import FormikInputPassword from "components/micro/Inputs/FormikInputPassword";
-import FormikInputNumberFormat from "components/micro/Inputs/FormikInputNumberFormat";
-import FormikInputSelect from "components/micro/Inputs/FormikInputSelect";
+import { registrarSchema } from "validators/sign";
+
+import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
+import ReactHookInputPassword from "components/micro/Inputs/ReactHookInputPassword";
+import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
+import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 import BlockToastCard from "components/micro/Cards/BlockToastCard";
-
-import { registrarSchema } from "validators/sign/Autenticacao";
 
 import { InputsContainer, Form, mediaQuery } from "./styles";
 
-const registrarInitialValues = {
-    nome: "",
-    cpf: "",
-    telefone: "",
-    email_reg: "",
-    rep_email_reg: "",
-    senha_reg: "",
-    rep_senha_reg: "",
-    estado: "",
-    municipio: "",
+type FormValues = {
+    nome: string;
+    cpf: string;
+    telefone: string;
+    email_reg: string;
+    rep_email_reg: string;
+    senha_reg: string;
+    rep_senha_reg: string;
+    estado: string;
+    municipio: string;
 };
 
 const Registrar: React.FC = () => {
-    const handleFormSubmit = React.useCallback((values: any) => console.log("submit", values), []);
+    const methods = useForm<FormValues>({
+        mode: "all",
+        resolver: yupResolver(registrarSchema),
+    });
+    const handleFormSubmit = React.useCallback((data: FormValues) => console.log("submit", data), []);
     return (
-        <Formik initialValues={registrarInitialValues} onSubmit={handleFormSubmit} validationSchema={registrarSchema}>
-            {() => (
-                <Form>
-                    <p>Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
-                    <BlockToastCard
-                        type="warning"
-                        text="Recomenda-se a utilização do e-mail INSTITUCIONAL para liberação do cadastro o mais rápido possível."
+        <FormProvider {...methods}>
+            <Form onSubmit={methods.handleSubmit(handleFormSubmit)}>
+                <p>Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
+                <BlockToastCard type="warning" text="Recomenda-se a utilização do e-mail INSTITUCIONAL para liberação do cadastro o mais rápido possível." />
+                <InputsContainer>
+                    <ReactHookInputText label="NOME COMPLETO:" name="nome" placeholder="Digite seu nome" isHorizontal={mediaQuery.mobile} thinBorder />
+                    <ReactHookInputNumberFormat
+                        label="CPF:"
+                        name="cpf"
+                        placeholder="Digite seu CPF"
+                        format="###.###.###-##"
+                        isHorizontal={mediaQuery.mobile}
+                        thinBorder
                     />
-                    <InputsContainer>
-                        <FormikInputText label="NOME COMPLETO:" name="nome" placeholder="Digite seu nome" isHorizontal={mediaQuery.mobile} thinBorder />
-                        <FormikInputNumberFormat
-                            label="CPF:"
-                            name="cpf"
-                            placeholder="Digite seu CPF"
-                            mask="_"
-                            format="###.###.###-##"
-                            isHorizontal={mediaQuery.mobile}
-                            thinBorder
-                        />
-                        <FormikInputNumberFormat
-                            label="TELEFONE:"
-                            name="telefone"
-                            placeholder="Digite seu Telefone"
-                            isHorizontal={mediaQuery.mobile}
-                            thinBorder
-                        />
-                        <FormikInputText label="E-MAIL:" name="email_reg" placeholder="Endereço de e-mail" isHorizontal={mediaQuery.mobile} thinBorder />
-                        <FormikInputText
-                            label="REPETIR E-MAIL:"
-                            name="rep_email_reg"
-                            placeholder="Endereço de e-mail"
-                            isHorizontal={mediaQuery.mobile}
-                            thinBorder
-                        />
-                        <FormikInputPassword label="SENHA:" name="senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
-                        <FormikInputPassword label="REPETIR SENHA:" name="rep_senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
-                    </InputsContainer>
-                    <p className="city-divider">Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
-                    <InputsContainer>
-                        <FormikInputSelect
-                            label="ESTADO OU DISTRITO:"
-                            name="estado"
-                            placeholder="Selecione um Estado"
-                            options={[
-                                { value: "1", label: "Olá mundo" },
-                                { value: "2", label: "Olá" },
-                                { value: "3", label: "Olá mndo" },
-                                { value: "4", label: "Olá mo" },
-                            ]}
-                            isHorizontal={mediaQuery.mobile}
-                            thinBorder
-                        />
-                        <FormikInputSelect
-                            label="MUNICÍPIO:"
-                            name="municipio"
-                            placeholder="Selecione um Município"
-                            options={[
-                                { value: "1", label: "Olá mundo" },
-                                { value: "2", label: "Olá" },
-                                { value: "3", label: "Olá mndo" },
-                                { value: "4", label: "Olá mo" },
-                            ]}
-                            isHorizontal={mediaQuery.mobile}
-                            thinBorder
-                        />
-                        <div className="submit-container">
-                            <Button variant="warning" className="btn-fill" type="submit">
-                                Registrar
-                            </Button>
-                        </div>
-                    </InputsContainer>
-                </Form>
-            )}
-        </Formik>
+                    <ReactHookInputNumberFormat
+                        label="TELEFONE:"
+                        name="telefone"
+                        placeholder="Digite seu Telefone"
+                        format={["(##) ####-#####", "(##) #####-####"]}
+                        isHorizontal={mediaQuery.mobile}
+                        thinBorder
+                    />
+                    <ReactHookInputText label="E-MAIL:" name="email_reg" placeholder="Endereço de e-mail" isHorizontal={mediaQuery.mobile} thinBorder />
+                    <ReactHookInputText
+                        label="REPETIR E-MAIL:"
+                        name="rep_email_reg"
+                        placeholder="Endereço de e-mail"
+                        isHorizontal={mediaQuery.mobile}
+                        thinBorder
+                    />
+                    <ReactHookInputPassword label="SENHA:" name="senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
+                    <ReactHookInputPassword label="REPETIR SENHA:" name="rep_senha_reg" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
+                </InputsContainer>
+                <p className="city-divider">Para registrar seu usuário, por favor preencha o formulário abaixo:</p>
+                <InputsContainer>
+                    <ReactHookInputSelect
+                        label="ESTADO OU DISTRITO:"
+                        name="estado"
+                        placeholder="Selecione um Estado"
+                        options={[
+                            { value: "1", label: "Olá mundo" },
+                            { value: "2", label: "Olá" },
+                            { value: "3", label: "Olá mndo" },
+                            { value: "4", label: "Olá mo" },
+                        ]}
+                        isHorizontal={mediaQuery.mobile}
+                        thinBorder
+                    />
+                    <ReactHookInputSelect
+                        label="MUNICÍPIO:"
+                        name="municipio"
+                        placeholder="Selecione um Município"
+                        options={[
+                            { value: "1", label: "Olá mundo" },
+                            { value: "2", label: "Olá" },
+                            { value: "3", label: "Olá mndo" },
+                            { value: "4", label: "Olá mo" },
+                        ]}
+                        isHorizontal={mediaQuery.mobile}
+                        thinBorder
+                    />
+                    <div className="submit-container">
+                        <Button variant="warning" className="btn-fill" type="submit">
+                            Registrar
+                        </Button>
+                    </div>
+                </InputsContainer>
+            </Form>
+        </FormProvider>
     );
 };
 

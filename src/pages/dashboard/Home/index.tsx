@@ -2,12 +2,12 @@ import React from "react";
 
 import { Container } from "./styles";
 
-const StepThree: React.FC = () => {
+const Home: React.FC = () => {
     return (
         <Container>
-            <button type="submit">Submit</button>
+            <h3>Olá SETE</h3>
         </Container>
     );
 };
 
-export default StepThree;
+export default Home;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 
-import { useFormikNavCard } from "hooks/FormikNavCardContext";
+import { useFormikNavCard } from "contexts/FormikNavCard";
 
 import { Container } from "./styles";
 

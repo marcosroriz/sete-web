@@ -1,7 +1,7 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 
-import { useReactHookNavCard } from "hooks/ReactHookNavCardContext";
+import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import { Container } from "./styles";
 

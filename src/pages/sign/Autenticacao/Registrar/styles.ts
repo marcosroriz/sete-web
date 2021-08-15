@@ -5,7 +5,7 @@ export const mediaQuery = {
     mobile: "(max-width: 525px)",
 };
 
-export const Form = styled(FormikForm)`
+export const Form = styled.form`
     width: 100%;
     padding: 0px 20px 20px 20px;
     p {

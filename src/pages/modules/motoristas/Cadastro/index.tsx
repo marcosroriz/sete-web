@@ -4,7 +4,7 @@ import PageTitle from "components/micro/PageTitle";
 import SidebarLayout from "components/macro/SidebarLayout";
 
 import { dadosPessoaisSchema, dadosTransportesSchema } from "validators/modules/motoristas";
-import { ReactHookNavCardProvider, ReactHookNavCardTab } from "hooks/ReactHookNavCardContext";
+import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 
 import DadosPessoais from "./DadosPessoais";
 import DadosTransporte from "./DadosTransporte";
@@ -12,8 +12,6 @@ import DadosTransporte from "./DadosTransporte";
 import PageIcon from "assets/icons/motorista/motorista-cadastro.png";
 import DadosPessoaisIcon from "assets/icons/motorista/motorista-dados-pessoais.svg";
 import DadosTransportesIcon from "assets/icons/motorista/motorista-dados-transportes.png";
-
-import { Container } from "./styles";
 
 type FormData = {
     nome: string;

@@ -22,7 +22,7 @@ const ReactHookInputText: React.FC<ReactHookInputTextProps> = ({ label, name, co
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
-            <InputField isTouched={touchedFields[name]} isInvalid={touchedFields[name] && !!errors[name]} thinBorder={thinBorder}>
+            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder}>
                 <input id={name} className="form-control" aria-invalid={!!errors[name]} {...register(name)} {...props} />
                 <span className="form-error">{errors[name]?.message}</span>
             </InputField>

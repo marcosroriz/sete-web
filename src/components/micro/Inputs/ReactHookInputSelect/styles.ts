@@ -56,29 +56,9 @@ export const InputField = styled.div<InputFieldProps>`
         font-weight: 400;
         font-size: 14px;
         line-height: 1.5;
-        ${({ isInvalid, isPlaceholder }) =>
-            isInvalid
-                ? css`
-                      border-color: var(--color-red-500);
-                      .form-control__single-value {
-                          color: var(--color-red-500);
-                      }
-                  `
-                : isPlaceholder
-                ? css`
-                      border-color: #ced4da;
-                      .form-control__single-value {
-                          color: rgba(65, 69, 80, 0.4);
-                          font-weight: 500;
-                      }
-                  `
-                : css`
-                      border-color: #ced4da;
-                      .form-control__single-value {
-                          color: var(--color-black-500);
-                      }
-                  `}
 
+        ${({ isInvalid }) => !isInvalid && "border-color: #ced4da;"}
+        ${({ isPlaceholder }) => isPlaceholder && ".form-control__single-value { color: rgba(65, 69, 80, 0.4); font-weight: 500; }"}
         ${({ thinBorder }) => (thinBorder ? "&, &:focus { border-width: 1px; }" : "&, &:focus { border-width: 2px; }")}
         box-shadow: none;
         transition: all 0.1s linear;
@@ -89,25 +69,25 @@ export const InputField = styled.div<InputFieldProps>`
 
         &.form-control__control--is-focused {
             ${({ isInvalid, isTouched }) =>
-                !isTouched
-                    ? css`
-                          border-color: #ced4da;
-                          border-bottom-color: #aaaaaa;
-                          box-shadow: none;
-                      `
-                    : isInvalid
+                isInvalid
                     ? css`
                           box-shadow: 0 0 0 0.15rem rgb(251 64 75 / 25%);
                           border-color: var(--color-red-500);
                           color: var(--color-red-500);
                       `
-                    : css`
+                    : !isTouched
+                    ? css`
                           border-color: #ced4da;
                           border-bottom-color: var(--color-green);
                           box-shadow: none;
                           .form-control__single-value {
                               color: var(--color-green);
                           }
+                      `
+                    : css`
+                          border-color: #ced4da;
+                          border-bottom-color: #aaaaaa;
+                          box-shadow: none;
                       `}
             background-color: var(--color-white-50);
             outline: 0;

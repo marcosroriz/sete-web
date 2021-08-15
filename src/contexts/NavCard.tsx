@@ -19,13 +19,13 @@ type NavCardData = {
     previousStep: () => void;
 };
 
-export const NavCardContext = React.createContext({} as NavCardData);
+const NavCardContext = React.createContext({} as NavCardData);
 
-export const NavCardTab: React.FC<NavCardTabProps> = ({ children }) => {
+const NavCardTab: React.FC<NavCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-export const NavCardProvider: React.FC = ({ children }) => {
+const NavCardProvider: React.FC = ({ children }) => {
     const [step, setStep] = React.useState<number>(0);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<NavCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -60,10 +60,12 @@ export const NavCardProvider: React.FC = ({ children }) => {
     );
 };
 
-export function useNavCard<T = string>(): NavCardData {
+function useNavCard<T = string>(): NavCardData {
     const context = React.useContext(NavCardContext);
     if (!context) {
         throw new Error("O NavCard deve ser usado entre um contexto");
     }
     return context;
 }
+
+export { NavCardContext, NavCardTab, NavCardProvider, useNavCard };

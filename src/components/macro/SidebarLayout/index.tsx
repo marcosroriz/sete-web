@@ -5,6 +5,7 @@ import { FaAddressBook, FaUsers, FaSignOutAlt } from "react-icons/fa";
 import { Spin as Hamburger } from "hamburger-react";
 
 import { useMediaQuery } from "hooks/MediaQuery";
+import { useAuth } from "contexts/Auth";
 
 import BackgroundImage from "../BackgroundImage";
 import Footer from "../Footer";
@@ -24,6 +25,7 @@ import IconSenso from "assets/icons/sidebar/sidebar-senso.png";
 import { Container, NavContainer, NavOverlay, Section, ChildrenContainer, NavItem, NavItemBody, HamburgerContainer, mediaQuery } from "./styles";
 
 const SidebarLayout: React.FC = ({ children }) => {
+    const { signOut } = useAuth();
     const matches = useMediaQuery(mediaQuery.mobile);
     const [menuIsOpened, setMenuIsOpened] = React.useState<boolean>(false);
 
@@ -37,6 +39,9 @@ const SidebarLayout: React.FC = ({ children }) => {
         },
         [setAtiveKey],
     );
+    const logout = React.useCallback(async () => {
+        await signOut();
+    }, [signOut]);
 
     return (
         <>
@@ -98,10 +103,10 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <Link to="/" onClick={logout}>
                                                 <FaSignOutAlt size={17} />
                                                 Sair
-                                            </NavLink>
+                                            </Link>
                                         </li>
                                     </NavItemBody>
                                 </Accordion.Collapse>

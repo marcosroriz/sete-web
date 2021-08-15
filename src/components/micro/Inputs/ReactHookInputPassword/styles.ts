@@ -61,22 +61,22 @@ export const InputField = styled.div<InputFieldProps>`
 
         &:focus {
             ${({ isInvalid, isTouched }) =>
-                !isTouched
-                    ? css`
-                          border-color: #ced4da;
-                          border-bottom-color: #aaaaaa;
-                          box-shadow: none;
-                      `
-                    : isInvalid
+                isInvalid
                     ? css`
                           box-shadow: 0 0 0 0.15rem rgb(251 64 75 / 25%);
                           border-color: var(--color-red-500);
                           color: var(--color-red-500);
                       `
-                    : css`
+                    : isTouched
+                    ? css`
                           color: var(--color-green);
                           border-color: #ced4da;
                           border-bottom-color: var(--color-green);
+                          box-shadow: none;
+                      `
+                    : css`
+                          border-color: #ced4da;
+                          border-bottom-color: #aaaaaa;
                           box-shadow: none;
                       `}
             background-color: var(--color-white-50);

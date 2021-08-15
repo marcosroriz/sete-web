@@ -29,13 +29,13 @@ type ReactHookNavCardProviderProps<T> = UseFormProps & {
     onSubmit: SubmitHandler<T>;
 };
 
-export const ReactHookNavCardContext = React.createContext({} as ReactHookNavCardData);
+const ReactHookNavCardContext = React.createContext({} as ReactHookNavCardData);
 
-export const ReactHookNavCardTab: React.FC<ReactHookCardTabProps> = ({ children }) => {
+const ReactHookNavCardTab: React.FC<ReactHookCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-export const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, ...props }: ReactHookNavCardProviderProps<T>): JSX.Element => {
+const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, ...props }: ReactHookNavCardProviderProps<T>): JSX.Element => {
     const formRef = React.useRef<HTMLFormElement>(null);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<ReactHookCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -93,10 +93,12 @@ export const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSu
     );
 };
 
-export function useReactHookNavCard(): ReactHookNavCardData {
+function useReactHookNavCard(): ReactHookNavCardData {
     const context = React.useContext(ReactHookNavCardContext);
     if (!context) {
         throw new Error("O ReactHookNavCard deve ser usado entre um contexto");
     }
     return context;
 }
+
+export { ReactHookNavCardContext, ReactHookNavCardTab, ReactHookNavCardProvider, useReactHookNavCard };

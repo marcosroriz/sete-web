@@ -25,13 +25,13 @@ type FormikNavCardData = {
 
 type FormikNavCardProviderProps = FormikConfig<FormikValues> & {};
 
-export const FormikNavCardContext = React.createContext({} as FormikNavCardData);
+const FormikNavCardContext = React.createContext({} as FormikNavCardData);
 
-export const FormikNavCardTab: React.FC<FormikCardTabProps> = ({ children }) => {
+const FormikNavCardTab: React.FC<FormikCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-export const FormikNavCardProvider: React.FC<FormikNavCardProviderProps> = ({ children, onSubmit, ...props }) => {
+const FormikNavCardProvider: React.FC<FormikNavCardProviderProps> = ({ children, onSubmit, ...props }) => {
     const formRef = React.useRef<HTMLFormElement>(null);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -86,10 +86,12 @@ export const FormikNavCardProvider: React.FC<FormikNavCardProviderProps> = ({ ch
     );
 };
 
-export function useFormikNavCard(): FormikNavCardData {
+function useFormikNavCard(): FormikNavCardData {
     const context = React.useContext(FormikNavCardContext);
     if (!context) {
         throw new Error("O FormikNavCard deve ser usado entre um contexto");
     }
     return context;
 }
+
+export { FormikNavCardContext, FormikNavCardTab, FormikNavCardProvider, useFormikNavCard };

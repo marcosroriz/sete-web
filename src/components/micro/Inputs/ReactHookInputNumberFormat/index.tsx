@@ -53,7 +53,7 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
-            <InputField isTouched={touchedFields[name]} isInvalid={touchedFields[name] && !!errors[name]} thinBorder={thinBorder}>
+            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder}>
                 <NumberFormat
                     {...registerField}
                     {...(props as any)}

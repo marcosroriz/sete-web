@@ -1,6 +1,11 @@
 import * as yup from "yup";
 
-export const registrarSchema = yup.object().shape({
+const loginSchema = yup.object().shape({
+    email: yup.string().required("Por favor digite seu endereço de e-mail").email("Digite um endereço de e-mail válido"),
+    senha: yup.string().required("Por favor digite sua senha"),
+});
+
+const registrarSchema = yup.object().shape({
     nome: yup.string().required("Esse campo é obrigatório"),
     cpf: yup
         .string()
@@ -17,3 +22,5 @@ export const registrarSchema = yup.object().shape({
     estado: yup.string().required("Esse campo é obrigatório"),
     municipio: yup.string().required("Esse campo é obrigatório"),
 });
+
+export { loginSchema, registrarSchema };
