@@ -21,7 +21,6 @@ const Login: React.FC = () => {
     const { clearModal, createModal } = useAlertModal();
     const { errorHandler } = useError();
     const { signIn } = useAuth();
-
     const methods = useForm<FormValues>({
         resolver: yupResolver(loginSchema),
     });
@@ -46,7 +45,7 @@ const Login: React.FC = () => {
                     <ReactHookInputText label="E-MAIL:" name="email" placeholder="Endereço de e-mail" isHorizontal={mediaQuery.mobile} thinBorder />
 
                     <div className="inputContainer">
-                        <ReactHookInputPassword type="password" label="SENHA:" name="senha" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
+                        <ReactHookInputPassword label="SENHA:" name="senha" placeholder="Senha" isHorizontal={mediaQuery.mobile} thinBorder />
                     </div>
 
                     <div className="submitContainer">

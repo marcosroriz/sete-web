@@ -8,22 +8,18 @@ const envUrls = {
 type EnvOptions = keyof typeof envUrls;
 
 const getApiClient = (env?: EnvOptions): AxiosInstance => {
-    const token = cookie.get("@sete-web:token");
     const api = axios.create({
         baseURL: envUrls[env || "api"],
     });
-    if (token) {
-        api.defaults.headers["Authorization"] = token;
-    }
+    api.interceptors.request.use((req) => {
+        const token = cookie.get("@sete-web:token");
+        if (token) {
+            req.headers["Authorization"] = token;
+        }
+        return req;
+    });
     return api;
 };
 
-const updateApiClient = (api: AxiosInstance, token?: string): void => {
-    if (!token) {
-        cookie.destroy("@sete-web:token");
-    }
-    api.defaults.headers["Authorization"] = token || "";
-};
-
-export { getApiClient, updateApiClient };
+export { getApiClient };
 export type { EnvOptions, AxiosInstance };

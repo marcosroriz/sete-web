@@ -1,4 +1,4 @@
-import { EnvOptions, AxiosInstance, getApiClient, updateApiClient } from "./apiClient";
+import { EnvOptions, AxiosInstance, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { Permission } from "entities/Permission";
 
@@ -42,7 +42,6 @@ class AuthenticatorService {
         });
         const data = (await response.data) as SignInResponse;
         cookie.set("@sete-web:token", data.access_token.access_token, { maxAge: data.access_token.expires_in });
-        updateApiClient(this.api, data.access_token.access_token);
         return data;
     }
 
@@ -51,7 +50,6 @@ class AuthenticatorService {
             url: "/users/logout",
         });
         cookie.destroy("@sete-web:token");
-        updateApiClient(this.api, "");
     }
 
     public async isAuthenticated(): Promise<IsAuthenticatedResponse | undefined> {

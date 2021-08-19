@@ -22,9 +22,9 @@ const BlockToastCard: React.FC<BlockToastCardProps> = ({ type, text }) => {
     });
     return (
         <>
-            {styledProps((options, item) => (
-                <>
-                    {item && (
+            {styledProps(
+                (options, item) =>
+                    item && (
                         <animated.div style={options}>
                             <Container type={type}>
                                 <div className="toast-text">
@@ -38,9 +38,8 @@ const BlockToastCard: React.FC<BlockToastCardProps> = ({ type, text }) => {
                                 </button>
                             </Container>
                         </animated.div>
-                    )}
-                </>
-            ))}
+                    ),
+            )}
         </>
     );
 };

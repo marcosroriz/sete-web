@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useAuth } from "contexts/Auth";
+import { formatHelper } from "helpers/FormatHelper";
 
 import { SwalOptions, useAlertModal } from "./AlertModal";
 
@@ -13,13 +14,17 @@ const useError = (): ErrorHandler => {
     const { signOut } = useAuth();
 
     const errorHandler = React.useCallback((err: any, options: SwalOptions): void => {
-        let errorMessage;
+        let errorMessage = "";
 
         if (err.response) {
-            errorMessage = Array.isArray(err.response.data.messages)
-                ? err.response.data.messages[0]
-                : err.response.data.messages || err.response.status + ": " + err.response.statusText;
-
+            const messages = err.response.data.messages;
+            if (Array.isArray(messages)) {
+                errorMessage = formatHelper.mergeArrayItemsWithBr(messages);
+            } else if (typeof messages === "object" && messages !== null) {
+                errorMessage = formatHelper.mergeObjectItemWithBr(messages);
+            } else {
+                errorMessage = messages || err.response.status + ": " + err.response.statusText;
+            }
             switch (err.response.status) {
                 case 401:
                     signOut();
@@ -30,7 +35,14 @@ const useError = (): ErrorHandler => {
         } else if (err.request) {
             errorMessage = "Não conseguimos nos conectar ao servidor.";
         } else {
-            errorMessage = err.messages;
+            const messages = err.messages;
+            if (Array.isArray(messages)) {
+                errorMessage = formatHelper.mergeArrayItemsWithBr(messages);
+            } else if (typeof messages === "object" && messages !== null) {
+                errorMessage = formatHelper.mergeObjectItemWithBr(messages);
+            } else {
+                errorMessage = messages;
+            }
         }
 
         createModal("error", {
