@@ -25,7 +25,6 @@ const AuthProvider: React.FC = ({ children }) => {
         const fetchUserData = async () => {
             try {
                 const data = await authenticatorService.isAuthenticated();
-                console.log(data);
                 if (data) {
                     const userData = data.data;
                     setUser({ nome: userData.nome, tipo_permissao: userData.tipo_permissao });
@@ -39,8 +38,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const signIn = React.useCallback(async (data: { email: string; senha: string }): Promise<void> => {
         const response = await authenticatorService.signIn({ usuario: data.email, senha: md5(data.senha) });
-        console.log("resposta login", response);
-        setUser({ tipo_permissao: response.access_token.tipo_permissao as Permission });
+        setUser({ tipo_permissao: response.access_token.tipo_permissao });
     }, []);
 
     const signOut = React.useCallback(async (): Promise<void> => {

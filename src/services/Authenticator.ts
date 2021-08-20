@@ -1,6 +1,7 @@
 import { EnvOptions, AxiosInstance, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { Permission } from "entities/Permission";
+import { AxiosError } from "axios";
 
 type SignInRequest = {
     usuario: string;
@@ -11,7 +12,7 @@ type SignInResponse = {
     access_token: {
         access_token: string;
         expires_in: number;
-        tipo_permissao: string;
+        tipo_permissao: Permission;
     };
     messages: string;
 };
@@ -26,7 +27,6 @@ type IsAuthenticatedResponse = {
     };
     result: boolean;
 };
-
 class AuthenticatorService {
     private api: AxiosInstance;
 
@@ -53,16 +53,21 @@ class AuthenticatorService {
     }
 
     public async isAuthenticated(): Promise<IsAuthenticatedResponse | undefined> {
-        const token = cookie.get("@sete-web:token");
-        if (!token) {
-            return;
+        try {
+            const token = cookie.get("@sete-web:token");
+            if (!token) {
+                return;
+            }
+            const response = await this.api({
+                url: "/authenticator/sete",
+                method: "get",
+            });
+            const data = (await response.data) as IsAuthenticatedResponse;
+            return data;
+        } catch (err) {
+            cookie.destroy("@sete-web:token");
+            throw err;
         }
-        const response = await this.api({
-            url: "/authenticator/sete",
-            method: "get",
-        });
-        const data = (await response.data) as IsAuthenticatedResponse;
-        return data;
     }
 }
 
