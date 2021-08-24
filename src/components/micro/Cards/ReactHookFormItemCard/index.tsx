@@ -19,7 +19,7 @@ const ReactHookFormItemCard: React.FC<ReactHookFormItemCardProps> = ({ required,
             isRequired={required}
             isInvalid={!!errors[name || firstChild.props.name]}
             className={containerClassName ? containerClassName : ""}
-            hasOnlyChild={!name}
+            hasOnlyChild={true}
         >
             <div className="form-item-label">
                 <span>{required ? "OBRIGATÓRIO" : "OPTATIVO"}</span>

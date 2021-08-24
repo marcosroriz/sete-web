@@ -101,5 +101,31 @@ export default createGlobalStyle`
     }
     /* RESET CSS */
 
-    /* RESET LIGHTBOOTSTRAP */
+    /* UTILS */
+    .form-item-card-center {
+        width: 100%;
+        & > label,
+        & > legend {
+            flex: 0 1 33.333%;
+            text-align: right;
+        }
+        & > div {
+            flex: 0 1 52%;
+        }
+    }
+
+    @media (max-width: 525px) {
+        .form-item-card-center {
+            & > label,
+            & > legend {
+                flex: 1;
+                text-align: left;
+            }
+            & > div {
+                flex: 1;
+            }
+        }
+    }
+    /* UTILS */
+
 `;

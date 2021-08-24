@@ -90,6 +90,10 @@ export const InputField = styled.div<InputFieldProps>`
             color: rgba(65, 69, 80, 0.4);
             font-weight: 500;
         }
+        &::-ms-clear,
+        &::-ms-reveal {
+            display: none;
+        }
     }
     .form-error {
         width: 100%;

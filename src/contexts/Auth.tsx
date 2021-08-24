@@ -2,9 +2,8 @@ import React from "react";
 import md5 from "md5";
 
 import { AuthenticatorService } from "services/Authenticator";
+import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
-import { Permission } from "entities/Permission";
-import { useError } from "hooks/Errors";
 
 type FormikNavCardData = {
     user: User | null;
@@ -16,8 +15,11 @@ type FormikNavCardData = {
 const AuthContext = React.createContext({} as FormikNavCardData);
 
 const AuthProvider: React.FC = ({ children }) => {
-    const { errorHandler } = useError();
-    const [user, setUser] = React.useState<User | null>(null);
+    const [user, setUser] = React.useState<User | null>(() => {
+        const token = cookie.get("@sete-web:token");
+        if (token) return {};
+        return null;
+    });
     const isAuthenticated = !!user;
     const authenticatorService = new AuthenticatorService();
 

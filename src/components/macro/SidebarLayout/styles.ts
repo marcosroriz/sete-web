@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 
 export const mediaQuery = {
-    mobile: "(max-width: 1000px)",
+    desktop: "(max-width: 1000px)",
+    mobile: "(max-width: 525px)",
 };
 
 type HamburgerContainerProps = {
@@ -19,7 +20,7 @@ export const HamburgerContainer = styled.div<HamburgerContainerProps>`
 export const Container = styled.div`
     padding-left: 270px;
 
-    @media ${mediaQuery.mobile} {
+    @media ${mediaQuery.desktop} {
         padding-left: 0px;
     }
 `;
@@ -28,7 +29,7 @@ type NavContainerProps = {
     menuIsOpened?: boolean;
 };
 
-export const NavContainer = styled.nav<NavContainerProps>`
+export const NavContainer = styled.div<NavContainerProps>`
     position: fixed;
     top: 0px;
     left: 0px;
@@ -57,7 +58,7 @@ export const NavContainer = styled.nav<NavContainerProps>`
         margin-top: 20px;
     }
 
-    @media ${mediaQuery.mobile} {
+    @media ${mediaQuery.desktop} {
         padding: 55px 0px 25px 0px;
         transition: all 0.4s ease;
         ${({ menuIsOpened }) =>
@@ -167,7 +168,7 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
                           display: block;
                           background-color: rgba(127, 133, 146, 0.9);
                           &:hover {
-                              border-radius: 0px 4px 4px 0px;
+                              border-radius: 0px 3px 3px 0px;
                               background-color: rgba(127, 133, 146, 1);
                               border-right: 5px solid var(--color-white-50);
                           }
@@ -194,7 +195,10 @@ export const Section = styled.section`
 export const ChildrenContainer = styled.div`
     flex: 1 1;
     padding: 25px 10% 25px 10%;
-    @media ${mediaQuery.mobile} {
+    @media ${mediaQuery.desktop} {
         padding: 90px 10% 25px 10%;
+    }
+    @media ${mediaQuery.mobile} {
+        padding: 90px 5% 25px 5%;
     }
 `;

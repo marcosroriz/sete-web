@@ -19,13 +19,18 @@ type NavCardData = {
     previousStep: () => void;
 };
 
+type NavCardProviderProps = {
+    children: React.ReactNode;
+    isDashboard?: boolean;
+};
+
 const NavCardContext = React.createContext({} as NavCardData);
 
 const NavCardTab: React.FC<NavCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-const NavCardProvider: React.FC = ({ children }) => {
+const NavCardProvider = ({ children, isDashboard }: NavCardProviderProps): JSX.Element => {
     const [step, setStep] = React.useState<number>(0);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<NavCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -55,7 +60,7 @@ const NavCardProvider: React.FC = ({ children }) => {
     );
     return (
         <NavCardContext.Provider value={{ tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
-            <NavCard />
+            <NavCard isDashboard={isDashboard} />
         </NavCardContext.Provider>
     );
 };

@@ -14,10 +14,7 @@ export const dadosPessoaisSchema = yup.object().shape({
 });
 
 export const dadosTransportesSchema = yup.object().shape({
-    cnh: yup
-        .string()
-        .matches(/\(\d{2}\)\s\d{4,5}\-\d{4}/, "Esse campo deve ser um telefone válido")
-        .required("Esse campo é obrigatório"),
+    cnh: yup.string().required("Esse campo é obrigatório"),
     vencimento_cnh: yup
         .string()
         .matches(/^\d{2}\/\d{2}\/\d{4}/, "Esse campo deve ser valido")

@@ -98,6 +98,7 @@ export const Label = styled.label<LabelProps>`
     & > .radio-input:focus ~ .radio-field {
         outline-color: var(--color-green);
         outline-width: 2px;
+        box-shadow: 0 0 0 0.15rem rgb(136 136 136 / 30%);
     }
 
     & > .radio-input:checked ~ .radio-field {

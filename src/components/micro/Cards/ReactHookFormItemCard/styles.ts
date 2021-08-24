@@ -11,11 +11,9 @@ type ContainerProps = {
 };
 
 export const Container = styled.div<ContainerProps>`
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    display: block;
 
-    padding: 25px 30px 25px 10px;
+    padding: 25px 32px 25px 32px;
 
     border-radius: 5px;
     border: 3px solid;
@@ -36,9 +34,12 @@ export const Container = styled.div<ContainerProps>`
                   border-color: var(--color-grey-150);
               `}
 
+    position: relative;
+
     .form-item-label {
-        position: relative;
-        left: 0px;
+        position: absolute;
+        left: 7px;
+        bottom: 50%;
 
         width: 30px;
 
@@ -62,11 +63,13 @@ export const Container = styled.div<ContainerProps>`
     .form-item-content {
         flex: 1;
         ${({ hasOnlyChild }) => (hasOnlyChild ? "margin-bottom: -15px;" : "margin-bottom: 0px;")}
-
         margin-left: 30px;
     }
 
     @media ${mediaQuery.mobile} {
         padding: 25px 20px 25px 0px;
+        .form-item-label {
+            left: -10px;
+        }
     }
 `;

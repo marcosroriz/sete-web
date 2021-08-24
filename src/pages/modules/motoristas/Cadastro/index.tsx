@@ -26,7 +26,7 @@ type FormData = {
 
 const Cadastro: React.FC = () => {
     return (
-        <SidebarLayout>
+        <>
             <PageTitle message="Cadastro de Motorista" icon={PageIcon} />
             <ReactHookNavCardProvider<FormData> mode="onChange" onSubmit={(data) => console.log(data)}>
                 <ReactHookNavCardTab
@@ -45,7 +45,7 @@ const Cadastro: React.FC = () => {
                     <DadosTransporte />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>
-        </SidebarLayout>
+        </>
     );
 };
 

@@ -13,6 +13,7 @@ export const Container = styled.header`
         width: 100%;
 
         img {
+            user-select: none;
             image-rendering: initial;
             width: 100%;
         }
