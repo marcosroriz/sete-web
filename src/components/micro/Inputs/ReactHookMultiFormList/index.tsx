@@ -6,18 +6,29 @@ import { Fieldset } from "./styles";
 type ReactHookMultiFormListProps = {
     label: string;
     name?: string;
+    formListSpacing?: string;
     isHorizontal?: boolean | string;
     fieldsHorizontal?: boolean | string;
     containerClassName?: string;
 };
 
-const ReactHookMultiFormList: React.FC<ReactHookMultiFormListProps> = ({ label, name, isHorizontal, fieldsHorizontal, containerClassName, children }) => {
+const ReactHookMultiFormList: React.FC<ReactHookMultiFormListProps> = ({
+    label,
+    name,
+    formListSpacing = "evenly",
+    isHorizontal,
+    fieldsHorizontal,
+    containerClassName,
+    children,
+}) => {
     const {
         formState: { errors },
     } = useFormContext();
+
     return (
         <Fieldset
             className={containerClassName ? containerClassName : ""}
+            formListSpacing={formListSpacing}
             isHorizontal={!!isHorizontal}
             isHorizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
             fieldsHorizontal={!!fieldsHorizontal}

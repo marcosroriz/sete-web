@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import NumberFormat, { NumberFormatValues, NumberFormatProps } from "react-number-format";
 
 import { Container, InputField } from "./styles";
@@ -26,26 +26,10 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
     ...props
 }) => {
     const {
-        register,
-        setValue,
         formState: { errors, touchedFields },
     } = useFormContext();
-    const { onChange: removed, ...registerField } = register(name);
 
     const [dynamicFormatMask, setDynamicFormatMask] = React.useState<string>(format?.[0] || "");
-    const handleInputChange = React.useCallback(
-        (values: NumberFormatValues): void => {
-            Array.isArray(format) && values.formattedValue.trimRight().length === format[0].length
-                ? setDynamicFormatMask(format[1])
-                : setDynamicFormatMask(format[0]);
-            if (isFormated) {
-                setValue(name, values.formattedValue.trimRight(), { shouldValidate: true });
-            } else {
-                setValue(name, values.value, { shouldValidate: true });
-            }
-        },
-        [setValue, setDynamicFormatMask],
-    );
     return (
         <Container
             className={containerClassName}
@@ -54,15 +38,30 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
         >
             <label htmlFor={name}>{label}</label>
             <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder}>
-                <NumberFormat
-                    {...registerField}
-                    {...(props as any)}
-                    className="form-control"
-                    id={name}
-                    aria-invalid={!!errors[name]}
-                    onValueChange={handleInputChange}
-                    format={!Array.isArray(format) ? format : dynamicFormatMask}
+                <Controller
+                    name={name}
+                    render={({ field: { onChange, ...fieldProps } }) => (
+                        <NumberFormat
+                            {...fieldProps}
+                            {...(props as any)}
+                            className="form-control"
+                            id={name}
+                            aria-invalid={!!errors[name]}
+                            onValueChange={(values: NumberFormatValues): void => {
+                                Array.isArray(format) && values.formattedValue.trimRight().length === format[0].length
+                                    ? setDynamicFormatMask(format[1])
+                                    : setDynamicFormatMask(format[0]);
+                                if (isFormated) {
+                                    onChange({ target: { value: values.formattedValue.trimRight() } });
+                                } else {
+                                    onChange({ target: { value: values.value } });
+                                }
+                            }}
+                            format={!Array.isArray(format) ? format : dynamicFormatMask}
+                        />
+                    )}
                 />
+
                 <span className="form-error">{errors[name]?.message}</span>
             </InputField>
         </Container>

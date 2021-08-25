@@ -1,17 +1,65 @@
 import styled, { css } from "styled-components";
 
 export const mediaQuery = {
+    desktop: "(max-width: 1000px)",
     mobile: "(max-width: 525px)",
 };
 
+const placeItemsCss = {
+    center: css`
+        & > div,
+        & > fieldset {
+            width: 100%;
+            & > label,
+            & > legend {
+                flex: 0 1 32.333%;
+                text-align: right;
+            }
+            & > div,
+            & > fieldset {
+                flex: 0 1 55%;
+            }
+        }
+
+        @media ${mediaQuery.desktop} {
+            & > div,
+            & > fieldset {
+                & > label,
+                & > legend {
+                    text-align: left;
+                }
+            }
+        }
+
+        @media ${mediaQuery.mobile} {
+            & > div,
+            & > fieldset {
+                & > label,
+                & > legend {
+                    flex: 1;
+                    text-align: left;
+                }
+                & > div,
+                & > fieldset {
+                    flex: 1;
+                }
+            }
+        }
+    `,
+    left: css``,
+};
+
 type ContainerProps = {
+    placeItems?: string;
     isRequired?: boolean;
     isInvalid?: boolean;
     hasOnlyChild?: boolean;
 };
 
 export const Container = styled.div<ContainerProps>`
-    display: block;
+    display: flex;
+    align-items: center;
+    min-height: 87px;
 
     padding: 25px 32px 25px 32px;
 
@@ -64,6 +112,7 @@ export const Container = styled.div<ContainerProps>`
         flex: 1;
         ${({ hasOnlyChild }) => (hasOnlyChild ? "margin-bottom: -15px;" : "margin-bottom: 0px;")}
         margin-left: 30px;
+        ${({ placeItems }) => placeItems && placeItemsCss[placeItems || "center"]}
     }
 
     @media ${mediaQuery.mobile} {

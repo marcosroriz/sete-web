@@ -17,27 +17,15 @@ const DadosPessoais: React.FC = () => {
         <Container>
             <h2>Forneça as informações básicas a respeito do aluno sendo cadastrado.</h2>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="NOME DO MOTORISTA*" name="nome" containerClassName="form-item-card-center" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="NOME DO MOTORISTA*" name="nome" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputNumberFormat
-                    label="CPF DO MOTORISTA*"
-                    name="cpf"
-                    format="###.###.###-##"
-                    containerClassName="form-item-card-center"
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputNumberFormat label="CPF DO MOTORISTA*" name="cpf" format="###.###.###-##" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputNumberFormat
-                    label="DATA DE NASCIMENTO*"
-                    name="nascimento"
-                    format="##/##/####"
-                    containerClassName="form-item-card-center"
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputNumberFormat label="DATA DE NASCIMENTO*" name="nascimento" format="##/##/####" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
@@ -45,19 +33,12 @@ const DadosPessoais: React.FC = () => {
                     label="TELEFONE*"
                     name="telefone"
                     format={["(##) ####-#####", "(##) #####-####"]}
-                    containerClassName="form-item-card-center"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookMultiFormList
-                    label="SEXO DO MOTORISTA*"
-                    name="sexo"
-                    containerClassName="form-item-card-center"
-                    isHorizontal={mediaQuery.desktop}
-                    fieldsHorizontal={mediaQuery.mobile}
-                >
+                <ReactHookMultiFormList label="SEXO DO MOTORISTA*" name="sexo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
                     <ReactHookInputRadio label="Masculino" value="masc" name="sexo" position="right" />
                     <ReactHookInputRadio label="Feminino" value="fem" name="sexo" position="right" />
                     <ReactHookInputRadio label="Não Informado" value="none" name="sexo" position="right" />
@@ -65,12 +46,7 @@ const DadosPessoais: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText
-                    label="NÚMERO DO DOCUMENTO DE ANTECENDENTES CRIMINAIS*"
-                    name="criminais"
-                    containerClassName="form-item-card-center"
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputText label="NÚMERO DO DOCUMENTO DE ANTECENDENTES CRIMINAIS*" name="criminais" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>

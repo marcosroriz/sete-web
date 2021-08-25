@@ -45,8 +45,8 @@ const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, i
     const isLastStep = step === tabs.length - 1;
 
     const methods = useForm({
-        resolver: yupResolver(currentTab.validationSchema || yup.object().shape({})),
         ...props,
+        resolver: yupResolver(currentTab.validationSchema || yup.object().shape({})),
     });
 
     const nextStep = React.useCallback(() => {

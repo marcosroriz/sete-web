@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 type FieldsetProps = {
+    formListSpacing?: string;
     isHorizontal?: boolean;
     isHorizontalMedia?: string;
     fieldsHorizontal?: boolean;
@@ -49,18 +50,32 @@ export const Fieldset = styled.fieldset<FieldsetProps>`
         color: var(--color-grey-500);
     }
     .form-list-container {
+        flex: 1;
         .form-list {
             flex: 1;
-            ${({ fieldsHorizontal, fieldsHorizontalMedia }) =>
+            ${({ fieldsHorizontal, fieldsHorizontalMedia, formListSpacing }) =>
                 fieldsHorizontal
                     ? css`
                           display: flex;
                           align-items: center;
-                          justify-content: space-between;
+                          ${formListSpacing === "evenly"
+                              ? css`
+                                    justify-content: space-between;
+                                `
+                              : css`
+                                    justify-content: flex-start;
+                                    & > div + div {
+                                        margin-left: ${formListSpacing};
+                                    }
+                                `}
                           ${fieldsHorizontalMedia &&
                           `
                                 @media ${fieldsHorizontalMedia} {
                                     display: block;
+
+                                    & > div + div {
+                                        margin-left: 0px;
+                                    }
                                 }
                           `}
                       `

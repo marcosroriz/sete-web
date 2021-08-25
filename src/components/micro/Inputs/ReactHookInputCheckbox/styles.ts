@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
     display: block;
-    width: 100%;
 
     .checkbox-error {
         width: 100%;

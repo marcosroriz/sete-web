@@ -1,7 +1,6 @@
 import React from "react";
 
 import PageTitle from "components/micro/PageTitle";
-import SidebarLayout from "components/macro/SidebarLayout";
 
 import { dadosPessoaisSchema, dadosTransportesSchema } from "validators/modules/motoristas";
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
@@ -28,7 +27,7 @@ const Cadastro: React.FC = () => {
     return (
         <>
             <PageTitle message="Cadastro de Motorista" icon={PageIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onChange" onSubmit={(data) => console.log(data)}>
+            <ReactHookNavCardProvider<FormData> mode="onSubmit" reValidateMode="onChange" onSubmit={(data) => console.log(data)}>
                 <ReactHookNavCardTab
                     name="DADOS PESSOAIS"
                     icon={<img src={DadosPessoaisIcon} alt="" aria-hidden="true" />}

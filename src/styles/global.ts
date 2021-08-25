@@ -102,30 +102,16 @@ export default createGlobalStyle`
     /* RESET CSS */
 
     /* UTILS */
-    .form-item-card-center {
-        width: 100%;
-        & > label,
+    /* .multi-form-list-checkbox {
         & > legend {
-            flex: 0 1 33.333%;
-            text-align: right;
+            width: 100%;
+            display: block;
+            text-align: center;
         }
-        & > div {
-            flex: 0 1 52%;
+        & > div > div {
+            display: block;
         }
-    }
-
-    @media (max-width: 525px) {
-        .form-item-card-center {
-            & > label,
-            & > legend {
-                flex: 1;
-                text-align: left;
-            }
-            & > div {
-                flex: 1;
-            }
-        }
-    }
+    } */
     /* UTILS */
 
 `;
