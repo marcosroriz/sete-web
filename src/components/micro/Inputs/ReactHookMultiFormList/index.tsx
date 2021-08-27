@@ -24,7 +24,6 @@ const ReactHookMultiFormList: React.FC<ReactHookMultiFormListProps> = ({
     const {
         formState: { errors },
     } = useFormContext();
-
     return (
         <Fieldset
             className={containerClassName ? containerClassName : ""}

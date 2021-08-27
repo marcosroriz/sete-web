@@ -15,12 +15,14 @@ import DadosTransportesIcon from "assets/icons/motorista/motorista-dados-transpo
 type FormData = {
     nome: string;
     cpf: string;
-    nascimento: string;
     telefone: string;
-    sexo: string | null;
-    criminais: string;
-    cnh: string;
+    nascimento: string;
+    sexo: string;
+    numero_cnh: string;
     vencimento_cnh: string;
+    tipo_cnh: boolean[];
+    turno: boolean[];
+    arquivos: any;
 };
 
 const Cadastro: React.FC = () => {

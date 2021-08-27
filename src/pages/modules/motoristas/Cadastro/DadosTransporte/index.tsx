@@ -4,9 +4,7 @@ import { Button } from "react-bootstrap";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
-import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
-import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 
@@ -37,11 +35,11 @@ const DadosTransporte: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                 >
-                    <ReactHookInputCheckbox label="A" name="tipo_cnh.a" />
-                    <ReactHookInputCheckbox label="B" name="tipo_cnh.b" />
-                    <ReactHookInputCheckbox label="C" name="tipo_cnh.c" />
-                    <ReactHookInputCheckbox label="D" name="tipo_cnh.d" />
-                    <ReactHookInputCheckbox label="E" name="tipo_cnh.e" />
+                    <ReactHookInputCheckbox label="A" name="tipo_cnh[0]" />
+                    <ReactHookInputCheckbox label="B" name="tipo_cnh[1]" />
+                    <ReactHookInputCheckbox label="C" name="tipo_cnh[2]" />
+                    <ReactHookInputCheckbox label="D" name="tipo_cnh[3]" />
+                    <ReactHookInputCheckbox label="E" name="tipo_cnh[4]" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
@@ -53,9 +51,9 @@ const DadosTransporte: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                 >
-                    <ReactHookInputCheckbox label="Manhã" name="turno.manha" />
-                    <ReactHookInputCheckbox label="Tarde" name="turno.tarde" />
-                    <ReactHookInputCheckbox label="Noite" name="turno.noite" />
+                    <ReactHookInputCheckbox label="Manhã" name="turno[0]" />
+                    <ReactHookInputCheckbox label="Tarde" name="turno[1]" />
+                    <ReactHookInputCheckbox label="Noite" name="turno[2]" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 

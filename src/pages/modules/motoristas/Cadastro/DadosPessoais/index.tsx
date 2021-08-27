@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
+import ReactHookInputMultiFiles from "components/micro/Inputs/ReactHookInputMultiFiles";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
@@ -48,6 +49,11 @@ const DadosPessoais: React.FC = () => {
             <ReactHookFormItemCard>
                 <ReactHookInputText label="NÚMERO DO DOCUMENTO DE ANTECENDENTES CRIMINAIS*" name="criminais" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputMultiFiles label="ARQUIVOS*" name="arquivos" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
