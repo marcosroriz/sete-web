@@ -5,6 +5,10 @@ const loginSchema = yup.object().shape({
     senha: yup.string().required("Por favor digite sua senha"),
 });
 
+const recuperarsenhaSchema = yup.object().shape({
+    email: yup.string().required("Por favor digite seu endereço de e-mail").email("Digite um endereço de e-mail válido"),
+});
+
 const registrarSchema = yup.object().shape({
     nome: yup.string().required("Esse campo é obrigatório"),
     cpf: yup
@@ -23,4 +27,4 @@ const registrarSchema = yup.object().shape({
     municipio: yup.string().required("Esse campo é obrigatório"),
 });
 
-export { loginSchema, registrarSchema };
+export { loginSchema, recuperarsenhaSchema, registrarSchema };
