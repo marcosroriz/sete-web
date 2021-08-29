@@ -16,7 +16,7 @@ const RecuperarSenha: React.FC = () => {
     const methods = useForm<FormValues>({
         resolver: yupResolver(recuperarsenhaSchema),
     });
-    const handleFormSubmit = React.useCallback(async (data: FormValues) => {console.log("submit", data)}, []);
+    const handleFormSubmit = React.useCallback((data: FormValues) => console.log("submit", data), []);
     return (
         <FormProvider {...methods}>
             <Form onSubmit={methods.handleSubmit(handleFormSubmit)}>
