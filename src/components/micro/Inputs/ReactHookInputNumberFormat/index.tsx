@@ -26,10 +26,13 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
     ...props
 }) => {
     const {
+        setValue,
         formState: { errors, touchedFields },
     } = useFormContext();
 
     const [dynamicFormatMask, setDynamicFormatMask] = React.useState<string>(format?.[0] || "");
+
+    React.useEffect(() => setValue(name, ""), []);
     return (
         <Container
             className={containerClassName}
