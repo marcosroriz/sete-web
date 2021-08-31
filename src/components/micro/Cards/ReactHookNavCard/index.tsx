@@ -5,11 +5,15 @@ import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import { Container } from "./styles";
 
-const ReactHookNavCard: React.FC = () => {
+type ReactHookNavCardProps = {
+    isDashboard?: boolean;
+};
+
+const ReactHookNavCard: React.FC<ReactHookNavCardProps> = ({ isDashboard = true }) => {
     const { tabs, step, gotoStep } = useReactHookNavCard();
 
     return (
-        <Container>
+        <Container isDashboard={isDashboard}>
             <Tabs id="nav-card" variant="pills" activeKey={step} onSelect={(k) => gotoStep(Number(k))}>
                 {tabs.map((tab, index) => (
                     <Tab

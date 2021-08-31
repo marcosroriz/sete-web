@@ -7,7 +7,9 @@ const envUrls = {
 
 type EnvOptions = keyof typeof envUrls;
 
-const getApiClient = (env?: EnvOptions): AxiosInstance => {
+type ApiInstance = AxiosInstance;
+
+const getApiClient = (env?: EnvOptions): ApiInstance => {
     const api = axios.create({
         baseURL: envUrls[env || "api"],
     });
@@ -22,4 +24,4 @@ const getApiClient = (env?: EnvOptions): AxiosInstance => {
 };
 
 export { getApiClient };
-export type { EnvOptions, AxiosInstance };
+export type { EnvOptions, ApiInstance };

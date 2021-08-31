@@ -26,6 +26,7 @@ type ReactHookNavCardData = {
 
 type ReactHookNavCardProviderProps<T> = UseFormProps & {
     children: React.ReactNode;
+    isDashboard?: boolean;
     onSubmit: SubmitHandler<T>;
 };
 
@@ -35,7 +36,7 @@ const ReactHookNavCardTab: React.FC<ReactHookCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, ...props }: ReactHookNavCardProviderProps<T>): JSX.Element => {
+const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, isDashboard, ...props }: ReactHookNavCardProviderProps<T>): JSX.Element => {
     const formRef = React.useRef<HTMLFormElement>(null);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<ReactHookCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -44,8 +45,8 @@ const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, .
     const isLastStep = step === tabs.length - 1;
 
     const methods = useForm({
-        resolver: yupResolver(currentTab.validationSchema || yup.object().shape({})),
         ...props,
+        resolver: yupResolver(currentTab.validationSchema || yup.object().shape({})),
     });
 
     const nextStep = React.useCallback(() => {
@@ -55,8 +56,8 @@ const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, .
     }, [formRef, step, setStep]);
 
     const previousStep = React.useCallback(() => {
-        if (step > -1) {
-            setStep(step - 1);
+        if (step > 0) {
+            setStep((prev) => prev - 1);
         }
     }, [step, setStep]);
 
@@ -86,7 +87,7 @@ const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, .
         <FormProvider {...methods}>
             <ReactHookNavCardContext.Provider value={{ formRef, tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
                 <form ref={formRef} onSubmit={methods.handleSubmit(handleFormSubmit)}>
-                    <ReactHookNavCard />
+                    <ReactHookNavCard isDashboard={isDashboard} />
                 </form>
             </ReactHookNavCardContext.Provider>
         </FormProvider>

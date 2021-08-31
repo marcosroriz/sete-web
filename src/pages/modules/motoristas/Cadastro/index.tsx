@@ -1,7 +1,6 @@
 import React from "react";
 
 import PageTitle from "components/micro/PageTitle";
-import SidebarLayout from "components/macro/SidebarLayout";
 
 import { dadosPessoaisSchema, dadosTransportesSchema } from "validators/modules/motoristas";
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
@@ -16,19 +15,21 @@ import DadosTransportesIcon from "assets/icons/motorista/motorista-dados-transpo
 type FormData = {
     nome: string;
     cpf: string;
-    nascimento: string;
     telefone: string;
-    sexo: string | null;
-    criminais: string;
-    cnh: string;
+    nascimento: string;
+    sexo: string;
+    numero_cnh: string;
     vencimento_cnh: string;
+    tipo_cnh: boolean[];
+    turno: boolean[];
+    arquivos: any;
 };
 
 const Cadastro: React.FC = () => {
     return (
-        <SidebarLayout>
+        <>
             <PageTitle message="Cadastro de Motorista" icon={PageIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onChange" onSubmit={(data) => console.log(data)}>
+            <ReactHookNavCardProvider<FormData> mode="onSubmit" reValidateMode="onChange" onSubmit={(data) => console.log(data)}>
                 <ReactHookNavCardTab
                     name="DADOS PESSOAIS"
                     icon={<img src={DadosPessoaisIcon} alt="" aria-hidden="true" />}
@@ -45,7 +46,7 @@ const Cadastro: React.FC = () => {
                     <DadosTransporte />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>
-        </SidebarLayout>
+        </>
     );
 };
 

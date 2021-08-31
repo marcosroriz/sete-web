@@ -23,7 +23,6 @@ const ReactHookInputRadio: React.FC<ReactHookInputRadioProps> = ({ label, name, 
                 <span className="radio-field"></span>
                 <span className="radio-text">{label}</span>
             </Label>
-            <span className="radio-error">{errors[name]?.message}</span>
         </Container>
     );
 };

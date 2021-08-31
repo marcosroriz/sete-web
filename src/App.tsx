@@ -4,8 +4,9 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "routes";
 
 import { AuthProvider } from "contexts/Auth";
-
+import { SidebarAccordionProvider } from "contexts/SidebarAccordion";
 import { AlertModalStyles } from "hooks/AlertModal";
+
 import GlobalStyles from "styles/global";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "styles/light-bootstrap-dashboard-react.min.css";
@@ -17,7 +18,9 @@ const App: React.FC = () => {
             <GlobalStyles />
             <AlertModalStyles />
             <AuthProvider>
-                <Routes />
+                <SidebarAccordionProvider>
+                    <Routes />
+                </SidebarAccordionProvider>
             </AuthProvider>
         </BrowserRouter>
     );

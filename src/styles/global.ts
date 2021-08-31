@@ -101,5 +101,17 @@ export default createGlobalStyle`
     }
     /* RESET CSS */
 
-    /* RESET LIGHTBOOTSTRAP */
+    /* UTILS */
+    /* .multi-form-list-checkbox {
+        & > legend {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+        & > div > div {
+            display: block;
+        }
+    } */
+    /* UTILS */
+
 `;

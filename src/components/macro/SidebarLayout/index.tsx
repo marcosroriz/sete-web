@@ -4,8 +4,10 @@ import { Accordion } from "react-bootstrap";
 import { FaAddressBook, FaUsers, FaSignOutAlt } from "react-icons/fa";
 import { Spin as Hamburger } from "hamburger-react";
 
+import { SidebarItemKeys } from "entities/SidebarItemKeys";
 import { useMediaQuery } from "hooks/MediaQuery";
 import { useAuth } from "contexts/Auth";
+import { useSidebarAccordion } from "contexts/SidebarAccordion";
 
 import BackgroundImage from "../BackgroundImage";
 import Footer from "../Footer";
@@ -26,19 +28,10 @@ import { Container, NavContainer, NavOverlay, Section, ChildrenContainer, NavIte
 
 const SidebarLayout: React.FC = ({ children }) => {
     const { signOut } = useAuth();
-    const matches = useMediaQuery(mediaQuery.mobile);
+    const { activeAccordionKey, changeAccordionKey } = useSidebarAccordion();
+    const matches = useMediaQuery(mediaQuery.desktop);
     const [menuIsOpened, setMenuIsOpened] = React.useState<boolean>(false);
 
-    const [activeKey, setAtiveKey] = React.useState("");
-    React.useEffect(() => {
-        //setAtiveKey("0");
-    }, []);
-    const changeAccordionKey = React.useCallback(
-        (key: string) => {
-            setAtiveKey((prev) => (prev !== key ? key : ""));
-        },
-        [setAtiveKey],
-    );
     const logout = React.useCallback(async () => {
         await signOut();
     }, [signOut]);
@@ -75,35 +68,35 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </HamburgerContainer>
                         )}
                         <div className="nav-logo">
-                            <Link to="/form">
+                            <Link to="/">
                                 <img src={LogoSete} alt="Sistema Eletrônico de Gestão do Transporte Escolar" />
                             </Link>
                         </div>
-                        <Accordion activeKey={activeKey} className="nav-items">
+                        <Accordion activeKey={activeAccordionKey} className="nav-items">
                             <NavItem isProfile>
                                 <AccordionButton
-                                    onClick={() => changeAccordionKey("0")}
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.perfil)}
                                     icon={IconPerfil}
                                     name="Irwin"
-                                    isActive={activeKey === "0"}
+                                    isActive={activeAccordionKey === SidebarItemKeys.perfil}
                                     isProfile
                                 />
-                                <Accordion.Collapse eventKey="0">
+                                <Accordion.Collapse eventKey={SidebarItemKeys.perfil}>
                                     <NavItemBody isProfile>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/perfil" activeClassName="isActive" exact>
                                                 <FaAddressBook size={17} />
                                                 Meu Perfil
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/usuarios" activeClassName="isActive" exact>
                                                 <FaUsers size={17} />
                                                 Outros Usuários
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <Link to="/" onClick={logout}>
+                                            <Link to="/login" onClick={logout}>
                                                 <FaSignOutAlt size={17} />
                                                 Sair
                                             </Link>
@@ -113,11 +106,16 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </NavItem>
 
                             <NavItem>
-                                <AccordionButton onClick={() => changeAccordionKey("1")} icon={IconSenso} name="Censo Escolar" isActive={activeKey === "1"} />
-                                <Accordion.Collapse eventKey="1">
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.censo)}
+                                    icon={IconSenso}
+                                    name="Censo Escolar"
+                                    isActive={activeAccordionKey === SidebarItemKeys.censo}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.censo}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/censo" activeClassName="isActive" exact>
                                                 Importar Base de Dados
                                             </NavLink>
                                         </li>
@@ -126,26 +124,31 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </NavItem>
 
                             <NavItem>
-                                <AccordionButton onClick={() => changeAccordionKey("2")} icon={IconAlunos} name="Alunos" isActive={activeKey === "2"} />
-                                <Accordion.Collapse eventKey="2">
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.alunos)}
+                                    icon={IconAlunos}
+                                    name="Alunos"
+                                    isActive={activeAccordionKey === SidebarItemKeys.alunos}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.alunos}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/alunos/cadastrar" activeClassName="isActive" exact>
                                                 Cadastrar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/alunos/gerenciar" activeClassName="isActive" exact>
                                                 Gerenciar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/alunos/importar" activeClassName="isActive" exact>
                                                 Importar de Planilha Eletrônica
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/alunos/visualizar" activeClassName="isActive" exact>
                                                 Visualizar
                                             </NavLink>
                                         </li>
@@ -154,26 +157,31 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </NavItem>
 
                             <NavItem>
-                                <AccordionButton onClick={() => changeAccordionKey("3")} icon={IconEscolas} name="Escolas" isActive={activeKey === "3"} />
-                                <Accordion.Collapse eventKey="3">
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.escolas)}
+                                    icon={IconEscolas}
+                                    name="Escolas"
+                                    isActive={activeAccordionKey === SidebarItemKeys.escolas}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.escolas}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/escolas/cadastrar" activeClassName="isActive" exact>
                                                 Cadastrar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/escolas/gerenciar" activeClassName="isActive" exact>
                                                 Gerenciar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/escolas/importar" activeClassName="isActive" exact>
                                                 Gerenciar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/escolas/visualizar" activeClassName="isActive" exact>
                                                 Visualizar
                                             </NavLink>
                                         </li>
@@ -182,16 +190,21 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </NavItem>
 
                             <NavItem>
-                                <AccordionButton onClick={() => changeAccordionKey("4")} icon={IconMotoristas} name="Motoristas" isActive={activeKey === "4"} />
-                                <Accordion.Collapse eventKey="4">
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.motoristas)}
+                                    icon={IconMotoristas}
+                                    name="Motoristas"
+                                    isActive={activeAccordionKey === SidebarItemKeys.motoristas}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.motoristas}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/motoristas/cadastrar" activeClassName="isActive" exact>
                                                 Cadastrar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/motoristas/gerenciar" activeClassName="isActive" exact>
                                                 Gerenciar
                                             </NavLink>
                                         </li>
@@ -200,26 +213,26 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </NavItem>
 
                             <NavItem>
-                                <AccordionButton onClick={() => changeAccordionKey("5")} icon={IconFrotas} name="Frotas" isActive={activeKey === "5"} />
-                                <Accordion.Collapse eventKey="5">
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.frotas)}
+                                    icon={IconFrotas}
+                                    name="Frotas"
+                                    isActive={activeAccordionKey === SidebarItemKeys.frotas}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.frotas}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/frotas/cadastrar" activeClassName="isActive" exact>
                                                 Cadastrar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/frotas/gerenciar" activeClassName="isActive" exact>
                                                 Gerenciar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
-                                                Gerenciar
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/frotas/servico" activeClassName="isActive" exact>
                                                 Ordens de Serviço
                                             </NavLink>
                                         </li>
@@ -229,20 +242,20 @@ const SidebarLayout: React.FC = ({ children }) => {
 
                             <NavItem>
                                 <AccordionButton
-                                    onClick={() => changeAccordionKey("6")}
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.fornecedores)}
                                     icon={IconFornecedores}
                                     name="Fornecedores"
-                                    isActive={activeKey === "6"}
+                                    isActive={activeAccordionKey === SidebarItemKeys.fornecedores}
                                 />
-                                <Accordion.Collapse eventKey="6">
+                                <Accordion.Collapse eventKey={SidebarItemKeys.fornecedores}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/fornecedores/cadastrar" activeClassName="isActive" exact>
                                                 Cadastrar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/fornecedores/gerenciar" activeClassName="isActive" exact>
                                                 Gerenciar
                                             </NavLink>
                                         </li>
@@ -251,26 +264,31 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </NavItem>
 
                             <NavItem>
-                                <AccordionButton onClick={() => changeAccordionKey("7")} icon={IconRotas} name="Rotas" isActive={activeKey === "7"} />
-                                <Accordion.Collapse eventKey="7">
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.rotas)}
+                                    icon={IconRotas}
+                                    name="Rotas"
+                                    isActive={activeAccordionKey === SidebarItemKeys.rotas}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.rotas}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/rotas/cadastrar" activeClassName="isActive" exact>
                                                 Cadastrar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/rotas/desenhar" activeClassName="isActive" exact>
                                                 Desenhar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/rotas/gerenciar" activeClassName="isActive" exact>
                                                 Gerenciar
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/rotas/visualizar" activeClassName="isActive" exact>
                                                 Visualizar
                                             </NavLink>
                                         </li>
@@ -279,26 +297,31 @@ const SidebarLayout: React.FC = ({ children }) => {
                             </NavItem>
 
                             <NavItem>
-                                <AccordionButton onClick={() => changeAccordionKey("8")} icon={IconRelatorios} name="Relatórios" isActive={activeKey === "8"} />
-                                <Accordion.Collapse eventKey="8">
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.relatorios)}
+                                    icon={IconRelatorios}
+                                    name="Relatórios"
+                                    isActive={activeAccordionKey === SidebarItemKeys.relatorios}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.relatorios}>
                                     <NavItemBody>
                                         <li>
-                                            <NavLink to="/" activeClassName="isActive">
+                                            <NavLink to="/relatorios/alunos" activeClassName="isActive" exact>
                                                 Alunos
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/relatorios/escolas" activeClassName="isActive" exact>
                                                 Escolas
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
-                                                Frota
+                                            <NavLink to="/relatorios/frotas" activeClassName="isActive" exact>
+                                                Frotas
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/" exact activeClassName="isActive">
+                                            <NavLink to="/relatorios/rotas" activeClassName="isActive" exact>
                                                 Rotas
                                             </NavLink>
                                         </li>

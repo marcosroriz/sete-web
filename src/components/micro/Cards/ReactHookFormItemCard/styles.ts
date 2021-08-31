@@ -1,10 +1,56 @@
 import styled, { css } from "styled-components";
 
 export const mediaQuery = {
+    desktop: "(max-width: 1000px)",
     mobile: "(max-width: 525px)",
 };
 
+const placeItemsCss = {
+    center: css`
+        & > div,
+        & > fieldset {
+            width: 100%;
+            & > label,
+            & > legend {
+                flex: 0 1 32.333%;
+                text-align: right;
+            }
+            & > div,
+            & > fieldset {
+                flex: 0 1 55%;
+            }
+        }
+
+        @media ${mediaQuery.desktop} {
+            & > div,
+            & > fieldset {
+                & > label,
+                & > legend {
+                    text-align: left;
+                }
+            }
+        }
+
+        @media ${mediaQuery.mobile} {
+            & > div,
+            & > fieldset {
+                & > label,
+                & > legend {
+                    flex: 1;
+                    text-align: left;
+                }
+                & > div,
+                & > fieldset {
+                    flex: 1;
+                }
+            }
+        }
+    `,
+    left: css``,
+};
+
 type ContainerProps = {
+    placeItems?: string;
     isRequired?: boolean;
     isInvalid?: boolean;
     hasOnlyChild?: boolean;
@@ -13,9 +59,9 @@ type ContainerProps = {
 export const Container = styled.div<ContainerProps>`
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    min-height: 87px;
 
-    padding: 25px 30px 25px 10px;
+    padding: 25px 32px 25px 32px;
 
     border-radius: 5px;
     border: 3px solid;
@@ -36,9 +82,12 @@ export const Container = styled.div<ContainerProps>`
                   border-color: var(--color-grey-150);
               `}
 
+    position: relative;
+
     .form-item-label {
-        position: relative;
-        left: 0px;
+        position: absolute;
+        left: 7px;
+        bottom: 50%;
 
         width: 30px;
 
@@ -62,11 +111,14 @@ export const Container = styled.div<ContainerProps>`
     .form-item-content {
         flex: 1;
         ${({ hasOnlyChild }) => (hasOnlyChild ? "margin-bottom: -15px;" : "margin-bottom: 0px;")}
-
         margin-left: 30px;
+        ${({ placeItems }) => placeItems && placeItemsCss[placeItems || "center"]}
     }
 
     @media ${mediaQuery.mobile} {
         padding: 25px 20px 25px 0px;
+        .form-item-label {
+            left: -10px;
+        }
     }
 `;

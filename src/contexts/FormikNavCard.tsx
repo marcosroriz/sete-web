@@ -66,7 +66,6 @@ const FormikNavCardProvider: React.FC<FormikNavCardProviderProps> = ({ children,
         <Formik
             {...props}
             onSubmit={async (values, helpers) => {
-                console.log("olá");
                 if (isLastStep) {
                     await onSubmit(values, helpers);
                     return;

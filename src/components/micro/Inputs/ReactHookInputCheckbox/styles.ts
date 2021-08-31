@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
     display: block;
-    width: 100%;
 
     .checkbox-error {
         width: 100%;
@@ -99,6 +98,7 @@ export const Label = styled.label<LabelProps>`
     & > .checkbox-input:focus ~ .checkbox-field {
         outline-color: var(--color-green);
         outline-width: 2px;
+        box-shadow: 0 0 0 0.15rem rgb(136 136 136 / 30%);
     }
 
     & > .checkbox-input:checked ~ .checkbox-field {

@@ -9,7 +9,7 @@ import Registrar from "./Registrar";
 
 const Autenticacao: React.FC = () => {
     return (
-        <NavCardProvider>
+        <NavCardProvider isDashboard={false}>
             <NavCardTab name="Login" icon={<FaSignInAlt />}>
                 <Login />
             </NavCardTab>
