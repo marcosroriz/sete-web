@@ -1,5 +1,16 @@
 import * as yup from "yup";
 
+const handleAtLeastOne: yup.TestFunction<(boolean | undefined)[] | undefined, {}> = (arr) => {
+    if (!arr) {
+        return false;
+    }
+    let arrLength = arr.length;
+    arr.forEach((arrItem) => {
+        if (!arrItem) arrLength--;
+    });
+    return arrLength > 0;
+};
+
 export const dadosPessoaisSchema = yup.object().shape({
     nome: yup.string().required("Esse campo é obrigatório"),
     cpf: yup
@@ -18,31 +29,12 @@ export const dadosPessoaisSchema = yup.object().shape({
         .matches(/^\d{2}\/\d{2}\/\d{4}/, "Esse campo deve ser valido")
         .required("Esse campo é obrigatório"),
     sexo: yup.string().required("Esse campo é obrigatório").nullable(true),
+    arquivos: yup.array().max(3, "Apenas 3 devem ser informados"),
 });
 
 export const dadosTransportesSchema = yup.object().shape({
     numero_cnh: yup.string().required("Esse campo é obrigatório"),
     vencimento_cnh: yup.lazy((value) => (!value ? yup.string() : yup.string().matches(/^\d{2}\/\d{2}\/\d{4}/, "Esse campo deve ser valido"))),
-    tipo_cnh: yup
-        .array()
-        .of(yup.boolean())
-        .compact((value) => !value)
-        .min(1, "Pelo menos um valor deve ser informado"),
-    turno: yup
-        .array()
-        .of(yup.boolean())
-        .compact((value) => !value)
-        .min(1, "Pelo menos um valor deve ser informado"),
+    tipo_cnh: yup.array().of(yup.boolean()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
+    turno: yup.array().of(yup.boolean()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
 });
-
-// const turno_schema = yup.object().shape({ manha: yup.boolean(), tarde: yup.boolean(), noite: yup.boolean() });
-// const functions = (obj) => {
-//     const objectEntries = Object.entries(obj);
-//     let objectEntriesLength = objectEntries.length;
-//     objectEntries.forEach(([, value]) => {
-//         if (!value) {
-//             objectEntriesLength--;
-//         }
-//     });
-//     return objectEntriesLength > 0;
-// }

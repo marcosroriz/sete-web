@@ -4,6 +4,7 @@ import PageTitle from "components/micro/PageTitle";
 
 import { dadosPessoaisSchema, dadosTransportesSchema } from "validators/modules/motoristas";
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
+import { FileData } from "entities/FileData";
 
 import DadosPessoais from "./DadosPessoais";
 import DadosTransporte from "./DadosTransporte";
@@ -22,7 +23,7 @@ type FormData = {
     vencimento_cnh: string;
     tipo_cnh: boolean[];
     turno: boolean[];
-    arquivos: any;
+    arquivos: FileData[];
 };
 
 const Cadastro: React.FC = () => {
