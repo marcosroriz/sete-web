@@ -5,6 +5,10 @@ import * as yup from "yup";
 
 import ReactHookNavCard from "components/micro/Cards/ReactHookNavCard";
 
+type AdditionalData = {
+    [key: string]: [any, React.Dispatch<React.SetStateAction<any>>];
+};
+
 type ReactHookCardTabProps = {
     id?: string;
     name: string;
@@ -18,16 +22,18 @@ type ReactHookNavCardData = {
     tabs: ReactHookCardTabProps[];
     step: number;
     currentTab: ReactHookCardTabProps;
+    aditionalData?: AdditionalData;
     setStep: React.Dispatch<React.SetStateAction<number>>;
     gotoStep: (newStep?: number) => void;
     nextStep: () => void;
     previousStep: () => void;
 };
 
-type ReactHookNavCardProviderProps<T> = UseFormProps & {
+type ReactHookNavCardProviderProps<FormValues> = UseFormProps & {
     children: React.ReactNode;
     isDashboard?: boolean;
-    onSubmit: SubmitHandler<T>;
+    aditionalData?: AdditionalData;
+    onSubmit: SubmitHandler<FormValues>;
 };
 
 const ReactHookNavCardContext = React.createContext({} as ReactHookNavCardData);
@@ -36,7 +42,13 @@ const ReactHookNavCardTab: React.FC<ReactHookCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, isDashboard, ...props }: ReactHookNavCardProviderProps<T>): JSX.Element => {
+const ReactHookNavCardProvider = <FormValues extends FieldValues>({
+    children,
+    onSubmit,
+    isDashboard,
+    aditionalData,
+    ...props
+}: ReactHookNavCardProviderProps<FormValues>): JSX.Element => {
     const formRef = React.useRef<HTMLFormElement>(null);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<ReactHookCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -72,7 +84,7 @@ const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, i
         [formRef, step, setStep],
     );
 
-    const handleFormSubmit: SubmitHandler<T> = React.useCallback(
+    const handleFormSubmit: SubmitHandler<FormValues> = React.useCallback(
         async (data) => {
             if (isLastStep) {
                 await onSubmit(data);
@@ -85,7 +97,7 @@ const ReactHookNavCardProvider = <T extends FieldValues>({ children, onSubmit, i
 
     return (
         <FormProvider {...methods}>
-            <ReactHookNavCardContext.Provider value={{ formRef, tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
+            <ReactHookNavCardContext.Provider value={{ formRef, tabs, currentTab, aditionalData, step, setStep, gotoStep, nextStep, previousStep }}>
                 <form ref={formRef} onSubmit={methods.handleSubmit(handleFormSubmit)}>
                     <ReactHookNavCard isDashboard={isDashboard} />
                 </form>

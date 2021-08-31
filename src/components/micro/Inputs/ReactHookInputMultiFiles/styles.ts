@@ -58,29 +58,9 @@ export const InputField = styled.div<InputFieldProps>`
         ${({ thinBorder }) => (thinBorder ? "&, &:focus { border-width: 1px; }" : "&, &:focus { border-width: 2px; }")}
         transition: all 0.1s linear;
 
-        &:focus {
-            /* ${({ isInvalid, isTouched }) =>
-                isInvalid
-                    ? css`
-                          box-shadow: 0 0 0 0.15rem rgb(251 64 75 / 25%);
-                          border-color: var(--color-red-500);
-                          color: var(--color-red-500);
-                      `
-                    : isTouched
-                    ? css`
-                          color: var(--color-green);
-                          border-color: #ced4da;
-                          border-bottom-color: var(--color-green);
-                          box-shadow: none;
-                      `
-                    : css`
-                          border-color: #ced4da;
-                          border-bottom-color: #aaaaaa;
-                          box-shadow: none;
-                      `} */
-            background-color: var(--color-white-50);
-            outline: 0;
-        }
+        background-color: var(--color-white-50);
+        outline: 0;
+
         &::placeholder {
             color: rgba(65, 69, 80, 0.4);
             font-weight: 500;
@@ -98,28 +78,81 @@ export const InputField = styled.div<InputFieldProps>`
         font-family: var(--font-tertiary);
     }
 
-    section {
+    .form-preview {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        .icon {
-            position: relative;
+        margin: 10px -6px -6px -6px;
+
+        .preview-bg {
             width: 100px;
             height: 100px;
-            overflow: hidden;
-            img {
-                position: absolute;
-                max-width: 100%;
-                bottom: 50%;
-                right: 50%;
-                transform: translateX(50%) translateY(50%);
-            }
+            margin: 6px;
 
-            svg {
+            position: relative;
+
+            border-radius: 5px;
+            border: 2px solid #e3e3e3;
+            background-color: var(--color-white-50);
+
+            .preview-img {
+                width: 100%;
+                height: 100%;
+
+                border-radius: 5px;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                width: 20px;
+                height: 20px;
+                padding: 0px;
+
                 position: absolute;
-                top: 0px;
-                right: 0px;
+                top: -5px;
+                right: -5px;
+
+                border: none;
+                border-radius: 50px;
+                background-color: var(--color-black-450);
             }
         }
+    }
+`;
+
+const getColor = (props) => {
+    if (props.isDragAccept) {
+        return "#00e676";
+    }
+    if (props.isDragReject) {
+        return "#ff1744";
+    }
+    if (props.isDragActive) {
+        return "#2196f3";
+    }
+    return "#e3e3e3";
+};
+
+export const DragDropContainer = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: ${(props) => getColor(props)};
+    border-style: dashed;
+    background-color: var(--color-white-50);
+    color: var(--color-grey-300);
+    outline: none;
+    transition: border 0.24s ease-in-out;
+    p {
+        user-select: none;
     }
 `;
