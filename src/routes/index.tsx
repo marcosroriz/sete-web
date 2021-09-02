@@ -4,6 +4,7 @@ import { Switch } from "react-router-dom";
 import DashboardRoutes from "./dashboard";
 import SignRoutes from "./sign";
 import MotoristasRoutes from "./modules/motoristas";
+import FrotasRoutes from "./modules/frotas";
 
 const Routes: React.FC = () => {
     return (
@@ -11,6 +12,7 @@ const Routes: React.FC = () => {
             {SignRoutes}
             {DashboardRoutes}
             {MotoristasRoutes}
+            {FrotasRoutes}
         </Switch>
     );
 };

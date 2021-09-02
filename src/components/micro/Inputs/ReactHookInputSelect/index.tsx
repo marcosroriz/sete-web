@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import ReactSelect from "react-select";
 
 import { Container, InputField } from "./styles";
@@ -13,7 +13,7 @@ export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectEle
     label: string;
     name: string;
     options: SelectOptions[];
-    placeholder: string;
+    placeholder?: string;
     menuPlacement?: "auto" | "bottom" | "top";
     isHorizontal?: boolean | string;
     thinBorder?: boolean;
@@ -31,24 +31,27 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     thinBorder,
     ...props
 }) => {
-    const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder });
+    const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder || "Escolha uma Opção" });
     const {
         register,
         setValue,
-        setFocus,
         formState: { errors, touchedFields },
     } = useFormContext();
-    const { onChange: removed1, ...registerField } = register(name);
+    const { onChange, name: removed, ...registerField } = register(name);
+
     const handleSelectChange = React.useCallback(
         (value: SelectOptions) => {
-            setValue(name, value.value, { shouldValidate: false });
             setSelectValue(value);
+            // onChange({ target: { value: value.value } });
+            setValue(name, value.value, { shouldValidate: false });
         },
-        [setSelectValue, setValue],
+        [setSelectValue, setValue, onChange],
     );
-    const handleSelectFocus = React.useCallback(() => {
-        setFocus(name);
-    }, [setFocus]);
+
+    React.useEffect(() => {
+        handleSelectChange({ value: "", label: placeholder || "Escolha uma Opção" });
+    }, [options]);
+
     return (
         <Container
             className={containerClassName}
@@ -58,10 +61,10 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
             <label htmlFor={name}>{label}</label>
             <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={selectValue.value === ""}>
                 <ReactSelect
+                    placeholder={placeholder}
                     id={name}
                     value={selectValue}
                     onChange={handleSelectChange}
-                    onFocus={handleSelectFocus}
                     className="select"
                     options={options}
                     menuPlacement={menuPlacement}

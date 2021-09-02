@@ -9,9 +9,9 @@ import { FileData } from "entities/FileData";
 import DadosPessoais from "./DadosPessoais";
 import DadosTransporte from "./DadosTransporte";
 
-import PageIcon from "assets/icons/motorista/motorista-cadastro.png";
-import DadosPessoaisIcon from "assets/icons/motorista/motorista-dados-pessoais.svg";
-import DadosTransportesIcon from "assets/icons/motorista/motorista-dados-transportes.png";
+import PageIcon from "assets/icons/motoristas/motorista-cadastro.png";
+import DadosPessoaisIcon from "assets/icons/motoristas/motorista-dados-pessoais.svg";
+import DadosTransportesIcon from "assets/icons/motoristas/motorista-dados-transportes.png";
 
 type FormData = {
     nome: string;

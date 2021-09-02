@@ -51,7 +51,12 @@ const DadosPessoais: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputMultiFiles label="ANEXAR PDF COM DOCUMENTOS PESSOAIS*" name="arquivos" accept="image/*" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputMultiFiles
+                    label="ANEXAR PDF COM DOCUMENTOS PESSOAIS*"
+                    name="arquivos"
+                    accept="image/*, application/pdf"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ButtonsContainer>

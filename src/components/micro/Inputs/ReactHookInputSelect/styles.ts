@@ -57,7 +57,7 @@ export const InputField = styled.div<InputFieldProps>`
         font-size: 14px;
         line-height: 1.5;
 
-        ${({ isInvalid }) => !isInvalid && "border-color: #ced4da;"}
+        ${({ isInvalid }) => !isInvalid && "border-color: #e3e3e3;"}
         ${({ isPlaceholder }) => isPlaceholder && ".form-control__single-value { color: rgba(65, 69, 80, 0.4); font-weight: 500; }"}
         ${({ thinBorder }) => (thinBorder ? "&, &:focus { border-width: 1px; }" : "&, &:focus { border-width: 2px; }")}
         box-shadow: none;
