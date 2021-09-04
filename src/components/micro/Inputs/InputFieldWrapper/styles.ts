@@ -35,7 +35,7 @@ export const InputField = styled.div<InputFieldProps>`
             position: relative;
             z-index: 20;
 
-            color: var(--color-grey-300);
+            color: var(--color-grey-400);
             font-size: 14px;
 
             border-left: none;
@@ -58,7 +58,7 @@ export const InputField = styled.div<InputFieldProps>`
         ${({ thinBorder }) => (thinBorder ? "&, &:focus { border-width: 1px; }" : "&, &:focus { border-width: 2px; }")}
         transition: all 0.1s linear;
 
-        background-color: var(--color-white-50);
+        background-color: var(--color-white);
 
         &:focus,
         &:focus ~ .input-group-text {
@@ -94,7 +94,7 @@ export const InputField = styled.div<InputFieldProps>`
         cursor: pointer;
         user-select: none;
         svg {
-            ${({ isInvalid }) => (isInvalid ? "color: var(--color-red-500);" : "color: var(--color-grey-300);")}
+            ${({ isInvalid }) => (isInvalid ? "color: var(--color-red-500);" : "color: var(--color-grey-400);")}
             width: 100%;
             height: 100%;
         }

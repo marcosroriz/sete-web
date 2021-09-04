@@ -41,7 +41,7 @@ export const NavContainer = styled.div<NavContainerProps>`
     height: 100%;
     padding: 25px 0px;
 
-    background-color: var(--color-black-500);
+    background-color: var(--color-black);
     overflow: auto;
 
     .nav-logo {
@@ -140,7 +140,7 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
             padding: 13px 30px;
 
             user-select: none;
-            color: var(--color-white-50);
+            color: var(--color-white);
             font-weight: 400;
             font-size: 14px;
             font-family: var(--font-tertiary);
@@ -172,7 +172,7 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
                           &:hover {
                               border-radius: 0px 3px 3px 0px;
                               background-color: rgba(127, 133, 146, 1);
-                              border-right: 5px solid var(--color-white-50);
+                              border-right: 5px solid var(--color-white);
                           }
                       `}
         }

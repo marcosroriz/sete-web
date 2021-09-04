@@ -89,7 +89,7 @@ export const InputField = styled.div<InputFieldProps>`
                           border-bottom-color: #aaaaaa;
                           box-shadow: none;
                       `}
-            background-color: var(--color-white-50);
+            background-color: var(--color-white);
             outline: 0;
         }
 

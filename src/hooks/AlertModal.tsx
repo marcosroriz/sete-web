@@ -65,7 +65,7 @@ const useAlertModal = (): IAlertModal => {
 const AlertModalStyles = createGlobalStyle`
     .swal2-modal {
         width: 450px;
-        border: 3px solid var(--color-grey-300);
+        border: 3px solid var(--color-grey-450);
         & > .swal2-icon {
             margin-top: 25px;
         }
@@ -73,7 +73,7 @@ const AlertModalStyles = createGlobalStyle`
             font-family: var(--font-primary);
             font-weight: 600;
             font-size: 24px;
-            color: var(--color-black-500);
+            color: var(--color-black);
         }
         & > .swal2-text {
             font-family: var(--font-primary);

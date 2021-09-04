@@ -48,7 +48,7 @@ export const Label = styled.label<LabelProps>`
 
     font-size: 14px;
     font-weight: 400;
-    color: var(--color-black-500);
+    color: var(--color-black);
     user-select: none;
     cursor: pointer;
 
@@ -77,9 +77,9 @@ export const Label = styled.label<LabelProps>`
         position: relative;
 
         border-radius: 3px;
-        border: 1px solid var(--color-grey-400);
+        border: 1px solid var(--color-grey-450);
         ${({ thinBorder }) => (thinBorder ? "border-width: 1px;" : "border-width: 2px;")}
-        background-color: var(--color-white-50);
+        background-color: var(--color-white);
         transition: all 0.1s linear;
 
         &:after {
@@ -114,7 +114,7 @@ export const Label = styled.label<LabelProps>`
 
             border: solid white;
             border-width: 0 3px 3px 0;
-            border-color: var(--color-grey-400);
+            border-color: var(--color-grey-450);
         }
     }
 `;
