@@ -51,6 +51,7 @@ export const NavContainer = styled.div<NavContainerProps>`
         img {
             width: 100%;
             image-rendering: unset;
+            -webkit-user-drag: none;
         }
     }
 
@@ -138,6 +139,7 @@ export const NavItemBody = styled.ul<NavItemBodyProps>`
             width: 100%;
             padding: 13px 30px;
 
+            user-select: none;
             color: var(--color-white-50);
             font-weight: 400;
             font-size: 14px;

@@ -48,6 +48,7 @@ export const Fieldset = styled.fieldset<FieldsetProps>`
         font-weight: 500;
         font-size: 14px;
         color: var(--color-grey-500);
+        cursor: default;
     }
     .form-list-container {
         flex: 1;

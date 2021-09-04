@@ -2,6 +2,8 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+import InputFieldWrapper from "../InputFieldWrapper";
+
 import { Container, InputField } from "./styles";
 
 export type ReactHookInputPasswordProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -33,7 +35,7 @@ const ReactHookInputPassword: React.FC<ReactHookInputPasswordProps> = ({ label, 
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
-            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder}>
+            <InputFieldWrapper isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder}>
                 <input
                     id={name}
                     className="form-control"
@@ -46,7 +48,7 @@ const ReactHookInputPassword: React.FC<ReactHookInputPasswordProps> = ({ label, 
                 <div className="form-toggle" aria-hidden="true" onClick={handleTogglePassword}>
                     {togglePassword ? <FaEyeSlash size={30} /> : <FaEye size={30} />}
                 </div>
-            </InputField>
+            </InputFieldWrapper>
         </Container>
     );
 };

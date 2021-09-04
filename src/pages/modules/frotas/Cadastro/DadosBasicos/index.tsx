@@ -57,7 +57,12 @@ const optionsMarca = {
 
 const DadosBasicos: React.FC = () => {
     const { nextStep } = useReactHookNavCard();
-    const { watch } = useFormContext();
+    const { watch, setValue } = useFormContext();
+
+    React.useEffect(() => {
+        setValue("tipo", { label: "Selecione uma Opção", value: "" });
+        setValue("marca", { label: "Selecione uma Opção", value: "" });
+    }, [watch("modo")]);
 
     return (
         <Container>

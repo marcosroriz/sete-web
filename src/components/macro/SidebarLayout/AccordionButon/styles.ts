@@ -43,6 +43,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
         flex: 1;
         display: flex;
         align-items: center;
+        user-select: none;
         .accordion-img-container {
             width: 30px;
             height: 28px;
@@ -50,6 +51,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
             img {
                 width: 100%;
                 height: 100%;
+                -webkit-user-drag: none;
             }
         }
     }

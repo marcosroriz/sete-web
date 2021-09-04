@@ -8,6 +8,8 @@ import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormLi
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
+import ReactHookInputMask from "components/micro/Inputs/ReactHookInputMask";
+import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 
 import { Container, ButtonsContainer, mediaQuery } from "./styles";
 
@@ -17,7 +19,7 @@ const DetalhesEnvio: React.FC = () => {
         <Container>
             <h2>POR FIM, INFORME OS DADOS CADASTRAIS DO VEÍCULO.</h2>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="PLACA DO VEÍCULO*" name="placa" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputMask label="PLACA DO VEÍCULO*" name="placa" format="aaa-9999" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
@@ -25,11 +27,11 @@ const DetalhesEnvio: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="QUILOMETRAGEM ATUAL DO VEÍCULO*" name="quilometragem" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="QUILOMETRAGEM ATUAL DO VEÍCULO*" name="quilometragem" unitOfMeasure="KM" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="CAPACIDADE DO VEÍCULO*" name="capacidade" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="CAPACIDADE DO VEÍCULO*" name="capacidade" unitOfMeasure="PASSAGEIROS" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

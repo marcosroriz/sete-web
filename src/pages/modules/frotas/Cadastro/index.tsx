@@ -14,9 +14,18 @@ import DetalhesVeiculoIcon from "assets/icons/frotas/frota-detalhes-veicuo.png";
 
 type FormData = {
     modo: string;
-    tipo: string;
-    marca: string;
-    aquisicao_programa: string;
+    tipo: {
+        label: string;
+        value: string;
+    };
+    marca: {
+        label: string;
+        value: string;
+    };
+    aquisicao_programa: {
+        label: string;
+        value: string;
+    };
     aquisicao: string;
     origem: string;
     placa: string;
@@ -27,10 +36,32 @@ type FormData = {
 };
 
 const Cadastro: React.FC = () => {
+    const formData = {
+        modo: "",
+        tipo: {
+            label: "",
+            value: "",
+        },
+        marca: {
+            label: "",
+            value: "",
+        },
+        aquisicao_programa: {
+            label: "",
+            value: "",
+        },
+        aquisicao: "",
+        origem: "",
+        placa: "",
+        renavam: "",
+        quilometragem: "",
+        capacidade: "",
+        manutencao: "",
+    };
     return (
         <>
             <PageTitle message="Cadastro de Motorista" icon={PageIconOnibus} iconRight={PageIconLancha} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" reValidateMode="onChange" onSubmit={(data) => console.log(data)}>
+            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={(data) => console.log(data)}>
                 <ReactHookNavCardTab
                     name="DADOS PESSOAIS"
                     icon={<img src={DadosBasicosIcon} alt="" aria-hidden="true" />}

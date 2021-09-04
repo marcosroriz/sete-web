@@ -13,6 +13,7 @@ export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectEle
     label: string;
     name: string;
     options: SelectOptions[];
+    noOptionsMessage?: string;
     placeholder?: string;
     menuPlacement?: "auto" | "bottom" | "top";
     isHorizontal?: boolean | string;
@@ -25,32 +26,17 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     name,
     containerClassName,
     options,
+    noOptionsMessage,
     menuPlacement = "auto",
     placeholder,
     isHorizontal,
     thinBorder,
     ...props
 }) => {
-    const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder || "Escolha uma Opção" });
     const {
-        register,
-        setValue,
+        watch,
         formState: { errors, touchedFields },
     } = useFormContext();
-    const { onChange, name: removed, ...registerField } = register(name);
-
-    const handleSelectChange = React.useCallback(
-        (value: SelectOptions) => {
-            setSelectValue(value);
-            // onChange({ target: { value: value.value } });
-            setValue(name, value.value, { shouldValidate: false });
-        },
-        [setSelectValue, setValue, onChange],
-    );
-
-    React.useEffect(() => {
-        handleSelectChange({ value: "", label: placeholder || "Escolha uma Opção" });
-    }, [options]);
 
     return (
         <Container
@@ -58,22 +44,36 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
             isHorizontal={!!isHorizontal}
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
-            <label htmlFor={name}>{label}</label>
-            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={selectValue.value === ""}>
-                <ReactSelect
-                    placeholder={placeholder}
-                    id={name}
-                    value={selectValue}
-                    onChange={handleSelectChange}
-                    className="select"
-                    options={options}
-                    menuPlacement={menuPlacement}
-                    classNamePrefix="form-control"
-                    aria-invalid={!!errors[name]}
-                    noOptionsMessage={() => "Valor não Encontrado"}
-                    {...registerField}
-                    {...(props as any)}
+            <label htmlFor={name} id={`label-${name}`}>
+                {label}
+            </label>
+            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={watch(name) === ""}>
+                <Controller
+                    name={name}
+                    render={({ field: { onChange, value, ...field } }) => {
+                        const handleSelectChange = (option: SelectOptions) => {
+                            onChange(option);
+                        };
+                        return (
+                            <ReactSelect
+                                aria-labelledby={`label-${name}`}
+                                id={name}
+                                value={value}
+                                placeholder={placeholder}
+                                onChange={handleSelectChange}
+                                className="select"
+                                options={options}
+                                menuPlacement={menuPlacement}
+                                classNamePrefix="form-control"
+                                aria-invalid={!!errors[name]}
+                                noOptionsMessage={() => noOptionsMessage || "Nenhuma Opção Encontrada"}
+                                {...field}
+                                {...(props as any)}
+                            />
+                        );
+                    }}
                 />
+
                 <span className="form-error">{errors[name]?.message}</span>
             </InputField>
         </Container>
