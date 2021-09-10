@@ -7,8 +7,9 @@ import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormLi
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 
-import { Container, ButtonsContainer, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
 
 const DadosTransporte: React.FC = () => {
     const { previousStep } = useReactHookNavCard();
@@ -57,7 +58,7 @@ const DadosTransporte: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
-            <ButtonsContainer>
+            <ButtonsContainer position="evenly">
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
                     Voltar
                 </Button>

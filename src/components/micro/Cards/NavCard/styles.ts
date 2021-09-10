@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 type ContainerProps = {
     isDashboard?: boolean;
@@ -32,7 +32,28 @@ export const Container = styled.div<ContainerProps>`
                 border-top: 3px solid #7a7a7a;
 
                 color: #808590;
-                font-size: 13px;
+                ${({ isDashboard }) =>
+                    !isDashboard
+                        ? css`
+                              font-size: 13px;
+                              font-weight: 500;
+                              .nav-card-item-icon {
+                                  max-width: 29px;
+                                  margin-right: 5px;
+                              }
+                          `
+                        : css`
+                              font-size: 17px;
+                              font-weight: 400;
+                              .nav-card-item-icon {
+                                  margin-right: 5%;
+                                  max-width: 45px;
+                                  filter: invert(0.7);
+                              }
+                              &.active .nav-card-item-icon {
+                                  filter: invert(0);
+                              }
+                          `}
                 text-transform: uppercase;
 
                 user-select: none;
@@ -50,9 +71,7 @@ export const Container = styled.div<ContainerProps>`
                 }
 
                 .nav-card-item-icon {
-                    max-width: 29px;
                     width: 100%;
-                    margin-right: 5px;
                     & > svg {
                         width: 100%;
                         height: 100%;
