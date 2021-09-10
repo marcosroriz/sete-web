@@ -79,7 +79,7 @@ export const InputField = styled.div<InputFieldProps>`
                           border-bottom-color: #aaaaaa;
                           box-shadow: none;
                       `}
-            background-color: var(--color-white-50);
+            background-color: var(--color-white);
             outline: 0;
         }
 
@@ -115,7 +115,7 @@ export const InputField = styled.div<InputFieldProps>`
         cursor: pointer;
         user-select: none;
         svg {
-            ${({ isInvalid }) => (isInvalid ? "color: var(--color-red-500);" : "color: var(--color-grey-300);")}
+            ${({ isInvalid }) => (isInvalid ? "color: var(--color-red-500);" : "color: var(--color-grey-400);")}
             width: 100%;
             height: 100%;
         }

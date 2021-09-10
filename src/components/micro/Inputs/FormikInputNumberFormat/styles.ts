@@ -55,7 +55,7 @@ export const InputField = styled.div<InputFieldProps>`
         padding: 0.375rem 0.75rem;
 
         font-size: 14px;
-        ${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red-500); color: var(--color-red-500);" : "color: var(--color-black-500);")}
+        ${({ isInvalid }) => (isInvalid ? "border-color: var(--color-red-500); color: var(--color-red-500);" : "color: var(--color-black);")}
         ${({ thinBorder }) => (thinBorder ? "border-width: 1px;" : "border-width: 2px;")}
         transition: all 0.1s linear;
 
@@ -79,7 +79,7 @@ export const InputField = styled.div<InputFieldProps>`
                           border-bottom-color: var(--color-green);
                           box-shadow: none;
                       `}
-            background-color: var(--color-white-50);
+            background-color: var(--color-white);
             outline: 0;
         }
         &::placeholder {

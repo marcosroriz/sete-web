@@ -58,7 +58,7 @@ export const InputField = styled.div<InputFieldProps>`
         ${({ thinBorder }) => (thinBorder ? "&, &:focus { border-width: 1px; }" : "&, &:focus { border-width: 2px; }")}
         transition: all 0.1s linear;
 
-        background-color: var(--color-white-50);
+        background-color: var(--color-white);
         outline: 0;
 
         &::placeholder {
@@ -93,7 +93,7 @@ export const InputField = styled.div<InputFieldProps>`
 
             border-radius: 5px;
             border: 2px solid #e3e3e3;
-            background-color: var(--color-white-50);
+            background-color: var(--color-white);
 
             .preview-img {
                 width: 100%;
@@ -119,7 +119,7 @@ export const InputField = styled.div<InputFieldProps>`
 
                 border: none;
                 border-radius: 50px;
-                background-color: var(--color-black-450);
+                background-color: var(--color-grey-700);
             }
         }
     }
@@ -148,8 +148,8 @@ export const DragDropContainer = styled.div`
     border-radius: 5px;
     border-color: ${(props) => getColor(props)};
     border-style: dashed;
-    background-color: var(--color-white-50);
-    color: var(--color-grey-300);
+    background-color: var(--color-white);
+    color: var(--color-grey-400);
     outline: none;
     transition: border 0.24s ease-in-out;
     p {

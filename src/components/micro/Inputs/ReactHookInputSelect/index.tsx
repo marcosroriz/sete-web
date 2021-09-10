@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import ReactSelect from "react-select";
 
 import { Container, InputField } from "./styles";
@@ -13,7 +13,8 @@ export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectEle
     label: string;
     name: string;
     options: SelectOptions[];
-    placeholder: string;
+    noOptionsMessage?: string;
+    placeholder?: string;
     menuPlacement?: "auto" | "bottom" | "top";
     isHorizontal?: boolean | string;
     thinBorder?: boolean;
@@ -25,52 +26,54 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     name,
     containerClassName,
     options,
+    noOptionsMessage,
     menuPlacement = "auto",
     placeholder,
     isHorizontal,
     thinBorder,
     ...props
 }) => {
-    const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder });
     const {
-        register,
-        setValue,
-        setFocus,
+        watch,
         formState: { errors, touchedFields },
     } = useFormContext();
-    const { onChange: removed1, ...registerField } = register(name);
-    const handleSelectChange = React.useCallback(
-        (value: SelectOptions) => {
-            setValue(name, value.value, { shouldValidate: false });
-            setSelectValue(value);
-        },
-        [setSelectValue, setValue],
-    );
-    const handleSelectFocus = React.useCallback(() => {
-        setFocus(name);
-    }, [setFocus]);
+
     return (
         <Container
             className={containerClassName}
             isHorizontal={!!isHorizontal}
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
-            <label htmlFor={name}>{label}</label>
-            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={selectValue.value === ""}>
-                <ReactSelect
-                    id={name}
-                    value={selectValue}
-                    onChange={handleSelectChange}
-                    onFocus={handleSelectFocus}
-                    className="select"
-                    options={options}
-                    menuPlacement={menuPlacement}
-                    classNamePrefix="form-control"
-                    aria-invalid={!!errors[name]}
-                    noOptionsMessage={() => "Valor não Encontrado"}
-                    {...registerField}
-                    {...(props as any)}
+            <label htmlFor={name} id={`label-${name}`}>
+                {label}
+            </label>
+            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={watch(name) === ""}>
+                <Controller
+                    name={name}
+                    render={({ field: { onChange, value, ...field } }) => {
+                        const handleSelectChange = (option: SelectOptions) => {
+                            onChange(option);
+                        };
+                        return (
+                            <ReactSelect
+                                aria-labelledby={`label-${name}`}
+                                id={name}
+                                value={value}
+                                placeholder={placeholder}
+                                onChange={handleSelectChange}
+                                className="select"
+                                options={options}
+                                menuPlacement={menuPlacement}
+                                classNamePrefix="form-control"
+                                aria-invalid={!!errors[name]}
+                                noOptionsMessage={() => noOptionsMessage || "Nenhuma Opção Encontrada"}
+                                {...field}
+                                {...(props as any)}
+                            />
+                        );
+                    }}
                 />
+
                 <span className="form-error">{errors[name]?.message}</span>
             </InputField>
         </Container>

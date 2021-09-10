@@ -132,7 +132,7 @@ const ReactHookInputMultiFiles: React.FC<ReactHookInputMultiFilesProps> = ({
                         <div className="preview-bg" key={fileData.id}>
                             <div className="preview-img" style={{ backgroundImage: `url(${fileData.url})` }}></div>
                             <button onClick={() => handleDeleteImgCLick(fileData)}>
-                                <FiX size={16} color="var(--color-white-50)" />
+                                <FiX size={16} color="var(--color-white)" />
                             </button>
                         </div>
                     ))}
