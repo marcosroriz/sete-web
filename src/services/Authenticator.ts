@@ -1,8 +1,9 @@
 import { EnvOptions, ApiInstance, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { Permission } from "entities/Permission";
+import { User } from "entities/User";
 
-type SignInRequest = {
+type SignInRequestBody = {
     usuario: string;
     senha: string;
 };
@@ -13,17 +14,12 @@ type SignInResponse = {
         expires_in: number;
         tipo_permissao: Permission;
     };
+    data: User;
     messages: string;
 };
 
 type IsAuthenticatedResponse = {
-    data: {
-        nome: string;
-        tipo_permissao: Permission;
-        codigo_cidade: number;
-        cidade: string;
-        estado: string;
-    };
+    data: User;
     result: boolean;
 };
 class AuthenticatorService {
@@ -33,7 +29,7 @@ class AuthenticatorService {
         this.api = getApiClient(env);
     }
 
-    public async signIn(body: SignInRequest): Promise<SignInResponse> {
+    public async signIn(body: SignInRequestBody): Promise<SignInResponse> {
         const response = await this.api({
             url: "/authenticator/sete",
             method: "post",
@@ -45,17 +41,17 @@ class AuthenticatorService {
     }
 
     public async signOut(): Promise<void> {
+        cookie.destroy("@sete-web:token");
         await this.api({
             url: "/users/logout",
         });
-        cookie.destroy("@sete-web:token");
     }
 
     public async isAuthenticated(): Promise<IsAuthenticatedResponse | undefined> {
         try {
             const token = cookie.get("@sete-web:token");
             if (!token) {
-                return;
+                throw { messages: "Token de Autorização Ausente" };
             }
             const response = await this.api({
                 url: "/authenticator/sete",

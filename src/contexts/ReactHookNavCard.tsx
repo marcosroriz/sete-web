@@ -5,10 +5,6 @@ import * as yup from "yup";
 
 import ReactHookNavCard from "components/micro/Cards/ReactHookNavCard";
 
-type AdditionalData = {
-    [key: string]: [any, React.Dispatch<React.SetStateAction<any>>];
-};
-
 type ReactHookCardTabProps = {
     id?: string;
     name: string;
@@ -22,7 +18,9 @@ type ReactHookNavCardData = {
     tabs: ReactHookCardTabProps[];
     step: number;
     currentTab: ReactHookCardTabProps;
-    aditionalData?: AdditionalData;
+    aditionalData?: {
+        [key: string]: any;
+    };
     setStep: React.Dispatch<React.SetStateAction<number>>;
     gotoStep: (newStep?: number) => void;
     nextStep: () => void;
@@ -32,7 +30,9 @@ type ReactHookNavCardData = {
 type ReactHookNavCardProviderProps<FormValues> = UseFormProps & {
     children: React.ReactNode;
     isDashboard?: boolean;
-    aditionalData?: AdditionalData;
+    aditionalData?: {
+        [key: string]: any;
+    };
     onSubmit: SubmitHandler<FormValues>;
 };
 

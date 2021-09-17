@@ -102,16 +102,31 @@ export default createGlobalStyle`
     /* RESET CSS */
 
     /* UTILS */
-    /* .multi-form-list-checkbox {
-        & > legend {
-            width: 100%;
-            display: block;
-            text-align: center;
+    .modal-header {
+        padding-bottom: 0px;
+        padding-top: 0px;
+        .h4 {
+            margin-top: 20px;
+            font-weight: 400;
+            color: var(--color-black);
         }
-        & > div > div {
-            display: block;
-        }
-    } */
+    }
+    .modal-body {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    .modal-footer {
+    }
+    .modal-md {
+        width: 600px;
+        max-width: 100%;
+        margin-top: 120px;
+    }
+    .modal-content {
+        border: 2px solid;
+        border-radius: 0px 0px 20px 20px;
+        border-color: #adadad;
+        border-top-color: var(--color-yellow);
+    }
     /* UTILS */
-
 `;
