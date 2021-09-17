@@ -29,6 +29,9 @@ const useError = (): ErrorHandler => {
                 case 401:
                     signOut();
                     break;
+                case 403:
+                    signOut();
+                    break;
                 default:
                     break;
             }
