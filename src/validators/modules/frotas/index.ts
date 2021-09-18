@@ -14,7 +14,7 @@ const dadosBasicosSchema = yup.object().shape({
         }
         return !!option.value;
     }),
-    aquisicao: yup.lazy((value) => {
+    ano: yup.lazy((value) => {
         if (!value) {
             return yup.string().required("Esse campo é obrigatório");
         }
@@ -23,14 +23,29 @@ const dadosBasicosSchema = yup.object().shape({
     origem: yup.string().required("Esse campo é obrigatório").nullable(true),
 });
 
-const detalhesEnvioSchema = yup.object().shape({
+const detalhesVeiculoSchema = yup.object().shape({
     placa: yup
         .string()
         .required("Esse campo é obrigatório")
         .matches(/^[a-zA-Z]{3}-[0-9]{4}$/, "Deve ser no formato AAA-0000"),
-    renavam: yup.string().required("Esse campo é obrigatório"),
-    capacidade: yup.string().required("Esse campo é obrigatório"),
-    manutencao: yup.string().required("Esse campo é obrigatório").nullable(true),
+    km_inicial: yup.lazy((value) => {
+        if (!value) {
+            return yup.string();
+        }
+        return yup.number().required("Esse campo é obrigatório");
+    }),
+    km_atual: yup.lazy((value) => {
+        if (value === "") {
+            return yup.string();
+        }
+        return yup.number().required("Esse campo é obrigatório");
+    }),
+    capacidade: yup.lazy((value) => {
+        if (value === "") {
+            return yup.string().required("Esse campo é obrigatório");
+        }
+        return yup.number().required("Esse campo é obrigatório");
+    }),
 });
 
-export { dadosBasicosSchema, detalhesEnvioSchema };
+export { dadosBasicosSchema, detalhesVeiculoSchema };

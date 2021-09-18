@@ -9,6 +9,7 @@ import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormLi
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
+import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, ButtonsContainer, mediaQuery } from "./styles";
 
@@ -24,11 +25,11 @@ const optionsTipoRod = [
 ];
 
 const optionsTipoAqua = [
-    { label: "Lancha/Voadeira", value: "1" },
-    { label: "Barco de madeira", value: "2" },
-    { label: "Barco de alumínio", value: "3" },
-    { label: "Canoa motorizada", value: "4" },
-    { label: "Canoa a remo", value: "5" },
+    { label: "Lancha/Voadeira", value: "9" },
+    { label: "Barco de madeira", value: "10" },
+    { label: "Barco de alumínio", value: "11" },
+    { label: "Canoa motorizada", value: "12" },
+    { label: "Canoa a remo", value: "13" },
 ];
 
 const optionsMarcaRod = [
@@ -46,13 +47,13 @@ const optionsMarcaAqua = [
 ];
 
 const optionsTipo = {
-    rod: [...optionsTipoRod],
-    aqua: [...optionsTipoAqua],
+    1: [...optionsTipoRod],
+    2: [...optionsTipoAqua],
 };
 
 const optionsMarca = {
-    rod: [...optionsMarcaRod],
-    aqua: [...optionsMarcaAqua],
+    1: [...optionsMarcaRod],
+    2: [...optionsMarcaAqua],
 };
 
 const DadosBasicos: React.FC = () => {
@@ -66,7 +67,7 @@ const DadosBasicos: React.FC = () => {
 
     return (
         <Container>
-            <h2>FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DO VEÍCULO SENDO CADASTRADO.</h2>
+            <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DO VEÍCULO SENDO CADASTRADO." />
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
                     label="QUAL O MODO DE TRANSPORT EDO VEÍCULO?*"
@@ -75,8 +76,8 @@ const DadosBasicos: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Rodoviário (Ônibus, Van, etc)" value="rod" name="modo" position="right" />
-                    <ReactHookInputRadio label="Aquaviário (Lancha, Barco, etc)" value="aqua" name="modo" position="right" />
+                    <ReactHookInputRadio label="Rodoviário (Ônibus, Van, etc)" value="1" name="modo" position="right" />
+                    <ReactHookInputRadio label="Aquaviário (Lancha, Barco, etc)" value="2" name="modo" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
@@ -98,18 +99,18 @@ const DadosBasicos: React.FC = () => {
                 />
             </ReactHookFormItemCard>
 
-            <ReactHookFormItemCard>
+            {/* <ReactHookFormItemCard>
                 <ReactHookInputSelect
                     label="CASO TENHA ADQUIRIDO O VEÍCULO PELO PROGRAMA CAMINHO DA ESCOLA, SELECIONE O MODELO DO MESMO*"
-                    name="aquisicao_programa"
+                    name="ano_programa"
                     placeholder="Não se aplica"
                     options={[{ label: "Iveco", value: "gg" }]}
                     isHorizontal={mediaQuery.desktop}
                 />
-            </ReactHookFormItemCard>
+            </ReactHookFormItemCard> */}
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="ANO DE AQUISIÇÃO DO VEÍCULO*" name="aquisicao" type="number" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="ANO DE AQUISIÇÃO DO VEÍCULO*" name="ano" type="number" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
@@ -120,8 +121,8 @@ const DadosBasicos: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Veículo Próprio" value="prop" name="origem" position="right" />
-                    <ReactHookInputRadio label="Veículo Terceirizado" value="terc" name="origem" position="right" />
+                    <ReactHookInputRadio label="Veículo Próprio" value="1" name="origem" position="right" />
+                    <ReactHookInputRadio label="Veículo Terceirizado" value="2" name="origem" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
