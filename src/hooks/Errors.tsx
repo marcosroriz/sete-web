@@ -50,7 +50,7 @@ const useError = (): ErrorHandler => {
 
         createModal("error", {
             ...options,
-            text: errorMessage,
+            html: errorMessage,
         });
     }, []);
 
