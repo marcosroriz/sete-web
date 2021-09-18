@@ -71,7 +71,11 @@ const ReactHookInputProfilePic: React.FC<ReactHookInputMultiFilesProps> = ({
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
+        const { [name]: fileValue } = getValues();
         if (files?.[0]) {
+            if (fileValue) {
+                URL.revokeObjectURL(fileValue.url);
+            }
             const fileEncoded = files[0];
             const fileUrl = URL.createObjectURL(fileEncoded);
             const fileData = { id: md5(fileUrl), url: fileUrl, file: fileEncoded };
