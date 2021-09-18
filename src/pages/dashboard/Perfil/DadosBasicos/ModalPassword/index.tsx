@@ -1,12 +1,14 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import md5 from "md5";
 
 import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
 import { useAuth } from "contexts/Auth";
 import { UsuariosService } from "services/Usuarios";
+import { updatePasswordSchema } from "validators/dashboard";
 
 import ReactHookInputPassword from "components/micro/Inputs/ReactHookInputPassword";
 
@@ -26,7 +28,9 @@ const ModalPassword: React.FC<ModalPasswordProps> = ({ showModal, handleCloseMod
     const { user } = useAuth();
     const { createModal } = useAlertModal();
     const { errorHandler } = useError();
-    const methods = useForm<FormValues>();
+    const methods = useForm<FormValues>({
+        resolver: yupResolver(updatePasswordSchema),
+    });
 
     const handleFormSubmit = async (data: FormValues) => {
         try {
