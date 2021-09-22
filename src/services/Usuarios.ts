@@ -26,8 +26,8 @@ class UsuariosService {
 
     public async getUserInfo(): Promise<GetUserInfoResponse | undefined> {
         try {
-            const token = cookie.get("@sete-web:token");
-            if (!token) {
+            const info = cookie.get("@sete-web:info");
+            if (!info?.token) {
                 throw { messages: "Token de Autorização Ausente" };
             }
             const response = await this.api({
@@ -37,7 +37,7 @@ class UsuariosService {
             const data = (await response.data) as GetUserInfoResponse;
             return data;
         } catch (err) {
-            cookie.destroy("@sete-web:token");
+            cookie.destroy("@sete-web:info");
             throw err;
         }
     }

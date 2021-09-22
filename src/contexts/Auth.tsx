@@ -18,8 +18,11 @@ const AuthContext = React.createContext({} as FormikNavCardData);
 const AuthProvider: React.FC = ({ children }) => {
     const { errorHandler } = useError();
     const [user, setUser] = React.useState<User | null>(() => {
-        const token = cookie.get("@sete-web:token");
-        if (token) return {};
+        const info = cookie.get("@sete-web:info");
+        if (info?.token)
+            return {
+                codigo_cidade: info.codigo_cidade,
+            };
         return null;
     });
     const isAuthenticated = !!user;

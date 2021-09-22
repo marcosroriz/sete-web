@@ -14,9 +14,9 @@ const getApiClient = (env?: EnvOptions): ApiInstance => {
         baseURL: envUrls[env || "api"],
     });
     api.interceptors.request.use((req) => {
-        const token = cookie.get("@sete-web:token");
-        if (token) {
-            req.headers["Authorization"] = token;
+        const info = cookie.get("@sete-web:info");
+        if (info?.token) {
+            req.headers["Authorization"] = info.token;
         }
         return req;
     });

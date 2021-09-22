@@ -36,12 +36,16 @@ class AuthenticatorService {
             data: body,
         });
         const data = (await response.data) as SignInResponse;
-        cookie.set("@sete-web:token", data.access_token.access_token, { maxAge: data.access_token.expires_in });
+        const cookieObj = {
+            codigo_cidade: data.data.codigo_cidade,
+            token: data.access_token.access_token,
+        };
+        cookie.set("@sete-web:info", cookieObj, { maxAge: data.access_token.expires_in });
         return data;
     }
 
     public async signOut(): Promise<void> {
-        cookie.destroy("@sete-web:token");
+        cookie.destroy("@sete-web:info");
         await this.api({
             url: "/users/logout",
         });
@@ -49,8 +53,8 @@ class AuthenticatorService {
 
     public async isAuthenticated(): Promise<IsAuthenticatedResponse | undefined> {
         try {
-            const token = cookie.get("@sete-web:token");
-            if (!token) {
+            const info = cookie.get("@sete-web:info");
+            if (!info?.token) {
                 throw { messages: "Token de Autorização Ausente" };
             }
             const response = await this.api({
@@ -60,7 +64,7 @@ class AuthenticatorService {
             const data = (await response.data) as IsAuthenticatedResponse;
             return data;
         } catch (err) {
-            cookie.destroy("@sete-web:token");
+            cookie.destroy("@sete-web:info");
             throw err;
         }
     }

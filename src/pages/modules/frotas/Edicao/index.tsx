@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
@@ -64,7 +65,8 @@ const formData = {
     manutencao: "",
 };
 
-const Cadastro: React.FC = () => {
+const Edicao: React.FC = () => {
+    const { id: veiculoId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
     const { clearModal, createModal } = useAlertModal();
@@ -88,14 +90,32 @@ const Cadastro: React.FC = () => {
             if (!veiculosResponse.result) {
                 throw { ...veiculosResponse };
             }
-            createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
+            createModal("success", { title: "Sucesso", html: "Veículo atualizado com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar veículo" });
+            errorHandler(err, { title: "Erro ao atualizar veículo" });
         }
     };
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                createModal();
+                const veiculosService = new VeiculosService();
+                const codigo_cidade = user?.codigo_cidade || 0;
+                const veiculosResponse = await veiculosService.getVeiculo(Number(veiculoId), codigo_cidade);
+                if (!veiculosResponse.result) {
+                    throw { ...veiculosResponse };
+                }
+                clearModal();
+            } catch (err) {
+                errorHandler(err, { title: "Erro ao buscar dados do veículo" });
+            }
+        };
+        fetchData();
+    }, []);
     return (
         <>
-            <PageTitle message="Cadastro de Veículo" icon={PageIconOnibus} iconRight={PageIconLancha} />
+            <PageTitle message="Edição de Veículo" icon={PageIconOnibus} iconRight={PageIconLancha} />
             <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleFormSubmit}>
                 <ReactHookNavCardTab name="DADOS BÁSICOS" icon={<img src={DadosBasicosIcon} alt="" aria-hidden="true" />} validationSchema={dadosBasicosSchema}>
                     <DadosBasicos />
@@ -113,4 +133,4 @@ const Cadastro: React.FC = () => {
     );
 };
 
-export default Cadastro;
+export default Edicao;
