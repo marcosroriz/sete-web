@@ -88,7 +88,7 @@ const Cadastro: React.FC = () => {
             if (!veiculosResponse.result) {
                 throw { ...veiculosResponse };
             }
-            createModal("success", { title: "Sucesso" });
+            createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar veículo" });
         }
