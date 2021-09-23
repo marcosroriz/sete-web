@@ -1,28 +1,45 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
-
-type GetUserInfoResponse = {
-    data: User;
-    result: boolean;
-};
+import { Veiculo } from "entities/Veiculo";
 
 type CreateVeiculoRequestBody = {
-    placa: string;
+    modo: number;
+    tipo: number;
+    marca: number;
     modelo: string;
     ano: number;
-    modo: number;
     origem: number;
-    km_inicial?: number;
-    km_atual?: number;
+    placa: string;
+    renavam: string;
+    km_inicial: number;
+    km_atual: number;
     capacidade: number;
-    tipo: number;
+    manutencao: boolean;
 };
 
 type CreateVeiculoResponse = {
     messages: string;
     result: boolean;
 };
+
+type GetVeiculoResponse = Veiculo;
+
+type UpdateVeiculoRequestBody = {
+    modo: number;
+    tipo: number;
+    marca: number;
+    modelo: string;
+    ano: number;
+    origem: number;
+    renavam: string;
+    km_inicial: number;
+    km_atual: number;
+    capacidade: number;
+    manutencao: boolean;
+};
+
+type UpdateVeiculoResponse = Veiculo;
 
 class VeiculosService {
     private api: ApiInstance;
@@ -37,6 +54,25 @@ class VeiculosService {
             data: body,
         });
         const data = (await response.data) as CreateVeiculoResponse;
+        return data;
+    }
+
+    public async getVeiculo(veiculoId: number, codigo_cidade: number): Promise<GetVeiculoResponse> {
+        const response = await this.api({
+            url: `/veiculos/${codigo_cidade}/${veiculoId}`,
+            method: "get",
+        });
+        const data = (await response.data) as GetVeiculoResponse;
+        return data;
+    }
+
+    public async updateVeiculo(body: UpdateVeiculoRequestBody, veiculoId: number, codigo_cidade: number): Promise<UpdateVeiculoResponse> {
+        const response = await this.api({
+            url: `/veiculos/${codigo_cidade}/${veiculoId}`,
+            method: "put",
+            data: body,
+        });
+        const data = (await response.data) as UpdateVeiculoResponse;
         return data;
     }
 }

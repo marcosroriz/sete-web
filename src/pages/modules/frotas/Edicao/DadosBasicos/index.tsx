@@ -1,8 +1,9 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
+import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { Veiculo } from "entities/Veiculo";
 
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
@@ -12,6 +13,8 @@ import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard"
 import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, ButtonsContainer, mediaQuery } from "./styles";
+
+type VeiculoData = [Veiculo | null, React.Dispatch<React.SetStateAction<Veiculo | null>>];
 
 const optionsTipoRod = [
     { label: "Ônibus", value: "1" },
@@ -57,8 +60,20 @@ const optionsMarca = {
 };
 
 const DadosBasicos: React.FC = () => {
-    const { nextStep } = useReactHookNavCard();
     const { watch, setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
+    const [veiculoData] = aditionalData?.veiculoData as VeiculoData;
+
+    React.useEffect(() => {
+        if (veiculoData) {
+            setValue("modo", veiculoData?.modo?.toString() || "");
+            setValue("tipo", veiculoData?.tipo?.toString() || "");
+            setValue("marca", veiculoData?.marca?.toString() || "");
+            setValue("modelo", veiculoData?.modelo || "");
+            setValue("ano", veiculoData?.ano || "");
+            setValue("origem", veiculoData?.origem?.toString() || "");
+        }
+    }, [veiculoData]);
 
     return (
         <Container>

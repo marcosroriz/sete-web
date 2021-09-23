@@ -2,18 +2,8 @@ import * as yup from "yup";
 
 const dadosBasicosSchema = yup.object().shape({
     modo: yup.string().required("Esse campo é obrigatório").nullable(true),
-    tipo: yup.object({ label: yup.string(), value: yup.string() }).test("checkSelect", "Esse campo é obrigatório", (option) => {
-        if (!option) {
-            return false;
-        }
-        return !!option.value;
-    }),
-    marca: yup.object({ label: yup.string(), value: yup.string() }).test("checkSelect", "Esse campo é obrigatório", (option) => {
-        if (!option) {
-            return false;
-        }
-        return !!option.value;
-    }),
+    tipo: yup.string().required("Esse campo é obrigatório"),
+    marca: yup.string().required("Esse campo é obrigatório"),
     ano: yup.lazy((value) => {
         if (!value) {
             return yup.string().required("Esse campo é obrigatório");

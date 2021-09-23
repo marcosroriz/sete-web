@@ -32,7 +32,14 @@
         "react-hooks/exhaustive-deps": "off",
         "react/jsx-filename-extension": [
             "warn",
-            {"extensions": [".jsx", ".js", ".tsx", ".ts"]}
+            {
+                "extensions": [
+                    ".jsx",
+                    ".js",
+                    ".tsx",
+                    ".ts"
+                ]
+            }
         ],
         "import/prefere-default-export": "off",
         "react/prop-types": 0,
@@ -41,6 +48,7 @@
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
         "prefer-const": "off"
     }
 }

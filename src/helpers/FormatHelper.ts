@@ -7,10 +7,11 @@ class FormatHelper {
         const arrLength = arr.length;
         let str = "";
         arr.forEach((item, index) => {
-            str += `${item}</br>`;
             if (index === arrLength - 1) {
                 str += item;
+                return;
             }
+            str += `${item}</br>`;
         });
         return str;
     }
@@ -19,10 +20,11 @@ class FormatHelper {
         const objectEntries = Object.entries(obj);
         let str = "";
         objectEntries.forEach(([, value], index) => {
-            str += `${value}</br>`;
             if (index === objectEntries.length - 1) {
                 str += value;
+                return;
             }
+            str += `${value}</br>`;
         });
         return str;
     }

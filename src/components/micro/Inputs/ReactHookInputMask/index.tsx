@@ -9,7 +9,7 @@ import { Container } from "./styles";
 export type ReactHookInputMaskProps = Omit<ReactInputMaskProps, "mask"> & {
     label: string;
     name: string;
-    format: string | [string, string];
+    format: string;
     unitOfMeasure?: string;
     mask?: string;
     isFormated?: boolean;
@@ -33,11 +33,11 @@ const ReactHookInputMask: React.FC<ReactHookInputMaskProps> = ({
     const {
         register,
         setValue,
+        watch,
         formState: { errors, touchedFields, isSubmitSuccessful },
     } = useFormContext();
     const { onChange, ref, ...fieldProps } = register(name);
 
-    const [dynamicFormatMask, setDynamicFormatMask] = React.useState<string>(format?.[0] || "");
     return (
         <Container
             className={containerClassName}
@@ -49,13 +49,13 @@ const ReactHookInputMask: React.FC<ReactHookInputMaskProps> = ({
                 <InputMask
                     id={name}
                     maskChar={mask}
-                    mask={!Array.isArray(format) ? format : dynamicFormatMask}
+                    mask={format}
+                    value={watch(name)}
                     onChange={(event): void => {
-                        if (!Array.isArray(format) && event.target.value === format.replace(/a/g, mask).replace(/9/g, mask).replace(/\*/g, mask)) {
+                        if (event.target.value === format.replace(/a/g, mask).replace(/9/g, mask).replace(/\*/g, mask)) {
                             return;
                         }
                         const value = event.target.value.trimRight();
-                        Array.isArray(format) && value.length === format[0].length ? setDynamicFormatMask(format[1]) : setDynamicFormatMask(format[0]);
                         if (value) {
                             !isSubmitSuccessful ? setValue(name, value, { shouldTouch: false, shouldValidate: true }) : onChange({ target: { value: value } });
                         }
