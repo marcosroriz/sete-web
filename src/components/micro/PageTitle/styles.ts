@@ -13,9 +13,10 @@ export const Container = styled.header`
         width: 100%;
 
         img {
+            width: 100%;
             user-select: none;
             image-rendering: initial;
-            width: 100%;
+            -webkit-user-drag: none;
         }
     }
     .page-title-text {

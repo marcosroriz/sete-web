@@ -2,12 +2,15 @@ import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import NumberFormat, { NumberFormatValues, NumberFormatProps } from "react-number-format";
 
-import { Container, InputField } from "./styles";
+import InputFieldWrapper from "../InputFieldWrapper";
+
+import { Container } from "./styles";
 
 export type ReactHookInputNumberFormatProps = React.InputHTMLAttributes<HTMLInputElement> &
     Omit<NumberFormatProps, "format"> & {
         label: string;
         name: string;
+        unitOfMeasure?: string;
         format: string | [string, string];
         isFormated?: boolean;
         isHorizontal?: boolean | string;
@@ -19,6 +22,7 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
     label,
     format,
     name,
+    unitOfMeasure,
     isFormated = true,
     containerClassName,
     isHorizontal,
@@ -40,7 +44,7 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
-            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder}>
+            <InputFieldWrapper isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} unitOfMeasure={unitOfMeasure}>
                 <Controller
                     name={name}
                     render={({ field: { onChange, ...fieldProps } }) => (
@@ -66,7 +70,7 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
                 />
 
                 <span className="form-error">{errors[name]?.message}</span>
-            </InputField>
+            </InputFieldWrapper>
         </Container>
     );
 };

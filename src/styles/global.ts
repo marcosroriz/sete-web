@@ -9,18 +9,18 @@ export default createGlobalStyle`
         --color-dark-orange: #ffbc67;
         --color-orange: orange;
         --color-yellow: gold;
-        --color-black-500: #414550;
-        --color-black-450: #464a56;
-        --color-black-300: #576071;
-        --color-white-150: #f9f9f9;
-        --color-white-100: #fbfbfb;
-        --color-white-50: #ffffff;
+        --color-black: #414550;
+        --color-white: #ffffff;
+        --color-grey-700: #464a56;
+        --color-grey-650: #576071;
         --color-grey-500: #6b6b6b;
-        --color-grey-400: #888888;
-        --color-grey-300: #9e9e9e;
-        --color-grey-150: #ece6e6;
-        --color-grey-100: #e7e7e7;
-        --color-grey-50: #efefef;
+        --color-grey-450: #888888;
+        --color-grey-400: #9e9e9e;
+        --color-grey-250: #ece6e6;
+        --color-grey-200: #e7e7e7;
+        --color-grey-150: #efefef;
+        --color-grey-100: #f9f9f9;
+        --color-grey-50: #fbfbfb;
         --color-red-500: #FB404B;
         --color-red-100: #f5c7c7;
         --color-red-50: #ffe4e4;
@@ -99,19 +99,45 @@ export default createGlobalStyle`
         image-rendering: crisp-edges;
         -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
     }
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
     /* RESET CSS */
 
     /* UTILS */
-    /* .multi-form-list-checkbox {
-        & > legend {
-            width: 100%;
-            display: block;
-            text-align: center;
+    .modal-header {
+        padding-bottom: 0px;
+        padding-top: 0px;
+        .h4 {
+            margin-top: 20px;
+            font-weight: 400;
+            color: var(--color-black);
         }
-        & > div > div {
-            display: block;
-        }
-    } */
+    }
+    .modal-body {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    .modal-footer {
+    }
+    .modal-md {
+        width: 600px;
+        max-width: 100%;
+        margin-top: 120px;
+    }
+    .modal-content {
+        border: 2px solid;
+        border-radius: 0px 0px 20px 20px;
+        border-color: #adadad;
+        border-top-color: var(--color-yellow);
+    }
     /* UTILS */
-
 `;

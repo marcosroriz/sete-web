@@ -1,8 +1,9 @@
 import { EnvOptions, ApiInstance, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { Permission } from "entities/Permission";
+import { User } from "entities/User";
 
-type SignInRequest = {
+type SignInRequestBody = {
     usuario: string;
     senha: string;
 };
@@ -13,17 +14,12 @@ type SignInResponse = {
         expires_in: number;
         tipo_permissao: Permission;
     };
+    data: User;
     messages: string;
 };
 
 type IsAuthenticatedResponse = {
-    data: {
-        nome: string;
-        tipo_permissao: Permission;
-        codigo_cidade: number;
-        cidade: string;
-        estado: string;
-    };
+    data: User;
     result: boolean;
 };
 class AuthenticatorService {
@@ -33,29 +29,33 @@ class AuthenticatorService {
         this.api = getApiClient(env);
     }
 
-    public async signIn(body: SignInRequest): Promise<SignInResponse> {
+    public async signIn(body: SignInRequestBody): Promise<SignInResponse> {
         const response = await this.api({
             url: "/authenticator/sete",
             method: "post",
             data: body,
         });
         const data = (await response.data) as SignInResponse;
-        cookie.set("@sete-web:token", data.access_token.access_token, { maxAge: data.access_token.expires_in });
+        const cookieObj = {
+            codigo_cidade: data.data.codigo_cidade,
+            token: data.access_token.access_token,
+        };
+        cookie.set("@sete-web:info", cookieObj, { maxAge: data.access_token.expires_in });
         return data;
     }
 
     public async signOut(): Promise<void> {
+        cookie.destroy("@sete-web:info");
         await this.api({
             url: "/users/logout",
         });
-        cookie.destroy("@sete-web:token");
     }
 
     public async isAuthenticated(): Promise<IsAuthenticatedResponse | undefined> {
         try {
-            const token = cookie.get("@sete-web:token");
-            if (!token) {
-                return;
+            const info = cookie.get("@sete-web:info");
+            if (!info?.token) {
+                throw { messages: "Token de Autorização Ausente" };
             }
             const response = await this.api({
                 url: "/authenticator/sete",
@@ -64,7 +64,7 @@ class AuthenticatorService {
             const data = (await response.data) as IsAuthenticatedResponse;
             return data;
         } catch (err) {
-            cookie.destroy("@sete-web:token");
+            cookie.destroy("@sete-web:info");
             throw err;
         }
     }

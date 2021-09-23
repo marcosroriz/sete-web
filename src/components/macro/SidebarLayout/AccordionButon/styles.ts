@@ -13,7 +13,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
     width: 100%;
     padding: 10px 30px;
 
-    color: var(--color-white-50);
+    color: var(--color-white);
     font-family: var(--font-primary);
     font-size: 12px;
     font-weight: 600;
@@ -33,9 +33,9 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
               `
             : css`
                   text-transform: uppercase;
-                  background-color: ${isActive ? "var(--color-black-300)" : "var(--color-black-450)"};
+                  background-color: ${isActive ? "var(--color-grey-650)" : "var(--color-grey-700)"};
                   &:hover {
-                      background-color: var(--color-black-300);
+                      background-color: var(--color-grey-650);
                   }
               `}
 
@@ -43,6 +43,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
         flex: 1;
         display: flex;
         align-items: center;
+        user-select: none;
         .accordion-img-container {
             width: 30px;
             height: 28px;
@@ -50,6 +51,7 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
             img {
                 width: 100%;
                 height: 100%;
+                -webkit-user-drag: none;
             }
         }
     }

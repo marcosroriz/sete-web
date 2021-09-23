@@ -75,7 +75,7 @@ export const InputField = styled.div<InputFieldProps>`
                 : css`
                       border-color: #ced4da;
                       .form-control__single-value {
-                          color: var(--color-black-500);
+                          color: var(--color-black);
                       }
                   `}
 
@@ -105,7 +105,7 @@ export const InputField = styled.div<InputFieldProps>`
                               color: var(--color-green);
                           }
                       `}
-            background-color: var(--color-white-50);
+            background-color: var(--color-white);
             outline: 0;
         }
 

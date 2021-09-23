@@ -17,11 +17,17 @@ type NavCardData = {
     gotoStep: (newStep?: number) => void;
     nextStep: () => void;
     previousStep: () => void;
+    aditionalData?: {
+        [key: string]: any;
+    };
 };
 
 type NavCardProviderProps = {
     children: React.ReactNode;
     isDashboard?: boolean;
+    aditionalData?: {
+        [key: string]: any;
+    };
 };
 
 const NavCardContext = React.createContext({} as NavCardData);
@@ -30,7 +36,7 @@ const NavCardTab: React.FC<NavCardTabProps> = ({ children }) => {
     return <>{children}</>;
 };
 
-const NavCardProvider = ({ children, isDashboard }: NavCardProviderProps): JSX.Element => {
+const NavCardProvider = ({ children, isDashboard, aditionalData }: NavCardProviderProps): JSX.Element => {
     const [step, setStep] = React.useState<number>(0);
     const childrenArray = React.Children.toArray(children) as React.ReactElement<NavCardTabProps>[];
     const tabs = childrenArray.map((child) => child.props);
@@ -59,13 +65,13 @@ const NavCardProvider = ({ children, isDashboard }: NavCardProviderProps): JSX.E
         [setStep, nextStep, previousStep],
     );
     return (
-        <NavCardContext.Provider value={{ tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep }}>
+        <NavCardContext.Provider value={{ tabs, currentTab, step, setStep, gotoStep, nextStep, previousStep, aditionalData }}>
             <NavCard isDashboard={isDashboard} />
         </NavCardContext.Provider>
     );
 };
 
-function useNavCard<T = string>(): NavCardData {
+function useNavCard(): NavCardData {
     const context = React.useContext(NavCardContext);
     if (!context) {
         throw new Error("O NavCard deve ser usado entre um contexto");

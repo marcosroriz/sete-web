@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 
 import { Fieldset } from "./styles";
 
-type ReactHookMultiFormListProps = {
+type ReactHookMultiFormListProps = React.HTMLAttributes<HTMLDivElement> & {
     label: string;
     name?: string;
     formListSpacing?: string;
@@ -20,6 +20,7 @@ const ReactHookMultiFormList: React.FC<ReactHookMultiFormListProps> = ({
     fieldsHorizontal,
     containerClassName,
     children,
+    ...props
 }) => {
     const {
         formState: { errors },
@@ -35,7 +36,9 @@ const ReactHookMultiFormList: React.FC<ReactHookMultiFormListProps> = ({
         >
             <legend className="form-list-legend">{label}</legend>
             <div className="form-list-container">
-                <div className="form-list">{children}</div>
+                <div className="form-list" onChange={props.onChange} {...props}>
+                    {children}
+                </div>
                 <span className="form-list-error">{errors[name || ""]?.message}</span>
             </div>
         </Fieldset>

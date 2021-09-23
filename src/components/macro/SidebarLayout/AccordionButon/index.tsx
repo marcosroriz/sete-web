@@ -20,7 +20,7 @@ const AccordionButton: React.FC<AccordionButtonProps> = ({ icon, name, ref, isAc
                 </div>
                 {name}
             </div>
-            <RiArrowDownSFill color="var(--color-white-50)" size={15} />
+            <RiArrowDownSFill color="var(--color-white)" size={15} />
         </ButtonContainer>
     );
 };

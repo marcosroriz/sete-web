@@ -4,6 +4,7 @@ import md5 from "md5";
 import { AuthenticatorService } from "services/Authenticator";
 import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
+import { useError } from "hooks/Errors";
 
 type FormikNavCardData = {
     user: User | null;
@@ -15,9 +16,13 @@ type FormikNavCardData = {
 const AuthContext = React.createContext({} as FormikNavCardData);
 
 const AuthProvider: React.FC = ({ children }) => {
+    const { errorHandler } = useError();
     const [user, setUser] = React.useState<User | null>(() => {
-        const token = cookie.get("@sete-web:token");
-        if (token) return {};
+        const info = cookie.get("@sete-web:info");
+        if (info?.token)
+            return {
+                codigo_cidade: info.codigo_cidade,
+            };
         return null;
     });
     const isAuthenticated = !!user;
@@ -26,13 +31,14 @@ const AuthProvider: React.FC = ({ children }) => {
     React.useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const data = await authenticatorService.isAuthenticated();
-                if (data) {
-                    const userData = data.data;
-                    setUser({ nome: userData.nome, tipo_permissao: userData.tipo_permissao });
+                const userInfo = await authenticatorService.isAuthenticated();
+                if (userInfo) {
+                    const data = userInfo.data;
+                    setUser({ ...data });
+                    if (!userInfo.result) throw { ...userInfo };
                 }
             } catch (err) {
-                console.log(err);
+                errorHandler(err, { title: "Atenção" });
             }
         };
         fetchUserData();
@@ -40,12 +46,12 @@ const AuthProvider: React.FC = ({ children }) => {
 
     const signIn = React.useCallback(async (data: { email: string; senha: string }): Promise<void> => {
         const response = await authenticatorService.signIn({ usuario: data.email, senha: md5(data.senha) });
-        setUser({ tipo_permissao: response.access_token.tipo_permissao });
+        setUser({ ...response.data });
     }, []);
 
     const signOut = React.useCallback(async (): Promise<void> => {
-        await authenticatorService.signOut();
         setUser(null);
+        await authenticatorService.signOut();
     }, []);
 
     return <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut }}>{children}</AuthContext.Provider>;

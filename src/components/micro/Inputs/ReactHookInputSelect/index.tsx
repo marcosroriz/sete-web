@@ -1,6 +1,6 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
-import ReactSelect from "react-select";
+import { useFormContext, Controller } from "react-hook-form";
+import ReactSelect, { NamedProps } from "react-select";
 
 import { Container, InputField } from "./styles";
 
@@ -9,68 +9,72 @@ type SelectOptions = {
     label: string;
 };
 
-export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
-    label: string;
-    name: string;
-    options: SelectOptions[];
-    placeholder: string;
-    menuPlacement?: "auto" | "bottom" | "top";
-    isHorizontal?: boolean | string;
-    thinBorder?: boolean;
-    containerClassName?: string;
-};
+export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> &
+    NamedProps & {
+        label: string;
+        name: string;
+        options: SelectOptions[];
+        noOptionsMessage?: string;
+        placeholder?: string;
+        menuPlacement?: "auto" | "bottom" | "top";
+        isHorizontal?: boolean | string;
+        thinBorder?: boolean;
+        containerClassName?: string;
+    };
 
 const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     label,
     name,
     containerClassName,
     options,
+    noOptionsMessage,
     menuPlacement = "auto",
-    placeholder,
+    placeholder = "Selecione uma Opção",
     isHorizontal,
     thinBorder,
     ...props
 }) => {
-    const [selectValue, setSelectValue] = React.useState<SelectOptions>({ value: "", label: placeholder });
     const {
-        register,
-        setValue,
-        setFocus,
+        watch,
         formState: { errors, touchedFields },
     } = useFormContext();
-    const { onChange: removed1, ...registerField } = register(name);
-    const handleSelectChange = React.useCallback(
-        (value: SelectOptions) => {
-            setValue(name, value.value, { shouldValidate: false });
-            setSelectValue(value);
-        },
-        [setSelectValue, setValue],
-    );
-    const handleSelectFocus = React.useCallback(() => {
-        setFocus(name);
-    }, [setFocus]);
+
     return (
         <Container
             className={containerClassName}
             isHorizontal={!!isHorizontal}
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
-            <label htmlFor={name}>{label}</label>
-            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={selectValue.value === ""}>
-                <ReactSelect
-                    id={name}
-                    value={selectValue}
-                    onChange={handleSelectChange}
-                    onFocus={handleSelectFocus}
-                    className="select"
-                    options={options}
-                    menuPlacement={menuPlacement}
-                    classNamePrefix="form-control"
-                    aria-invalid={!!errors[name]}
-                    noOptionsMessage={() => "Valor não Encontrado"}
-                    {...registerField}
-                    {...(props as any)}
+            <label htmlFor={name} id={`label-${name}`}>
+                {label}
+            </label>
+            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={watch(name) === ""}>
+                <Controller
+                    name={name}
+                    render={({ field: { onChange, value, ...field } }) => {
+                        const handleSelectChange = (option: SelectOptions) => {
+                            onChange(option.value);
+                        };
+                        return (
+                            <ReactSelect
+                                aria-labelledby={`label-${name}`}
+                                id={name}
+                                value={options.find((obj) => obj.value === value) || { label: placeholder, value: "" }}
+                                placeholder={placeholder}
+                                onChange={handleSelectChange}
+                                className="select"
+                                options={options}
+                                menuPlacement={menuPlacement}
+                                classNamePrefix="form-control"
+                                aria-invalid={!!errors[name]}
+                                noOptionsMessage={() => noOptionsMessage || "Nenhuma Opção Encontrada"}
+                                {...field}
+                                {...(props as any)}
+                            />
+                        );
+                    }}
                 />
+
                 <span className="form-error">{errors[name]?.message}</span>
             </InputField>
         </Container>

@@ -48,6 +48,7 @@ export const Fieldset = styled.fieldset<FieldsetProps>`
         font-weight: 500;
         font-size: 14px;
         color: var(--color-grey-500);
+        cursor: default;
     }
     .form-list-container {
         flex: 1;
@@ -61,6 +62,9 @@ export const Fieldset = styled.fieldset<FieldsetProps>`
                           ${formListSpacing === "evenly"
                               ? css`
                                     justify-content: space-between;
+                                    & > div + div {
+                                        margin-left: 5px;
+                                    }
                                 `
                               : css`
                                     justify-content: flex-start;

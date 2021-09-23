@@ -68,8 +68,8 @@ export const Container = styled.div<ContainerProps>`
     ${({ isRequired, isInvalid }) =>
         !isRequired
             ? css`
-                  border-color: var(--color-white-150);
-                  background: var(--color-white-100);
+                  border-color: var(--color-grey-100);
+                  background: var(--color-grey-50);
               `
             : isInvalid
             ? css`
@@ -78,8 +78,8 @@ export const Container = styled.div<ContainerProps>`
                   border-width: 4px;
               `
             : css`
-                  background-color: var(--color-grey-50);
-                  border-color: var(--color-grey-150);
+                  background-color: var(--color-grey-150);
+                  border-color: var(--color-grey-250);
               `}
 
     position: relative;
@@ -100,7 +100,7 @@ export const Container = styled.div<ContainerProps>`
             transform: translateX(50%);
 
             text-align: center;
-            color: var(--color-grey-300);
+            color: var(--color-grey-400);
             font-family: var(--font-primary);
             font-weight: 600;
             font-size: 14px;

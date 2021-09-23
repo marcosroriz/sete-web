@@ -9,14 +9,16 @@ import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
+import BlockTitle from "components/micro/BlockTitle";
 
-import { Container, ButtonsContainer, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
 
 const DadosPessoais: React.FC = () => {
     const { nextStep } = useReactHookNavCard();
     return (
         <Container>
-            <h2>Forneça as informações básicas a respeito do aluno sendo cadastrado.</h2>
+            <BlockTitle message="Forneça as informações básicas a respeito do aluno sendo cadastrado." />
             <ReactHookFormItemCard required>
                 <ReactHookInputText label="NOME DO MOTORISTA*" name="nome" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
@@ -51,7 +53,12 @@ const DadosPessoais: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputMultiFiles label="ANEXAR PDF COM DOCUMENTOS PESSOAIS*" name="arquivos" accept="image/*" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputMultiFiles
+                    label="ANEXAR PDF COM DOCUMENTOS PESSOAIS*"
+                    name="arquivos"
+                    accept="image/*, application/pdf"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ButtonsContainer>

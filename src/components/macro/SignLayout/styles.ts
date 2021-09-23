@@ -38,7 +38,7 @@ export const Header = styled.header`
             }
         }
         figcaption {
-            color: var(--color-white-50);
+            color: var(--color-white);
             text-align: center;
             font-family: var(--font-primary);
             font-weight: 600;

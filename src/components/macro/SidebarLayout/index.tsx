@@ -27,7 +27,7 @@ import IconSenso from "assets/icons/sidebar/sidebar-senso.png";
 import { Container, NavContainer, NavOverlay, Section, ChildrenContainer, NavItem, NavItemBody, HamburgerContainer, mediaQuery } from "./styles";
 
 const SidebarLayout: React.FC = ({ children }) => {
-    const { signOut } = useAuth();
+    const { user, signOut } = useAuth();
     const { activeAccordionKey, changeAccordionKey } = useSidebarAccordion();
     const matches = useMediaQuery(mediaQuery.desktop);
     const [menuIsOpened, setMenuIsOpened] = React.useState<boolean>(false);
@@ -77,7 +77,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                                 <AccordionButton
                                     onClick={() => changeAccordionKey(SidebarItemKeys.perfil)}
                                     icon={IconPerfil}
-                                    name="Irwin"
+                                    name={user?.nome || ""}
                                     isActive={activeAccordionKey === SidebarItemKeys.perfil}
                                     isProfile
                                 />

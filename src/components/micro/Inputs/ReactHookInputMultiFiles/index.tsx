@@ -94,7 +94,7 @@ const ReactHookInputMultiFiles: React.FC<ReactHookInputMultiFilesProps> = ({
         }
     };
 
-    const handleDeleteImgCLick = (fileData: FileData) => {
+    const handleDeleteImgClick = (fileData: FileData) => {
         const { [name]: fileValues } = getValues();
         URL.revokeObjectURL(fileData.url);
         setValue(
@@ -131,8 +131,8 @@ const ReactHookInputMultiFiles: React.FC<ReactHookInputMultiFilesProps> = ({
                     {((watch(name) as FileData[]) || []).map((fileData) => (
                         <div className="preview-bg" key={fileData.id}>
                             <div className="preview-img" style={{ backgroundImage: `url(${fileData.url})` }}></div>
-                            <button onClick={() => handleDeleteImgCLick(fileData)}>
-                                <FiX size={16} color="var(--color-white-50)" />
+                            <button onClick={() => handleDeleteImgClick(fileData)}>
+                                <FiX size={16} color="var(--color-white)" />
                             </button>
                         </div>
                     ))}

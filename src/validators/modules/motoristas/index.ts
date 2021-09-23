@@ -11,7 +11,7 @@ const handleAtLeastOne: yup.TestFunction<(boolean | undefined)[] | undefined, {}
     return arrLength > 0;
 };
 
-export const dadosPessoaisSchema = yup.object().shape({
+const dadosPessoaisSchema = yup.object().shape({
     nome: yup.string().required("Esse campo é obrigatório"),
     cpf: yup
         .string()
@@ -32,9 +32,11 @@ export const dadosPessoaisSchema = yup.object().shape({
     arquivos: yup.array().max(3, "Apenas 3 devem ser informados"),
 });
 
-export const dadosTransportesSchema = yup.object().shape({
+const dadosTransportesSchema = yup.object().shape({
     numero_cnh: yup.string().required("Esse campo é obrigatório"),
     vencimento_cnh: yup.lazy((value) => (!value ? yup.string() : yup.string().matches(/^\d{2}\/\d{2}\/\d{4}/, "Esse campo deve ser valido"))),
     tipo_cnh: yup.array().of(yup.boolean()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
     turno: yup.array().of(yup.boolean()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
 });
+
+export { dadosPessoaisSchema, dadosTransportesSchema };
