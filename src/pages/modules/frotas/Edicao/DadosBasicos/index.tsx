@@ -1,8 +1,9 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
+import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { Veiculo } from "entities/Veiculo";
 
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
@@ -12,6 +13,8 @@ import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard"
 import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, ButtonsContainer, mediaQuery } from "./styles";
+
+type VeiculoData = [Veiculo | null, React.Dispatch<React.SetStateAction<Veiculo | null>>];
 
 const optionsTipoRod = [
     { label: "Ônibus", value: "1" },
@@ -41,9 +44,9 @@ const optionsMarcaRod = [
 ];
 
 const optionsMarcaAqua = [
-    { label: "EMGEPRON (Empresa Gerencial de Projetos Navais)", value: "1" },
-    { label: "ESTALEIRO B3", value: "2" },
-    { label: "Yamanha", value: "3" },
+    { label: "EMGEPRON (Empresa Gerencial de Projetos Navais)", value: "6" },
+    { label: "ESTALEIRO B3", value: "7" },
+    { label: "Yamanha", value: "8" },
 ];
 
 const optionsTipo = {
@@ -57,13 +60,20 @@ const optionsMarca = {
 };
 
 const DadosBasicos: React.FC = () => {
-    const { nextStep } = useReactHookNavCard();
     const { watch, setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
+    const [veiculoData] = aditionalData?.veiculoData as VeiculoData;
 
     React.useEffect(() => {
-        setValue("tipo", { label: "Selecione uma Opção", value: "" });
-        setValue("marca", { label: "Selecione uma Opção", value: "" });
-    }, [watch("modo")]);
+        if (veiculoData) {
+            setValue("modo", veiculoData?.modo?.toString() || "");
+            setValue("tipo", veiculoData?.tipo?.toString() || "");
+            setValue("marca", veiculoData?.marca?.toString() || "");
+            setValue("modelo", veiculoData?.modelo || "");
+            setValue("ano", veiculoData?.ano || "");
+            setValue("origem", veiculoData?.origem?.toString() || "");
+        }
+    }, [veiculoData]);
 
     return (
         <Container>
@@ -75,6 +85,10 @@ const DadosBasicos: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
+                    onChange={() => {
+                        setValue("tipo", "");
+                        setValue("marca", "");
+                    }}
                 >
                     <ReactHookInputRadio label="Rodoviário (Ônibus, Van, etc)" value="1" name="modo" position="right" />
                     <ReactHookInputRadio label="Aquaviário (Lancha, Barco, etc)" value="2" name="modo" position="right" />
@@ -99,15 +113,9 @@ const DadosBasicos: React.FC = () => {
                 />
             </ReactHookFormItemCard>
 
-            {/* <ReactHookFormItemCard>
-                <ReactHookInputSelect
-                    label="CASO TENHA ADQUIRIDO O VEÍCULO PELO PROGRAMA CAMINHO DA ESCOLA, SELECIONE O MODELO DO MESMO*"
-                    name="ano_programa"
-                    placeholder="Não se aplica"
-                    options={[{ label: "Iveco", value: "gg" }]}
-                    isHorizontal={mediaQuery.desktop}
-                />
-            </ReactHookFormItemCard> */}
+            <ReactHookFormItemCard required>
+                <ReactHookInputText label="MODELO DO VEÍCULO*" name="modelo" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
                 <ReactHookInputText label="ANO DE AQUISIÇÃO DO VEÍCULO*" name="ano" type="number" isHorizontal={mediaQuery.desktop} />

@@ -43,17 +43,23 @@ class UsuariosService {
     }
 
     public async updateUserPassword(body: UpdateUserPasswordRequestBody, codigo_cidade: number): Promise<UpdateUserPasswordResponse> {
-        try {
-            const response = await this.api({
-                url: `/users/sete/${codigo_cidade}/alterar-senha`,
-                method: "put",
-                data: body,
-            });
-            const data = (await response.data) as UpdateUserPasswordResponse;
-            return data;
-        } catch (err) {
-            throw err;
-        }
+        const response = await this.api({
+            url: `/users/sete/${codigo_cidade}/alterar-senha`,
+            method: "put",
+            data: body,
+        });
+        const data = (await response.data) as UpdateUserPasswordResponse;
+        return data;
+    }
+
+    public async updateUserPicture(body: FormData, userId: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/users/sete/${codigo_cidade}/${userId}/foto`,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            data: body,
+        });
     }
 }
 

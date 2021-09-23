@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import ReactSelect from "react-select";
+import ReactSelect, { NamedProps } from "react-select";
 
 import { Container, InputField } from "./styles";
 
@@ -9,17 +9,18 @@ type SelectOptions = {
     label: string;
 };
 
-export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
-    label: string;
-    name: string;
-    options: SelectOptions[];
-    noOptionsMessage?: string;
-    placeholder?: string;
-    menuPlacement?: "auto" | "bottom" | "top";
-    isHorizontal?: boolean | string;
-    thinBorder?: boolean;
-    containerClassName?: string;
-};
+export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> &
+    NamedProps & {
+        label: string;
+        name: string;
+        options: SelectOptions[];
+        noOptionsMessage?: string;
+        placeholder?: string;
+        menuPlacement?: "auto" | "bottom" | "top";
+        isHorizontal?: boolean | string;
+        thinBorder?: boolean;
+        containerClassName?: string;
+    };
 
 const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     label,
@@ -28,7 +29,7 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     options,
     noOptionsMessage,
     menuPlacement = "auto",
-    placeholder,
+    placeholder = "Selecione uma Opção",
     isHorizontal,
     thinBorder,
     ...props
@@ -52,13 +53,13 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
                     name={name}
                     render={({ field: { onChange, value, ...field } }) => {
                         const handleSelectChange = (option: SelectOptions) => {
-                            onChange(option);
+                            onChange(option.value);
                         };
                         return (
                             <ReactSelect
                                 aria-labelledby={`label-${name}`}
                                 id={name}
-                                value={value}
+                                value={options.find((obj) => obj.value === value) || { label: placeholder, value: "" }}
                                 placeholder={placeholder}
                                 onChange={handleSelectChange}
                                 className="select"

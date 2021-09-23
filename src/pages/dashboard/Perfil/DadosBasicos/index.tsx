@@ -5,6 +5,8 @@ import { Button } from "react-bootstrap";
 import { useNavCard } from "contexts/NavCard";
 import { User } from "entities/User";
 import { FileData } from "entities/FileData";
+import { getApiClient } from "services/apiClient";
+import { useAuth } from "contexts/Auth";
 
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
@@ -29,7 +31,16 @@ const DadosBasicos: React.FC = () => {
     const methods = useForm<FormValues>();
 
     const handleFormSubmit = async (data: FormValues) => {
-        console.log(data);
+        const api = getApiClient();
+        const profileData = new FormData();
+        profileData.set("foto", data.profile.file);
+        await api({
+            url: `/users/sete/${userData?.codigo_cidade}/${userData?.id_usuario}/foto`,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            data: profileData,
+        });
     };
 
     const handleCloseModal = () => {

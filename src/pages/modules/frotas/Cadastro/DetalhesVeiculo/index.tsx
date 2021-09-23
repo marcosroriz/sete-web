@@ -24,9 +24,9 @@ const DetalhesVeiculo: React.FC = () => {
                 <ReactHookInputMask label="PLACA DO VEÍCULO*" name="placa" format="aaa-9999" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
-            {/* <ReactHookFormItemCard required>
+            <ReactHookFormItemCard required>
                 <ReactHookInputText label="RENAVEM DO VEÍCULO*" name="renavam" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard> */}
+            </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
                 <ReactHookInputText
@@ -58,7 +58,7 @@ const DetalhesVeiculo: React.FC = () => {
                 />
             </ReactHookFormItemCard>
 
-            {/* <ReactHookFormItemCard required>
+            <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
                     label="O VEÍCULO ESTÁ ATUALMENTE EM MANUTANÇÃO?*"
                     name="manutencao"
@@ -69,7 +69,7 @@ const DetalhesVeiculo: React.FC = () => {
                     <ReactHookInputRadio label="Sim" value="true" name="manutencao" position="right" />
                     <ReactHookInputRadio label="Não" value="false" name="manutencao" position="right" />
                 </ReactHookMultiFormList>
-            </ReactHookFormItemCard> */}
+            </ReactHookFormItemCard>
 
             <ButtonsContainer position="evenly">
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>

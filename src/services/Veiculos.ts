@@ -1,17 +1,21 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
+import { Veiculo } from "entities/Veiculo";
 
 type CreateVeiculoRequestBody = {
-    placa: string;
+    modo: number;
+    tipo: number;
+    marca: number;
     modelo: string;
     ano: number;
-    modo: number;
     origem: number;
-    km_inicial?: number;
-    km_atual?: number;
+    placa: string;
+    renavam: string;
+    km_inicial: number;
+    km_atual: number;
     capacidade: number;
-    tipo: number;
+    manutencao: boolean;
 };
 
 type CreateVeiculoResponse = {
@@ -19,27 +23,23 @@ type CreateVeiculoResponse = {
     result: boolean;
 };
 
-type GetVeiculoResponse = {
-    codigo_cidade: number;
-    id_veiculo: number;
-    placa: string;
+type GetVeiculoResponse = Veiculo;
+
+type UpdateVeiculoRequestBody = {
+    modo: number;
+    tipo: number;
+    marca: number;
     modelo: string;
     ano: number;
-    modo: string;
     origem: number;
-    km_inicial: string;
-    capacidade: number;
-    km_atual: string;
-    tipo: number;
     renavam: string;
-    manutencao: string;
-    marca: string;
-    id_firebase: string;
-    _links: {
-        _self: string;
-    };
-    result: boolean;
+    km_inicial: number;
+    km_atual: number;
+    capacidade: number;
+    manutencao: boolean;
 };
+
+type UpdateVeiculoResponse = Veiculo;
 
 class VeiculosService {
     private api: ApiInstance;
@@ -63,6 +63,16 @@ class VeiculosService {
             method: "get",
         });
         const data = (await response.data) as GetVeiculoResponse;
+        return data;
+    }
+
+    public async updateVeiculo(body: UpdateVeiculoRequestBody, veiculoId: number, codigo_cidade: number): Promise<UpdateVeiculoResponse> {
+        const response = await this.api({
+            url: `/veiculos/${codigo_cidade}/${veiculoId}`,
+            method: "put",
+            data: body,
+        });
+        const data = (await response.data) as UpdateVeiculoResponse;
         return data;
     }
 }

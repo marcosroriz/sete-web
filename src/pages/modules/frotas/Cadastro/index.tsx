@@ -18,42 +18,25 @@ import DetalhesVeiculoIcon from "assets/icons/frotas/frota-detalhes-veicuo.png";
 
 type FormData = {
     modo: string;
-    tipo: {
-        label: string;
-        value: string;
-    };
-    marca: {
-        label: string;
-        value: string;
-    };
-    ano_programa: {
-        label: string;
-        value: string;
-    };
+    tipo: string;
+    marca: string;
+    modelo: string;
+    ano_programa: string;
     ano: number;
     origem: string;
     placa: string;
     renavam: string;
-    km_atual: number;
-    km_inicial: number;
+    km_atual: string;
+    km_inicial: string;
     capacidade: number;
     manutencao: string;
 };
 
 const formData = {
     modo: "",
-    tipo: {
-        label: "",
-        value: "",
-    },
-    marca: {
-        label: "",
-        value: "",
-    },
-    ano_programa: {
-        label: "",
-        value: "",
-    },
+    tipo: "",
+    marca: "",
+    modelo: "",
     ano: "",
     origem: "",
     placa: "",
@@ -67,7 +50,8 @@ const formData = {
 const Cadastro: React.FC = () => {
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { clearModal, createModal } = useAlertModal();
+    const { createModal } = useAlertModal();
+
     const handleFormSubmit = async (data: FormData) => {
         try {
             createModal();
@@ -75,14 +59,17 @@ const Cadastro: React.FC = () => {
             const codigo_cidade = user?.codigo_cidade || 0;
             const body = {
                 modo: Number(data.modo),
-                tipo: Number(data.tipo.value),
-                modelo: data.marca.label,
+                tipo: Number(data.tipo),
+                marca: Number(data.marca),
+                modelo: data.modelo,
                 ano: Number(data.ano),
                 origem: Number(data.origem),
                 placa: data.placa.replace("-", ""),
-                km_inicial: data.km_inicial,
-                km_atual: data.km_atual,
+                renavam: data.renavam,
+                km_inicial: Number(data.km_inicial),
+                km_atual: Number(data.km_atual),
                 capacidade: data.capacidade,
+                manutencao: data.manutencao === "true",
             };
             const veiculosResponse = await veiculosService.createVeiculo(body, codigo_cidade);
             if (!veiculosResponse.result) {
@@ -93,6 +80,7 @@ const Cadastro: React.FC = () => {
             errorHandler(err, { title: "Erro ao cadastrar veículo" });
         }
     };
+
     return (
         <>
             <PageTitle message="Cadastro de Veículo" icon={PageIconOnibus} iconRight={PageIconLancha} />
