@@ -1,5 +1,6 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
+import { formatHelper } from "helpers/FormatHelper";
 import { User } from "entities/User";
 
 type GetUserInfoResponse = {
@@ -15,6 +16,11 @@ type UpdateUserPasswordRequestBody = {
 
 type UpdateUserPasswordResponse = {
     messages: string;
+    result: boolean;
+};
+
+type UpdateUserPictureResponse = {
+    messages: any;
     result: boolean;
 };
 
@@ -35,6 +41,7 @@ class UsuariosService {
                 method: "get",
             });
             const data = (await response.data) as GetUserInfoResponse;
+            data.data.foto = formatHelper.concatUrlImg(data.data.foto || "");
             return data;
         } catch (err) {
             cookie.destroy("@sete-web:info");
@@ -52,14 +59,17 @@ class UsuariosService {
         return data;
     }
 
-    public async updateUserPicture(body: FormData, userId: number, codigo_cidade: number): Promise<void> {
+    public async updateUserPicture(body: FormData, userId: number, codigo_cidade: number): Promise<UpdateUserPictureResponse> {
         const response = await this.api({
             url: `/users/sete/${codigo_cidade}/${userId}/foto`,
+            method: "post",
             headers: {
                 "Content-Type": "multipart/form-data",
             },
             data: body,
         });
+        const data = (await response.data) as UpdateUserPictureResponse;
+        return data;
     }
 }
 

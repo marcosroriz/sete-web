@@ -1,7 +1,7 @@
 interface FileData {
     id: string;
     url: string;
-    file: File;
+    file?: File;
 }
 
 export type { FileData };

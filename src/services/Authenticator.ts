@@ -1,5 +1,6 @@
 import { EnvOptions, ApiInstance, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
+import { formatHelper } from "helpers/FormatHelper";
 import { Permission } from "entities/Permission";
 import { User } from "entities/User";
 
@@ -62,6 +63,7 @@ class AuthenticatorService {
                 method: "get",
             });
             const data = (await response.data) as IsAuthenticatedResponse;
+            data.data.foto = formatHelper.concatUrlImg(data.data.foto || "");
             return data;
         } catch (err) {
             cookie.destroy("@sete-web:info");
