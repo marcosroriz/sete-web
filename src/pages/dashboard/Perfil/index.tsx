@@ -51,4 +51,4 @@ const Perfil: React.FC = () => {
     );
 };
 
-export default React.memo(Perfil);
+export default Perfil;

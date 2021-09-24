@@ -227,7 +227,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/frotas/gerenciar" activeClassName="isActive" exact>
+                                            <NavLink to="/frotas/gerenciar" activeClassName="isActive">
                                                 Gerenciar
                                             </NavLink>
                                         </li>
