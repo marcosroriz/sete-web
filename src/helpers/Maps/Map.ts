@@ -6,18 +6,16 @@ import * as source from "ol/source";
 import XYZ from "ol/source/XYZ";
 import { ViewOptions } from "ol/View";
 
-type MapConstructorDTO = ViewOptions & {
-    mapId: string;
-};
+type MapConstructorViewOptionsDTO = ViewOptions;
 
-type CreateMapDTO = MapConstructorDTO;
+type CreateMapViewOptionsDTO = MapConstructorViewOptionsDTO;
 
 class Map {
     private mapInstance: ol.Map;
-    constructor(data: MapConstructorDTO) {
-        this.mapInstance = this.createMap(data);
+    constructor(mapId: string, viewOptions: MapConstructorViewOptionsDTO) {
+        this.mapInstance = this.createMap(mapId, viewOptions);
     }
-    public createMap({ mapId, ...data }: CreateMapDTO): ol.Map {
+    public createMap(mapId: string, viewOptions: CreateMapViewOptionsDTO): ol.Map {
         return new ol.Map({
             target: mapId,
             layers: [
@@ -31,7 +29,7 @@ class Map {
                 projection: "EPSG:4326",
                 center: [-49.2727665, -16.7384281],
                 zoom: 12,
-                ...data,
+                ...viewOptions,
             }),
         });
     }
