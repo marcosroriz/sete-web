@@ -17,9 +17,10 @@ const detalhesVeiculoSchema = yup.object().shape({
     placa: yup
         .string()
         .required("Esse campo é obrigatório")
-        .matches(/^[a-zA-Z]{3}-[0-9]{4}$/, "Deve ser no formato AAA-0000"),
+        .matches(/^[A-Z]{3}-[0-9]{4}$/, "Deve ser no formato AAA-0000"),
+    renavam: yup.string().required("Esse campo é obrigatório"),
     km_inicial: yup.lazy((value) => {
-        if (!value) {
+        if (value === "") {
             return yup.string();
         }
         return yup.number().required("Esse campo é obrigatório");
@@ -36,6 +37,7 @@ const detalhesVeiculoSchema = yup.object().shape({
         }
         return yup.number().required("Esse campo é obrigatório");
     }),
+    manutencao: yup.string().required("Esse campo é obrigatório").nullable(true),
 });
 
 export { dadosBasicosSchema, detalhesVeiculoSchema };
