@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
-import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
+import { FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "components/micro/Table/columnFilter";
 
 export const COLUMNS: ColumnWithLooseAccessor[] = [

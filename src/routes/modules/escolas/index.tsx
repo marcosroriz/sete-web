@@ -1,5 +1,4 @@
 import React from "react";
-
 import AuthRoute from "routes/AuthRoute";
 
 import Gerenciar from "pages/modules/escolas/Gerenciar";

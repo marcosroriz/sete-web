@@ -12,6 +12,7 @@ const Routes: React.FC = () => {
         <Switch>
             {SignRoutes}
             {DashboardRoutes}
+
             {EscolasRoutes}
             {MotoristasRoutes}
             {FrotasRoutes}

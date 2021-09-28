@@ -10,7 +10,7 @@ export const ColumnFilter = ({ column: { filterValue, setFilter } }) => {
             }}
             placeholder={"Procurar por escola"}
             style={{
-                width: "80%",
+                width: "81%",
                 padding: "5% 0",
                 paddingLeft: "5%",
                 backgroundColor: "white",

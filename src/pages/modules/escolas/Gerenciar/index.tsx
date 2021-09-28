@@ -29,7 +29,7 @@ const Gerenciar: React.FC = () => {
         fetchData();
     }, []);
     const columns = useMemo(() => COLUMNS, []);
-    return <TableComponent columns={columns} name={"tableFrotas"} data={dataTable} />;
+    return <TableComponent columns={columns} name={"table"} data={dataTable} />;
 };
 
 export default Gerenciar;

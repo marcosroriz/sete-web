@@ -152,7 +152,7 @@ function TableComponent<T extends Record<string, unknown>>(props: PropsWithChild
 
                     <div>
                         <span>
-                            Ir para a página:{" "}
+                            Ir para a página:
                             <input
                                 type="number"
                                 defaultValue={pageIndex + 1}

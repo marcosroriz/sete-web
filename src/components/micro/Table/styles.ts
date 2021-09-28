@@ -142,6 +142,7 @@ export const Pagination = styled.div`
             border-radius: 20px;
             padding: 1% 10px;
             margin-right: 20px;
+            margin-left: 3px;
         }
         & > div {
             display: flex;
@@ -161,7 +162,7 @@ export const Pagination = styled.div`
                 margin-left: 3%;
                 padding: 3% 5%;
                 background-color: white;
-                font-size: 100%large;
+                font-size: large;
                 border: 2px solid lightgray;
                 border-radius: 20px;
                 color: gray;

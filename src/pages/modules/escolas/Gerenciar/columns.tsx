@@ -4,10 +4,6 @@ import { ColumnWithLooseAccessor } from "react-table";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "components/micro/Table/columnFilter";
 
-const message = () => {
-    console.log("Hello World!");
-};
-
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "NOME",
