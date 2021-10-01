@@ -11,10 +11,12 @@ type MapConstructorViewOptionsDTO = ViewOptions;
 type CreateMapViewOptionsDTO = MapConstructorViewOptionsDTO;
 
 class Map {
-    private mapInstance: ol.Map;
+    public mapInstance: ol.Map;
+
     constructor(mapId: string, viewOptions: MapConstructorViewOptionsDTO) {
         this.mapInstance = this.createMap(mapId, viewOptions);
     }
+
     public createMap(mapId: string, viewOptions: CreateMapViewOptionsDTO): ol.Map {
         return new ol.Map({
             target: mapId,
