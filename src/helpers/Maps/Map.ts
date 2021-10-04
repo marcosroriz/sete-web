@@ -2,8 +2,11 @@ import * as ol from "ol";
 import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as style from "ol/style";
-import * as source from "ol/source";
-import XYZ from "ol/source/XYZ";
+import BingMaps from "ol/source/BingMaps";
+import OSM from "ol/source/OSM";
+import Vector from "ol/source/Vector";
+
+// Types
 import { ViewOptions } from "ol/View";
 
 type MapConstructorViewOptionsDTO = ViewOptions;
@@ -22,9 +25,17 @@ class Map {
             target: mapId,
             layers: [
                 new layer.Tile({
-                    source: new XYZ({
-                        url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    source: new BingMaps({
+                        key: "ciN5QAQYiHzOFNabIODf~b61cOBWqj2nmKSuoyjuyKA~AiShqLNGsToztBeSE2Tk8Pb1cUdr4nikxL24hlMRaHCJkIpKaYtdBXoxaDEgFhQv",
+                        imagerySet: "AerialWithLabels",
                     }),
+                }),
+                new layer.Tile({
+                    source: new OSM(),
+                    visible: false,
+                }),
+                new layer.Vector({
+                    source: new Vector(),
                 }),
             ],
             view: new ol.View({
