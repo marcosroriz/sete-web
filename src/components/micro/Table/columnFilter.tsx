@@ -15,7 +15,7 @@ export const ColumnFilter = ({ column: { filterValue, setFilter } }) => {
                 paddingLeft: "5%",
                 backgroundColor: "white",
                 border: "2px solid #C8C8C8",
-                borderRadius: "4px",
+                borderRadius: "6px",
                 color: "gray",
             }}
         />

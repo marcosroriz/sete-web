@@ -15,6 +15,9 @@ type EscolasData = {
 
 const Gerenciar: React.FC = () => {
     const [dataTable, setTableData] = React.useState<EscolasData[]>([]);
+    const handleOpenModal = () => {
+        console.log("Olá mundo");
+    };
     React.useEffect(() => {
         const fetchData = async () => {
             const api = getApiClient();
@@ -22,9 +25,18 @@ const Gerenciar: React.FC = () => {
                 url: `/frotas/5201405`,
                 method: "GET",
             });
-            const data = await response.data;
+            const data = (await response.data) as EscolasData[];
 
-            setTableData(JSON.parse(data));
+            const treatedData = data.map((escola) => {
+                const actionData = {
+                    handleOpenModal,
+                };
+                return {
+                    ...escola,
+                    actionData,
+                };
+            });
+            setTableData(treatedData);
         };
         fetchData();
     }, []);

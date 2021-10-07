@@ -56,39 +56,41 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
         Header: "AÇÕES",
         accessor: "acoes",
         disableFilters: true,
-        Cell: () => (
-            <span>
-                <button
-                    style={{
-                        border: "none",
-                        backgroundColor: "transparent",
-                        cursor: "pointer",
-                    }}
-                    onClick={() => console.log("Clicou2")}
-                >
-                    <FaSearch size={"18px"} color={"gray"} />
-                </button>
-                <button
-                    style={{
-                        border: "none",
-                        backgroundColor: "transparent",
-                        cursor: "pointer",
-                    }}
-                    onClick={() => console.log("Clicou3")}
-                >
-                    <FaEdit size={"18px"} color={"orange"} />
-                </button>
-                <button
-                    style={{
-                        border: "none",
-                        backgroundColor: "transparent",
-                        cursor: "pointer",
-                    }}
-                    onClick={() => console.log("Clicou4")}
-                >
-                    <FaRegTimesCircle size={"17px"} color={"red"} />
-                </button>
-            </span>
-        ),
+        Cell: (row) => {
+            return (
+                <span>
+                    <button
+                        style={{
+                            border: "none",
+                            backgroundColor: "transparent",
+                            cursor: "pointer",
+                        }}
+                        onClick={() => row.actionData.handleOpenModal()}
+                    >
+                        <FaSearch size={"18px"} color={"gray"} />
+                    </button>
+                    <button
+                        style={{
+                            border: "none",
+                            backgroundColor: "transparent",
+                            cursor: "pointer",
+                        }}
+                        onClick={() => console.log("Clicou3")}
+                    >
+                        <FaEdit size={"18px"} color={"orange"} />
+                    </button>
+                    <button
+                        style={{
+                            border: "none",
+                            backgroundColor: "transparent",
+                            cursor: "pointer",
+                        }}
+                        onClick={() => console.log("Clicou4")}
+                    >
+                        <FaRegTimesCircle size={"17px"} color={"red"} />
+                    </button>
+                </span>
+            );
+        },
     },
 ];
