@@ -3,7 +3,6 @@ import { Switch } from "react-router-dom";
 
 import DashboardRoutes from "./dashboard";
 import SignRoutes from "./sign";
-import EscolasRoutes from "./modules/escolas";
 import MotoristasRoutes from "./modules/motoristas";
 import FrotasRoutes from "./modules/frotas";
 import AlunosRoutes from "./modules/alunos";
@@ -16,8 +15,6 @@ const Routes: React.FC = () => {
         <Switch>
             {SignRoutes}
             {DashboardRoutes}
-
-            {EscolasRoutes}
             {MotoristasRoutes}
             {FrotasRoutes}
             {AlunosRoutes}
