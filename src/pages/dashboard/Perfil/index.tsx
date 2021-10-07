@@ -43,7 +43,7 @@ const Perfil: React.FC = () => {
                     userData: [userData, setUserData],
                 }}
             >
-                <NavCardTab name="Dados de Básicos" icon={<FaLock color="#464a56" />}>
+                <NavCardTab name="Dados Básicos" icon={<FaLock color="#464a56" />}>
                     <DadosBasicos />
                 </NavCardTab>
             </NavCardProvider>
@@ -51,4 +51,4 @@ const Perfil: React.FC = () => {
     );
 };
 
-export default React.memo(Perfil);
+export default Perfil;

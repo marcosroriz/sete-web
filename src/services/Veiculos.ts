@@ -1,7 +1,13 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
-import { Veiculo } from "entities/Veiculo";
+import { Veiculo, VeiculoTableField } from "entities/Veiculo";
+
+type ListVeiculoResponse = {
+    data: VeiculoTableField[];
+    result: boolean;
+    total: number;
+};
 
 type CreateVeiculoRequestBody = {
     modo: number;
@@ -45,6 +51,15 @@ class VeiculosService {
     private api: ApiInstance;
     constructor(env?: EnvOptions) {
         this.api = getApiClient(env);
+    }
+
+    public async listVeiculos(codigo_cidade: number): Promise<ListVeiculoResponse> {
+        const response = await this.api({
+            url: `/veiculos/${codigo_cidade}`,
+            method: "get",
+        });
+        const data = (await response.data) as ListVeiculoResponse;
+        return data;
     }
 
     public async createVeiculo(body: CreateVeiculoRequestBody, codigo_cidade: number): Promise<CreateVeiculoResponse> {

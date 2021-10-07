@@ -76,7 +76,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                             <NavItem isProfile>
                                 <AccordionButton
                                     onClick={() => changeAccordionKey(SidebarItemKeys.perfil)}
-                                    icon={IconPerfil}
+                                    icon={user?.foto || IconPerfil}
                                     name={user?.nome || ""}
                                     isActive={activeAccordionKey === SidebarItemKeys.perfil}
                                     isProfile
@@ -227,7 +227,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/frotas/gerenciar" activeClassName="isActive" exact>
+                                            <NavLink to="/frotas/gerenciar" activeClassName="isActive">
                                                 Gerenciar
                                             </NavLink>
                                         </li>

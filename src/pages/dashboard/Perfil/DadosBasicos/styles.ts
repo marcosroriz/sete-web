@@ -96,7 +96,7 @@ export const Container = styled.div`
 `;
 
 export const Form = styled.form`
-    padding: 30px 85px;
+    padding: 30px 30px;
     @media ${media.lgDesktop} {
         padding: 0px;
     }

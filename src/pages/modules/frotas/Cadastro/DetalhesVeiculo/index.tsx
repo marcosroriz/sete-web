@@ -3,13 +3,11 @@ import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
-import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ReactHookInputMask from "components/micro/Inputs/ReactHookInputMask";
-import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import BlockTitle from "components/micro/BlockTitle";
 
@@ -21,11 +19,11 @@ const DetalhesVeiculo: React.FC = () => {
         <Container>
             <BlockTitle message="POR FIM, INFORME OS DADOS CADASTRAIS DO VEÍCULO." />
             <ReactHookFormItemCard required>
-                <ReactHookInputMask label="PLACA DO VEÍCULO*" name="placa" format="aaa-9999" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputMask label="PLACA DO VEÍCULO*" name="placa" format="AAA-1111" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="RENAVEM DO VEÍCULO*" name="renavam" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="RENAVAM DO VEÍCULO*" name="renavam" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>

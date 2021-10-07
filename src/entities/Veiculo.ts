@@ -20,4 +20,15 @@ interface Veiculo {
     result?: boolean;
 }
 
-export type { Veiculo };
+interface VeiculoTableField {
+    capacidade: number;
+    id_veiculo: number;
+    manutencao: string;
+    marca: string;
+    modelo: string;
+    origem: string;
+    placa: string;
+    tipo: string;
+}
+
+export type { Veiculo, VeiculoTableField };

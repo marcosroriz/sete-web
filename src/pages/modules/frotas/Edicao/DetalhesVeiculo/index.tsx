@@ -19,20 +19,26 @@ type VeiculoData = [Veiculo | null, React.Dispatch<React.SetStateAction<Veiculo 
 
 const DetalhesVeiculo: React.FC = () => {
     const { setValue } = useFormContext();
-    const { previousStep, aditionalData } = useReactHookNavCard();
+    const { step, previousStep, aditionalData } = useReactHookNavCard();
     const [veiculoData] = aditionalData?.veiculoData as VeiculoData;
 
     React.useEffect(() => {
         if (veiculoData) {
             setValue("placa", veiculoData?.placa || "");
             setValue("renavam", veiculoData?.renavam || "");
-            setValue("km_inicial", veiculoData?.km_inicial?.toString() || "");
-            setValue("km_atual", veiculoData?.km_atual?.toString() || "");
+            setValue("km_inicial", Number(veiculoData?.km_inicial) || 0);
+            setValue("km_atual", Number(veiculoData?.km_atual) || 0);
             setValue("capacidade", veiculoData?.capacidade?.toString() || "");
             setValue("manutencao", veiculoData?.manutencao === "1" ? "true" : "false");
-            console.log(veiculoData);
         }
     }, [veiculoData]);
+
+    React.useEffect(() => {
+        if (step === 1) {
+            (document.getElementById("placa") as any).focus();
+            (document.getElementById("placa") as any).blur();
+        }
+    }, [step]);
 
     return (
         <Container>
@@ -42,7 +48,7 @@ const DetalhesVeiculo: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="RENAVEM DO VEÍCULO*" name="renavam" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="RENAVAM DO VEÍCULO*" name="renavam" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>

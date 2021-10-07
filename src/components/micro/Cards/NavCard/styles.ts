@@ -16,6 +16,7 @@ export const Container = styled.div<ContainerProps>`
         flex-wrap: nowrap;
         align-items: center;
         justify-content: space-between;
+        background-color: white;
         li {
             flex: 1;
             .nav-link {

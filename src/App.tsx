@@ -11,6 +11,8 @@ import GlobalStyles from "styles/global";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "styles/light-bootstrap-dashboard-react.min.css";
 import "@sweetalert2/theme-bootstrap-4";
+import "ol/ol.css";
+import "ol-ext/dist/ol-ext.css";
 
 const App: React.FC = () => {
     return (

@@ -11,6 +11,7 @@ interface User {
     cidade?: string;
     codigo_cidade?: number;
     estado?: string;
+    foto?: string;
 }
 
 export type { User };

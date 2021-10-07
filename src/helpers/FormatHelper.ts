@@ -28,6 +28,10 @@ class FormatHelper {
         });
         return str;
     }
+    public concatUrlImg(img: string) {
+        const backendUrl = process.env.REACT_APP_API_URL || "";
+        return `${backendUrl}/${img}`;
+    }
 }
 
 const formatHelper = new FormatHelper();

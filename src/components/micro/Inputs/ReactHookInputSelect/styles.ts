@@ -97,6 +97,9 @@ export const InputField = styled.div<InputFieldProps>`
             padding: 0px 8px;
         }
     }
+    .form-control__option {
+        font-size: 14px;
+    }
     .form-error {
         width: 100%;
         display: block;
