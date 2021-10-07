@@ -1,29 +1,39 @@
 interface Escola {
-    nome: string;
-    mec_co_entidade: 0;
-    mec_co_uf: 0;
-    mec_co_municipio: 0;
-    mec_no_entidade: string;
-    mec_tp_dependencia: 1;
-    mec_tp_localizacao: 1;
-    mec_in_regular: "S" | "N";
-    mec_in_eja: "S" | "N";
-    mec_in_profissionalizante: "S" | "N";
-    mec_in_especial_exclusiva: "S" | "N";
-    loc_latitude: string;
-    loc_longitude: string;
-    loc_endereco: string;
-    loc_cep: string;
-    contato_responsavel: string;
-    contato_telefone: string;
-    contato_email: string;
-    horario_matutino: "S" | "N";
-    horario_vespertino: "S" | "N";
-    horario_noturno: "S" | "N";
-    ensino_superior: "S" | "N";
-    ensino_medio: "S" | "N";
-    ensino_fundamental: "S" | "N";
-    ensino_pre_escola: "S" | "N";
+    id_escola?: number;
+    nome?: string;
+    mec_co_entidade?: number;
+    mec_co_uf?: number;
+    mec_co_municipio?: number;
+    mec_no_entidade?: string;
+    mec_tp_dependencia?: number;
+    mec_tp_localizacao?: number;
+    mec_in_regular?: string;
+    mec_in_eja?: string;
+    mec_in_profissionalizante?: string;
+    mec_in_especial_exclusiva?: string;
+    loc_latitude?: string;
+    loc_longitude?: string;
+    loc_endereco?: string;
+    loc_cep?: string;
+    contato_responsavel?: string;
+    contato_telefone?: string;
+    contato_email?: string;
+    horario_matutino?: string;
+    horario_vespertino?: string;
+    horario_noturno?: string;
+    ensino_superior?: string;
+    ensino_medio?: string;
+    ensino_fundamental?: string;
+    ensino_pre_escola?: string;
 }
 
-export type { Escola };
+interface EscolaTableField {
+    id_escola: number;
+    nome: string;
+    horario_matutino: string;
+    ensino_fundamental: string;
+    ensino_medio: string;
+    qtd_alunos: number;
+}
+
+export type { Escola, EscolaTableField };

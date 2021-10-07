@@ -1,8 +1,8 @@
 import React from "react";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 
-class EscolaTableHelper {
-    public treatData(data: any[], aditionalData: any): any[] {
+class EscolasTableHelper {
+    public treatData(data: any[], aditionalData?: any): any[] {
         return data.map((escola) => {
             return {
                 ...escola,
@@ -55,4 +55,6 @@ class EscolaTableHelper {
     }
 }
 
-export { EscolaTableHelper };
+const escolasTableHelper = new EscolasTableHelper();
+
+export { escolasTableHelper, EscolasTableHelper };
