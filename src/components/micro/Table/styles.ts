@@ -1,16 +1,6 @@
 import styled from "styled-components";
 
 export const TableContainer = styled.div`
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    width: 100%;
-    margin-top: 50px;
-    border: 2px solid gray;
-    border-radius: 20px;
-    background-color: white;
-    padding: 1% 2%;
-
     .titulo {
         font-weight: 500;
         font-size: 150%;

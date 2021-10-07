@@ -1,47 +1,19 @@
-import React, { useMemo } from "react";
-import TableComponent from "components/micro/Table/TableComponent";
-import { getApiClient } from "services/apiClient";
+import React from "react";
 
-import { COLUMNS } from "./columns";
+import { FrotasTableProvider } from "contexts/Tables/FrotasTableContext";
 
-type EscolasData = {
-    nome: string;
-    localizacao: string;
-    gps: string;
-    nivel: string;
-    horario: string[];
-    quantAlunos: number;
-};
+import TableCard from "components/micro/Cards/TableCard";
+
+import TableComponent from "./TableComponent";
 
 const Gerenciar: React.FC = () => {
-    const [dataTable, setTableData] = React.useState<EscolasData[]>([]);
-    const handleOpenModal = () => {
-        console.log("Olá mundo");
-    };
-    React.useEffect(() => {
-        const fetchData = async () => {
-            const api = getApiClient();
-            const response = await api({
-                url: `/frotas/5201405`,
-                method: "GET",
-            });
-            const data = (await response.data) as EscolasData[];
-
-            const treatedData = data.map((escola) => {
-                const actionData = {
-                    handleOpenModal,
-                };
-                return {
-                    ...escola,
-                    actionData,
-                };
-            });
-            setTableData(treatedData);
-        };
-        fetchData();
-    }, []);
-    const columns = useMemo(() => COLUMNS, []);
-    return <TableComponent columns={columns} name={"table"} data={dataTable} />;
+    return (
+        <FrotasTableProvider>
+            <TableCard>
+                <TableComponent />
+            </TableCard>
+        </FrotasTableProvider>
+    );
 };
 
 export default Gerenciar;
