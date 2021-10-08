@@ -2,10 +2,10 @@ import React from "react";
 
 import AuthRoute from "routes/AuthRoute";
 
-import Cadastro from "pages/modules/fornecedores/Cadastro";
-import Edicao from "pages/modules/fornecedores/Edicao";
+import Cadastrar from "pages/modules/fornecedores/Cadastrar";
+import Editar from "pages/modules/fornecedores/Editar";
 
 export default [
-    <AuthRoute path="/fornecedores/cadastrar" component={Cadastro} permission="reader" key="cadastrar" isPrivate exact />,
-    <AuthRoute path="/fornecedores/gerenciar/:id" component={Edicao} permission="reader" key="gerenciar/:id" isPrivate exact />,
+    <AuthRoute path="/fornecedores/cadastrar" component={Cadastrar} permission="reader" key="cadastrar" isPrivate exact />,
+    <AuthRoute path="/fornecedores/gerenciar/editar/:id" component={Editar} permission="reader" key="gerenciar/editar/:id" isPrivate exact />,
 ];

@@ -7,13 +7,12 @@ import TableComponent from "./TableComponent";
 import PageTitle from "components/micro/PageTitle";
 import TableCard from "components/micro/Cards/TableCard";
 
-import PageIconOnibus from "assets/icons/frotas/frota-onibus.png";
-import PageIconLancha from "assets/icons/frotas/frota-lancha.png";
+import EscolasCadastroIcon from "assets/icons/escolas/escolas-cadastro.png";
 
 const Gerenciar: React.FC = () => {
     return (
         <>
-            <PageTitle message="Escolas Cadastradas" icon={PageIconOnibus} iconRight={PageIconLancha} />
+            <PageTitle message="Cadastrar Escola" icon={EscolasCadastroIcon} />
             <EscolasTableProvider>
                 <TableCard>
                     <TableComponent />
