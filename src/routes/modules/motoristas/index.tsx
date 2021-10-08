@@ -2,6 +2,6 @@ import React from "react";
 
 import AuthRoute from "routes/AuthRoute";
 
-import Cadastro from "pages/modules/motoristas/Cadastro";
+import Cadastrar from "pages/modules/motoristas/Cadastrar";
 
-export default [<AuthRoute path="/motoristas/cadastrar" key="cadastrar" component={Cadastro} permission="reader" isPrivate exact />];
+export default [<AuthRoute path="/motoristas/cadastrar" key="cadastrar" component={Cadastrar} permission="reader" isPrivate exact />];
