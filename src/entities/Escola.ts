@@ -25,6 +25,9 @@ interface Escola {
     ensino_medio?: string;
     ensino_fundamental?: string;
     ensino_pre_escola?: string;
+    _links?: {
+        _self?: string;
+    };
 }
 
 interface EscolaTableField {
@@ -33,6 +36,7 @@ interface EscolaTableField {
     horario_matutino: string;
     ensino_fundamental: string;
     ensino_medio: string;
+    ensino_superior: string;
     qtd_alunos: number;
 }
 

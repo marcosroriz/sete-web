@@ -1,11 +1,14 @@
+import { EscolaTableField } from "entities/Escola";
 import React from "react";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 
 class EscolasTableHelper {
-    public treatData(data: any[], aditionalData?: any): any[] {
+    public treatData(data: EscolaTableField[]): any[] {
+        console.log(data);
         return data.map((escola) => {
             return {
                 ...escola,
+                ensino_pre_escola: [data[0].ensino_fundamental, ", ", data[0].ensino_superior],
                 acoes: (
                     <span>
                         <button
@@ -14,7 +17,6 @@ class EscolasTableHelper {
                                 backgroundColor: "transparent",
                                 cursor: "pointer",
                             }}
-                            onClick={() => aditionalData.handleOpenModal()}
                         >
                             <FaUserAlt size={"18px"} color={"#1dc7ea"} />
                         </button>
