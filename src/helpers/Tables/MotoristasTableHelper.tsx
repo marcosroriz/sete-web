@@ -1,25 +1,13 @@
 import React from "react";
-import { EscolaTableField } from "entities/Escola";
+import { MotoristaTableField } from "entities/Motorista";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 
-class EscolasTableHelper {
-    public treatData(data: EscolaTableField[]): any[] {
-        return data.map((escola) => {
+class MotoristasTableHelper {
+    public treatData(data: MotoristaTableField[]): any[] {
+        //console.log(data);
+        return data.map((motorista) => {
             return {
-                ...escola,
-                localizacao: ":/",
-                gps: ":/",
-                nivel: [
-                    escola.ensino_pre_escola === "S" ? "Infantil, " : "",
-                    escola.ensino_fundamental === "S" ? "Fundamental, " : "",
-                    escola.ensino_medio === "S" ? "Médio, " : "",
-                    escola.ensino_superior === "S" ? "Superior, " : "",
-                ],
-                horario_funcionamento: [
-                    escola.horario_matutino === "S" ? "Manhã, " : "",
-                    escola.horario_vespertino === "S" ? "Tarde, " : "",
-                    escola.horario_noturno === "S" ? "Noite, " : "",
-                ],
+                ...motorista,
                 acoes: (
                     <span>
                         <button
@@ -68,6 +56,6 @@ class EscolasTableHelper {
     }
 }
 
-const escolasTableHelper = new EscolasTableHelper();
+const motoristasTableHelper = new MotoristasTableHelper();
 
-export { escolasTableHelper, EscolasTableHelper };
+export { motoristasTableHelper, MotoristasTableHelper };

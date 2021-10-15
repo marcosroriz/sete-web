@@ -19,6 +19,11 @@ interface Motorista {
 
 interface MotoristaTableField {
     nome: string;
+    telefone: string;
+    turno: string[];
+    cnh: string;
+    data_validade_cnh: string;
+    rotas_dirigidas: string;
 }
 
 export type { Motorista, MotoristaTableField };

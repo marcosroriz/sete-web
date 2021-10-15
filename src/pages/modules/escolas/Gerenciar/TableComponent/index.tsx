@@ -6,7 +6,7 @@ import SeteTable from "components/micro/SeteTable";
 
 const Gerenciar: React.FC = () => {
     const { tableData, columns } = useEscolasTable();
-    return <SeteTable columns={columns} name={"table"} data={tableData} />;
+    return <SeteTable columns={columns} name={"tableEscolas"} data={tableData} />;
 };
 
 export default Gerenciar;

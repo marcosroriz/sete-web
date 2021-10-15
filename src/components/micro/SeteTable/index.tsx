@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { PropsWithChildren, ReactElement, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import {
     CellProps,
@@ -22,10 +22,6 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { TableContainer, Pagination } from "./styles";
 
 import { useSelection } from "hooks/Table";
-
-export interface TableProperties<T extends Record<string, unknown>> extends TableOptions<T> {
-    name: string;
-}
 
 const hooks = [useFilters, useSortBy, useFlexLayout, usePagination, useRowSelect, useSelection];
 

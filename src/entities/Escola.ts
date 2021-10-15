@@ -34,9 +34,14 @@ interface EscolaTableField {
     id_escola: number;
     nome: string;
     horario_matutino: string;
+    horario_vespertino: string;
+    horario_noturno: string;
+    ensino_pre_escola: string;
     ensino_fundamental: string;
     ensino_medio: string;
     ensino_superior: string;
+    nivel: string;
+    horario_funcionamento: string;
     qtd_alunos: number;
 }
 

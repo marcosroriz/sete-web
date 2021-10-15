@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Form as FormikForm } from "formik";
 
 export const mediaQuery = {
     mobile: "(max-width: 525px)",
