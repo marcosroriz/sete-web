@@ -15,7 +15,7 @@ import {
     useTable,
 } from "react-table";
 
-import { useLocalStorage } from "./useLocalStorage";
+import { useLocalStorage } from "hooks/LocalStorage";
 
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
@@ -29,13 +29,13 @@ export interface TableProperties<T extends Record<string, unknown>> extends Tabl
 
 const hooks = [useFilters, useSortBy, useFlexLayout, usePagination, useRowSelect, useSelection];
 
-type TableComponentProps = {
+type SeteTableProps = {
     name: string;
     columns: ColumnWithLooseAccessor[];
     data: any[];
 };
 
-const TableComponent: React.FC<TableComponentProps> = ({ name, columns, data, ...props }) => {
+const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) => {
     const [initialState, setInitialState] = useLocalStorage(`tableState:${name}}`, {});
 
     const instance = useTable(
@@ -185,4 +185,4 @@ const TableComponent: React.FC<TableComponentProps> = ({ name, columns, data, ..
     );
 };
 
-export default TableComponent;
+export default SeteTable;

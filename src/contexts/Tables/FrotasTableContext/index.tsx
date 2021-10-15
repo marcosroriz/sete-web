@@ -4,7 +4,7 @@ import { ColumnWithLooseAccessor } from "react-table";
 import { useAuth } from "contexts/Auth";
 import { VeiculosService } from "services/Veiculos";
 import { VeiculoTableField } from "entities/Veiculo";
-import { frotasTableHelper } from "helpers/FrotasTableHelper";
+import { frotasTableHelper } from "helpers/Tables/FrotasTableHelper";
 
 import { COLUMNS } from "./columns";
 

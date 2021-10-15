@@ -2,11 +2,11 @@ import React from "react";
 
 import { useFrotasTable } from "contexts/Tables/FrotasTableContext";
 
-import TableComponent from "components/micro/Table/TableComponent";
+import SeteTable from "components/micro/SeteTable";
 
 const Gerenciar: React.FC = () => {
     const { tableData, columns } = useFrotasTable();
-    return <TableComponent columns={columns} name={"table"} data={tableData} />;
+    return <SeteTable columns={columns} name={"table"} data={tableData} />;
 };
 
 export default Gerenciar;

@@ -47,6 +47,18 @@ type UpdateVeiculoRequestBody = {
 
 type UpdateVeiculoResponse = Veiculo;
 
+type GetTiposVeiculoResponse = {
+    data: { id: number; tipo: string }[];
+    result: boolean;
+    total: number;
+};
+
+type GetMarcasVeiculoResponse = {
+    data: { id: number; marca: string }[];
+    result: boolean;
+    total: number;
+};
+
 class VeiculosService {
     private api: ApiInstance;
     constructor(env?: EnvOptions) {
@@ -88,6 +100,24 @@ class VeiculosService {
             data: body,
         });
         const data = (await response.data) as UpdateVeiculoResponse;
+        return data;
+    }
+
+    public async getTiposVeiculo(): Promise<GetTiposVeiculoResponse> {
+        const response = await this.api({
+            url: "/veiculos/tipo",
+            method: "get",
+        });
+        const data = (await response.data) as GetTiposVeiculoResponse;
+        return data;
+    }
+
+    public async getMarcasVeiculo() {
+        const response = await this.api({
+            url: "/veiculos/marcas",
+            method: "get",
+        });
+        const data = (await response.data) as GetMarcasVeiculoResponse;
         return data;
     }
 }

@@ -3,18 +3,19 @@ import styled, { css } from "styled-components";
 type ContainerProps = {
     isHorizontal?: boolean;
     horizontalMedia?: string;
+    dontShowError?: boolean;
 };
 
 export const Container = styled.div<ContainerProps>`
     width: 100%;
-    ${({ isHorizontal, horizontalMedia }) =>
+    ${({ isHorizontal, horizontalMedia, dontShowError }) =>
         isHorizontal
             ? css`
                   display: flex;
                   align-items: center;
                   label {
                       display: inline-block;
-                      margin-bottom: 15px;
+                      margin-bottom: ${!dontShowError ? "15px" : "0px"};
                       margin-right: 15px;
                   }
                   ${horizontalMedia &&

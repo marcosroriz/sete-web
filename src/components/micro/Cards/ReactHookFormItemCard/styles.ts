@@ -6,7 +6,8 @@ export const mediaQuery = {
 };
 
 const placeItemsCss = {
-    center: css`
+    left: css`
+        flex: 1;
         & > div,
         & > fieldset {
             width: 100%;
@@ -46,7 +47,10 @@ const placeItemsCss = {
             }
         }
     `,
-    left: css``,
+    center: css`
+        width: 70%;
+        margin: 0 auto;
+    `,
 };
 
 type ContainerProps = {
@@ -109,10 +113,9 @@ export const Container = styled.div<ContainerProps>`
     }
 
     .form-item-content {
-        flex: 1;
         ${({ hasOnlyChild }) => (hasOnlyChild ? "margin-bottom: -15px;" : "margin-bottom: 0px;")}
         margin-left: 30px;
-        ${({ placeItems }) => placeItems && placeItemsCss[placeItems || "center"]}
+        ${({ placeItems }) => placeItems && placeItemsCss[placeItems || "left"]}
     }
 
     @media ${mediaQuery.mobile} {

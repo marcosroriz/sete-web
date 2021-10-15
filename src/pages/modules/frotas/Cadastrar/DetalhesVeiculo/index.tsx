@@ -19,7 +19,7 @@ const DetalhesVeiculo: React.FC = () => {
         <Container>
             <BlockTitle message="POR FIM, INFORME OS DADOS CADASTRAIS DO VEÍCULO." />
             <ReactHookFormItemCard required>
-                <ReactHookInputMask label="PLACA DO VEÍCULO*" name="placa" format="AAA-1111" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputMask label="PLACA DO VEÍCULO*" name="placa" format="aaa-9999" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

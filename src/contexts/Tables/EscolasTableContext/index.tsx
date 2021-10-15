@@ -4,7 +4,7 @@ import { ColumnWithLooseAccessor } from "react-table";
 import { useAuth } from "contexts/Auth";
 import { EscolasService } from "services/Escolas";
 import { EscolaTableField } from "entities/Escola";
-import { escolasTableHelper } from "helpers/EscolasTableHelper";
+import { escolasTableHelper } from "helpers/Tables/EscolasTableHelper";
 
 import { COLUMNS } from "./columns";
 

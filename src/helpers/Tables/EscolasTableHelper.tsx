@@ -1,5 +1,5 @@
-import { EscolaTableField } from "entities/Escola";
 import React from "react";
+import { EscolaTableField } from "entities/Escola";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 
 class EscolasTableHelper {
