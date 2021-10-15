@@ -12,9 +12,19 @@ export type ReactHookInputTextProps = React.InputHTMLAttributes<HTMLInputElement
     isHorizontal?: boolean | string;
     thinBorder?: boolean;
     containerClassName?: string;
+    dontShowError?: boolean;
 };
 
-const ReactHookInputText: React.FC<ReactHookInputTextProps> = ({ label, name, containerClassName, isHorizontal, thinBorder, unitOfMeasure, ...props }) => {
+const ReactHookInputText: React.FC<ReactHookInputTextProps> = ({
+    label,
+    name,
+    containerClassName,
+    isHorizontal,
+    thinBorder,
+    unitOfMeasure,
+    dontShowError,
+    ...props
+}) => {
     const {
         register,
         formState: { errors, touchedFields },
@@ -23,12 +33,13 @@ const ReactHookInputText: React.FC<ReactHookInputTextProps> = ({ label, name, co
         <Container
             className={containerClassName}
             isHorizontal={!!isHorizontal}
+            dontShowError={dontShowError}
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
             <InputFieldWrapper isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} unitOfMeasure={unitOfMeasure}>
                 <input id={name} className="form-control" aria-invalid={!!errors[name]} {...register(name)} {...props} />
-                <span className="form-error">{errors[name]?.message}</span>
+                {!dontShowError && <span className="form-error">{errors[name]?.message}</span>}
             </InputFieldWrapper>
         </Container>
     );

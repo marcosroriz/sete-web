@@ -10,7 +10,7 @@ type ReactHookFormItemCardProps = {
     containerClassName?: string;
 };
 
-const ReactHookFormItemCard: React.FC<ReactHookFormItemCardProps> = ({ required, name, placeItems = "center", containerClassName, children }) => {
+const ReactHookFormItemCard: React.FC<ReactHookFormItemCardProps> = ({ required, name, placeItems = "left", containerClassName, children }) => {
     const firstChild = React.Children.only(children) as React.ReactElement<{ name: string }>;
     const {
         formState: { errors },

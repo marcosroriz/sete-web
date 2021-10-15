@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 
 import { useEscolasTable } from "contexts/Tables/EscolasTableContext";
 
-import TableComponent from "components/micro/Table/TableComponent";
+import SeteTable from "components/micro/SeteTable";
 
 const Gerenciar: React.FC = () => {
     const { tableData, columns } = useEscolasTable();
-    return <TableComponent columns={columns} name={"table"} data={tableData} />;
+    return <SeteTable columns={columns} name={"table"} data={tableData} />;
 };
 
 export default Gerenciar;

@@ -1,8 +1,5 @@
-// credits to https://usehooks.com/useLocalStorage/
-
 import { useCallback, useState } from "react";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useLocalStorage(key: string, initialValue: any) {
     // State to store our value
     // Pass initial state function to useState so logic is only executed once
@@ -32,6 +29,7 @@ export function useLocalStorage(key: string, initialValue: any) {
                 console.log(error);
             }
         },
+
         [key],
     );
 

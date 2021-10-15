@@ -4,9 +4,9 @@ import { useFormContext } from "react-hook-form";
 import { Fieldset } from "./styles";
 
 type ReactHookMultiFormListProps = React.HTMLAttributes<HTMLDivElement> & {
-    label: string;
+    label?: string;
     name?: string;
-    formListSpacing?: string;
+    formListSpacing?: "evenly" | string;
     isHorizontal?: boolean | string;
     fieldsHorizontal?: boolean | string;
     containerClassName?: string;
@@ -34,7 +34,7 @@ const ReactHookMultiFormList: React.FC<ReactHookMultiFormListProps> = ({
             fieldsHorizontal={!!fieldsHorizontal}
             fieldsHorizontalMedia={(fieldsHorizontal as any) instanceof String || typeof fieldsHorizontal === "string" ? (fieldsHorizontal as string) : ""}
         >
-            <legend className="form-list-legend">{label}</legend>
+            {label && <legend className="form-list-legend">{label}</legend>}
             <div className="form-list-container">
                 <div className="form-list" onChange={props.onChange} {...props}>
                     {children}
