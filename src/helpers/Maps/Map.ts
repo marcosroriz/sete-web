@@ -9,6 +9,7 @@ import OSM from "ol/source/OSM";
 import Vector from "ol/source/Vector";
 
 import CanvasScaleLine from "ol-ext/control/CanvasScaleLine";
+import LayerSwitcher from "ol-ext/control/LayerSwitcher";
 import PrintDialog from "ol-ext/control/PrintDialog";
 
 import { ViewOptions } from "ol/View";
@@ -37,6 +38,7 @@ class Map {
                     tipLabel: "Ativar/Desativar tela cheia",
                 }),
                 new CanvasScaleLine(),
+                new LayerSwitcher(),
             ]),
             target: mapId,
             layers: [

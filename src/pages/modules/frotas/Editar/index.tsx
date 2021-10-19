@@ -70,6 +70,7 @@ const Editar: React.FC = () => {
                 modelo: data.modelo,
                 ano: Number(data.ano),
                 origem: Number(data.origem),
+                placa: data.placa.replace("-", ""),
                 renavam: data.renavam,
                 km_inicial: Number(data.km_inicial),
                 km_atual: Number(data.km_atual),
