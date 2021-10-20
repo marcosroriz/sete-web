@@ -11,6 +11,8 @@ import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 
+import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
+
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
 const Localizacao: React.FC = () => {
@@ -18,7 +20,7 @@ const Localizacao: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" />
+            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" icon={AlunosMarker} />
             <ReactHookFormItemCard placeItems="center" required>
                 <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />

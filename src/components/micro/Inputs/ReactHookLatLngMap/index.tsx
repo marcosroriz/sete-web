@@ -9,11 +9,13 @@ import { Container } from "./styles";
 
 type ReactHookLatLngMapProps = {
     name: string;
+    icon?: string;
+    anchor?: [number, number];
     children?: React.ReactNode;
     title?: string;
 };
 
-const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, children }) => {
+const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, icon, anchor, children }) => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
     const { setValue } = useFormContext();
 
@@ -23,7 +25,7 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, ch
             const map = mapRef.current;
             map.mapInstance.on("singleclick", (event) => {
                 const [lng, lat] = event.coordinate;
-                map.handleSingleClickEvent({ lng: lng, lat: lat, icon: AlunosMarker, anchor: [25, 50] });
+                map.handleSingleClickEvent({ lng: lng, lat: lat, icon: icon || "", anchor: anchor || [25, 50] });
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
                 const translate = map.getTranslateMarker();
                 if (!translate) {

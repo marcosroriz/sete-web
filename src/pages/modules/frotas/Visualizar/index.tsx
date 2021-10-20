@@ -44,7 +44,7 @@ const Visualizar: React.FC = () => {
     }, []);
     return (
         <>
-            <PageTitle message="Cadastro de Veículo" icon={PageIconOnibus} iconRight={PageIconLancha} />
+            <PageTitle message="Dados do Veículo" icon={PageIconOnibus} iconRight={PageIconLancha} />
             <NavCardProvider aditionalData={{ veiculoData: [veiculoData, setVeiculoData] }}>
                 <NavCardTab name="FICHA DO VEÍCULO" icon={<img src={FrotasFichaVeiculoIcon} alt="" aria-hidden="true" />}>
                     <FichaVeiculo />
