@@ -22,7 +22,7 @@ const Localizacao: React.FC = () => {
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
             <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" icon={AlunosMarker} />
             <ReactHookFormItemCard placeItems="center" required>
-                <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
+                <ReactHookMultiFormList name="latlng" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />
                     <ReactHookInputText label="LONGITUDE:" name="latlng[1]" isHorizontal={mediaQuery.desktop} dontShowError />
                 </ReactHookMultiFormList>
@@ -30,13 +30,13 @@ const Localizacao: React.FC = () => {
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
                     label="O ALUNO ESTÁ LOCALIZADO EM:*"
-                    name="modo"
+                    name="mec_tp_localizacao"
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Área urbana" value="1" name="area" position="right" />
-                    <ReactHookInputRadio label="Área rural" value="2" name="area" position="right" />
+                    <ReactHookInputRadio label="Área urbana" value="1" name="mec_tp_localizacao" position="right" />
+                    <ReactHookInputRadio label="Área rural" value="2" name="mec_tp_localizacao" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
@@ -45,15 +45,14 @@ const Localizacao: React.FC = () => {
             <ReactHookFormItemCard>
                 <ReactHookMultiFormList
                     label="O LOCAL POSSUI ALGUMA DIFICULDADE DE ACESSO? SE SIM, MARQUE AS DIFICULDADES:"
-                    name="dificuldade"
                     formListSpacing="30px"
-                    fieldsHorizontal={mediaQuery.mobile}
+                    fieldsHorizontal={mediaQuery.desktop}
                 >
-                    <ReactHookInputCheckbox label="Porteira" name="dificuldade[0]" />
-                    <ReactHookInputCheckbox label="Mata-Burro" name="dificuldade[1]" />
-                    <ReactHookInputCheckbox label="Colchete" name="dificuldade[2]" />
-                    <ReactHookInputCheckbox label="Atoleiro" name="dificuldade[3]" />
-                    <ReactHookInputCheckbox label="Ponte Rústica" name="dificuldade[4]" />
+                    <ReactHookInputCheckbox label="Porteira" name="da_porteira" />
+                    <ReactHookInputCheckbox label="Mata-Burro" name="da_mataburro" />
+                    <ReactHookInputCheckbox label="Colchete" name="da_colchete" />
+                    <ReactHookInputCheckbox label="Atoleiro" name="da_atoleiro" />
+                    <ReactHookInputCheckbox label="Ponte Rústica" name="da_ponterustica" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>

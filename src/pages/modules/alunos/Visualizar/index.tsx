@@ -10,8 +10,8 @@ import { Escola } from "entities/Escola";
 import PageTitle from "components/micro/PageTitle";
 
 import AlunosListar from "assets/icons/alunos/alunos-listar.png";
-import FichaAlunoIcon from "assets/icons/alunos/alunos-dados-escolares.png";
-import LocalizacaoIcon from "assets/icons/alunos/alunos-localizacao.png";
+import FichaAlunoIcon from "assets/icons/alunos/alunos-dados-escolares.svg";
+import LocalizacaoIcon from "assets/icons/alunos/alunos-localizacao.svg";
 
 const Visualizar: React.FC = () => {
     const { id: alunoId } = useParams<{ id: string }>();

@@ -41,7 +41,7 @@ const DadosPessoais: React.FC = () => {
             <ReactHookFormItemCard>
                 <ReactHookInputNumberFormat
                     label="TELEFONE DO RESPONSÁVEL"
-                    name="data_nascimento"
+                    name="telefone_responsavel"
                     format={["(##) ####-#####", "(##) #####-####"]}
                     isHorizontal={mediaQuery.desktop}
                 />
@@ -71,7 +71,7 @@ const DadosPessoais: React.FC = () => {
                 <ReactHookMultiFormList
                     label="A COR DO ALUNO É?*"
                     name="cor"
-                    isHorizontal={mediaQuery.mobile}
+                    isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.corHorizontal}
                     formListSpacing="10px"
                 >
