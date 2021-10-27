@@ -7,6 +7,7 @@ interface Escola {
     mec_no_entidade?: string;
     mec_tp_dependencia?: number;
     mec_tp_localizacao?: number;
+    mec_tp_localizacao_diferenciada?: number;
     mec_in_regular?: string;
     mec_in_eja?: string;
     mec_in_profissionalizante?: string;

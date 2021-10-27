@@ -15,7 +15,7 @@ const DadosEscolares: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="POR FIM, FORNEÇA AS INFORMAÇÕES RELACIONADOS AO TIPO DE ENSINO DA ESCOLA:" />
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
                     label="EM RELAÇÃO AO REGIME, A ESCOLA OFERECE ENSINO:*"
                     isHorizontal={mediaQuery.desktop}
@@ -27,7 +27,7 @@ const DadosEscolares: React.FC = () => {
                     <ReactHookInputCheckbox label="Profissionalizante" name="mec_in_profissionalizante" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
                     label="EM RELAÇÃO AO NÍVEL A ESCOLA OFERECE ENSINO:*"
                     isHorizontal={mediaQuery.desktop}
@@ -40,7 +40,7 @@ const DadosEscolares: React.FC = () => {
                     <ReactHookInputCheckbox label="Superior" name="ensino_superior" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
                     label="EM RELAÇÃO AO HORÁRIO DE FUNCIONAMENTO, A ESCOLA FUNCIONA NO PERÍODO DA:*"
                     isHorizontal={mediaQuery.desktop}

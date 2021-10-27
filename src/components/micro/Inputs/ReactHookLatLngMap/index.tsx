@@ -3,8 +3,6 @@ import { useFormContext } from "react-hook-form";
 
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 
-import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
-
 import { Container } from "./styles";
 
 type ReactHookLatLngMapProps = {
@@ -17,7 +15,7 @@ type ReactHookLatLngMapProps = {
 
 const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, icon, anchor, children }) => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
-    const { setValue } = useFormContext();
+    const { setValue, watch } = useFormContext();
 
     React.useEffect(() => {
         if (!mapRef.current) {
@@ -36,6 +34,19 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, ic
                     setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
                 });
             });
+            if (watch(name)) {
+                const [lng, lat] = watch(name);
+                map.handleSingleClickEvent({ lng: lng, lat: lat, icon: icon || "", anchor: anchor || [25, 50] });
+                setValue(name, [lat, lng]);
+                const translate = map.getTranslateMarker();
+                if (!translate) {
+                    return;
+                }
+                translate.on("translateend", (translateEvent) => {
+                    const [lng, lat] = translateEvent.coordinate;
+                    setValue(name, [lat, lng]);
+                });
+            }
         }
     }, []);
 
