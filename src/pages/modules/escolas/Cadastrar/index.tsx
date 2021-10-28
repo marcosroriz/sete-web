@@ -27,6 +27,7 @@ type FormData = {
     loc_cep: string;
     mec_tp_localizacao: string;
     mec_tp_localizacao_diferenciada: string;
+    mec_tp_dependencia: string;
 
     nome: string;
     contato_responsavel: string;
@@ -64,6 +65,7 @@ const Cadastrar: React.FC = () => {
                 loc_cep: data.loc_cep,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),
                 mec_tp_localizacao_diferenciada: Number(data.mec_tp_localizacao_diferenciada),
+                mec_tp_dependencia: Number(data.mec_tp_dependencia),
                 nome: data.nome,
                 contato_responsavel: data.contato_responsavel,
                 contato_telefone: data.contato_telefone,

@@ -29,12 +29,12 @@ type FormData = {
     loc_cep: string;
     mec_tp_localizacao: string;
     mec_tp_localizacao_diferenciada: string;
+    mec_tp_dependencia: string;
 
     nome: string;
     contato_responsavel: string;
     contato_telefone: string;
     contato_email: string;
-    mec_tp_dependencia: string;
 
     mec_in_regular: boolean;
     mec_in_eja: boolean;

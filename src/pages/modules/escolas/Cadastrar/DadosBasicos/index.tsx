@@ -35,11 +35,11 @@ const DadosBasicos: React.FC = () => {
                 <ReactHookInputText label="EMAIL PARA CONTATO*" name="contato_email" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookMultiFormList label="A ESCOLA É:*" name="escola_tipo" isHorizontal={mediaQuery.desktop} fieldsHorizontal>
-                    <ReactHookInputRadio label="Federal" value="1" name="escola_tipo" position="right" />
-                    <ReactHookInputRadio label="Estadual" value="2" name="escola_tipo" position="right" />
-                    <ReactHookInputRadio label="Municipal" value="3" name="escola_tipo" position="right" />
-                    <ReactHookInputRadio label="Privatizada" value="4" name="escola_tipo" position="right" />
+                <ReactHookMultiFormList label="A ESCOLA É:*" name="mec_tp_dependencia" isHorizontal={mediaQuery.desktop} fieldsHorizontal>
+                    <ReactHookInputRadio label="Federal" value="1" name="mec_tp_dependencia" position="right" />
+                    <ReactHookInputRadio label="Estadual" value="2" name="mec_tp_dependencia" position="right" />
+                    <ReactHookInputRadio label="Municipal" value="3" name="mec_tp_dependencia" position="right" />
+                    <ReactHookInputRadio label="Privatizada" value="4" name="mec_tp_dependencia" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>

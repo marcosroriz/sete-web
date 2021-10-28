@@ -1,8 +1,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { Aluno } from "entities/Aluno";
 
 import BlockTitle from "components/micro/BlockTitle";
 import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
@@ -14,12 +16,32 @@ import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckb
 
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
+type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
+
 const Localizacao: React.FC = () => {
-    const { nextStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
     const history = useHistory();
+
+    const [alunoData] = aditionalData?.alunoData as AlunoData;
+
+    React.useEffect(() => {
+        if (alunoData) {
+            // setValue("latlng[0]", alunoData?.loc_latitude || "");
+            // setValue("latlng[0]", alunoData.loc_longitude || "");
+            // setValue("mec_co_uf", alunoData?.mec_co_uf?.toString() || "");
+            // setValue("mec_co_municipio", alunoData?.mec_co_municipio?.toString() || "");
+            // setValue("loc_endereco", alunoData?.loc_endereco || "");
+            // setValue("loc_cep", alunoData?.loc_cep || "");
+            // setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
+            // setValue("mec_tp_localizacao_diferenciada", alunoData?.mec_tp_localizacao_diferenciada?.toString() || "");
+        }
+    }, [alunoData]);
+
     const handleCancelEditClick = () => {
         history.goBack();
     };
+
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
