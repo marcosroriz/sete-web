@@ -28,6 +28,17 @@ type FormData = {
     so_seguros: boolean; // S/N pra api
 };
 
+const formData = {
+    latlng: ["", ""],
+    endereco: "",
+    cep: "",
+    nome: "",
+    telefone: "",
+    cpf_cnpj: "",
+    so_mecaninca: false,
+    so_combustivel_oleo: false,
+    so_seguros: false,
+};
 const Cadastrar: React.FC = () => {
     const { user } = useAuth();
     const { errorHandler } = useError();
@@ -63,7 +74,7 @@ const Cadastrar: React.FC = () => {
     return (
         <>
             <PageTitle message="Cadastrar Fornecedor" icon={FornecedoresCadastroIcon} />
-            <ReactHookNavCardProvider onSubmit={(data) => console.log(data)}>
+            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleFormSubmit}>
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />}>
                     <Localizacao />
                 </ReactHookNavCardTab>
