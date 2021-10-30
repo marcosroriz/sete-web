@@ -21,6 +21,7 @@ import AlunosCadastroIcon from "assets/icons/alunos/alunos-cadastro.svg";
 
 type FormData = {
     latlng: [string, string];
+    loc_endereco: string;
     mec_tp_localizacao: string;
     endereco: string;
     da_porteira: boolean; // S/N pra api
@@ -62,6 +63,7 @@ const Editar: React.FC = () => {
             const body = {
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
+                loc_endereco: data.loc_endereco,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),
                 endereco: data.endereco,
                 da_porteira: data.da_porteira ? "S" : "N",
