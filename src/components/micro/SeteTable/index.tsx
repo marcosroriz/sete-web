@@ -73,7 +73,7 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
         <TableContainer>
             <div className="componententeTabela">
                 <div className="titulo">
-                    Total de escolas
+                    Total de {name}
                     <span className="totalEscolas ml-4">{data.length}</span>
                 </div>
                 <div className="table-wrapper">

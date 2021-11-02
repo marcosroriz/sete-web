@@ -6,7 +6,7 @@ import SeteTable from "components/micro/SeteTable";
 
 const Gerenciar: React.FC = () => {
     const { tableData, columns } = useFrotasTable();
-    return <SeteTable columns={columns} name={"tableFrotas"} data={tableData} />;
+    return <SeteTable columns={columns} name={"Frotas"} data={tableData} />;
 };
 
 export default Gerenciar;

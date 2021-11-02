@@ -61,6 +61,7 @@ const Cadastrar: React.FC = () => {
                 loc_cep: data.cep,
                 telefone: data.telefone,
             };
+
             const response = await fornecedoresService.createFornecedor(body, codigo_cidade);
             if (!response.result) {
                 throw { ...response };

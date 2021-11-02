@@ -24,7 +24,7 @@ const DadosInstitucionais: React.FC = () => {
                 <ReactHookInputText label="TELEFONE" name="telefone" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="CPF OU CNPJ DO FORNECEDOR" name="cpfcnpj" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="CPF OU CNPJ DO FORNECEDOR" name="cpf_cnpj" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
