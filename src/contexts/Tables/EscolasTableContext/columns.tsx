@@ -23,7 +23,7 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
     },
     {
         Header: "NÍVEL",
-        accessor: "horario_matutino",
+        accessor: "nivel",
         Filter: SelectColumnFilter,
         filter: "includes",
     },

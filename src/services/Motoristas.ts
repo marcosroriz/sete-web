@@ -1,56 +1,23 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
-import { Motorista, MotoristaTableField } from "entities/Motorista";
+import { Motorista, MotoristaListObj } from "entities/Motorista";
 
-type ListMotoristaResponse = {
-    data: MotoristaTableField[];
-    result: boolean;
-    total: number;
-};
-
-type CreateMotoristaRequestBody = {
-    nome: string;
-    cpf: string;
-    data_nascimento: string;
-    sexo: number;
-    telefone: string;
-    cnh: string;
-    data_validade_cnh: string;
-    turno_manha: string;
-    turno_tarde: string;
-    turno_noite: string;
-    tem_cnh_a: string;
-    tem_cnh_b: string;
-    tem_cnh_c: string;
-    tem_cnh_d: string;
-    tem_cnh_e: string;
-};
-
+type CreateMotoristaRequestBody = Motorista;
 type CreateMotoristaResponse = {
     messages: string;
     result: boolean;
 };
 
-type GetMotoristaResponse = Motorista;
-
-type UpdateMotoristaRequestBody = {
-    nome: string;
-    data_nascimento: string;
-    sexo: number;
-    telefone: string;
-    cnh: string;
-    data_validade_cnh: string;
-    turno_manha: string;
-    turno_tarde: string;
-    turno_noite: string;
-    tem_cnh_a: string;
-    tem_cnh_b: string;
-    tem_cnh_c: string;
-    tem_cnh_d: string;
-    tem_cnh_e: string;
+type ListMotoristaResponse = {
+    data: MotoristaListObj[];
+    result: boolean;
+    total: number;
 };
 
+type GetMotoristaResponse = Motorista;
+
+type UpdateMotoristaRequestBody = Motorista;
 type UpdateMotoristaResponse = Motorista;
 
 class MotoristasService {
@@ -88,7 +55,6 @@ class MotoristasService {
     }
 
     public async updateMotorista(body: UpdateMotoristaRequestBody, codigo_cidade: number, cpf: string): Promise<UpdateMotoristaResponse> {
-        console.log(body);
         const response = await this.api({
             url: `/motoristas/${codigo_cidade}/${cpf}`,
             method: "put",

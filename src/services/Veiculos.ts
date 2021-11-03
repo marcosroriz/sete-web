@@ -1,58 +1,29 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
-import { Veiculo, VeiculoTableField } from "entities/Veiculo";
+import { Veiculo, VeiculoListObj } from "entities/Veiculo";
 
-type ListVeiculoResponse = {
-    data: VeiculoTableField[];
-    result: boolean;
-    total: number;
-};
-
-type CreateVeiculoRequestBody = {
-    modo: number;
-    tipo: number;
-    marca: number;
-    modelo: string;
-    ano: number;
-    origem: number;
-    placa: string;
-    renavam: string;
-    km_inicial: number;
-    km_atual: number;
-    capacidade: number;
-    manutencao: boolean;
-};
-
+type CreateVeiculoRequestBody = Veiculo;
 type CreateVeiculoResponse = {
     messages: string;
     result: boolean;
 };
 
-type GetVeiculoResponse = Veiculo;
-
-type UpdateVeiculoRequestBody = {
-    modo: number;
-    tipo: number;
-    marca: number;
-    modelo: string;
-    ano: number;
-    origem: number;
-    renavam: string;
-    km_inicial: number;
-    km_atual: number;
-    capacidade: number;
-    manutencao: boolean;
+type ListVeiculoResponse = {
+    data: VeiculoListObj[];
+    result: boolean;
+    total: number;
 };
 
+type UpdateVeiculoRequestBody = Veiculo;
 type UpdateVeiculoResponse = Veiculo;
 
+type GetVeiculoResponse = Veiculo;
 type GetTiposVeiculoResponse = {
     data: { id: number; tipo: string }[];
     result: boolean;
     total: number;
 };
-
 type GetMarcasVeiculoResponse = {
     data: { id: number; marca: string }[];
     result: boolean;

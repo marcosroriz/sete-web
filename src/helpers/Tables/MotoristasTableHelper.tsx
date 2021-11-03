@@ -1,58 +1,60 @@
 import React from "react";
-import { MotoristaTableField } from "entities/Motorista";
+import { MotoristaListObj, MotoristaTableField } from "entities/Motorista";
+import { Link } from "react-router-dom";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 
 class MotoristasTableHelper {
-    public treatData(data: MotoristaTableField[]): any[] {
-        //console.log(data);
-        return data.map((motorista) => {
-            return {
-                ...motorista,
-                acoes: (
-                    <span>
-                        <button
-                            style={{
-                                border: "none",
-                                backgroundColor: "transparent",
-                                cursor: "pointer",
-                            }}
-                        >
-                            <FaUserAlt size={"18px"} color={"#1dc7ea"} />
-                        </button>
-                        <button
-                            style={{
-                                border: "none",
-                                backgroundColor: "transparent",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => console.log("Clicou2")}
-                        >
-                            <FaSearch size={"18px"} color={"gray"} />
-                        </button>
-                        <button
-                            style={{
-                                border: "none",
-                                backgroundColor: "transparent",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => console.log("Clicou3")}
-                        >
-                            <FaEdit size={"18px"} color={"orange"} />
-                        </button>
-                        <button
-                            style={{
-                                border: "none",
-                                backgroundColor: "transparent",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => console.log("Clicou4")}
-                        >
-                            <FaRegTimesCircle size={"17px"} color={"red"} />
-                        </button>
-                    </span>
-                ),
-            };
-        });
+    public treatData(data: MotoristaListObj[]): MotoristaTableField[] {
+        return data.map((motoristaObj) => ({
+            nome: motoristaObj.nome,
+            telefone: motoristaObj.telefone,
+            turno: motoristaObj.turno_manha === "S" ? "Manhã" : "",
+            cnh: motoristaObj.cnh,
+            data_validade_cnh: motoristaObj.data_validade_cnh,
+            rotas_dirigidas: ":/",
+            acoes: this.acoesComponent(motoristaObj),
+        }));
+    }
+
+    public acoesComponent(motoristaObj: MotoristaListObj) {
+        return (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Link
+                    to={`/motoristas/gerenciar/visualizar/${motoristaObj.id_motorista}`}
+                    style={{
+                        display: "block",
+                        marginBottom: "-2px",
+                        border: "none",
+                        backgroundColor: "transparent",
+                        cursor: "pointer",
+                    }}
+                >
+                    <FaSearch size={"16px"} color={"gray"} />
+                </Link>
+                <Link
+                    to={`/alunos/gerenciar/editar/${motoristaObj.id_motorista}`}
+                    style={{
+                        display: "block",
+                        marginLeft: "6px",
+                        border: "none",
+                        backgroundColor: "transparent",
+                        cursor: "pointer",
+                    }}
+                >
+                    <FaEdit size={"18px"} color={"orange"} />
+                </Link>
+                <button
+                    style={{
+                        border: "none",
+                        backgroundColor: "transparent",
+                        cursor: "pointer",
+                    }}
+                    onClick={() => console.log("Clicou4")}
+                >
+                    <FaRegTimesCircle size={"17px"} color={"red"} />
+                </button>
+            </div>
+        );
     }
 }
 

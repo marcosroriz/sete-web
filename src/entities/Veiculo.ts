@@ -20,15 +20,25 @@ interface Veiculo {
     result?: boolean;
 }
 
-interface VeiculoTableField {
-    capacidade: number;
-    id_veiculo: number;
-    manutencao: string;
-    marca: string;
-    modelo: string;
-    origem: string;
+interface VeiculoListObj {
+    id_veiculo?: number;
     placa: string;
     tipo: string;
+    marca: string;
+    modelo: string;
+    capacidade: string;
+    manutencao: string;
+    origem: string;
 }
 
-export type { Veiculo, VeiculoTableField };
+interface VeiculoTableField {
+    placa: string;
+    tipo: string;
+    marca: string;
+    modelo: string;
+    capacidade: string;
+    manutencao: string;
+    origem: string;
+}
+
+export type { Veiculo, VeiculoListObj, VeiculoTableField };

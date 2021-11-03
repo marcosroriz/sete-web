@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import BlockTitle from "components/micro/BlockTitle";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -11,7 +12,7 @@ import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckb
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 
-import { ButtonsContainer, Container, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
 
 const veiculoOptions = [
     { label: "Escolher veículo depois", value: "0" },
@@ -95,6 +96,11 @@ const DadosBasicos: React.FC = () => {
             <ReactHookFormItemCard required>
                 <ReactHookInputText label="INFORME O TEMPO ESTIMADO PARA ESTA ROTA:" name="tmp_estimado" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
+            <ButtonsContainer>
+                <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
+                    Próximo
+                </Button>
+            </ButtonsContainer>
         </Container>
     );
 };

@@ -17,13 +17,27 @@ interface Motorista {
     tem_cnh_e?: string;
 }
 
+interface MotoristaListObj {
+    id_motorista: number;
+    nome: string;
+    telefone: string;
+    turno_manha?: string;
+    turno_tarde?: string;
+    turno_noite?: string;
+    cnh?: string;
+    data_validade_cnh?: string;
+    _links: {
+        _self: string;
+    };
+}
+
 interface MotoristaTableField {
     nome: string;
     telefone: string;
-    turno: string[];
-    cnh: string;
-    data_validade_cnh: string;
+    turno?: string;
+    cnh?: string;
+    data_validade_cnh?: string;
     rotas_dirigidas: string;
 }
 
-export type { Motorista, MotoristaTableField };
+export type { Motorista, MotoristaListObj, MotoristaTableField };

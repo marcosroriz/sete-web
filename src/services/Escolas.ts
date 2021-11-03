@@ -1,10 +1,10 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { User } from "entities/User";
-import { Escola, EscolaTableField } from "entities/Escola";
+import { Escola, EscolaListObj } from "entities/Escola";
 
 type ListEscolaResponse = {
-    data: EscolaTableField[];
+    data: EscolaListObj[];
     result: boolean;
     total: number;
 };

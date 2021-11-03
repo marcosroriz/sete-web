@@ -30,9 +30,11 @@ interface Escola {
     };
 }
 
-interface EscolaTableField {
+interface EscolaListObj {
     id_escola: number;
     nome: string;
+    loc_latitude: string;
+    loc_longitude: string;
     horario_matutino: string;
     horario_vespertino: string;
     horario_noturno: string;
@@ -40,9 +42,19 @@ interface EscolaTableField {
     ensino_fundamental: string;
     ensino_medio: string;
     ensino_superior: string;
+    qtd_alunos: number;
+    _links: {
+        _self: string;
+    };
+}
+
+interface EscolaTableField {
+    nome: string;
+    localizacao: string;
+    gps: string;
     nivel: string;
     horario_funcionamento: string;
     qtd_alunos: number;
 }
 
-export type { Escola, EscolaTableField };
+export type { Escola, EscolaListObj, EscolaTableField };

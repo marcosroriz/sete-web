@@ -17,7 +17,7 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
     },
     {
         Header: "TURNO",
-        accessor: "turno_manha",
+        accessor: "turno",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
