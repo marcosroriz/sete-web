@@ -82,6 +82,7 @@ const Cadastrar: React.FC = () => {
                 turno: Number(data.turno),
                 nivel: Number(data.nivel),
             };
+            console.log(body);
             const response = await alunosService.createAluno(body, codigo_cidade);
             if (!response.result) {
                 throw { ...response };

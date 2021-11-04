@@ -25,7 +25,7 @@ type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | n
 
 const Localizacao: React.FC = () => {
     const history = useHistory();
-    const { watch, setValue } = useFormContext();
+    const { setValue } = useFormContext();
     const { nextStep, aditionalData } = useReactHookNavCard();
     const mec_co_uf = useWatch({
         name: "mec_co_uf",
@@ -39,7 +39,7 @@ const Localizacao: React.FC = () => {
     React.useEffect(() => {
         if (escolaData) {
             setValue("latlng[0]", escolaData?.loc_latitude || "");
-            setValue("latlng[0]", escolaData.loc_longitude || "");
+            setValue("latlng[1]", escolaData?.loc_longitude || "");
             setValue("mec_co_uf", escolaData?.mec_co_uf?.toString() || "");
             setValue("mec_co_municipio", escolaData?.mec_co_municipio?.toString() || "");
             setValue("loc_endereco", escolaData?.loc_endereco || "");

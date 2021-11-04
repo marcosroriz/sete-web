@@ -27,9 +27,21 @@ const FichaEscola: React.FC = () => {
                 "Telefone de contato": escolaData.contato_telefone,
                 "E-mail de contato": escolaData.contato_email,
                 // "Número de alunos atendidos": escolaData.nome,
-                "Tipo de ensino oferecido": escolaData.ensino_fundamental,
-                "Horário de funcionamento": escolaData.horario_vespertino,
-                "Regime de funcionamento": escolaData.ensino_fundamental,
+                "Tipo de ensino oferecido": [
+                    escolaData.ensino_pre_escola === "S" ? "Infantil" : "",
+                    escolaData.ensino_fundamental === "S" ? "Fundamental" : "",
+                    escolaData.ensino_medio === "S" ? "Médio" : "",
+                    escolaData.ensino_superior === "S" ? "Superior" : "",
+                ]
+                    .filter((val) => val !== "")
+                    .join(", "),
+                "Horário de funcionamento": [
+                    escolaData.horario_matutino === "S" ? "Manhã" : "",
+                    escolaData.horario_vespertino === "S" ? "Tarde" : "",
+                    escolaData.horario_noturno === "S" ? "Noite" : "",
+                ]
+                    .filter((val) => val !== "")
+                    .join(", "),
             };
             setTableData(data);
         }

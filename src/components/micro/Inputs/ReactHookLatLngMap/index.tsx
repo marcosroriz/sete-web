@@ -15,6 +15,7 @@ type ReactHookLatLngMapProps = {
 
 const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, icon, anchor, children }) => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
+    const transladeRef = React.useRef<boolean>(false);
     const { setValue, watch } = useFormContext();
 
     React.useEffect(() => {
@@ -23,32 +24,29 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, ic
             const map = mapRef.current;
             map.mapInstance.on("singleclick", (event) => {
                 const [lng, lat] = event.coordinate;
-                map.handleSingleClickEvent({ lng: lng, lat: lat, icon: icon || "", anchor: anchor || [25, 50] });
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
-                const translate = map.getTranslateMarker();
-                if (!translate) {
-                    return;
-                }
-                translate.on("translateend", (translateEvent) => {
-                    const [lng, lat] = translateEvent.coordinate;
-                    setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
-                });
             });
-            if (watch(name)) {
-                const [lng, lat] = watch(name);
-                map.handleSingleClickEvent({ lng: lng, lat: lat, icon: icon || "", anchor: anchor || [25, 50] });
-                setValue(name, [lat, lng]);
-                const translate = map.getTranslateMarker();
-                if (!translate) {
-                    return;
-                }
-                translate.on("translateend", (translateEvent) => {
-                    const [lng, lat] = translateEvent.coordinate;
-                    setValue(name, [lat, lng]);
-                });
-            }
         }
     }, []);
+
+    React.useEffect(() => {
+        if (watch(name) && mapRef.current && !transladeRef.current) {
+            const map = mapRef.current;
+            const [lat, lng] = watch(name);
+            map.handleMarkerInstance({ lng: Number(lng), lat: Number(lat), icon: icon || "", anchor: anchor || [25, 50] });
+            const translate = map.getTranslateMarker();
+            if (!translate) {
+                return;
+            }
+            translate.on("translateend", (translateEvent) => {
+                const [lng, lat] = translateEvent.coordinate;
+                setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
+                transladeRef.current = true;
+            });
+        } else {
+            transladeRef.current = false;
+        }
+    }, [watch(name)]);
 
     return (
         <Container>

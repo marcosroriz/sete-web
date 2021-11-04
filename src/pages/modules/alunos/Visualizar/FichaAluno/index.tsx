@@ -24,7 +24,6 @@ const FichaAluno: React.FC = () => {
                 "Possui alguma deficiência": alunoData.def_caminhar,
                 "Nome do responsável": alunoData.nome_responsavel,
                 "Grau de parentesco": alunoData.grau_responsavel,
-                "Telefone do responsável": alunoData.data_nascimento,
                 "Endereço do Aluno": alunoData.loc_endereco,
                 "CEP da residência": alunoData.loc_cep,
                 "Dificuldade de Acesso": alunoData.mec_tp_localizacao,
