@@ -15,7 +15,7 @@ const AccordionButton: React.FC<AccordionButtonProps> = ({ icon, name, ref, isAc
     return (
         <ButtonContainer {...props} ref={ref} isActive={isActive} isProfile={isProfile}>
             <div className="accordion-content">
-                <div className="accordion-img-container">
+                <div className={`accordion-img-container${isProfile ? " accordion-img-profile" : ""}`}>
                     <img src={icon} alt="" />
                 </div>
                 {name}

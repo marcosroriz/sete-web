@@ -71,9 +71,9 @@ const Cadastrar: React.FC = () => {
                 capacidade: data.capacidade,
                 manutencao: data.manutencao === "true",
             };
-            const veiculosResponse = await veiculosService.createVeiculo(body, codigo_cidade);
-            if (!veiculosResponse.result) {
-                throw { ...veiculosResponse };
+            const response = await veiculosService.createVeiculo(body, codigo_cidade);
+            if (!response.result) {
+                throw { ...response };
             }
             createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
         } catch (err) {
