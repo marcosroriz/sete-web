@@ -1,11 +1,10 @@
+/**
+ * Classe que lida com o uso dos cookies da aplicação utilizando a biblioteca cookie.
+ */
+
 import { parse, serialize, CookieParseOptions, CookieSerializeOptions } from "cookie";
 
 class Cookie {
-    /**
-     * Esse método serve para pegar uma string e verificar se ela é um json parsado
-     * @param {Number} value a - String that is json
-     * @returns {Boolean}
-     */
     private isJSON(value: string): boolean {
         try {
             JSON.parse(value);

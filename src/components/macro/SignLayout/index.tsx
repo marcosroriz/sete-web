@@ -1,3 +1,7 @@
+/**
+ * Template da página de Autenticação do SETE.
+ */
+
 import React from "react";
 import { Container as BootstrapContainer, Row, Col } from "react-bootstrap";
 

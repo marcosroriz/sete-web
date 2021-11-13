@@ -1,3 +1,8 @@
+/**
+ * Tabelas gerais do SETE.
+ * pages/modules/{modulo}/Gerenciar ou /{modulo}/gerenciar
+ */
+
 /* eslint-disable react/jsx-key */
 import React, { useEffect } from "react";
 

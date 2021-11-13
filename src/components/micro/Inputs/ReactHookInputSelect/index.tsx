@@ -1,3 +1,7 @@
+/**
+ * Componente contendo Label, Select e ErrorMessage integrado com React-Hook-Forms
+ */
+
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import ReactSelect, { NamedProps } from "react-select";

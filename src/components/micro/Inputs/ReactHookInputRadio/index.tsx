@@ -1,3 +1,7 @@
+/**
+ * Componente contendo Label, Radio e ErrorMessage integrado com React-Hook-Forms
+ */
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 

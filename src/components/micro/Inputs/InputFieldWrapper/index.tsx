@@ -1,3 +1,6 @@
+/**
+ * Como muitos dos campos de input possuem a mesma estilização, esse componente serve para economizar o código dessa funcionalidade.
+ */
 import React from "react";
 
 import { InputField } from "./styles";

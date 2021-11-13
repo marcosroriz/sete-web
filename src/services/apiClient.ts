@@ -1,3 +1,8 @@
+/**
+ * Instancia da api que só existe pois é necessário fazer tratamentos com interceptor ou com baseUrl.
+ * Nesse caso, ele intercepta toda request e busca os token de autenticação do usuário.
+ */
+
 import axios, { AxiosInstance } from "axios";
 import { cookie } from "helpers/Cookie";
 

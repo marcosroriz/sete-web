@@ -1,3 +1,7 @@
+/**
+ * UI do componente de Tabs com wizzard do SETE.
+ */
+
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 

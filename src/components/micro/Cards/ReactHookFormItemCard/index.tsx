@@ -1,3 +1,7 @@
+/**
+ * Card que fica em volta dos componentes de formulário com o objetivo de informar a obrigatoriedade do campo.
+ */
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 

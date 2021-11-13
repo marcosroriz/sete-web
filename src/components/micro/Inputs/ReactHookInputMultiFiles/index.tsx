@@ -1,3 +1,8 @@
+/**
+ * Componente contendo Label, MultiFiles e ErrorMessage integrado com React-Hook-Forms.
+ * Esse componente é utilizado para quando se precisa fazer upload de arquivos para o servidor.
+ */
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FiX } from "react-icons/fi";

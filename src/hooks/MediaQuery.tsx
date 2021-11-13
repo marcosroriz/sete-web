@@ -1,3 +1,7 @@
+/**
+ * Hook que lida com media Querys quando é necessário ter esse estado no JSX.
+ */
+
 import React from "react";
 
 const useMediaQuery = (query: string): boolean => {

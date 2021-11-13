@@ -1,3 +1,7 @@
+/**
+ * Hook que lida com os alertas da aplicação bem como o loading.
+ */
+
 import React from "react";
 import swal, { SweetAlertOptions } from "sweetalert2";
 

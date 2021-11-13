@@ -1,3 +1,7 @@
+/**
+ * Subtítulos de cada Tab do NavCard.
+ */
+
 import React from "react";
 
 import { Container } from "./styles";
