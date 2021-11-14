@@ -4,31 +4,49 @@ import * as ol from "ol";
 import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as control from "ol/control";
-import BingMaps from "ol/source/BingMaps";
-import OSM from "ol/source/OSM";
-import Vector from "ol/source/Vector";
+import * as source from "ol/source";
 
 import CanvasScaleLine from "ol-ext/control/CanvasScaleLine";
-import LayerSwitcher from "ol-ext/control/LayerSwitcher";
 import PrintDialog from "ol-ext/control/PrintDialog";
+import LayerSwitcherImage from "ol-ext/control/LayerSwitcherImage";
 
 import { ViewOptions } from "ol/View";
+
+type LayerObj = {
+    source: source.Vector<geom.Geometry>;
+    layer: layer.Vector<source.Vector<geom.Geometry>>;
+    displayInLayerSwitcher?: boolean;
+};
+
+type LayersObj = {
+    [name: string]: LayerObj;
+};
 
 type MapConstructorViewOptionsDTO = ViewOptions;
 
 type CreateMapViewOptionsDTO = MapConstructorViewOptionsDTO;
 class Map {
     public mapInstance: ol.Map;
-    public vectorLayer: layer.Vector<Vector<geom.Geometry>>;
-    public vectorSource: Vector<geom.Geometry>;
+    public vectorLayer: layer.Vector<source.Vector<geom.Geometry>>;
+    public vectorSource: source.Vector<geom.Geometry>;
+    public layerSwitcherActivated: boolean;
+    public mapLayers: LayersObj;
+    public mapGroupLayer: layer.Group | null;
 
     constructor(mapId: string, viewOptions?: MapConstructorViewOptionsDTO) {
-        this.vectorSource = new Vector();
+        this.vectorSource = new source.Vector();
         this.vectorLayer = new layer.Vector({
             source: this.vectorSource,
         });
         this.mapInstance = this.createMap(mapId, viewOptions);
-        this.activatePrinting();
+        this.mapLayers = {
+            base: {
+                layer: this.vectorLayer,
+                source: this.vectorSource,
+            },
+        };
+        this.mapGroupLayer = null;
+        this.layerSwitcherActivated = false;
     }
 
     public createMap(mapId: string, viewOptions?: CreateMapViewOptionsDTO): ol.Map {
@@ -38,19 +56,18 @@ class Map {
                     tipLabel: "Ativar/Desativar tela cheia",
                 }),
                 new CanvasScaleLine(),
-                new LayerSwitcher(),
             ]),
             target: mapId,
             layers: [
                 new layer.Tile({
-                    source: new BingMaps({
+                    source: new source.BingMaps({
                         key: "ciN5QAQYiHzOFNabIODf~b61cOBWqj2nmKSuoyjuyKA~AiShqLNGsToztBeSE2Tk8Pb1cUdr4nikxL24hlMRaHCJkIpKaYtdBXoxaDEgFhQv",
                         imagerySet: "AerialWithLabels",
                         ...{ displayInLayerSwitcher: true },
                     }),
                 }),
                 new layer.Tile({
-                    source: new OSM(),
+                    source: new source.OSM(),
                     visible: false,
                     ...{ displayInLayerSwitcher: true },
                 }),
@@ -65,7 +82,50 @@ class Map {
         });
     }
 
-    public activatePrinting() {
+    public addLayer(name: string, displayInLayerSwitcher?: boolean): LayerObj {
+        let addedVectorSource = new source.Vector();
+        let addedVectorLayer = new layer.Vector({
+            source: addedVectorSource,
+            ...{ displayInLayerSwitcher },
+        });
+        addedVectorLayer.set("name", name);
+
+        let addedLayer = {
+            source: addedVectorSource,
+            layer: addedVectorLayer,
+            ...{ displayInLayerSwitcher },
+        };
+
+        this.mapLayers[name] = addedLayer;
+        this.mapInstance.addLayer(addedVectorLayer);
+        return addedLayer;
+    }
+
+    public removeLayer(name: string): void {
+        if (this.mapLayers[name] != null) {
+            this.mapLayers[name].source.clear();
+            this.mapInstance.removeLayer(this.mapLayers[name] as any);
+            delete this.mapLayers[name];
+        }
+    }
+
+    public addGroupLayer(layers: layer.Vector<source.Vector<geom.Geometry>>[]) {
+        let groupLayer = new layer.Group({
+            ...{ displayInLayerSwitcher: true },
+            layers: layers,
+        });
+
+        this.mapGroupLayer = groupLayer;
+        this.mapInstance.addLayer(groupLayer);
+    }
+
+    public removeGroupLayer() {
+        if (this.mapGroupLayer != null) {
+            this.mapInstance.removeLayer(this.mapGroupLayer);
+        }
+    }
+
+    public activatePrinting(): void {
         let printControl = new PrintDialog({ lang: "pt" });
         printControl.setSize("A4");
         this.mapInstance.addControl(printControl);
@@ -88,6 +148,26 @@ class Map {
                 (document.querySelector(".ol-ext-buttons button[type='button']") as any).click();
             }
         });
+    }
+
+    public activateImageLayerSwitcher(): void {
+        if (!this.layerSwitcherActivated) {
+            let switcher = new LayerSwitcherImage({
+                reordering: false,
+                drawDelay: 1000,
+                displayInLayerSwitcher: (layer) => {
+                    if (layer.values_.displayInLayerSwitcher != undefined) {
+                        return layer.values_.displayInLayerSwitcher;
+                    } else if (layer.values_.name == undefined) {
+                        return true;
+                    } else {
+                        return !layer.values_.name.startsWith("geocoder");
+                    }
+                },
+            });
+            this.mapInstance.addControl(switcher as any);
+            this.layerSwitcherActivated = true;
+        }
     }
 }
 

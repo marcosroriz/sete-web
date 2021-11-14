@@ -7,32 +7,35 @@ import { Container } from "./styles";
 
 type ReactHookLatLngMapProps = {
     name: string;
+    mapController?: MapControlEvents | null;
     icon?: string;
     anchor?: [number, number];
     children?: React.ReactNode;
     title?: string;
 };
 
-const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, name, icon, anchor, children }) => {
-    const mapRef = React.useRef<MapControlEvents | null>(null);
+const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name, icon, anchor, children }) => {
     const transladeRef = React.useRef<boolean>(false);
     const { setValue, watch } = useFormContext();
 
     React.useEffect(() => {
-        if (!mapRef.current) {
-            mapRef.current = new MapControlEvents("map");
-            const map = mapRef.current;
+        if (!mapController) {
+            mapController = new MapControlEvents("map");
+            const map = mapController;
             map.mapInstance.on("singleclick", (event) => {
                 const [lng, lat] = event.coordinate;
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
             });
+            map.activatePrinting();
+            map.activateImageLayerSwitcher();
         }
     }, []);
 
     React.useEffect(() => {
-        if (watch(name) && mapRef.current && !transladeRef.current) {
-            const map = mapRef.current;
+        if (watch(name) && mapController && !transladeRef.current) {
+            const map = mapController;
             const [lat, lng] = watch(name);
+            console.log(lat);
             map.handleMarkerInstance({ lng: Number(lng), lat: Number(lat), icon: icon || "", anchor: anchor || [25, 50] });
             const translate = map.getTranslateMarker();
             if (!translate) {

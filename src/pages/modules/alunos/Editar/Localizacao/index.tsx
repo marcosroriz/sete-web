@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
+import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { Aluno } from "entities/Aluno";
 
@@ -14,11 +16,14 @@ import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 
+import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
+
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
 const Localizacao: React.FC = () => {
+    const mapRef = React.useRef<MapControlEvents | null>(null);
     const { setValue } = useFormContext();
     const { nextStep, aditionalData } = useReactHookNavCard();
     const history = useHistory();
@@ -45,7 +50,7 @@ const Localizacao: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" />
+            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" mapController={mapRef.current} name="latlng" icon={AlunosMarker} />
             <ReactHookFormItemCard placeItems="center" required>
                 <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />
