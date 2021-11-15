@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
-import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "components/micro/Table/columnFilter";
+import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "helpers/Tables/columnFilters";
 
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
@@ -10,25 +10,31 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
         Filter: ColumnFilter,
     },
     {
-        Header: "HORÁRIO MATUTINO - TESTE",
-        accessor: "horario_matutino",
+        Header: "LOCALIZAÇÃO",
+        accessor: "localizacao",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
-        Header: "FUNDAMENTAL - TESTE",
-        accessor: "ensino_fundamental",
+        Header: "GPS",
+        accessor: "gps",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
-        Header: "MÉDIO - TESTE",
-        accessor: "ensino_medio",
+        Header: "NÍVEL",
+        accessor: "nivel",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
-        Header: "ALUNOS",
+        Header: "HORÁRIO DE FUNCIONAMENTO",
+        accessor: "horario_funcionamento",
+        Filter: SelectColumnFilter,
+        filter: "between",
+    },
+    {
+        Header: "QUANTIDADE DE ALUNOS",
         accessor: "qtd_alunos",
         Filter: NumberRangeColumnFilter,
         filter: "between",

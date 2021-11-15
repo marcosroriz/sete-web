@@ -23,7 +23,7 @@ const FichaVeiculo: React.FC = () => {
                 "Capacidade máxima": veiculoData.capacidade,
                 "Quilometragem inicial": veiculoData.km_inicial,
                 "Quilometragem atual": veiculoData.km_atual,
-                Estado: veiculoData.manutencao,
+                Manutenção: veiculoData.manutencao ? "Sim" : "Não",
             };
             setTableData(data);
         }

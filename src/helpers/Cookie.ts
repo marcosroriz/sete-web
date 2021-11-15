@@ -1,3 +1,7 @@
+/**
+ * Classe que lida com o uso dos cookies da aplicação utilizando a biblioteca cookie.
+ */
+
 import { parse, serialize, CookieParseOptions, CookieSerializeOptions } from "cookie";
 
 class Cookie {

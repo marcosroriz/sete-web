@@ -48,6 +48,12 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
             width: 30px;
             height: 28px;
             margin-right: 15px;
+            &.accordion-img-profile {
+                height: 30px;
+                overflow: hidden;
+                border-radius: 100000px;
+                border: 1px solid var(--color-grey-650);
+            }
             img {
                 width: 100%;
                 height: 100%;

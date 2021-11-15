@@ -1,3 +1,8 @@
+/**
+ * Componente contendo Label, Mask e ErrorMessage integrado com React-Hook-Forms.
+ * Esse componente é utilizado para quando se precisa de máscaras apenas de números nos inputs.
+ */
+
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import NumberFormat, { NumberFormatValues, NumberFormatProps } from "react-number-format";

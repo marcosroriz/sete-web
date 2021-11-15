@@ -1,3 +1,7 @@
+/**
+ * Template do Footer contendo as instituições do SETE.
+ */
+
 import React from "react";
 import { Container as BootstrapContainer, Row, Col } from "react-bootstrap";
 

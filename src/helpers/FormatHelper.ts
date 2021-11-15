@@ -1,8 +1,16 @@
+/**
+ * Classe que serve para formatar inputs para uma forma desejada
+ */
+
 type StringObject = {
     [key: string]: string;
 };
 
 class FormatHelper {
+    public capitalize(str: string): string {
+        return str.charAt(0).toUpperCase() + str.slice(1).toLocaleLowerCase();
+    }
+
     public mergeArrayItemsWithBr(arr: string[]): string {
         const arrLength = arr.length;
         let str = "";
@@ -28,6 +36,7 @@ class FormatHelper {
         });
         return str;
     }
+
     public concatUrlImg(img: string) {
         const backendUrl = process.env.REACT_APP_API_URL || "";
         return `${backendUrl}/${img}`;

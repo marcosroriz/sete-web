@@ -1,3 +1,7 @@
+/**
+ * Estrutura semelhante a um Toast que aparece na tela para informar algo ao usuário.
+ */
+
 import React from "react";
 import { animated, useTransition } from "react-spring";
 import { FaExclamationCircle, FaRegTimesCircle } from "react-icons/fa";

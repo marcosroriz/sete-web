@@ -1,5 +1,10 @@
+/**
+ * Componente contendo Label, Mask e ErrorMessage integrado com React-Hook-Forms.
+ * Esse componente é utilizado para quando se precisa de máscaras de letras e números nos inputs.
+ */
+
 import React from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import InputMask, { Props as ReactInputMaskProps } from "react-input-mask";
 
 import InputFieldWrapper from "../InputFieldWrapper";
@@ -37,6 +42,10 @@ const ReactHookInputMask: React.FC<ReactHookInputMaskProps> = ({
         formState: { errors, touchedFields, isSubmitSuccessful },
     } = useFormContext();
     const { onChange, ref, ...fieldProps } = register(name);
+    const [inputValue, setInputValue] = React.useState("");
+    React.useEffect(() => {
+        setInputValue(watch(name));
+    }, [watch(name)]);
 
     return (
         <Container
@@ -50,14 +59,15 @@ const ReactHookInputMask: React.FC<ReactHookInputMaskProps> = ({
                     id={name}
                     maskChar={mask}
                     mask={format}
-                    value={watch(name)}
+                    value={inputValue}
                     onChange={(event): void => {
                         if (event.target.value === format.replace(/a/g, mask).replace(/9/g, mask).replace(/\*/g, mask)) {
                             return;
                         }
                         const value = event.target.value.trimRight();
+                        setInputValue(value);
                         if (value) {
-                            !isSubmitSuccessful ? setValue(name, value, { shouldTouch: false, shouldValidate: true }) : onChange({ target: { value: value } });
+                            !isSubmitSuccessful ? setValue(name, value, { shouldTouch: false, shouldValidate: true }) : onChange({ target: { value } });
                         }
                     }}
                     {...fieldProps}

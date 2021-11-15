@@ -1,5 +1,10 @@
 import * as yup from "yup";
 
+/**
+ * Essa função serve como um helper para validar campos de checkbox com yup
+ * @param {(boolean | undefined)[]} arr
+ * @returns {boolean}
+ */
 const handleAtLeastOne: yup.TestFunction<(boolean | undefined)[] | undefined, {}> = (arr) => {
     if (!arr) {
         return false;

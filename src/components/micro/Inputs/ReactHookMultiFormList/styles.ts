@@ -54,6 +54,7 @@ export const Fieldset = styled.fieldset<FieldsetProps>`
         flex: 1;
         .form-list {
             flex: 1;
+            width: 100%;
             ${({ fieldsHorizontal, fieldsHorizontalMedia, formListSpacing }) =>
                 fieldsHorizontal
                     ? css`
