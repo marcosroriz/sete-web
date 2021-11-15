@@ -1,3 +1,7 @@
+/**
+ * Classe principal de mapas da aplicação com todas as funcionalidades necessárias.
+ */
+
 import jsPDF from "jspdf";
 
 import * as ol from "ol";

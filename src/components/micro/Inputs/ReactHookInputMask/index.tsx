@@ -1,5 +1,10 @@
+/**
+ * Componente contendo Label, Mask e ErrorMessage integrado com React-Hook-Forms.
+ * Esse componente é utilizado para quando se precisa de máscaras de letras e números nos inputs.
+ */
+
 import React from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import InputMask, { Props as ReactInputMaskProps } from "react-input-mask";
 
 import InputFieldWrapper from "../InputFieldWrapper";

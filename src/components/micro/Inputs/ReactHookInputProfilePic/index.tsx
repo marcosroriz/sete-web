@@ -1,3 +1,8 @@
+/**
+ * Componente contendo o Input de File para imagem de usuário integrado com React-Hook-Forms.
+ * Esse componente é utilizado na página do usuário para alterar ou mostrar sua foto de perfil.
+ */
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import md5 from "md5";

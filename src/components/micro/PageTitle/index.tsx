@@ -1,3 +1,6 @@
+/**
+ * Título de cada página do SETE.
+ */
 import React from "react";
 
 import { Container } from "./styles";

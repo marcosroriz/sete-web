@@ -1,3 +1,7 @@
+/**
+ * Hooks customizados do react-table.
+ */
+
 import React from "react";
 import { Hooks } from "react-table";
 

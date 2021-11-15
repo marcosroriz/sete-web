@@ -1,3 +1,8 @@
+/**
+ * Esse arquivo contém o componente que serve para a visualização de cada Módulo.
+ * pages/modules/{modulo}/Visualizar ou /{modulo}/gerenciar/visualizar/id
+ */
+
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";

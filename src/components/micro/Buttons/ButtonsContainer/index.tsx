@@ -1,3 +1,7 @@
+/**
+ * Ajuda a agrupar os botões da aplicação.
+ */
+
 import React from "react";
 
 import { Container } from "./styles";

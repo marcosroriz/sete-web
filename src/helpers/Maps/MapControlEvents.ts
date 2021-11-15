@@ -1,3 +1,7 @@
+/**
+ * Classe que estende a Map adicionando controllers de events nela.
+ */
+
 import * as ol from "ol";
 import * as geom from "ol/geom";
 import * as interaction from "ol/interaction";

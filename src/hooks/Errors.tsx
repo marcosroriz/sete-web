@@ -1,3 +1,7 @@
+/**
+ * Hook que lida com os erros de forma geral, os formatando e mostrando para o usuário.
+ */
+
 import React from "react";
 
 import { useAuth } from "contexts/Auth";

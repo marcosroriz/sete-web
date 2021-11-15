@@ -1,3 +1,7 @@
+/**
+ * Classe contendo métodos que ajudam a autenticação do usuário.
+ */
+
 import { Location } from "history";
 import queryString from "query-string";
 

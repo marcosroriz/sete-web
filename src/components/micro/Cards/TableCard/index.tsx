@@ -1,3 +1,7 @@
+/**
+ * Card que fica em volta dos componentes de tabela do SETE.
+ */
+
 import React from "react";
 
 import { Container } from "./styles";

@@ -1,3 +1,7 @@
+/**
+ * Componente contendo componente que engloba as listas de radio e checkbox integrado com React-Hook-Forms.
+ */
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 

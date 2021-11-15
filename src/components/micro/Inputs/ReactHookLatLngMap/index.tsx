@@ -1,3 +1,7 @@
+/**
+ * Componente contendo os mapa de latlng integrado com React-Hook-Forms
+ */
+
 import React from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 

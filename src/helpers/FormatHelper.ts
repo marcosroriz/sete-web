@@ -1,3 +1,7 @@
+/**
+ * Classe que serve para formatar inputs para uma forma desejada
+ */
+
 type StringObject = {
     [key: string]: string;
 };

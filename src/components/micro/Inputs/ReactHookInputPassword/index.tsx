@@ -1,10 +1,15 @@
+/**
+ * Componente contendo Label, InputPassword e ErrorMessage integrado com React-Hook-Forms.
+ * Esse componente é utilizado para todos os campos de senha da aplicação.
+ */
+
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import InputFieldWrapper from "../InputFieldWrapper";
 
-import { Container, InputField } from "./styles";
+import { Container } from "./styles";
 
 export type ReactHookInputPasswordProps = React.InputHTMLAttributes<HTMLInputElement> & {
     label: string;

@@ -1,3 +1,7 @@
+/**
+ * Template do Sidebar para a navegação dentro do SETE
+ */
+
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Accordion } from "react-bootstrap";

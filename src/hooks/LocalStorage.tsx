@@ -1,3 +1,7 @@
+/**
+ * Hook que usa o localstorage para guardar filtros do usuário.
+ */
+
 import { useCallback, useState } from "react";
 
 export function useLocalStorage(key: string, initialValue: any) {
