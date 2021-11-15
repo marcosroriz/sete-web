@@ -1,21 +1,31 @@
 import React from "react";
 
+import { FornecedorListObj, FornecedorTableField } from "entities/Fornecedor";
 import { Link } from "react-router-dom";
-import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
-import { VeiculoListObj, VeiculoTableField } from "entities/Veiculo";
+import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
 
-class FrotasTableHelper {
-    public treatData(data: VeiculoListObj[]): VeiculoTableField[] {
-        return data.map((frotaObj) => ({
-            ...frotaObj,
-            acoes: this.acoesComponent(frotaObj),
+class FornecedoresTableHelper {
+    public treatData(data: FornecedorListObj[]): FornecedorTableField[] {
+        return data.map((fornecedorObj) => ({
+            nome: fornecedorObj.nome,
+            telefone: fornecedorObj.telefone,
+            servicos_oferecidos: [
+                fornecedorObj.ramo_mecanica === "S" ? "Mecânica" : "",
+                fornecedorObj.ramo_combustivel === "S" ? "Combustível" : "",
+                fornecedorObj.ramo_seguro === "S" ? "Seguro" : "",
+            ]
+                .filter((val) => val !== "")
+                .join(", "),
+            numero_servicos: 1,
+            acoes: this.acoesComponent(fornecedorObj),
         }));
     }
-    public acoesComponent(frotaObj: VeiculoListObj) {
+
+    public acoesComponent(fornecedorObj: FornecedorListObj) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
-                    to={`/alunos/gerenciar/visualizar/${frotaObj.id_veiculo}`}
+                    to={`/alunos/gerenciar/visualizar/${fornecedorObj.nome}`}
                     style={{
                         display: "block",
                         marginBottom: "-2px",
@@ -27,7 +37,7 @@ class FrotasTableHelper {
                     <FaSearch size={"16px"} color={"gray"} />
                 </Link>
                 <Link
-                    to={`/alunos/gerenciar/editar/${frotaObj.id_veiculo}`}
+                    to={`/alunos/gerenciar/editar/${fornecedorObj.nome}`}
                     style={{
                         display: "block",
                         marginLeft: "6px",
@@ -53,6 +63,6 @@ class FrotasTableHelper {
     }
 }
 
-const frotasTableHelper = new FrotasTableHelper();
+const fornecedoresTableHelper = new FornecedoresTableHelper();
 
-export { frotasTableHelper, FrotasTableHelper };
+export { fornecedoresTableHelper, FornecedoresTableHelper };

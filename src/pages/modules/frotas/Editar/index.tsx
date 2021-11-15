@@ -64,18 +64,18 @@ const Editar: React.FC = () => {
             const veiculosService = new VeiculosService();
             const codigo_cidade = user?.codigo_cidade || 0;
             const body = {
-                modo: Number(data.modo),
+                modo: data.modo,
                 tipo: Number(data.tipo),
-                marca: Number(data.marca),
+                marca: data.marca,
                 modelo: data.modelo,
                 ano: Number(data.ano),
                 origem: Number(data.origem),
                 placa: data.placa.replace("-", ""),
                 renavam: data.renavam,
-                km_inicial: Number(data.km_inicial),
-                km_atual: Number(data.km_atual),
+                km_inicial: data.km_inicial,
+                km_atual: data.km_atual,
                 capacidade: data.capacidade,
-                manutencao: data.manutencao === "true",
+                manutencao: data.manutencao,
             };
             const veiculosResponse = await veiculosService.updateVeiculo(body, Number(veiculoId), codigo_cidade);
             if (!veiculosResponse.result) {

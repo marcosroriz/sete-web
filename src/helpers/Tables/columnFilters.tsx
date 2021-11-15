@@ -8,7 +8,7 @@ export const ColumnFilter = ({ column: { filterValue, setFilter } }) => {
             onChange={(e) => {
                 setFilter(e.target.value || undefined);
             }}
-            placeholder={"Procurar por escola"}
+            placeholder={"Procurar por nome*"}
             style={{
                 width: "81%",
                 padding: "5% 0",

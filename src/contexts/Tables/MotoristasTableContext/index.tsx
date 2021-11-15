@@ -27,9 +27,8 @@ const MotoristasTableProvider = ({ children }: MotoristasTableProviderProps) => 
         const fetchData = async () => {
             const motoristasService = new MotoristasService();
             const codigo_cidade = user?.codigo_cidade || 0;
-
-            const data = await motoristasService.listMotoristas(codigo_cidade);
-            const treatedData = motoristasTableHelper.treatData(data.data);
+            const response = await motoristasService.listMotoristas(codigo_cidade);
+            const treatedData = motoristasTableHelper.treatData(response.data);
             setTableData(treatedData);
         };
         fetchData();

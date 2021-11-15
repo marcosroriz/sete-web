@@ -2,13 +2,12 @@
 import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
 import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "helpers/Tables/columnFilters";
-import { disable } from "ol/rotationconstraint";
 
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "NOME",
         accessor: "nome",
-        disableFilters: true,
+        Filter: ColumnFilter,
     },
     {
         Header: "TELEFONE",
@@ -16,24 +15,13 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
         disableFilters: true,
     },
     {
-        Header: "TURNO",
-        accessor: "turno",
-        Filter: SelectColumnFilter,
-        filter: "includes",
-    },
-    {
-        Header: "CNH",
-        accessor: "cnh",
+        Header: "SERVIÇOS OFERECIDOS",
+        accessor: "servicos_oferecidos",
         disableFilters: true,
     },
     {
-        Header: "VALIDADE DA CNH",
-        accessor: "data_validade_cnh",
-        disableFilters: true,
-    },
-    {
-        Header: "# NÚMERO DE ROTAS DIRIGIDAS",
-        accessor: "rotas_dirigidas",
+        Header: "TOTAL DE SERVIÇOS REALIZADOS",
+        accessor: "numero_servicos",
         disableFilters: true,
     },
     {

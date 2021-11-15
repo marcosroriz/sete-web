@@ -5,45 +5,35 @@ import { Link } from "react-router-dom";
 
 class EscolasTableHelper {
     public treatData(data: EscolaListObj[]): EscolaTableField[] {
-        return data.map((escola) => {
-            return {
-                ...escola,
-                localizacao: escola.loc_longitude ? `${escola.loc_latitude || ""}, ${escola.loc_longitude || ""}` : "-",
-                gps: "-",
-                nivel: [
-                    escola.ensino_pre_escola === "S" ? "Infantil" : "",
-                    escola.ensino_fundamental === "S" ? "Fundamental" : "",
-                    escola.ensino_medio === "S" ? "Médio" : "",
-                    escola.ensino_superior === "S" ? "Superior" : "",
-                ]
-                    .filter((val) => val !== "")
-                    .join(", "),
-                horario_funcionamento: [
-                    escola.horario_matutino === "S" ? "Manhã" : "",
-                    escola.horario_vespertino === "S" ? "Tarde" : "",
-                    escola.horario_noturno === "S" ? "Noite" : "",
-                ]
-                    .filter((val) => val !== "")
-                    .join(", "),
-                acoes: this.acoesComponent(escola),
-            };
-        });
+        return data.map((escolaObj) => ({
+            nome: escolaObj.nome,
+            localizacao: "Rural - Urbano",
+            gps: escolaObj.loc_latitude && escolaObj.loc_longitude ? "Sim" : "Não",
+            nivel: [
+                escolaObj.ensino_pre_escola === "S" ? "Infantil" : "",
+                escolaObj.ensino_fundamental === "S" ? "Fundamental" : "",
+                escolaObj.ensino_medio === "S" ? "Médio" : "",
+                escolaObj.ensino_superior === "S" ? "Superior" : "",
+            ]
+                .filter((val) => val !== "")
+                .join(", "),
+            horario_funcionamento: [
+                escolaObj.horario_matutino === "S" ? "Manhã" : "",
+                escolaObj.horario_vespertino === "S" ? "Tarde" : "",
+                escolaObj.horario_noturno === "S" ? "Noite" : "",
+            ]
+                .filter((val) => val !== "")
+                .join(", "),
+            qtd_alunos: escolaObj.qtd_alunos,
+            acoes: this.acoesComponent(escolaObj),
+        }));
     }
 
     public acoesComponent(escolaObj: EscolaListObj) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <button
-                    style={{
-                        border: "none",
-                        backgroundColor: "transparent",
-                        cursor: "pointer",
-                    }}
-                >
-                    <FaUserAlt size={"18px"} color={"#1dc7ea"} />
-                </button>
                 <Link
-                    to={`/escolas/gerenciar/visualizar/${escolaObj.id_escola}`}
+                    to={`/alunos/gerenciar/visualizar/${escolaObj.id_escola}`}
                     style={{
                         display: "block",
                         marginBottom: "-2px",
@@ -55,7 +45,7 @@ class EscolasTableHelper {
                     <FaSearch size={"16px"} color={"gray"} />
                 </Link>
                 <Link
-                    to={`/escolas/gerenciar/editar/${escolaObj.id_escola}`}
+                    to={`/alunos/gerenciar/editar/${escolaObj.id_escola}`}
                     style={{
                         display: "block",
                         marginLeft: "6px",

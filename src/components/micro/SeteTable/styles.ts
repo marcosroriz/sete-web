@@ -13,7 +13,7 @@ export const TableContainer = styled.div`
             background-color: #29a329;
             color: white;
             margin-left: 0.3%;
-            padding: 0.2% 0.2%;
+            padding: 0.1% 0.3%;
             border-radius: 5px;
         }
     }
