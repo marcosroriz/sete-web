@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { useWatch } from "react-hook-form";
 
+import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import { LocalidadeService } from "services/Localidade";
@@ -20,6 +22,7 @@ import { ButtonsContainer, Container, mediaQuery } from "./styles";
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 
 const Localizacao: React.FC = () => {
+    const mapRef = React.useRef<MapControlEvents | null>(null);
     const mec_co_uf = useWatch({
         name: "mec_co_uf",
     });
@@ -52,7 +55,7 @@ const Localizacao: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" icon={EscolasMarker} />
+            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" mapController={mapRef} icon={EscolasMarker} />
             <ReactHookFormItemCard placeItems="center">
                 <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />

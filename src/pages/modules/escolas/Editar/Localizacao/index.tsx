@@ -5,6 +5,7 @@ import { useFormContext, useWatch } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
+import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 import { Escola } from "entities/Escola";
 import { LocalidadeService } from "services/Localidade";
 
@@ -24,6 +25,7 @@ import { ButtonsContainer, Container, mediaQuery } from "./styles";
 type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
 
 const Localizacao: React.FC = () => {
+    const mapRef = React.useRef<MapControlEvents | null>(null);
     const history = useHistory();
     const { setValue } = useFormContext();
     const { nextStep, aditionalData } = useReactHookNavCard();
@@ -46,6 +48,10 @@ const Localizacao: React.FC = () => {
             setValue("loc_cep", escolaData?.loc_cep || "");
             setValue("mec_tp_localizacao", escolaData?.mec_tp_localizacao?.toString() || "");
             setValue("mec_tp_localizacao_diferenciada", escolaData?.mec_tp_localizacao_diferenciada?.toString() || "");
+
+            if (escolaData?.loc_latitude && escolaData?.loc_longitude) {
+                mapRef.current?.goToLocation([Number(escolaData?.loc_longitude), Number(escolaData?.loc_latitude)]);
+            }
         }
     }, [escolaData]);
 
@@ -78,7 +84,7 @@ const Localizacao: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" icon={EscolasMarker} />
+            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" mapController={mapRef} icon={EscolasMarker} />
             <ReactHookFormItemCard placeItems="center">
                 <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />
