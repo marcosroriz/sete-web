@@ -138,7 +138,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/alunos/gerenciar" activeClassName="isActive" exact>
+                                            <NavLink to="/alunos/gerenciar" activeClassName="isActive">
                                                 Gerenciar
                                             </NavLink>
                                         </li>
@@ -171,7 +171,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/escolas/gerenciar" activeClassName="isActive" exact>
+                                            <NavLink to="/escolas/gerenciar" activeClassName="isActive">
                                                 Gerenciar
                                             </NavLink>
                                         </li>
@@ -204,7 +204,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/motoristas/gerenciar" activeClassName="isActive" exact>
+                                            <NavLink to="/motoristas/gerenciar" activeClassName="isActive">
                                                 Gerenciar
                                             </NavLink>
                                         </li>
@@ -255,7 +255,7 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/fornecedores/gerenciar" activeClassName="isActive" exact>
+                                            <NavLink to="/fornecedores/gerenciar" activeClassName="isActive">
                                                 Gerenciar
                                             </NavLink>
                                         </li>

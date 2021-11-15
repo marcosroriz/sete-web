@@ -13,6 +13,14 @@ type ListAlunoResponse = {
     result: boolean;
 };
 
+type GetAlunoResponse = Aluno & { result: boolean };
+
+type UpdateAlunoRequestBody = Aluno;
+type UpdateAlunoResponse = {
+    messages: string;
+    result: boolean;
+};
+
 class AlunosService {
     private api: ApiInstance;
 
@@ -38,6 +46,27 @@ class AlunosService {
         });
 
         const data = (await response.data) as ListAlunoResponse;
+        return data;
+    }
+
+    public async getAluno(alunoId: number, codigo_cidade: number): Promise<GetAlunoResponse> {
+        const response = await this.api({
+            method: "get",
+            url: `/alunos/${codigo_cidade}/${alunoId}`,
+        });
+
+        const data = (await response.data) as GetAlunoResponse;
+        return data;
+    }
+
+    public async updateAluno(body: UpdateAlunoRequestBody, alunoId: number, codigo_cidade: number): Promise<UpdateAlunoResponse> {
+        const response = await this.api({
+            method: "put",
+            url: `/alunos/${codigo_cidade}/${alunoId}`,
+            data: body,
+        });
+
+        const data = (await response.data) as UpdateAlunoResponse;
         return data;
     }
 }

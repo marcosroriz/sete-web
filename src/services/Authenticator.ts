@@ -37,6 +37,7 @@ class AuthenticatorService {
             data: body,
         });
         const data = (await response.data) as SignInResponse;
+        data.data.foto = formatHelper.concatUrlImg(data.data.foto || "");
         const cookieObj = {
             codigo_cidade: data.data.codigo_cidade,
             token: data.access_token.access_token,

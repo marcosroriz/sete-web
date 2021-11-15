@@ -7,6 +7,7 @@ interface Escola {
     mec_no_entidade?: string;
     mec_tp_dependencia?: number;
     mec_tp_localizacao?: number;
+    mec_tp_localizacao_diferenciada?: number;
     mec_in_regular?: string;
     mec_in_eja?: string;
     mec_in_profissionalizante?: string;
@@ -31,17 +32,18 @@ interface Escola {
 }
 
 interface EscolaListObj {
+    codigo_cidade: number;
+    ensino_fundamental: string; // 'S' ou 'N'
+    ensino_medio: string; // 'S' ou 'N'
+    ensino_pre_escola: string; // 'S' ou 'N'
+    ensino_superior: string; // 'S' ou 'N'
+    horario_matutino: string; // 'S' ou 'N'
+    horario_noturno: string; // 'S' ou 'N'
+    horario_vespertino: string; // 'S' ou 'N'
     id_escola: number;
-    nome: string;
     loc_latitude: string;
     loc_longitude: string;
-    horario_matutino: string;
-    horario_vespertino: string;
-    horario_noturno: string;
-    ensino_pre_escola: string;
-    ensino_fundamental: string;
-    ensino_medio: string;
-    ensino_superior: string;
+    nome: string;
     qtd_alunos: number;
     _links: {
         _self: string;

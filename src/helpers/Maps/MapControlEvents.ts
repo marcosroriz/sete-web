@@ -22,7 +22,7 @@ class MapControlEvents extends Map {
         this.translateMarker = null;
     }
 
-    public handleSingleClickEvent({ lat, lng, icon, anchor = [12, 37] }: GenerateMarkerDTO) {
+    public handleMarkerInstance({ lat, lng, icon, anchor = [12, 37] }: GenerateMarkerDTO) {
         if (this.positionMarker) {
             this.vectorSource.removeFeature(this.positionMarker);
         }

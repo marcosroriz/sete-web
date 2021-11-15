@@ -21,6 +21,7 @@ import AlunosCadastroIcon from "assets/icons/alunos/alunos-cadastro.svg";
 type FormData = {
     latlng: [string, string];
     mec_tp_localizacao: string;
+    loc_endereco: string;
     endereco: string;
     da_porteira: boolean; // S/N pra api
     da_mataburro: boolean; // S/N pra api
@@ -58,6 +59,7 @@ const Cadastrar: React.FC = () => {
             const body = {
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
+                loc_endereco: data.loc_endereco,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),
                 endereco: data.endereco,
                 da_porteira: data.da_porteira ? "S" : "N",
@@ -80,6 +82,7 @@ const Cadastrar: React.FC = () => {
                 turno: Number(data.turno),
                 nivel: Number(data.nivel),
             };
+            console.log(body);
             const response = await alunosService.createAluno(body, codigo_cidade);
             if (!response.result) {
                 throw { ...response };

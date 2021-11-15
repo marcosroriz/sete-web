@@ -1,5 +1,5 @@
 import React from "react";
-import { EscolaListObj, EscolaTableField } from "entities/Escola";
+import { EscolaTableField, EscolaListObj } from "entities/Escola";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
