@@ -40,6 +40,9 @@ const Localizacao: React.FC = () => {
             // setValue("loc_cep", alunoData?.loc_cep || "");
             // setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
             // setValue("mec_tp_localizacao_diferenciada", alunoData?.mec_tp_localizacao_diferenciada?.toString() || "");
+            if (alunoData?.loc_latitude && alunoData?.loc_longitude) {
+                mapRef.current?.goToLocation([Number(alunoData?.loc_longitude), Number(alunoData?.loc_latitude)]);
+            }
         }
     }, [alunoData]);
 
@@ -50,7 +53,7 @@ const Localizacao: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" mapController={mapRef.current} name="latlng" icon={AlunosMarker} />
+            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" mapController={mapRef} name="latlng" icon={AlunosMarker} />
             <ReactHookFormItemCard placeItems="center" required>
                 <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />

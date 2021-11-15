@@ -5,6 +5,7 @@ import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as control from "ol/control";
 import * as source from "ol/source";
+import * as proj from "ol/proj";
 
 import CanvasScaleLine from "ol-ext/control/CanvasScaleLine";
 import PrintDialog from "ol-ext/control/PrintDialog";
@@ -21,6 +22,9 @@ type LayerObj = {
 type LayersObj = {
     [name: string]: LayerObj;
 };
+
+// [lng, lat]
+type GoToLocation = [number, number];
 
 type MapConstructorViewOptionsDTO = ViewOptions;
 
@@ -109,7 +113,7 @@ class Map {
         }
     }
 
-    public addGroupLayer(layers: layer.Vector<source.Vector<geom.Geometry>>[]) {
+    public addGroupLayer(layers: layer.Vector<source.Vector<geom.Geometry>>[]): void {
         let groupLayer = new layer.Group({
             ...{ displayInLayerSwitcher: true },
             layers: layers,
@@ -119,10 +123,14 @@ class Map {
         this.mapInstance.addLayer(groupLayer);
     }
 
-    public removeGroupLayer() {
+    public removeGroupLayer(): void {
         if (this.mapGroupLayer != null) {
             this.mapInstance.removeLayer(this.mapGroupLayer);
         }
+    }
+
+    public goToLocation(location: GoToLocation): void {
+        this.mapInstance.getView().setCenter(location);
     }
 
     public activatePrinting(): void {

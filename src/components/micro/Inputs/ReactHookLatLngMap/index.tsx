@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 
@@ -7,7 +7,7 @@ import { Container } from "./styles";
 
 type ReactHookLatLngMapProps = {
     name: string;
-    mapController?: MapControlEvents | null;
+    mapController: React.MutableRefObject<MapControlEvents | null>;
     icon?: string;
     anchor?: [number, number];
     children?: React.ReactNode;
@@ -16,12 +16,15 @@ type ReactHookLatLngMapProps = {
 
 const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name, icon, anchor, children }) => {
     const transladeRef = React.useRef<boolean>(false);
-    const { setValue, watch } = useFormContext();
+    const { setValue } = useFormContext();
+    const inputValue = useWatch({
+        name,
+    });
 
     React.useEffect(() => {
-        if (!mapController) {
-            mapController = new MapControlEvents("map");
-            const map = mapController;
+        if (!mapController?.current) {
+            mapController!.current = new MapControlEvents("map");
+            const map = mapController?.current;
             map.mapInstance.on("singleclick", (event) => {
                 const [lng, lat] = event.coordinate;
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
@@ -32,10 +35,9 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
     }, []);
 
     React.useEffect(() => {
-        if (watch(name) && mapController && !transladeRef.current) {
-            const map = mapController;
-            const [lat, lng] = watch(name);
-            console.log(lat);
+        if (inputValue && mapController?.current && !transladeRef.current) {
+            const map = mapController?.current;
+            const [lat, lng] = inputValue;
             map.handleMarkerInstance({ lng: Number(lng), lat: Number(lat), icon: icon || "", anchor: anchor || [25, 50] });
             const translate = map.getTranslateMarker();
             if (!translate) {
@@ -49,7 +51,7 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
         } else {
             transladeRef.current = false;
         }
-    }, [watch(name)]);
+    }, [inputValue]);
 
     return (
         <Container>

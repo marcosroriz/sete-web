@@ -24,7 +24,7 @@ const Localizacao: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" mapController={mapRef.current} name="latlng" icon={AlunosMarker} />
+            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" mapController={mapRef} name="latlng" icon={AlunosMarker} />
             <ReactHookFormItemCard placeItems="center" required>
                 <ReactHookMultiFormList name="latlng" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />
@@ -62,6 +62,9 @@ const Localizacao: React.FC = () => {
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
+                </Button>
+                <Button variant="info" type="button" className="btn-fill" onClick={() => console.log(mapRef.current)}>
+                    Vai
                 </Button>
             </ButtonsContainer>
         </Container>
