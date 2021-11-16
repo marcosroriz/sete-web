@@ -63,6 +63,14 @@ class MotoristasService {
         const data = (await response.data) as UpdateMotoristaResponse;
         return data;
     }
+
+    public async deleteMotorista(cpf_motorista: string, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/motoristas/${codigo_cidade}/${cpf_motorista}`,
+            method: "delete",
+        });
+        const data = await response.data;
+    }
 }
 
 export { MotoristasService };

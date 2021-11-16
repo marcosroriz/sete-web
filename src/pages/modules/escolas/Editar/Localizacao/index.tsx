@@ -60,7 +60,7 @@ const Localizacao: React.FC = () => {
             const localidadeService = new LocalidadeService();
             const response = await localidadeService.getEstados();
             const options = response.data.map((option) => ({ label: option.nome, value: option.codigo.toString() }));
-            setEstadoOptions([{ label: "Escolher rota depois", value: "0" }, ...options]);
+            setEstadoOptions(options);
         };
         fetchData();
     }, []);
@@ -69,8 +69,8 @@ const Localizacao: React.FC = () => {
         const fetchData = async (co_uf: number) => {
             const localidadeService = new LocalidadeService();
             const response = await localidadeService.getMunicipiosFromEstado(co_uf);
-            const options = response.data.map((option) => ({ label: option.nm_cidade, value: option.nm_cidade.toString() }));
-            setCidadeOptions([{ label: "Escolher rota depois", value: "0" }, ...options]);
+            const options = response.data.map((option) => ({ label: option.nm_cidade, value: option.codigo_cidade.toString() }));
+            setCidadeOptions(options);
         };
         if (mec_co_uf) {
             fetchData(Number(mec_co_uf));
@@ -92,10 +92,22 @@ const Localizacao: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputSelect label="ESTADO*" name="mec_co_uf" options={estadoOptions} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputSelect
+                    label="ESTADO*"
+                    name="mec_co_uf"
+                    placeholder="Selecione uma Opção"
+                    options={estadoOptions}
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputSelect label="CIDADE*" name="mec_co_municipio" options={cidadeOptions} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputSelect
+                    label="CIDADE*"
+                    name="mec_co_municipio"
+                    placeholder="Selecione uma Opção"
+                    options={cidadeOptions}
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
                 <ReactHookInputText label="ENDEREÇO DA ESCOLA" name="loc_endereco" isHorizontal={mediaQuery.desktop} />

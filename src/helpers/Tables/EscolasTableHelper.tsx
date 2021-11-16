@@ -1,10 +1,14 @@
 import React from "react";
 import { EscolaTableField, EscolaListObj } from "entities/Escola";
-import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
+import { FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+type AdditionalOptions = {
+    delete: (escola: EscolaListObj) => Promise<void>;
+};
+
 class EscolasTableHelper {
-    public treatData(data: EscolaListObj[]): EscolaTableField[] {
+    public treatData(data: EscolaListObj[], addOptions?: AdditionalOptions): EscolaTableField[] {
         return data.map((escolaObj) => ({
             nome: escolaObj.nome,
             localizacao: "Rural - Urbano",
@@ -25,15 +29,15 @@ class EscolasTableHelper {
                 .filter((val) => val !== "")
                 .join(", "),
             qtd_alunos: escolaObj.qtd_alunos,
-            acoes: this.acoesComponent(escolaObj),
+            acoes: this.acoesComponent(escolaObj, addOptions),
         }));
     }
 
-    public acoesComponent(escolaObj: EscolaListObj) {
+    public acoesComponent(escolaObj: EscolaListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
-                    to={`/alunos/gerenciar/visualizar/${escolaObj.id_escola}`}
+                    to={`/escolas/gerenciar/visualizar/${escolaObj.id_escola}`}
                     style={{
                         display: "block",
                         marginBottom: "-2px",
@@ -45,7 +49,7 @@ class EscolasTableHelper {
                     <FaSearch size={"16px"} color={"gray"} />
                 </Link>
                 <Link
-                    to={`/alunos/gerenciar/editar/${escolaObj.id_escola}`}
+                    to={`/escolas/gerenciar/editar/${escolaObj.id_escola}`}
                     style={{
                         display: "block",
                         marginLeft: "6px",
@@ -62,7 +66,7 @@ class EscolasTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => console.log("Clicou4")}
+                    onClick={() => addOptions?.delete(escolaObj)}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>

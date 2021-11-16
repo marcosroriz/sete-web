@@ -33,13 +33,14 @@ const Localizacao: React.FC = () => {
     React.useEffect(() => {
         if (alunoData) {
             setValue("latlng[0]", alunoData?.loc_latitude || "");
-            setValue("latlng[0]", alunoData.loc_longitude || "");
-            // setValue("mec_co_uf", alunoData?.mec_co_uf?.toString() || "");
-            // setValue("mec_co_municipio", alunoData?.mec_co_municipio?.toString() || "");
-            // setValue("loc_endereco", alunoData?.loc_endereco || "");
-            // setValue("loc_cep", alunoData?.loc_cep || "");
-            // setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
-            // setValue("mec_tp_localizacao_diferenciada", alunoData?.mec_tp_localizacao_diferenciada?.toString() || "");
+            setValue("latlng[1]", alunoData.loc_longitude || "");
+            setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
+            setValue("loc_endereco", alunoData?.loc_endereco || "");
+            setValue("da_porteira", alunoData?.da_porteira === "S");
+            setValue("da_mataburro", alunoData?.da_mataburro === "S");
+            setValue("da_colchete", alunoData?.da_colchete === "S");
+            setValue("da_atoleiro", alunoData?.da_atoleiro === "S");
+            setValue("da_ponterustica", alunoData?.da_ponterustica === "S");
             if (alunoData?.loc_latitude && alunoData?.loc_longitude) {
                 mapRef.current?.goToLocation([Number(alunoData?.loc_longitude), Number(alunoData?.loc_latitude)]);
             }

@@ -21,7 +21,6 @@ class RotasService {
     }
 
     public async createRota(body: CreateRotaRequestBody, codigo_cidade: number): Promise<CreateRotaResponse> {
-        //console.log(body);
         const response = await this.api({
             method: "post",
             url: `/rotas/${codigo_cidade}`,

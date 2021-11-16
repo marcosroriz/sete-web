@@ -3,8 +3,12 @@ import { MotoristaListObj, MotoristaTableField } from "entities/Motorista";
 import { Link } from "react-router-dom";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 
+type AdditionalOptions = {
+    delete: (escola: MotoristaListObj) => Promise<void>;
+};
+
 class MotoristasTableHelper {
-    public treatData(data: MotoristaListObj[]): MotoristaTableField[] {
+    public treatData(data: MotoristaListObj[], addOptions?: AdditionalOptions): MotoristaTableField[] {
         return data.map((motoristaObj) => ({
             nome: motoristaObj.nome,
             telefone: motoristaObj.telefone,
@@ -12,11 +16,11 @@ class MotoristasTableHelper {
             cnh: motoristaObj.cnh,
             data_validade_cnh: motoristaObj.data_validade_cnh,
             rotas_dirigidas: ":/",
-            acoes: this.acoesComponent(motoristaObj),
+            acoes: this.acoesComponent(motoristaObj, addOptions),
         }));
     }
 
-    public acoesComponent(motoristaObj: MotoristaListObj) {
+    public acoesComponent(motoristaObj: MotoristaListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
@@ -49,7 +53,7 @@ class MotoristasTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => console.log("Clicou4")}
+                    onClick={() => addOptions?.delete(motoristaObj)}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>

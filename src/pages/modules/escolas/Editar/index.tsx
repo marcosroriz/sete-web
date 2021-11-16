@@ -66,6 +66,7 @@ const Editar: React.FC = () => {
                 loc_longitude: data.latlng[1].toString(),
                 mec_co_uf: Number(data.mec_co_uf),
                 mec_co_municipio: Number(data.mec_co_municipio),
+                mec_co_entidade: data.nome,
                 loc_endereco: data.loc_endereco,
                 loc_cep: data.loc_cep,
                 mec_tp_dependencia: Number(data.mec_tp_dependencia),

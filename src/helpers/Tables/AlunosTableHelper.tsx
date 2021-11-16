@@ -4,8 +4,12 @@ import { AlunoListObj, AlunosTableField } from "entities/Aluno";
 import { Link } from "react-router-dom";
 import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
 
+type AdditionalOptions = {
+    delete: (escola: AlunoListObj) => Promise<void>;
+};
+
 class AlunosTableHelper {
-    public treatData(data: AlunoListObj[]): AlunosTableField[] {
+    public treatData(data: AlunoListObj[], addOptions?: AdditionalOptions): AlunosTableField[] {
         return data.map((alunoObj) => ({
             escola: alunoObj.escola,
             rota: alunoObj.rota,
@@ -14,11 +18,11 @@ class AlunosTableHelper {
             gps: alunoObj.loc_latitude && alunoObj.log_longitude ? "Sim" : "Não",
             nivel: alunoObj.nivel.toString(),
             turno: alunoObj.turno.toString(),
-            acoes: this.acoesComponent(alunoObj),
+            acoes: this.acoesComponent(alunoObj, addOptions),
         }));
     }
 
-    public acoesComponent(alunoObj: AlunoListObj) {
+    public acoesComponent(alunoObj: AlunoListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
@@ -51,7 +55,7 @@ class AlunosTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => console.log("Clicou4")}
+                    onClick={() => addOptions?.delete(alunoObj)}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>

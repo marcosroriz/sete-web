@@ -40,8 +40,8 @@ type FormData = {
     def_ouvir: boolean; // S/N pra api
     def_enxergar: boolean; // S/N pra api
     def_mental: boolean; // S/N pra api
-    escola: any;
-    rota: any;
+    escola: string;
+    rota: string;
     turno: string; // número pra api
     nivel: string; // número pra api
 };
@@ -82,11 +82,12 @@ const Cadastrar: React.FC = () => {
                 turno: Number(data.turno),
                 nivel: Number(data.nivel),
             };
-            console.log(body);
             const response = await alunosService.createAluno(body, codigo_cidade);
             if (!response.result) {
                 throw { ...response };
             }
+            await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any).id, codigo_cidade);
+            await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
             createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar veículo" });

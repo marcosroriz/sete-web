@@ -66,13 +66,21 @@ class EscolasService {
         return data;
     }
 
-    public async getEscola(veiculoId: number, codigo_cidade: number): Promise<GetEscolaResponse> {
+    public async getEscola(veiculo_id: number, codigo_cidade: number): Promise<GetEscolaResponse> {
         const response = await this.api({
-            url: `/escolas/${codigo_cidade}/${veiculoId}`,
+            url: `/escolas/${codigo_cidade}/${veiculo_id}`,
             method: "get",
         });
         const data = (await response.data) as GetEscolaResponse;
         return data;
+    }
+
+    public async deleteEscola(id_escola: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/escolas/${codigo_cidade}/${id_escola}`,
+            method: "delete",
+        });
+        const data = await response.data;
     }
 }
 

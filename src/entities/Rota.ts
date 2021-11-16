@@ -19,10 +19,13 @@ interface Rota {
 }
 
 interface RotaListObj {
+    id_rota: number;
+    codigo_cidade: number;
     nome: string;
     turno_matutino: string; // 'S' ou 'N'
     turno_vespertino: string; // 'S' ou 'N'
     turno_noturno: string; // 'S' ou 'N'
+    gps: string;
     km: number;
     _links: {
         _self: string;

@@ -14,6 +14,7 @@ type GetMunicipiosFromEstadoResponse = {
     data: {
         codigo_uf: number;
         nm_cidade: string;
+        codigo_cidade: number;
         estado: string;
     }[];
     total: number;

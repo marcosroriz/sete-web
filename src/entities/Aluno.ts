@@ -1,4 +1,5 @@
 interface Aluno {
+    id_aluno?: number;
     loc_latitude?: string;
     loc_longitude?: string;
     loc_endereco?: string;
@@ -15,6 +16,7 @@ interface Aluno {
     turno: number;
     nivel: number;
     nome_responsavel?: string;
+    telefone_responsavel?: string;
     grau_responsavel?: number;
     mec_tp_localizacao: number;
     cpf?: string;

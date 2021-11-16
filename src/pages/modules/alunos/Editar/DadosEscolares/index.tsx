@@ -2,8 +2,13 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
-import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { Aluno } from "entities/Aluno";
+
+import { EscolasService } from "services/Escolas";
+import { RotasService } from "services/Rotas";
+
+import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { useAuth } from "contexts/Auth";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
@@ -13,36 +18,69 @@ import BlockTitle from "components/micro/BlockTitle";
 
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
-const escolaOptions = [{ label: "Escolher rota depois", value: "0" }];
-const rotaOptions = [{ label: "Escolher rota depois", value: "0" }];
+type SelectOptions = {
+    value: string;
+    label: string;
+};
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
 const DadosEscolares: React.FC = () => {
+    const { user } = useAuth();
+    const { setValue } = useFormContext();
     const { previousStep, aditionalData } = useReactHookNavCard();
 
     const [alunoData] = aditionalData?.alunoData as AlunoData;
+    const [escolaOptions, setEscolaOptions] = React.useState<SelectOptions[]>([]);
+    const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
+
+    const fetchData = async () => {
+        try {
+            const codigo_cidade = user?.codigo_cidade || 0;
+            const escolasService = new EscolasService();
+            const rotasService = new RotasService();
+
+            const escolasResponse = await escolasService.listEscolas(codigo_cidade);
+            const rotasResponse = await rotasService.listRotas(codigo_cidade);
+            setEscolaOptions(escolasResponse.data.map((escola) => ({ value: escola.id_escola.toString(), label: escola.nome })));
+            setRotaOptions(rotasResponse.data.map((rota) => ({ value: rota.id_rota.toString(), label: rota.nome })));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchData();
+    }, []);
 
     React.useEffect(() => {
         if (alunoData) {
-            // setValue("latlng[0]", alunoData?.loc_latitude || "");
-            // setValue("latlng[0]", alunoData.loc_longitude || "");
-            // setValue("mec_co_uf", alunoData?.mec_co_uf?.toString() || "");
-            // setValue("mec_co_municipio", alunoData?.mec_co_municipio?.toString() || "");
-            // setValue("loc_endereco", alunoData?.loc_endereco || "");
-            // setValue("loc_cep", alunoData?.loc_cep || "");
-            // setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
-            // setValue("mec_tp_localizacao_diferenciada", alunoData?.mec_tp_localizacao_diferenciada?.toString() || "");
+            setValue("turno", alunoData?.turno.toString() || "");
+            setValue("nivel", alunoData?.nivel.toString() || "");
         }
     }, [alunoData]);
     return (
         <Container>
             <BlockTitle message="A RESPEITO DOS DADOS ESCOLARES DO ALUNO, RESPONDA:" />
             <ReactHookFormItemCard>
-                <ReactHookInputSelect label="QUAL A ESCOLA DO ALUNO?" name="escola" options={escolaOptions} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputSelect
+                    label="QUAL A ESCOLA DO ALUNO?"
+                    name="escola"
+                    placeholder="Escolha uma escola"
+                    options={escolaOptions}
+                    isHorizontal={mediaQuery.desktop}
+                    hasPlaceholderOption
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputSelect label="QUAL A ROTA DO ALUNO?" name="rota" options={rotaOptions} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputSelect
+                    label="QUAL A ROTA DO ALUNO?"
+                    name="rota"
+                    placeholder="Escolha uma rota"
+                    options={rotaOptions}
+                    isHorizontal={mediaQuery.desktop}
+                    hasPlaceholderOption
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList label="QUAL O TURNO QUE O ALUNO ESTUDA?*" name="turno" isHorizontal={mediaQuery.desktop} formListSpacing="20px">

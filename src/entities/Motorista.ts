@@ -20,6 +20,7 @@ interface Motorista {
 interface MotoristaListObj {
     id_motorista: number;
     nome: string;
+    cpf: string;
     telefone: string;
     turno_manha?: string;
     turno_tarde?: string;

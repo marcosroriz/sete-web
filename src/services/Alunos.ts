@@ -3,7 +3,7 @@ import { Aluno, AlunoListObj } from "entities/Aluno";
 
 type CreateAlunoRequestBody = Aluno;
 type CreateAlunoResponse = {
-    messages: string;
+    messages: string | { [key: string]: any };
     result: boolean;
 };
 
@@ -17,8 +17,24 @@ type GetAlunoResponse = Aluno & { result: boolean };
 
 type UpdateAlunoRequestBody = Aluno;
 type UpdateAlunoResponse = {
-    messages: string;
+    messages: string | { [key: string]: any };
     result: boolean;
+};
+
+type BindEscolaToAlunoRequestBody = {
+    id_escola: number;
+};
+
+type ListBindEscolaToAlunoResponse = {
+    nome: string;
+    loc_latitude: string;
+    loc_longitude: string;
+    loc_endereco: string;
+    loc_cep: string;
+};
+
+type BindRotaToAlunoRequestBody = {
+    id_rota: number;
 };
 
 class AlunosService {
@@ -59,15 +75,60 @@ class AlunosService {
         return data;
     }
 
-    public async updateAluno(body: UpdateAlunoRequestBody, alunoId: number, codigo_cidade: number): Promise<UpdateAlunoResponse> {
+    public async updateAluno(body: UpdateAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<UpdateAlunoResponse> {
         const response = await this.api({
             method: "put",
-            url: `/alunos/${codigo_cidade}/${alunoId}`,
+            url: `/alunos/${codigo_cidade}/${id_aluno}`,
             data: body,
         });
 
         const data = (await response.data) as UpdateAlunoResponse;
         return data;
+    }
+
+    public async bindEscolaToAluno(body: BindEscolaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            method: "put",
+            url: `/alunos/${codigo_cidade}/${id_aluno}/escola`,
+            data: body,
+        });
+        const data = await response.data;
+        console.log(data);
+    }
+
+    public async listBindEscolaToAluno(id_aluno: number, codigo_cidade: number): Promise<ListBindEscolaToAlunoResponse> {
+        const response = await this.api({
+            method: "get",
+            url: `/alunos/${codigo_cidade}/${id_aluno}/escola`,
+        });
+        const data = (await response.data) as ListBindEscolaToAlunoResponse;
+        return data;
+    }
+
+    public async bindRotaToAluno(body: BindRotaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            method: "put",
+            url: `/alunos/${codigo_cidade}/${id_aluno}/rota`,
+            data: body,
+        });
+        const data = await response.data;
+        console.log(data);
+    }
+
+    public async listBindRotaToAluno(id_aluno: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            method: "get",
+            url: `/alunos/${codigo_cidade}/${id_aluno}/rota`,
+        });
+        const data = await response.data;
+    }
+
+    public async deleteAluno(id_aluno: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/alunos/${codigo_cidade}/${id_aluno}`,
+            method: "delete",
+        });
+        const data = await response.data;
     }
 }
 

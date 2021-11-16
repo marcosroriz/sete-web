@@ -63,9 +63,6 @@ const Localizacao: React.FC = () => {
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>
-                <Button variant="info" type="button" className="btn-fill" onClick={() => console.log(mapRef.current)}>
-                    Vai
-                </Button>
             </ButtonsContainer>
         </Container>
     );

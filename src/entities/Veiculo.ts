@@ -21,7 +21,7 @@ interface Veiculo {
 }
 
 interface VeiculoListObj {
-    id_veiculo?: number;
+    id_veiculo: number;
     placa: string;
     tipo: string;
     marca: string;

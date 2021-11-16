@@ -1,9 +1,11 @@
 import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
 
+import { useAlertModal } from "hooks/AlertModal";
+import { useError } from "hooks/Errors";
 import { useAuth } from "contexts/Auth";
 import { FornecedoresService } from "services/Fornecedores";
-import { FornecedorTableField } from "entities/Fornecedor";
+import { FornecedorTableField, FornecedorListObj } from "entities/Fornecedor";
 import { fornecedoresTableHelper } from "helpers/Tables/FornecedoresTableHelper";
 
 import { COLUMNS } from "./columns";
@@ -20,16 +22,45 @@ type FornecedoresTableProviderProps = {
 const FornecedoresTableContext = React.createContext({} as FornecedoresTableContextProps);
 
 const FornecedoresTableProvider = ({ children }: FornecedoresTableProviderProps) => {
+    const { createModalAsync } = useAlertModal();
+    const { errorHandler } = useError();
+
     const { user } = useAuth();
     const [tableData, setTableData] = React.useState<FornecedorTableField[]>([]);
     const columns = React.useMemo(() => COLUMNS, []);
+
+    const handleDeleteFornecedor = async (fornecedor: FornecedorListObj) => {
+        try {
+            const alertResponse = await createModalAsync("warning", {
+                title: "Atenção!",
+                html: `Deseja remover a Escola:<br /> <b>${fornecedor.nome}</b>?`,
+                confirmButtonText: "Remover",
+                confirmButtonColor: "var(--color-red-500)",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                cancelButtonColor: "var(--color-grey-650)",
+                reverseButtons: true,
+            });
+            if (!alertResponse.isConfirmed) {
+                return;
+            }
+
+            const fornecedoresService = new FornecedoresService();
+            const codigo_cidade = user?.codigo_cidade || 0;
+
+            await fornecedoresService.deleteFornecedor(fornecedor.id_fornecedor, codigo_cidade);
+        } catch (err) {
+            errorHandler(err, { title: "Erro ao remover Escola" });
+        }
+    };
+
     React.useEffect(() => {
         const fetchData = async () => {
             const fornecedoresService = new FornecedoresService();
             const codigo_cidade = user?.codigo_cidade || 0;
 
             const data = await fornecedoresService.listFornecedores(codigo_cidade);
-            const treatedData = fornecedoresTableHelper.treatData(data.data);
+            const treatedData = fornecedoresTableHelper.treatData(data.data, { delete: handleDeleteFornecedor });
             setTableData(treatedData);
         };
         fetchData();

@@ -90,6 +90,8 @@ const Editar: React.FC = () => {
             if (!response.result) {
                 throw { ...response };
             }
+            await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, alunoData?.id_aluno as number, codigo_cidade);
+            await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, alunoData?.id_aluno as number, codigo_cidade);
             createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar veículo" });
@@ -103,6 +105,8 @@ const Editar: React.FC = () => {
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const alunosService = new AlunosService();
                 const response = await alunosService.getAluno(Number(alunoId), codigo_cidade);
+                // const escolaVinculada = await alunosService.getAluno(Number(alunoId), codigo_cidade);
+                // const rotaVinculada = await alunosService.getAluno(Number(alunoId), codigo_cidade);
                 setAlunoData(response);
                 if (!response.result) {
                     throw { ...response };

@@ -41,6 +41,14 @@ class FornecedoresService {
         const data = (await response.data) as ListFornecedorResponse;
         return data;
     }
+
+    public async deleteFornecedor(id_fornecedor: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/fornecedores/${codigo_cidade}/${id_fornecedor}`,
+            method: "delete",
+        });
+        const data = await response.data;
+    }
 }
 
 export { FornecedoresService };

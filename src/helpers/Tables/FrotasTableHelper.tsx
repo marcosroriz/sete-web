@@ -4,14 +4,18 @@ import { Link } from "react-router-dom";
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import { VeiculoListObj, VeiculoTableField } from "entities/Veiculo";
 
+type AdditionalOptions = {
+    delete: (escola: VeiculoListObj) => Promise<void>;
+};
+
 class FrotasTableHelper {
-    public treatData(data: VeiculoListObj[]): VeiculoTableField[] {
+    public treatData(data: VeiculoListObj[], addOptions?: AdditionalOptions): VeiculoTableField[] {
         return data.map((frotaObj) => ({
             ...frotaObj,
-            acoes: this.acoesComponent(frotaObj),
+            acoes: this.acoesComponent(frotaObj, addOptions),
         }));
     }
-    public acoesComponent(frotaObj: VeiculoListObj) {
+    public acoesComponent(frotaObj: VeiculoListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
@@ -44,7 +48,7 @@ class FrotasTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => console.log("Clicou4")}
+                    onClick={() => addOptions?.delete(frotaObj)}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>

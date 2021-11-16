@@ -91,6 +91,14 @@ class VeiculosService {
         const data = (await response.data) as GetMarcasVeiculoResponse;
         return data;
     }
+
+    public async deleteVeiculo(id_veiculo: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/veiculos/${codigo_cidade}/${id_veiculo}`,
+            method: "delete",
+        });
+        const data = await response.data;
+    }
 }
 
 export { VeiculosService };

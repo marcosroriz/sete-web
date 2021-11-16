@@ -61,6 +61,7 @@ const Cadastrar: React.FC = () => {
                 loc_longitude: data.latlng[1].toString(),
                 mec_co_uf: Number(data.mec_co_uf),
                 mec_co_municipio: Number(data.mec_co_municipio),
+                mec_co_entidade: data.nome,
                 loc_endereco: data.loc_endereco,
                 loc_cep: data.loc_cep,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),
@@ -81,6 +82,7 @@ const Cadastrar: React.FC = () => {
                 horario_vespertino: data.contato_email ? "S" : "N",
                 horario_noturno: data.contato_email ? "S" : "N",
             };
+            console.log(JSON.stringify(body, null, 4));
             const response = await escolasService.createEscolas(body, codigo_cidade);
             if (!response.result) {
                 throw { ...response };

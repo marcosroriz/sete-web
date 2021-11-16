@@ -4,8 +4,12 @@ import { FornecedorListObj, FornecedorTableField } from "entities/Fornecedor";
 import { Link } from "react-router-dom";
 import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
 
+type AdditionalOptions = {
+    delete: (escola: FornecedorListObj) => Promise<void>;
+};
+
 class FornecedoresTableHelper {
-    public treatData(data: FornecedorListObj[]): FornecedorTableField[] {
+    public treatData(data: FornecedorListObj[], addOptions?: AdditionalOptions): FornecedorTableField[] {
         return data.map((fornecedorObj) => ({
             nome: fornecedorObj.nome,
             telefone: fornecedorObj.telefone,
@@ -17,11 +21,11 @@ class FornecedoresTableHelper {
                 .filter((val) => val !== "")
                 .join(", "),
             numero_servicos: 1,
-            acoes: this.acoesComponent(fornecedorObj),
+            acoes: this.acoesComponent(fornecedorObj, addOptions),
         }));
     }
 
-    public acoesComponent(fornecedorObj: FornecedorListObj) {
+    public acoesComponent(fornecedorObj: FornecedorListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
@@ -54,7 +58,7 @@ class FornecedoresTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => console.log("Clicou4")}
+                    onClick={() => addOptions?.delete(fornecedorObj)}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>

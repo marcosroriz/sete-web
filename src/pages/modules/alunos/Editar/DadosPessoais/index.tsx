@@ -33,14 +33,18 @@ const DadosPessoais: React.FC = () => {
 
     React.useEffect(() => {
         if (alunoData) {
-            // setValue("latlng[0]", alunoData?.loc_latitude || "");
-            // setValue("latlng[0]", alunoData.loc_longitude || "");
-            // setValue("mec_co_uf", alunoData?.mec_co_uf?.toString() || "");
-            // setValue("mec_co_municipio", alunoData?.mec_co_municipio?.toString() || "");
-            // setValue("loc_endereco", alunoData?.loc_endereco || "");
-            // setValue("loc_cep", alunoData?.loc_cep || "");
-            // setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
-            // setValue("mec_tp_localizacao_diferenciada", alunoData?.mec_tp_localizacao_diferenciada?.toString() || "");
+            setValue("nome", alunoData?.nome || "");
+            setValue("cpf", alunoData?.cpf || "");
+            setValue("data_nascimento", alunoData?.data_nascimento || "");
+            setValue("nome_responsavel", alunoData?.nome_responsavel || "");
+            setValue("telefone_responsavel", alunoData?.telefone_responsavel || "");
+            setValue("grau_responsavel", alunoData?.grau_responsavel?.toString() || "");
+            setValue("sexo", alunoData?.sexo?.toString() || "");
+            setValue("cor", alunoData?.cor?.toString() || "");
+            setValue("def_caminhar", alunoData?.def_caminhar === "S");
+            setValue("def_ouvir", alunoData?.def_ouvir === "S");
+            setValue("def_enxergar", alunoData?.def_enxergar === "S");
+            setValue("def_mental", alunoData?.def_mental === "S");
         }
     }, [alunoData]);
 
@@ -62,7 +66,7 @@ const DadosPessoais: React.FC = () => {
             <ReactHookFormItemCard>
                 <ReactHookInputNumberFormat
                     label="TELEFONE DO RESPONSÁVEL"
-                    name="data_nascimento"
+                    name="telefone_responsavel"
                     format={["(##) ####-#####", "(##) #####-####"]}
                     isHorizontal={mediaQuery.desktop}
                 />
