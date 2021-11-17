@@ -11,7 +11,8 @@ type CreateEscolaRequestBody = {
     loc_latitude: string;
     loc_longitude: string;
     mec_co_uf: number;
-    mec_co_municipio: number;
+    // mec_co_municipio: number;
+    mec_no_municipio: string;
     loc_endereco: string;
     loc_cep: string;
     mec_tp_localizacao: number;
