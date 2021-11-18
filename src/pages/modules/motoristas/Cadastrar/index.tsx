@@ -19,11 +19,12 @@ import DadosTransportesIcon from "assets/icons/motoristas/motorista-dados-transp
 type FormData = {
     nome: string;
     cpf: string;
-    nascimento: string;
+    data_nascimento: string;
+    ant_criminais: string;
     sexo: string;
     telefone: string;
-    numero_cnh: string;
-    vencimento_cnh: string;
+    cnh: string;
+    data_validade_cnh: string;
     tipo_cnh: boolean[];
     turno: boolean[];
     arquivos: FileData[];
@@ -32,11 +33,12 @@ type FormData = {
 const formData = {
     nome: "",
     cpf: "",
+    ant_criminais: "",
     telefone: "",
-    nascimento: "",
+    data_nascimento: "",
     sexo: "",
-    numero_cnh: "",
-    vencimento_cnh: "",
+    cnh: "",
+    data_validade_cnh: "",
     tipo_cnh: [false, false, false, false, false],
     turno: [false, false, false],
 };
@@ -47,7 +49,6 @@ const Cadastrar: React.FC = () => {
     const { createModal } = useAlertModal();
 
     const handleFormSubmit = async (data: FormData) => {
-        //console.log(data);
         try {
             createModal();
             const motoristasService = new MotoristasService();
@@ -56,22 +57,22 @@ const Cadastrar: React.FC = () => {
             const body = {
                 nome: data.nome,
                 cpf: data.cpf.replace(/[-.]/g, ""),
-                data_nascimento: data.nascimento,
-                sexo: data.sexo == "masc" ? 1 : data.sexo == "fem" ? 2 : 3,
+                ant_criminais: data.ant_criminais,
+                data_nascimento: data.data_nascimento,
+                sexo: Number(data.sexo),
                 telefone: data.telefone,
-                cnh: data.numero_cnh,
-                data_validade_cnh: data.vencimento_cnh,
-                turno_manha: data.turno[0] == true ? "S" : "N",
-                turno_tarde: data.turno[1] == true ? "S" : "N",
-                turno_noite: data.turno[2] == true ? "S" : "N",
-                tem_cnh_a: data.tipo_cnh[0] == true ? "S" : "N",
-                tem_cnh_b: data.tipo_cnh[0] == true ? "S" : "N",
-                tem_cnh_c: data.tipo_cnh[0] == true ? "S" : "N",
-                tem_cnh_d: data.tipo_cnh[0] == true ? "S" : "N",
-                tem_cnh_e: data.tipo_cnh[0] == true ? "S" : "N",
+                cnh: data.cnh,
+                data_validade_cnh: data.data_validade_cnh,
+                turno_manha: data.turno[0] ? "S" : "N",
+                turno_tarde: data.turno[1] ? "S" : "N",
+                turno_noite: data.turno[2] ? "S" : "N",
+                tem_cnh_a: data.tipo_cnh[0] ? "S" : "N",
+                tem_cnh_b: data.tipo_cnh[1] ? "S" : "N",
+                tem_cnh_c: data.tipo_cnh[2] ? "S" : "N",
+                tem_cnh_d: data.tipo_cnh[4] ? "S" : "N",
+                tem_cnh_e: data.tipo_cnh[5] ? "S" : "N",
             };
 
-            //console.log(body);
             const motoristasResponse = await motoristasService.createMotorista(body, codigo_cidade);
             if (!motoristasResponse.result) {
                 throw { ...motoristasResponse };
@@ -107,6 +108,3 @@ const Cadastrar: React.FC = () => {
 };
 
 export default Cadastrar;
-function body(body: any) {
-    throw new Error("Function not implemented.");
-}

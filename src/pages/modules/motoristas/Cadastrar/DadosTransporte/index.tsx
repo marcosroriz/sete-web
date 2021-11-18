@@ -15,17 +15,17 @@ const DadosTransporte: React.FC = () => {
     const { previousStep } = useReactHookNavCard();
     return (
         <Container>
-            <ReactHookFormItemCard name="numero_cnh" required>
+            <ReactHookFormItemCard name="cnh" required>
                 <ReactHookInputNumberFormat
                     label="CARTEIRA NACIONAL DE HABILITAÇÃO (CNH)*"
-                    name="numero_cnh"
+                    name="cnh"
                     format="#########-##"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputNumberFormat label="DATA DE VENCIMENTO DA CNH*" name="vencimento_cnh" format="##/##/####" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputNumberFormat label="DATA DE VENCIMENTO DA CNH*" name="data_validade_cnh" format="##/##/####" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
