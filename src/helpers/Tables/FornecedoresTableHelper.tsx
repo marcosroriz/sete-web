@@ -18,9 +18,13 @@ class FornecedoresTableHelper {
                 fornecedorObj.ramo_combustivel === "S" ? "Combustível" : "",
                 fornecedorObj.ramo_seguro === "S" ? "Seguro" : "",
             ]
-                .filter((val) => val !== "")
+                .filter((val) => val)
                 .join(", "),
-            numero_servicos: 1,
+            numero_servicos: [
+                fornecedorObj.ramo_mecanica === "S" ? "Mecânica" : "",
+                fornecedorObj.ramo_combustivel === "S" ? "Combustível" : "",
+                fornecedorObj.ramo_seguro === "S" ? "Seguro" : "",
+            ].filter((val) => val).length,
             acoes: this.acoesComponent(fornecedorObj, addOptions),
         }));
     }

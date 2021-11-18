@@ -18,26 +18,26 @@ import FornecedoresCadastroIcon from "assets/icons/fornecedores/fornecedores-cad
 
 type FormData = {
     latlng: [string, string];
-    endereco: string;
-    cep: string;
+    loc_endereco: string;
+    loc_cep: string;
     nome: string;
     telefone: string;
-    cpf_cnpj: string;
-    so_mecaninca: boolean; // S/N pra api
-    so_combustivel_oleo: boolean; // S/N pra api
-    so_seguros: boolean; // S/N pra api
+    cnpj: string;
+    ramo_mecanica: boolean; // S/N pra api
+    ramo_combustivel: boolean; // S/N pra api
+    ramo_seguro: boolean; // S/N pra api
 };
 
 const formData = {
     latlng: ["", ""],
-    endereco: "",
-    cep: "",
+    loc_endereco: "",
+    loc_cep: "",
     nome: "",
     telefone: "",
-    cpf_cnpj: "",
-    so_mecaninca: false,
-    so_combustivel_oleo: false,
-    so_seguros: false,
+    cnpj: "",
+    ramo_mecanica: false,
+    ramo_combustivel: false,
+    ramo_seguro: false,
 };
 const Cadastrar: React.FC = () => {
     const { user } = useAuth();
@@ -50,15 +50,15 @@ const Cadastrar: React.FC = () => {
             const fornecedoresService = new FornecedoresService();
             const codigo_cidade = user?.codigo_cidade || 0;
             const body = {
-                cnpj: data.cpf_cnpj,
+                cnpj: data.cnpj,
                 nome: data.nome,
-                ramo_mecanica: data.so_mecaninca ? "S" : "N",
-                ramo_combustivel: data.so_combustivel_oleo ? "S" : "N",
-                ramo_seguro: data.so_seguros ? "S" : "N",
+                ramo_mecanica: data.ramo_mecanica ? "S" : "N",
+                ramo_combustivel: data.ramo_combustivel ? "S" : "N",
+                ramo_seguro: data.ramo_seguro ? "S" : "N",
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
-                loc_endereco: data.endereco,
-                loc_cep: data.cep,
+                loc_endereco: data.loc_endereco,
+                loc_cep: data.loc_cep,
                 telefone: data.telefone,
             };
 
