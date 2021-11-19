@@ -24,9 +24,7 @@ type FormData = {
     nome: string;
     telefone: string;
     cnpj: string;
-    ramo_mecanica: boolean; // S/N pra api
-    ramo_combustivel: boolean; // S/N pra api
-    ramo_seguro: boolean; // S/N pra api
+    ramo: boolean[];
 };
 
 const formData = {
@@ -53,9 +51,9 @@ const Cadastrar: React.FC = () => {
             const body = {
                 cnpj: data.cnpj,
                 nome: data.nome,
-                ramo_mecanica: data.ramo_mecanica ? "S" : "N",
-                ramo_combustivel: data.ramo_combustivel ? "S" : "N",
-                ramo_seguro: data.ramo_seguro ? "S" : "N",
+                ramo_mecanica: data.ramo[0] ? "S" : "N",
+                ramo_combustivel: data.ramo[1] ? "S" : "N",
+                ramo_seguro: data.ramo[2] ? "S" : "N",
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
                 loc_endereco: data.loc_endereco,
