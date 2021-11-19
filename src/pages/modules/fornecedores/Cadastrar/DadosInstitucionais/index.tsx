@@ -39,9 +39,9 @@ const DadosInstitucionais: React.FC = () => {
                     fieldsHorizontal={mediaQuery.desktop}
                     name="ramo"
                 >
-                    <ReactHookInputCheckbox label="Mecânica (reparo e revisão)" name="ramo[0]" /*_mecanica*/ />
-                    <ReactHookInputCheckbox label="Combustível e óleo" name="ramo[1]" /*_combustivel*/ />
-                    <ReactHookInputCheckbox label="Seguros" name="ramo[2]" /*_seguro*/ />
+                    <ReactHookInputCheckbox label="Mecânica (reparo e revisão)" name="ramo[0]" />
+                    <ReactHookInputCheckbox label="Combustível e óleo" name="ramo[1]" />
+                    <ReactHookInputCheckbox label="Seguros" name="ramo[2]" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>
