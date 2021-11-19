@@ -17,6 +17,7 @@ import DadosEscolaresIcon from "assets/icons/alunos/alunos-dados-escolares.svg";
 import DadosPessoaisIcon from "assets/icons/alunos/alunos-dados-pessoais.svg";
 import LocalizacaoIcon from "assets/icons/alunos/alunos-localizacao.svg";
 import AlunosCadastroIcon from "assets/icons/alunos/alunos-cadastro.svg";
+import { localizacaoSchema, dadosPessoaisSchema, dadosEscolaresSchema } from "validators/modules/alunos";
 
 type FormData = {
     latlng: [string, string];
@@ -51,7 +52,7 @@ const Cadastrar: React.FC = () => {
     const { errorHandler } = useError();
     const { createModal } = useAlertModal();
 
-    const handleFormSubmit = async (data: FormData) => {
+    const handleSubmit = async (data: FormData) => {
         try {
             createModal();
             const alunosService = new AlunosService();
@@ -97,14 +98,14 @@ const Cadastrar: React.FC = () => {
     return (
         <>
             <PageTitle message="Cadastrar Aluno" icon={AlunosCadastroIcon} />
-            <ReactHookNavCardProvider<FormData> onSubmit={handleFormSubmit}>
-                <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />}>
+            <ReactHookNavCardProvider<FormData> mode="onSubmit" reValidateMode="onChange" onSubmit={handleSubmit}>
+                <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />} validationSchema={localizacaoSchema}>
                     <Localizacao />
                 </ReactHookNavCardTab>
-                <ReactHookNavCardTab name="Dados Pessoais" icon={<img src={DadosPessoaisIcon} alt="" />}>
+                <ReactHookNavCardTab name="Dados Pessoais" icon={<img src={DadosPessoaisIcon} alt="" />} validationSchema={dadosPessoaisSchema}>
                     <DadosPessoais />
                 </ReactHookNavCardTab>
-                <ReactHookNavCardTab name="Dados Escolares" icon={<img src={DadosEscolaresIcon} alt="" />}>
+                <ReactHookNavCardTab name="Dados Escolares" icon={<img src={DadosEscolaresIcon} alt="" />} validationSchema={dadosEscolaresSchema}>
                     <DadosEscolares />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>

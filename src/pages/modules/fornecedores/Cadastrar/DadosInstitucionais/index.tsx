@@ -31,10 +31,11 @@ const DadosInstitucionais: React.FC = () => {
                     label="QUAIS OS TIPO DE SERVIÇOS OFERECIDOS PELO FORNECEDOR?"
                     formListSpacing="30px"
                     fieldsHorizontal={mediaQuery.desktop}
+                    name="ramo"
                 >
-                    <ReactHookInputCheckbox label="Mecânica (reparo e revisão)" name="so_mecanica" />
-                    <ReactHookInputCheckbox label="Combustível e óleo" name="so_combustivel_oleo" />
-                    <ReactHookInputCheckbox label="Seguros" name="so_seguros" />
+                    <ReactHookInputCheckbox label="Mecânica (reparo e revisão)" name="ramo[0]" /*_mecanica*/ />
+                    <ReactHookInputCheckbox label="Combustível e óleo" name="ramo[1]" /*_combustivel*/ />
+                    <ReactHookInputCheckbox label="Seguros" name="ramo[2]" /*_seguro*/ />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>
