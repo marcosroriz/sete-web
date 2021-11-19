@@ -15,6 +15,7 @@ import DadosInstitucionais from "./DadosInstitucionais";
 import DadosInstitucionaisIcon from "assets/icons/fornecedores/fornecedores-dados-institucionais.svg";
 import LocalizacaoIcon from "assets/icons/fornecedores/fornecedores-localizacao.svg";
 import FornecedoresCadastroIcon from "assets/icons/fornecedores/fornecedores-cadastro.png";
+import { dadosInstitucionaisSchema } from "validators/modules/fornecedores";
 
 type FormData = {
     latlng: [string, string];
@@ -79,7 +80,11 @@ const Cadastrar: React.FC = () => {
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />}>
                     <Localizacao />
                 </ReactHookNavCardTab>
-                <ReactHookNavCardTab name="Dados Institucionais" icon={<img src={DadosInstitucionaisIcon} alt="" />}>
+                <ReactHookNavCardTab
+                    name="Dados Institucionais"
+                    icon={<img src={DadosInstitucionaisIcon} alt="" />}
+                    validationSchema={dadosInstitucionaisSchema}
+                >
                     <DadosInstitucionais />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>
