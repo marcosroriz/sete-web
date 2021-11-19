@@ -21,7 +21,6 @@ class FornecedoresService {
     }
 
     public async createFornecedor(body: CreateFornecedorRequestBody, codigo_cidade: number): Promise<CreateFornecedorResponse> {
-        console.log(body);
         const response = await this.api({
             method: "post",
             url: `/fornecedores/${codigo_cidade}`,

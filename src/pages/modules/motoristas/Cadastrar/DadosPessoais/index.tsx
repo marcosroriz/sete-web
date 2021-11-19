@@ -28,7 +28,7 @@ const DadosPessoais: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputNumberFormat label="DATA DE NASCIMENTO*" name="nascimento" format="##/##/####" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputNumberFormat label="DATA DE NASCIMENTO*" name="data_nascimento" format="##/##/####" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
@@ -42,14 +42,14 @@ const DadosPessoais: React.FC = () => {
 
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList label="SEXO DO MOTORISTA*" name="sexo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
-                    <ReactHookInputRadio label="Masculino" value="masc" name="sexo" position="right" />
-                    <ReactHookInputRadio label="Feminino" value="fem" name="sexo" position="right" />
-                    <ReactHookInputRadio label="Não Informado" value="none" name="sexo" position="right" />
+                    <ReactHookInputRadio label="Masculino" value="1" name="sexo" position="right" />
+                    <ReactHookInputRadio label="Feminino" value="2" name="sexo" position="right" />
+                    <ReactHookInputRadio label="Não Informado" value="3" name="sexo" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="NÚMERO DO DOCUMENTO DE ANTECENDENTES CRIMINAIS*" name="criminais" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="NÚMERO DO DOCUMENTO DE ANTECENDENTES CRIMINAIS*" name="ant_criminais" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>

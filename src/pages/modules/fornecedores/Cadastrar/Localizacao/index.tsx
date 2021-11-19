@@ -28,10 +28,10 @@ const Localizacao: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputText label="ENDEREÇO DO FORNECEDOR" name="endereco" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="ENDEREÇO DO FORNECEDOR" name="loc_endereco" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputText label="CEP DO FORNECEDOR" name="cep" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="CEP DO FORNECEDOR" name="loc_cep" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>

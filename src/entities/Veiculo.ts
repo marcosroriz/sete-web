@@ -14,6 +14,9 @@ interface Veiculo {
     manutencao?: string;
     marca?: string;
     id_firebase?: number;
+    marca_str?: string;
+    modo_str?: string;
+    origem_str?: string;
     _links?: {
         _self?: string;
     };

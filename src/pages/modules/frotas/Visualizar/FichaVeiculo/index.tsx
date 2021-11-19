@@ -15,15 +15,13 @@ const FichaVeiculo: React.FC = () => {
     React.useEffect(() => {
         if (veiculoData) {
             const data = {
-                Marca: veiculoData.marca,
-                Modelo: veiculoData.modelo,
-                Origem: veiculoData.origem,
                 Placa: veiculoData.placa,
-                RENAVAM: veiculoData.renavam,
+                Tipo: veiculoData.tipo,
+                Marca: veiculoData.marca_str,
+                Modelo: veiculoData.modelo,
                 "Capacidade máxima": veiculoData.capacidade,
-                "Quilometragem inicial": veiculoData.km_inicial,
                 "Quilometragem atual": veiculoData.km_atual,
-                Manutenção: veiculoData.manutencao ? "Sim" : "Não",
+                Origem: veiculoData.origem,
             };
             setTableData(data);
         }

@@ -18,7 +18,6 @@ interface Motorista {
 }
 
 interface MotoristaListObj {
-    id_motorista: number;
     nome: string;
     cpf: string;
     telefone: string;
