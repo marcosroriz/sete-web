@@ -39,11 +39,12 @@ const Cadastrar: React.FC = () => {
             const body = {
                 nome: data.nome,
             };
+            console.log(data);
 
-            const response = await rotasService.createRota(body, codigo_cidade);
-            if (!response.result) {
-                throw { ...response };
-            }
+            // const response = await rotasService.createRota(body, codigo_cidade);
+            // if (!response.result) {
+            //     throw { ...response };
+            // }
             createModal("success", { title: "Sucesso", html: "Rota cadastrada com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar rota" });
