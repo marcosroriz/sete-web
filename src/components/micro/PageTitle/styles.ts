@@ -9,11 +9,8 @@ export const Container = styled.header`
     margin-bottom: 26px;
 
     .page-title-img {
-        max-width: 50px;
-        width: 100%;
-
         img {
-            width: 100%;
+            max-height: 50px;
             user-select: none;
             image-rendering: initial;
             -webkit-user-drag: none;

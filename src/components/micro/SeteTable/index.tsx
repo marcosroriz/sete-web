@@ -27,7 +27,7 @@ import { TableContainer, Pagination } from "./styles";
 
 import { useSelection } from "hooks/Table";
 
-const hooks = [useFilters, useSortBy, useFlexLayout, usePagination, useRowSelect, useSelection];
+const hooks = [useFilters, useSortBy, usePagination, useRowSelect, useSelection];
 
 type SeteTableProps = {
     name: string;
