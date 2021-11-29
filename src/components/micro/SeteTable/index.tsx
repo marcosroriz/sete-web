@@ -36,7 +36,7 @@ type SeteTableProps = {
 };
 
 const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) => {
-    const [initialState, setInitialState] = useLocalStorage(`tableState:${name}}`, {});
+    const [initialState, setInitialState] = useLocalStorage(`tableState:${name}`, {});
 
     const instance = useTable(
         {

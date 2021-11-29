@@ -7,7 +7,7 @@ import React from "react";
 import { Container } from "./styles";
 
 type BlockTitleProps = {
-    message: string;
+    message: React.ReactNode;
     containerClassName?: string;
 };
 

@@ -4,9 +4,12 @@ export const Container = styled.li`
     display: flex;
     .info-list-item__separator {
         position: relative;
+        flex: 1 0 0 35px;
+        display: block;
+        width: 35px;
+        height: 35px;
 
-        width: 45px;
-        height: 55px;
+        border-radius: 1000px;
         background-color: var(--color-dark-orange);
 
         .info-list-item__separator__text {
@@ -17,11 +20,13 @@ export const Container = styled.li`
 
             font-weight: 600;
             color: var(--color-black);
+            user-select: none;
         }
     }
 
     .info-list-item__content {
-        margin-left: 20px;
+        flex: 1;
+        margin-left: 10px;
         .info-list-item__title {
             display: block;
             font-weight: 600;
