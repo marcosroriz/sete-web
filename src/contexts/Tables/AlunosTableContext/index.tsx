@@ -2,7 +2,6 @@ import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
 
 import { AlunosService } from "services/Alunos";
-import { EscolasService } from "services/Escolas";
 import { AlunosTableField, AlunoListObj } from "entities/Aluno";
 
 import { useAlertModal } from "hooks/AlertModal";

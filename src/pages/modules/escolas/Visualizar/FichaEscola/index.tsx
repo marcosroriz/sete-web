@@ -21,8 +21,17 @@ const FichaEscola: React.FC = () => {
                 Município: escolaData.mec_co_municipio,
                 CEP: escolaData.loc_cep,
                 Endereço: escolaData.loc_endereco,
-                "Tipo de Localização": escolaData.mec_tp_localizacao,
-                Dependência: escolaData.mec_tp_localizacao_diferenciada,
+                "Tipo de Localização": escolaData.mec_tp_localizacao == 1 ? "Urbana" : escolaData.mec_tp_localizacao == 2 ? "Rural" : null,
+                Dependência:
+                    escolaData.mec_tp_dependencia == 1
+                        ? "Federal"
+                        : escolaData.mec_tp_dependencia == 2
+                        ? "Estadual"
+                        : escolaData.mec_tp_dependencia == 3
+                        ? "Municipal"
+                        : escolaData.mec_tp_dependencia == 4
+                        ? "Privada"
+                        : null,
                 Contato: escolaData.contato_responsavel,
                 "Telefone de contato": escolaData.contato_telefone,
                 "E-mail de contato": escolaData.contato_email,
@@ -32,6 +41,14 @@ const FichaEscola: React.FC = () => {
                     escolaData.ensino_fundamental === "S" ? "Fundamental" : "",
                     escolaData.ensino_medio === "S" ? "Médio" : "",
                     escolaData.ensino_superior === "S" ? "Superior" : "",
+                ]
+                    .filter((val) => val !== "")
+                    .join(", "),
+                "Modo de ensino oferecido": [
+                    escolaData.mec_in_regular === "S" ? "Regular" : "",
+                    escolaData.mec_in_eja === "S" ? "EJA" : "",
+                    escolaData.mec_in_profissionalizante === "S" ? "Profissionalizante" : "",
+                    escolaData.mec_in_especial_exclusiva === "S" ? "Especial/Exclusiva" : "",
                 ]
                     .filter((val) => val !== "")
                     .join(", "),

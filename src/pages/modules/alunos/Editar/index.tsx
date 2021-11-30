@@ -92,9 +92,9 @@ const Editar: React.FC = () => {
             }
             await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, alunoData?.id_aluno as number, codigo_cidade);
             await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, alunoData?.id_aluno as number, codigo_cidade);
-            createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
+            createModal("success", { title: "Sucesso", html: "Aluno editado com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar veículo" });
+            errorHandler(err, { title: "Erro ao editar aluno" });
         }
     };
 

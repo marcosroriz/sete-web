@@ -12,6 +12,7 @@ import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormLi
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
+import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 
 import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
 
@@ -45,6 +46,9 @@ const Localizacao: React.FC = () => {
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
                 <ReactHookInputText label="ENDEREÇO" name="loc_endereco" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+            <ReactHookFormItemCard>
+                <ReactHookInputNumberFormat label="CEP" name="loc_cep" format="#####-###" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
                 <ReactHookMultiFormList

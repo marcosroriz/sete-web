@@ -93,6 +93,7 @@ class AlunosService {
             data: body,
         });
         const data = await response.data;
+        console.log("BindEscolaToAluno");
         console.log(data);
     }
 

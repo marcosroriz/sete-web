@@ -23,7 +23,7 @@ import { localizacaoSchema, dadosBasicosSchema, dadosEscolaresSchema } from "val
 type FormData = {
     latlng: [number, number];
     mec_co_uf: string;
-    mec_no_municipio: string;
+    mec_co_municipio: string;
     loc_endereco: string;
     loc_cep: string;
     mec_tp_localizacao: string;
@@ -51,8 +51,8 @@ const Cadastrar: React.FC = () => {
                 loc_latitude: data.latlng[0].toString(),
                 loc_longitude: data.latlng[1].toString(),
                 mec_co_uf: Number(data.mec_co_uf),
-                mec_no_municipio: data.mec_no_municipio,
-                mec_co_entidade: data.nome,
+                mec_co_municipio: Number(data.mec_co_municipio),
+                mec_no_entidade: data.nome,
                 loc_endereco: data.loc_endereco,
                 loc_cep: data.loc_cep,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),

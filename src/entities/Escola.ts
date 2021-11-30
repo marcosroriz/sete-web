@@ -33,6 +33,7 @@ interface Escola {
 
 interface EscolaListObj {
     codigo_cidade: number;
+    mec_tp_localizacao: number;
     ensino_fundamental: string; // 'S' ou 'N'
     ensino_medio: string; // 'S' ou 'N'
     ensino_pre_escola: string; // 'S' ou 'N'

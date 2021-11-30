@@ -20,10 +20,7 @@ const dadosInstitucionaisSchema = yup.object().shape({
                   .string()
                   .matches(/^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$/, "Deve ser um telefone"),
     ),
-    cnpj: yup
-        .string()
-        .matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, "Esse campo deve ser um cpf ou um cnpj válido")
-        .required("Esse campo é obrigatório"),
+    cnpj: yup.string().required("Esse campo é obrigatório"),
     ramo: yup.array().of(yup.boolean()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
 });
 

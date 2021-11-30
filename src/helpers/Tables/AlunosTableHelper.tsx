@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AlunoListObj, AlunosTableField } from "entities/Aluno";
+import { Aluno, AlunoListObj, AlunosTableField } from "entities/Aluno";
 import { Link } from "react-router-dom";
 import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
 
@@ -14,10 +14,30 @@ class AlunosTableHelper {
             escola: alunoObj.escola,
             rota: alunoObj.rota,
             nome: alunoObj.nome,
-            localizacao: "-",
-            gps: alunoObj.loc_latitude && alunoObj.log_longitude ? "Sim" : "Não",
-            nivel: alunoObj.nivel.toString(),
-            turno: alunoObj.turno.toString(),
+            localizacao: alunoObj.mec_tp_localizacao == 1 ? "Urbana" : alunoObj.mec_tp_localizacao == 2 ? "Rural" : "-",
+            gps: alunoObj.loc_latitude === null ? "Não" : alunoObj.log_longitude === null ? "Não" : "Sim",
+            nivel:
+                alunoObj.nivel === 1
+                    ? "Infantil"
+                    : alunoObj.nivel === 2
+                    ? "Fundamental"
+                    : alunoObj.nivel === 3
+                    ? "Médio"
+                    : alunoObj.nivel === 4
+                    ? "Superior"
+                    : alunoObj.nivel === 5
+                    ? "Outro"
+                    : "Não informado",
+            turno:
+                alunoObj.turno === 1
+                    ? "Matutino"
+                    : alunoObj.turno === 2
+                    ? "Vespertino"
+                    : alunoObj.turno === 3
+                    ? "Integral"
+                    : alunoObj.turno === 4
+                    ? "Noturno"
+                    : "Não informado",
             acoes: this.acoesComponent(alunoObj, addOptions),
         }));
     }

@@ -33,6 +33,7 @@ interface AlunoListObj {
     cpf: string;
     loc_latitude: string;
     log_longitude: string;
+    mec_tp_localizacao: number;
     nivel: number;
     turno: number;
     escola: string;

@@ -56,7 +56,7 @@ const DadosPessoais: React.FC = () => {
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
-                    label="QUAL O MODO DE TRANSPORTE DO VEÍCULO?*"
+                    label="SEXO DO ALUNO É?*"
                     name="sexo"
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}

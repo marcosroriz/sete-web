@@ -1,43 +1,16 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { Escola, EscolaTableField, EscolaListObj } from "entities/Escola";
 
+type CreateEscolaRequestBody = Escola;
+type CreateEscolaResponse = {
+    messages: string | { [key: string]: any };
+    result: boolean;
+};
+
 type ListEscolaResponse = {
     data: EscolaListObj[];
     result: boolean;
     total: number;
-};
-
-type CreateEscolaRequestBody = {
-    loc_latitude: string;
-    loc_longitude: string;
-    mec_co_uf: number;
-    // mec_co_municipio: number;
-    mec_no_municipio: string;
-    loc_endereco: string;
-    loc_cep: string;
-    mec_tp_localizacao: number;
-    mec_tp_localizacao_diferenciada: number;
-
-    nome: string;
-    contato_responsavel: string;
-    contato_telefone: string;
-    contato_email: string;
-    // escola_tipo: string;
-
-    mec_in_regular: string;
-    mec_in_eja: string;
-    mec_in_profissionalizante: string;
-    ensino_pre_escola: string;
-    ensino_fundamental: string;
-    ensino_medio: string;
-    ensino_superior: string;
-    horario_matutino: string;
-    horario_vespertino: string;
-    horario_noturno: string;
-};
-
-type CreateEscolaResponse = {
-    result: boolean;
 };
 
 type GetEscolaResponse = Escola & { result: boolean };

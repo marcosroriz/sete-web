@@ -7,6 +7,7 @@ import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { Escola } from "entities/Escola";
 import { EscolasService } from "services/Escolas";
+import { escolasTableHelper } from "helpers/Tables/EscolasTableHelper";
 
 import PageTitle from "components/micro/PageTitle";
 
@@ -33,14 +34,14 @@ const Visualizar: React.FC = () => {
                 createModal();
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const escolasService = new EscolasService();
-                const veiculosResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
-                setEscolaData(veiculosResponse);
-                if (!veiculosResponse.result) {
-                    throw { ...veiculosResponse };
+                const escolasResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
+                setEscolaData(escolasResponse);
+                if (!escolasResponse.result) {
+                    throw { ...escolasResponse };
                 }
                 clearModal();
             } catch (err) {
-                errorHandler(err, { title: "Erro ao buscar dados do veículo" });
+                errorHandler(err, { title: "Erro ao buscar dados da escola" });
             }
         };
         fetchData();

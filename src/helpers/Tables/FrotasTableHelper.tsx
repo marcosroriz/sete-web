@@ -19,7 +19,7 @@ class FrotasTableHelper {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
-                    to={`/alunos/gerenciar/visualizar/${frotaObj.id_veiculo}`}
+                    to={`/frotas/gerenciar/visualizar/${frotaObj.id_veiculo}`}
                     style={{
                         display: "block",
                         marginBottom: "-2px",
@@ -31,7 +31,7 @@ class FrotasTableHelper {
                     <FaSearch size={"16px"} color={"gray"} />
                 </Link>
                 <Link
-                    to={`/alunos/gerenciar/editar/${frotaObj.id_veiculo}`}
+                    to={`/frotas/gerenciar/editar/${frotaObj.id_veiculo}`}
                     style={{
                         display: "block",
                         marginLeft: "6px",

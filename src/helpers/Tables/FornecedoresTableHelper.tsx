@@ -33,7 +33,7 @@ class FornecedoresTableHelper {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
-                    to={`/alunos/gerenciar/visualizar/${fornecedorObj.nome}`}
+                    to={`/fornecedores/gerenciar/visualizar/${fornecedorObj.id_fornecedor}`}
                     style={{
                         display: "block",
                         marginBottom: "-2px",
@@ -45,7 +45,7 @@ class FornecedoresTableHelper {
                     <FaSearch size={"16px"} color={"gray"} />
                 </Link>
                 <Link
-                    to={`/alunos/gerenciar/editar/${fornecedorObj.nome}`}
+                    to={`/fornecedores/gerenciar/editar/${fornecedorObj.id_fornecedor}`}
                     style={{
                         display: "block",
                         marginLeft: "6px",

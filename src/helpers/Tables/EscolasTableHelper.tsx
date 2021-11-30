@@ -1,5 +1,5 @@
 import React from "react";
-import { EscolaTableField, EscolaListObj } from "entities/Escola";
+import { Escola, EscolaTableField, EscolaListObj } from "entities/Escola";
 import { FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -11,8 +11,8 @@ class EscolasTableHelper {
     public treatData(data: EscolaListObj[], addOptions?: AdditionalOptions): EscolaTableField[] {
         return data.map((escolaObj) => ({
             nome: escolaObj.nome,
-            localizacao: "Rural - Urbano",
-            gps: escolaObj.loc_latitude && escolaObj.loc_longitude ? "Sim" : "Não",
+            localizacao: escolaObj.mec_tp_localizacao == 1 ? "Urbana" : escolaObj.mec_tp_localizacao == 2 ? "Rural" : "-",
+            gps: escolaObj.loc_latitude === null ? "Não" : escolaObj.loc_longitude === null ? "Não" : "Sim",
             nivel: [
                 escolaObj.ensino_pre_escola === "S" ? "Infantil" : "",
                 escolaObj.ensino_fundamental === "S" ? "Fundamental" : "",

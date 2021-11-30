@@ -23,7 +23,7 @@ type FormData = {
     latlng: [string, string];
     mec_tp_localizacao: string;
     loc_endereco: string;
-    endereco: string;
+    loc_cep: string;
     da_porteira: boolean; // S/N pra api
     da_mataburro: boolean; // S/N pra api
     da_colchete: boolean; // S/N pra api
@@ -61,8 +61,8 @@ const Cadastrar: React.FC = () => {
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
                 loc_endereco: data.loc_endereco,
+                loc_cep: data.loc_cep,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),
-                endereco: data.endereco,
                 da_porteira: data.da_porteira ? "S" : "N",
                 da_mataburro: data.da_mataburro ? "S" : "N",
                 da_colchete: data.da_colchete ? "S" : "N",
@@ -89,9 +89,9 @@ const Cadastrar: React.FC = () => {
             }
             await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any).id, codigo_cidade);
             await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
-            createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
+            createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar veículo" });
+            errorHandler(err, { title: "Erro ao cadastrar aluno" });
         }
     };
 
