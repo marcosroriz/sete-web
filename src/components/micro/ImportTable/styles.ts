@@ -14,8 +14,12 @@ export const Container = styled.div`
 
                 :last-child {
                     th {
-                        padding: 2% 0 1%;
                         border-bottom: 3px solid #7e7c97;
+                        padding: 12px 10px;
+
+                        &:nth-child(2) {
+                            text-align: left;
+                        }
                     }
                 }
             }
@@ -30,6 +34,12 @@ export const Container = styled.div`
                 :hover {
                     cursor: pointer;
                 }
+                td {
+                    padding: 12px 10px;
+                    &:nth-child(2) {
+                        text-align: left;
+                    }
+                }
             }
 
             .selected {
@@ -41,10 +51,6 @@ export const Container = styled.div`
                 }
 
                 border-top: 1px solid #e0e0e1;
-
-                td {
-                    padding: 0.9% 0;
-                }
             }
 
             .notSelected {
@@ -56,10 +62,6 @@ export const Container = styled.div`
 
                 :hover {
                     background-color: #dedee3;
-                }
-
-                td {
-                    padding: 0.9% 0;
                 }
             }
         }

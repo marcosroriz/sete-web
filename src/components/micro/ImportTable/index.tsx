@@ -11,9 +11,10 @@ import { Container } from "./styles";
 type ImportTableProps = {
     columns: ColumnWithLooseAccessor[];
     data: any[];
+    onSelectedDataChange: (arr: any[]) => void;
 };
 
-const ImportTable: React.FC<ImportTableProps> = ({ columns, data }) => {
+const ImportTable: React.FC<ImportTableProps> = ({ columns, data, onSelectedDataChange }) => {
     const instance = useTable(
         {
             columns,
@@ -39,9 +40,14 @@ const ImportTable: React.FC<ImportTableProps> = ({ columns, data }) => {
         nextPage,
         previousPage,
         setPageSize,
+        selectedFlatRows,
         state: { pageIndex, pageSize, globalFilter },
         setGlobalFilter,
     } = instance;
+
+    React.useEffect(() => {
+        onSelectedDataChange(selectedFlatRows.map((d) => d.original));
+    }, [selectedFlatRows]);
 
     return (
         <Container>

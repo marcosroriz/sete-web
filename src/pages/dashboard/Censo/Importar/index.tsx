@@ -1,9 +1,12 @@
 import React from "react";
 import { FaRegSquare } from "react-icons/fa";
 import { Button } from "react-bootstrap";
+import { useWatch, useFormContext } from "react-hook-form";
+
+import { CensoHelper } from "helpers/CensoHelper";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
-import { COLUMNS } from "contexts/Tables/CensoImportTable/columns";
+import { useCensoImportTable, TableData } from "contexts/Tables/CensoImportTable";
 
 import BlockTitle from "components/micro/BlockTitle";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
@@ -14,8 +17,23 @@ import ImportTable from "components/micro/ImportTable";
 import { Container } from "./styles";
 
 const Importar: React.FC = () => {
+    const { tableData, columns, parseCensoFile } = useCensoImportTable();
+    const {
+        setValue,
+        formState: { errors },
+    } = useFormContext();
     const { previousStep } = useReactHookNavCard();
-    const columns = React.useMemo(() => COLUMNS, []);
+    const file = useWatch({ name: "arquivo" });
+
+    const onSelectedDataChange = (val: TableData[]) => {
+        setValue("selecionado", val, { shouldValidate: true });
+    };
+
+    React.useEffect(() => {
+        if (file) {
+            parseCensoFile(file);
+        }
+    }, [file]);
 
     return (
         <Container>
@@ -31,13 +49,14 @@ const Importar: React.FC = () => {
                     POR FIM, CLIQUE NO BOTÃO <span>importar</span> PARA CONCLUIR O PROCESSO
                 </InfoListItem>
             </InfoList>
-            <ImportTable data={[]} columns={columns} />
+            <ImportTable data={tableData} columns={columns} onSelectedDataChange={onSelectedDataChange} />
+            {errors.selecionado && <span className="selected-error-message">{errors.selecionado?.message}</span>}
             <ButtonsContainer position="evenly">
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
                     Voltar
                 </Button>
                 <Button variant="info" type="submit" className="btn-fill">
-                    Enviar
+                    Importar
                 </Button>
             </ButtonsContainer>
         </Container>

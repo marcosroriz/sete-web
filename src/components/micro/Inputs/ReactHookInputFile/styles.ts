@@ -82,7 +82,7 @@ export const InputField = styled.div<InputFieldProps>`
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        margin: 0px;
+        margin: 10px 0px 0px 0px;
 
         span {
             color: var(--color-black);

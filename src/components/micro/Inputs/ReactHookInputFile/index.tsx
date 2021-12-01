@@ -105,10 +105,10 @@ const ReactHookInputFile: React.FC<ReactHookInputFileProps> = ({
                     />
                     <p>{placeholder ? placeholder : "Solte os arquivos de imagem aqui!"}</p>
                 </DragDropContainer>
-                <span className="form-error">{errors[name]?.message}</span>
                 <section className="form-preview">
                     <span>{file?.name}</span>
                 </section>
+                <span className="form-error">{errors[name]?.message}</span>
             </InputField>
         </Container>
     );

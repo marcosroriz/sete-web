@@ -3,6 +3,8 @@ import React from "react";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { ReactHookNavCardTab, ReactHookNavCardProvider } from "contexts/ReactHookNavCard";
+import { CensoImportTableProvider, TableData } from "contexts/Tables/CensoImportTable";
+import { baseDadosSchema, importarSchema } from "validators/dashboard/censo";
 
 import IconInep from "assets/icons/censo/censo-inep.png";
 import IconEducaCenso from "assets/icons/censo/censo-educacenso.png";
@@ -14,32 +16,38 @@ import BaseDados from "./BaseDados";
 import Importar from "./Importar";
 import PageTitle from "components/micro/PageTitle";
 
+type FormData = {
+    arquivo: File;
+    selecionado: TableData[];
+};
+
 const Censo: React.FC = () => {
     const { errorHandler } = useError();
     const { createModal, clearModal } = useAlertModal();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (data: FormData) => {
         try {
+            console.log(data);
         } catch (err) {
             errorHandler(err, { title: "Atenção!" });
         }
     };
 
     return (
-        <>
+        <CensoImportTableProvider>
             <PageTitle message="Importar Base de Dados do Censo Escolar" icon={IconInep} />
-            <ReactHookNavCardProvider onSubmit={handleSubmit}>
+            <ReactHookNavCardProvider<FormData> onSubmit={handleSubmit}>
                 <ReactHookNavCardTab name="EDUCACENSO" icon={<img src={IconEducaCenso} alt="" />}>
                     <EducaCenso />
                 </ReactHookNavCardTab>
-                <ReactHookNavCardTab name="BASE DE DADOS" icon={<img src={IconTxt} alt="" />}>
+                <ReactHookNavCardTab name="BASE DE DADOS" icon={<img src={IconTxt} alt="" />} validationSchema={baseDadosSchema}>
                     <BaseDados />
                 </ReactHookNavCardTab>
-                <ReactHookNavCardTab name="IMPORTAR" icon={<img src={IconProcessamento} alt="" />}>
+                <ReactHookNavCardTab name="IMPORTAR" icon={<img src={IconProcessamento} alt="" />} validationSchema={importarSchema}>
                     <Importar />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>
-        </>
+        </CensoImportTableProvider>
     );
 };
 
