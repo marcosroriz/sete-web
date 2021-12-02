@@ -9,6 +9,7 @@ import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as control from "ol/control";
 import * as source from "ol/source";
+import * as style from "ol/style";
 import * as proj from "ol/proj";
 
 import CanvasScaleLine from "ol-ext/control/CanvasScaleLine";
@@ -25,6 +26,13 @@ type LayerObj = {
 
 type LayersObj = {
     [name: string]: LayerObj;
+};
+
+type CreateMarkerDTO = {
+    lat: number;
+    lng: number;
+    icon: string;
+    anchor?: [number, number];
 };
 
 // [lng, lat]
@@ -180,6 +188,27 @@ class Map {
             this.mapInstance.addControl(switcher as any);
             this.layerSwitcherActivated = true;
         }
+    }
+
+    public createMarker({ icon, lat, lng, anchor }: CreateMarkerDTO): ol.Feature<geom.Point> {
+        const positionMarker = new ol.Feature({
+            type: "click",
+            desc: "Description",
+            geometry: new geom.Point([lng, lat]),
+        });
+        positionMarker.setStyle(
+            new style.Style({
+                image: new style.Icon({
+                    anchor: anchor,
+                    anchorXUnits: "pixels",
+                    anchorYUnits: "pixels",
+                    opacity: 1,
+                    src: icon,
+                }),
+            }),
+        );
+        this.vectorSource.addFeature(positionMarker);
+        return positionMarker;
     }
 }
 
