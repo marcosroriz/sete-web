@@ -3,6 +3,7 @@ import React from "react";
 import Home from "pages/dashboard/Home";
 import Perfil from "pages/dashboard/Perfil";
 import Usuarios from "pages/dashboard/Usuarios";
+import Censo from "pages/dashboard/Censo";
 
 import AuthRoute from "routes/AuthRoute";
 
@@ -10,4 +11,5 @@ export default [
     <AuthRoute path="/" component={Home} permission="reader" isPrivate exact key="home" />,
     <AuthRoute path="/perfil" component={Perfil} permission="reader" isPrivate exact key="perfil" />,
     <AuthRoute path="/usuarios" component={Usuarios} permission="reader" isPrivate exact key="usuarios" />,
+    <AuthRoute path="/censo" component={Censo} permission="reader" isPrivate exact key="censo" />,
 ];

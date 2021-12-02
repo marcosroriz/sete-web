@@ -8,7 +8,7 @@ import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
 import { useAuth } from "contexts/Auth";
 import { UsuariosService } from "services/Usuarios";
-import { updatePasswordSchema } from "validators/dashboard";
+import { updatePasswordSchema } from "validators/dashboard/user";
 
 import ReactHookInputPassword from "components/micro/Inputs/ReactHookInputPassword";
 

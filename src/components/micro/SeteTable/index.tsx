@@ -27,7 +27,7 @@ import { TableContainer, Pagination } from "./styles";
 
 import { useSelection } from "hooks/Table";
 
-const hooks = [useFilters, useSortBy, useFlexLayout, usePagination, useRowSelect, useSelection];
+const hooks = [useFilters, useSortBy, usePagination, useRowSelect, useSelection];
 
 type SeteTableProps = {
     name: string;
@@ -36,7 +36,7 @@ type SeteTableProps = {
 };
 
 const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) => {
-    const [initialState, setInitialState] = useLocalStorage(`tableState:${name}}`, {});
+    const [initialState, setInitialState] = useLocalStorage(`tableState:${name}`, {});
 
     const instance = useTable(
         {
