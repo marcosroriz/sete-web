@@ -139,5 +139,52 @@ export default createGlobalStyle`
         border-color: #adadad;
         border-top-color: var(--color-yellow);
     }
+
+    .table-header__container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .table-header__input {
+        width: max-content;
+        background-color: white;
+        border: 2px solid #C8C8C8;
+        border-radius: 6px;
+        color: var(---color-black);
+        font-size: 12px;
+        padding: 0px 12px;
+        height: 30px;
+
+        &::placeholder {
+            color: rgba(65, 69, 80, 0.5);
+            font-weight: 500;
+        }
+        &:focus {
+            border-width: 2px;
+            border-color: #C8C8C8;
+        }
+    }
+    .table-header__input.min {
+        width: inherit;
+    }
+    .table-header__select {
+        width: max-content;
+        background-color: white;
+        border: 2px solid #C8C8C8;
+        border-radius: 6px;
+        color: var(---color-black);
+        font-size: 12px;
+        padding: 0px 12px;
+        height: 30px;
+
+        &::placeholder {
+            color: rgba(65, 69, 80, 0.5);
+            font-weight: 500;
+        }
+        &:focus {
+            border-width: 2px;
+            outline: none;
+        }
+    }
     /* UTILS */
 `;

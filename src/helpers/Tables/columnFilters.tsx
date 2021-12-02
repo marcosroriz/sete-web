@@ -7,22 +7,16 @@ import React from "react";
 
 export const ColumnFilter = ({ column: { filterValue, setFilter } }) => {
     return (
-        <input
-            value={filterValue || ""}
-            onChange={(e) => {
-                setFilter(e.target.value || undefined);
-            }}
-            placeholder={"Procurar por nome*"}
-            style={{
-                width: "81%",
-                padding: "5% 0",
-                paddingLeft: "5%",
-                backgroundColor: "white",
-                border: "2px solid #C8C8C8",
-                borderRadius: "6px",
-                color: "gray",
-            }}
-        />
+        <div className="table-header__container">
+            <input
+                value={filterValue || ""}
+                onChange={(e) => {
+                    setFilter(e.target.value || undefined);
+                }}
+                placeholder={"Procurar por nome*"}
+                className="table-header__input form-control"
+            />
+        </div>
     );
 };
 
@@ -37,28 +31,22 @@ export const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilter
 
     // Render a multi-select box
     return (
-        <select
-            value={filterValue}
-            onChange={(e) => {
-                setFilter(e.target.value || undefined);
-            }}
-            style={{
-                width: "70%",
-                padding: "5% 0",
-                paddingLeft: "5%",
-                backgroundColor: "white",
-                border: "2px solid #C8C8C8",
-                borderRadius: "6px",
-                color: "gray",
-            }}
-        >
-            <option value="">Sem filtro</option>
-            {options.map((option, i) => (
-                <option key={i} value={option}>
-                    {option}
-                </option>
-            ))}
-        </select>
+        <div className="table-header__container">
+            <select
+                value={filterValue}
+                onChange={(e) => {
+                    setFilter(e.target.value || undefined);
+                }}
+                className="table-header__select"
+            >
+                <option value="">Sem filtro</option>
+                {options.map((option, i) => (
+                    <option key={i} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
+        </div>
     );
 };
 
@@ -74,52 +62,39 @@ export const NumberRangeColumnFilter = ({ column: { filterValue = [], preFiltere
     }, [id, preFilteredRows]);
 
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <input
-                value={filterValue[0] || ""}
-                type="number"
-                onChange={(e) => {
-                    const val = e.target.value;
-                    setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]]);
-                }}
-                placeholder={"Min"}
+        <div className="table-header__container">
+            <div
                 style={{
-                    width: "30%",
-                    padding: "5% 0",
-                    paddingLeft: "5%",
-                    backgroundColor: "white",
-                    border: "2px solid #C8C8C8",
-                    borderRadius: "6px",
-                    color: "gray",
-                    marginRight: "1.5%",
+                    display: "flex",
+                    width: "80%",
+                    justifyContent: "center",
+                    alignItems: "center",
                 }}
-            />
-            até
-            <input
-                value={filterValue[1] || ""}
-                type="number"
-                onChange={(e) => {
-                    const val = e.target.value;
-                    setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined]);
-                }}
-                placeholder={"Max"}
-                style={{
-                    width: "30%",
-                    padding: "5% 0",
-                    paddingLeft: "5%",
-                    backgroundColor: "white",
-                    border: "2px solid #C8C8C8",
-                    borderRadius: "6px",
-                    color: "gray",
-                    marginLeft: "2%",
-                }}
-            />
+            >
+                <input
+                    value={filterValue[0] || ""}
+                    type="number"
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]]);
+                    }}
+                    placeholder={"Min"}
+                    className="table-header__input min form-control"
+                    style={{ marginRight: "2px" }}
+                />
+                até
+                <input
+                    value={filterValue[1] || ""}
+                    type="number"
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined]);
+                    }}
+                    placeholder={"Max"}
+                    className="table-header__input min form-control"
+                    style={{ marginLeft: "2px" }}
+                />
+            </div>
         </div>
     );
 };
