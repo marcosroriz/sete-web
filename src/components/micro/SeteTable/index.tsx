@@ -12,7 +12,6 @@ import {
     ColumnWithLooseAccessor,
     TableOptions,
     useFilters,
-    useFlexLayout,
     usePagination,
     useRowSelect,
     useSortBy,
