@@ -9,6 +9,7 @@ import AlunosRoutes from "./modules/alunos";
 import EscolasRoutes from "./modules/escolas";
 import FornecedoresRoutes from "./modules/fornecedores";
 import RotasRoutes from "./modules/rotas";
+import MonitoresRoutes from "./modules/monitores";
 
 const Routes: React.FC = () => {
     return (
@@ -21,6 +22,7 @@ const Routes: React.FC = () => {
             {EscolasRoutes}
             {FornecedoresRoutes}
             {RotasRoutes}
+            {MonitoresRoutes}
         </Switch>
     );
 };

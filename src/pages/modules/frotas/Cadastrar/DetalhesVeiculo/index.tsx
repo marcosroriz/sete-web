@@ -69,6 +69,49 @@ const DetalhesVeiculo: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
+            <ReactHookFormItemCard>
+                <ReactHookInputText
+                    label="VALOR DO IPVA DO VEÍCULO (ANUAL E COM LICENSIAMENTO)"
+                    name="valor_ipva"
+                    type="number"
+                    unitOfMeasure="R$"
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText
+                    label="VALOR ANUAL DO DPVAT DO VEÍCULO"
+                    name="valor_dpvat"
+                    type="integer"
+                    unitOfMeasure="R$"
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="SEGURO ANUAL DO VEÍCULO" name="seguro_anual" type="number" unitOfMeasure="R$" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="CONSUMO DO VEÍCULO (L/HORA)" name="consumo" type="number" unitOfMeasure="R$" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookMultiFormList
+                    label="TIPO DE COMBUSTÍVEL PREFERENCIAL"
+                    isHorizontal={mediaQuery.desktop}
+                    fieldsHorizontal={mediaQuery.mobile}
+                    formListSpacing="20px"
+                >
+                    <ReactHookInputRadio label="Gasolina" value="falsee" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Diesel" value="false" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Etanol" value="false" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Gás Natural" value="false" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Outro" value="false" name="tipo_combustivel" position="right" />
+                </ReactHookMultiFormList>
+            </ReactHookFormItemCard>
+
             <ButtonsContainer position="evenly">
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
                     Voltar

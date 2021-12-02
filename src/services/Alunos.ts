@@ -37,6 +37,14 @@ type BindRotaToAlunoRequestBody = {
     id_rota: number;
 };
 
+type ListBindRotaToAlunoResponse = {
+    nome: string;
+    loc_latitude: string;
+    loc_longitude: string;
+    loc_endereco: string;
+    loc_cep: string;
+};
+
 class AlunosService {
     private api: ApiInstance;
 
@@ -86,7 +94,7 @@ class AlunosService {
         return data;
     }
 
-    public async bindEscolaToAluno(body: BindEscolaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<void> {
+    public async bindEscolaToAluno(body: BindEscolaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<any> {
         const response = await this.api({
             method: "put",
             url: `/alunos/${codigo_cidade}/${id_aluno}/escola`,
@@ -106,7 +114,7 @@ class AlunosService {
         return data;
     }
 
-    public async bindRotaToAluno(body: BindRotaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<void> {
+    public async bindRotaToAluno(body: BindRotaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<any> {
         const response = await this.api({
             method: "put",
             url: `/alunos/${codigo_cidade}/${id_aluno}/rota`,
@@ -121,7 +129,7 @@ class AlunosService {
             method: "get",
             url: `/alunos/${codigo_cidade}/${id_aluno}/rota`,
         });
-        const data = await response.data;
+        const data = (await response.data) as ListBindRotaToAlunoResponse;
     }
 
     public async deleteAluno(id_aluno: number, codigo_cidade: number): Promise<void> {

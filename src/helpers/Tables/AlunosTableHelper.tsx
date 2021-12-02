@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Aluno, AlunoListObj, AlunosTableField } from "entities/Aluno";
+import { AlunoListObj, AlunosTableField } from "entities/Aluno";
 import { Link } from "react-router-dom";
 import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
 
