@@ -2,9 +2,11 @@ import React from "react";
 
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
+import { useAuth } from "contexts/Auth";
 import { ReactHookNavCardTab, ReactHookNavCardProvider } from "contexts/ReactHookNavCard";
 import { CensoImportTableProvider, TableData } from "contexts/Tables/CensoImportTable";
 import { baseDadosSchema, importarSchema } from "validators/dashboard/censo";
+import { CensoService } from "services/Censo";
 
 import IconInep from "assets/icons/censo/censo-inep.png";
 import IconEducaCenso from "assets/icons/censo/censo-educacenso.png";
@@ -23,10 +25,20 @@ type FormData = {
 
 const Censo: React.FC = () => {
     const { errorHandler } = useError();
+    const { user } = useAuth();
     const { createModal, clearModal } = useAlertModal();
 
     const handleSubmit = async (data: FormData) => {
         try {
+            const codigo_cidade = user?.codigo_cidade || 0;
+            const censoService = new CensoService();
+            data.selecionado.forEach((tabela) => {
+                const body = {
+                    escolas: [{ ...tabela.escola, mec_co_municipio: codigo_cidade }],
+                    alunos: tabela.alunos,
+                };
+                censoService.createCensoRegistro(body, codigo_cidade);
+            });
             console.log(data);
         } catch (err) {
             errorHandler(err, { title: "Atenção!" });
