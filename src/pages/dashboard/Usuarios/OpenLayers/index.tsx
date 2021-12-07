@@ -1,10 +1,9 @@
 import React from "react";
-import Overlay from "ol/Overlay";
 
-import { toLonLat } from "ol/proj";
-import { toStringHDMS } from "ol/coordinate";
-import RenderFeature from "ol/render/Feature";
-import Geometry from "ol/geom/Geometry";
+import ol from "ol";
+import * as interaction from "ol/interaction";
+import * as events from "ol/events";
+import PopupFeature from "ol-ext/overlay/PopupFeature";
 
 import { Map } from "helpers/Maps/Map";
 
@@ -27,58 +26,53 @@ const OpenLayers: React.FC = () => {
         if (!mapRef.current) {
             mapRef.current = new Map("map", { zoom: 5 });
             const map = mapRef.current;
-            map.createMarker({ lng: Number(-48.068419), lat: Number(-15.105272), icon: AlunosMarker, anchor: [25, 50] });
-            let popup = new Overlay.Popup();
-            popup.setOffset([0, -55]);
-            map.mapInstance.addOverlay(popup);
-            map.mapInstance.on("click", function (evt) {
-                let f = map.mapInstance.forEachFeatureAtPixel(evt.pixel, function (ft, layer) {
-                    return ft;
-                });
-                if (f && f.get("type") == "click") {
-                    let geometry = f.getGeometry() as any;
-                    let coord = geometry.getCoordinates();
-
-                    let content = "<h1>" + f.get("desc") + "</h1>";
-
-                    popup.show(coord, content);
-                } else {
-                    popup.hide();
-                }
+            const marker = map.createMarker({ lng: Number(-48.068419), lat: Number(-15.105272), icon: AlunosMarker, anchor: [25, 50] });
+            let select = new interaction.Select({
+                hitTolerance: 5,
+                multi: false,
+                condition: events.condition.singleClick,
+                filter: (feature, layer) => {
+                    if (feature.getGeometry().getType() == "Point" && feature.getProperties()["TIPO"] == tipo) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                },
             });
-            // const popup = new Overlay({
-            //     element: document.getElementById("popup") || undefined,
-            // });
-            // map.mapInstance.addOverlay(popup);
-            // map.mapInstance.on("click", function (evt) {
-            //     const element = popup.getElement() as HTMLElement;
-            //     console.log(`clicou no mapa`);
-            //     if (element) {
-            //         const jqElement = $(element) as any;
-            //         jqElement.popover("dispose");
-            //         map.mapInstance.forEachFeatureAtPixel(evt.pixel, function () {
-            //             const coordinate = evt.coordinate;
-            //             popup.setPosition(coordinate);
-            //             jqElement.popover({
-            //                 container: element,
-            //                 placement: "top",
-            //                 animation: false,
-            //             });
-            //             jqElement.popover("show");
-            //         });
-            //     }
-            // });
+            let popupEscola = new PopupFeature({
+                closeBox: true,
+                onshow: () => {
+                    console.log("abrir");
+                },
+                onclose: () => {
+                    console.log("Fechou");
+                },
+                template: {
+                    title: (elem) => {
+                        return "Aluno Meu";
+                    },
+                    attributes: {
+                        NOME: {
+                            title: "Nome",
+                        },
+                        SEXO: {
+                            title: "Sexo",
+                        },
+                        NIVELSTR: {
+                            title: "Nível",
+                        },
+                        TURNOSTR: {
+                            title: "Turno",
+                        },
+                    },
+                },
+            });
         }
     }, []);
 
     return (
         <Container ref={containerRef}>
             <div id="map"></div>
-            <div style={{ display: "none" }}>
-                <div id="popup" title="Welcome to OpenLayers">
-                    <button>Clica aqui</button>
-                </div>
-            </div>
         </Container>
     );
 };

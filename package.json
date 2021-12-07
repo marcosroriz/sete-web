@@ -14,7 +14,6 @@
         "md5": "^2.3.0",
         "ol": "^6.9.0",
         "ol-ext": "^3.2.6",
-        "ol-popup": "^4.0.0",
         "query-string": "^7.0.1",
         "react": "^17.0.2",
         "react-bootstrap": "^2.0.0-beta.4",

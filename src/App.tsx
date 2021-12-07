@@ -15,13 +15,9 @@ import "@sweetalert2/theme-bootstrap-4";
 import "ol/ol.css";
 import "ol-ext/dist/ol-ext.css";
 
-import Overlay from "ol/Overlay";
-import Popup from "ol-popup";
-Overlay.Popup = Popup;
 import $ from "jquery";
 (window as any).$ = $;
 (window as any).jQuery = $;
-import "bootstrap";
 
 const App: React.FC = () => {
     return (
