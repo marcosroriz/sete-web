@@ -20,7 +20,7 @@ import PageTitle from "components/micro/PageTitle";
 
 type FormData = {
     arquivo: File;
-    selecionado: TableData[];
+    escolas_selecionadas: TableData[];
 };
 
 const Censo: React.FC = () => {
@@ -30,16 +30,17 @@ const Censo: React.FC = () => {
 
     const handleSubmit = async (data: FormData) => {
         try {
+            createModal();
             const codigo_cidade = user?.codigo_cidade || 0;
             const censoService = new CensoService();
-            data.selecionado.forEach((tabela) => {
+            for (let tabela of data.escolas_selecionadas) {
                 const body = {
                     escolas: [{ ...tabela.escola, mec_co_municipio: codigo_cidade }],
                     alunos: tabela.alunos,
                 };
-                censoService.createCensoRegistro(body, codigo_cidade);
-            });
-            console.log(data);
+                await censoService.createCensoRegistro(body, codigo_cidade);
+            }
+            createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Atenção!" });
         }
