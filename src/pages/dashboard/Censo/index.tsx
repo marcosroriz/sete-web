@@ -1,4 +1,5 @@
 import React from "react";
+import { ProgressBar } from "react-bootstrap";
 
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
@@ -26,14 +27,16 @@ type FormData = {
 const Censo: React.FC = () => {
     const { errorHandler } = useError();
     const { user } = useAuth();
-    const { createModal, clearModal } = useAlertModal();
+    const { createModal, incrementProgress } = useAlertModal();
 
     const handleSubmit = async (data: FormData) => {
         try {
-            createModal();
+            createModal("progress");
             const codigo_cidade = user?.codigo_cidade || 0;
             const censoService = new CensoService();
+            const incrementNumber = Number((100 / data.escolas_selecionadas.length).toPrecision(2));
             for (let tabela of data.escolas_selecionadas) {
+                incrementProgress(incrementNumber);
                 const body = {
                     escolas: [{ ...tabela.escola, mec_co_municipio: codigo_cidade }],
                     alunos: tabela.alunos,
