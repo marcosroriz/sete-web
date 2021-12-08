@@ -1,8 +1,7 @@
 import React from "react";
 
-import ol from "ol";
 import * as interaction from "ol/interaction";
-import * as events from "ol/events";
+import condition from "ol/events/condition";
 import PopupFeature from "ol-ext/overlay/PopupFeature";
 
 import { Map } from "helpers/Maps/Map";
@@ -30,9 +29,9 @@ const OpenLayers: React.FC = () => {
             let select = new interaction.Select({
                 hitTolerance: 5,
                 multi: false,
-                condition: events.condition.singleClick,
+                condition: condition.singleClick,
                 filter: (feature, layer) => {
-                    if (feature.getGeometry().getType() == "Point" && feature.getProperties()["TIPO"] == tipo) {
+                    if ((feature as any).getGeometry().getType() == "Point" && feature.getProperties()["TIPO"] == tipo) {
                         return true;
                     } else {
                         return false;
