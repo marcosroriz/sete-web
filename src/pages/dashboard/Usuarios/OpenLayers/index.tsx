@@ -1,7 +1,7 @@
 import React from "react";
 
 import * as interaction from "ol/interaction";
-import condition from "ol/events/condition";
+import * as condition from "ol/events/condition";
 import PopupFeature from "ol-ext/overlay/PopupFeature";
 
 import { Map } from "helpers/Maps/Map";
@@ -25,47 +25,40 @@ const OpenLayers: React.FC = () => {
         if (!mapRef.current) {
             mapRef.current = new Map("map", { zoom: 5 });
             const map = mapRef.current;
-            const marker = map.createMarker({ lng: Number(-48.068419), lat: Number(-15.105272), icon: AlunosMarker, anchor: [25, 50] });
+            map.createMarker({ lng: Number(-48.068419), lat: Number(-15.105272), icon: AlunosMarker, anchor: [25, 50] });
             let select = new interaction.Select({
                 hitTolerance: 5,
-                multi: false,
+                multi: true,
                 condition: condition.singleClick,
-                filter: (feature, layer) => {
-                    if ((feature as any).getGeometry().getType() == "Point" && feature.getProperties()["TIPO"] == tipo) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                },
             });
-            let popupEscola = new PopupFeature({
-                closeBox: true,
-                onshow: () => {
-                    console.log("abrir");
-                },
-                onclose: () => {
-                    console.log("Fechou");
-                },
+            map.mapInstance.addInteraction(select);
+            let popup = new PopupFeature({
+                select: select,
+                canFix: true,
                 template: {
-                    title: (elem) => {
-                        return "Aluno Meu";
+                    title: function (f) {
+                        return f.get("nom") + " (" + f.get("id") + ")";
                     },
                     attributes: {
-                        NOME: {
-                            title: "Nome",
+                        region: { title: "Région" },
+                        arrond: { title: "Arrondissement" },
+                        cantons: { title: "Cantons" },
+                        communes: { title: "Communes" },
+                        pop: {
+                            title: "Population", // attribute's title
+                            before: "", // something to add before
+                            after: " hab.", // something to add after
                         },
-                        SEXO: {
-                            title: "Sexo",
-                        },
-                        NIVELSTR: {
-                            title: "Nível",
-                        },
-                        TURNOSTR: {
-                            title: "Turno",
+                        pop2: {
+                            title: "Population (kHab.)", // attribute's title
+                            format: function (val, f) {
+                                return Math.round(parseInt(f.get("pop")) / 100).toLocaleString() + " kHab.";
+                            },
                         },
                     },
                 },
             });
+            map.mapInstance.addOverlay(popup);
         }
     }, []);
 
