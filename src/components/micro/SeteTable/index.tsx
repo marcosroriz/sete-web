@@ -40,7 +40,7 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
     const instance = useTable(
         {
             ...props,
-            columns: columns,
+            columns: columns as any,
             data: data,
             initialState,
         },
