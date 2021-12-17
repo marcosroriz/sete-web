@@ -11,7 +11,7 @@ import TableHead from "./Table/TableHead";
 const TableDocument: React.FC = () => {
     return (
         <Document>
-            <Page size="A4" orientation="landscape" style={styles.page}>
+            <Page size="A4" orientation="landscape" style={styles.page} wrap>
                 <View style={styles.document} wrap>
                     <View style={styles.documentTitleContainer}>
                         <View style={styles.logoContainer}>
@@ -29,6 +29,13 @@ const TableDocument: React.FC = () => {
                     </View>
                     <TableHead />
                     <TableBody />
+                    <View
+                        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                        render={({ pageNumber }) => (pageNumber > 1 ? <TableHead /> : "")}
+                        fixed
+                    />
+
+                    <View style={{ position: "absolute", top: 0, left: 0, width: "100%" }} />
                 </View>
             </Page>
         </Document>
@@ -39,14 +46,11 @@ const styles = StyleSheet.create({
     page: {
         flexDirection: "column",
         backgroundColor: "#FFFFFF",
-    },
-    document: {
-        flexDirection: "column",
-        width: "100%",
-        height: "100%",
-        paddingVertical: 40,
+        paddingBottom: 40,
+        paddingTop: 40,
         paddingHorizontal: 40,
     },
+    document: {},
     documentTitleContainer: {
         display: "flex",
         flexDirection: "row",
@@ -80,6 +84,7 @@ const styles = StyleSheet.create({
     tableTitleContainer: {
         width: "100%",
         marginTop: 15,
+        marginBottom: 20,
     },
     // TableTitleContainer
     tableTitle: {
@@ -92,6 +97,23 @@ const styles = StyleSheet.create({
         fontSize: 17,
     },
     // TableTitleContainer
+    theadrow: {
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        paddingVertical: 5,
+        backgroundColor: "#576071",
+        color: "#FFFFFF",
+    },
+    theaddata: {
+        fontSize: 12,
+        paddingHorizontal: 10,
+    },
+    theaddatatext: {
+        color: "#FFFFFF",
+        fontSize: 12,
+    },
 });
 
 export default TableDocument;

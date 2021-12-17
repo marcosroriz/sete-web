@@ -11,8 +11,8 @@ const TableHead: React.FC = () => {
 
     return (
         <>
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, index) => (
-                <View style={[styles.tbodyrow, getRowColor(index)]} key={index}>
+            {Array.from(Array(60).keys()).map((_, index) => (
+                <View style={[styles.tbodyrow, getRowColor(index)]} key={index} wrap={false}>
                     <Text style={[styles.tbodydata, { width: "25%" }]}>
                         <Text>ADRIELLY ALVES DE SOUSA</Text>
                     </Text>

@@ -1,34 +1,47 @@
 import React from "react";
-import { StyleSheet, Image, View, Document, Page, Text } from "@react-pdf/renderer";
+import ReactPdf, { StyleSheet, Image, View, Document, Page, Text } from "@react-pdf/renderer";
+
+type TableHead = {
+    styles?: ReactPdf.Styles;
+};
 
 const TableHead: React.FC = () => {
     return (
-        <>
-            <View style={styles.theadrow}>
-                <View style={[styles.theaddata, { width: "25%" }]}>
-                    <Text>Nome</Text>
-                </View>
-                <View style={[styles.theaddata, { width: "12%" }]}>
-                    <Text>Localização</Text>
-                </View>
-                <View style={[styles.theaddata, { width: "8%" }]}>
-                    <Text>GPS</Text>
-                </View>
-                <View style={[styles.theaddata, { width: "20%" }]}>
-                    <Text>Escola</Text>
-                </View>
-                <View style={[styles.theaddata, { width: "20%" }]}>
-                    <Text>Nível</Text>
-                </View>
-                <View style={[styles.theaddata, { width: "10%" }]}>
-                    <Text>Turno</Text>
-                </View>
+        <View
+            style={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                paddingTop: 5,
+                paddingBottom: 5,
+                backgroundColor: "#576071",
+                color: "#FFFFFF",
+            }}
+        >
+            <View style={{ width: "25%", fontSize: 12, paddingLeft: 10, paddingRight: 10 }}>
+                <Text style={{ color: "#FFFFFF", fontSize: 12 }}>Nome</Text>
             </View>
-        </>
+            <View style={{ width: "12%", fontSize: 12, paddingLeft: 10, paddingRight: 10 }}>
+                <Text style={{ color: "#FFFFFF", fontSize: 12 }}>Localização</Text>
+            </View>
+            <View style={{ width: "8%", fontSize: 12, paddingLeft: 10, paddingRight: 10 }}>
+                <Text style={{ color: "#FFFFFF", fontSize: 12 }}>GPS</Text>
+            </View>
+            <View style={{ width: "20%", fontSize: 12, paddingLeft: 10, paddingRight: 10 }}>
+                <Text style={{ color: "#FFFFFF", fontSize: 12 }}>Escola</Text>
+            </View>
+            <View style={{ width: "20%", fontSize: 12, paddingLeft: 10, paddingRight: 10 }}>
+                <Text style={{ color: "#FFFFFF", fontSize: 12 }}>Nível</Text>
+            </View>
+            <View style={{ width: "10%", fontSize: 12, paddingLeft: 10, paddingRight: 10 }}>
+                <Text style={{ color: "#FFFFFF", fontSize: 12 }}>Turno</Text>
+            </View>
+        </View>
     );
 };
 
-const styles = StyleSheet.create({
+const componentStyles = StyleSheet.create({
     thead: {},
     theadrow: {
         display: "flex",
@@ -42,6 +55,10 @@ const styles = StyleSheet.create({
     theaddata: {
         fontSize: 12,
         paddingHorizontal: 10,
+    },
+    theaddatatext: {
+        color: "#FFFFFF",
+        fontSize: 12,
     },
 });
 

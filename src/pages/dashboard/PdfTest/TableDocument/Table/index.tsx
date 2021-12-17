@@ -5,7 +5,12 @@ import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 
 const Table: React.FC = () => {
-    return <View style={styles.table}></View>;
+    return (
+        <View style={styles.table}>
+            <TableHead />
+            <TableBody />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
