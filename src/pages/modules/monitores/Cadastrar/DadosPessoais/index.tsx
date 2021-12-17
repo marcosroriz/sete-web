@@ -41,7 +41,7 @@ const DadosPessoais: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookMultiFormList label="VÍNCULO COM A PREFEITURA*" name="vinculo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
+                <ReactHookMultiFormList label="VÍNCULO TRABALHISTA*" name="vinculo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
                     <ReactHookInputRadio label="Servidor efetivo" value="1" name="vinculo" position="right" />
                     <ReactHookInputRadio label="Servidor comissionado" value="2" name="vinculo" position="right" />
                     <ReactHookInputRadio label="Terceirizado" value="3" name="vinculo" position="right" />

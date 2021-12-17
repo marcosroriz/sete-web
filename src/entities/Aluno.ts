@@ -4,6 +4,7 @@ interface Aluno {
     loc_longitude?: string;
     loc_endereco?: string;
     loc_cep?: string;
+    mec_tp_localizacao: number;
     da_porteira?: string; // 'S' ou 'N'
     da_mataburro?: string; // 'S' ou 'N'
     da_colchete?: string; // 'S' ou 'N'
@@ -18,7 +19,6 @@ interface Aluno {
     nome_responsavel?: string;
     telefone_responsavel?: string;
     grau_responsavel?: number;
-    mec_tp_localizacao: number;
     cpf?: string;
     def_caminhar?: string; // 'S' ou 'N'
     def_ouvir?: string; // 'S' ou 'N'

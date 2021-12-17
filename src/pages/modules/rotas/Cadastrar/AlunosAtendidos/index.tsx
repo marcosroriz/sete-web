@@ -5,6 +5,7 @@ import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import BlockTitle from "components/micro/BlockTitle";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
+import ReactHookDualMultiSelect from "components/micro/Inputs/ReactHookDualMultiSelect";
 
 import { Container } from "./styles";
 
@@ -12,7 +13,8 @@ const AlunosAtendidos: React.FC = () => {
     const { previousStep } = useReactHookNavCard();
     return (
         <Container>
-            <BlockTitle message="ESCOLAS ATENDIDAS" />
+            <BlockTitle message="ALUNOS ATENDIDAS" />
+            <ReactHookDualMultiSelect name="escolas" />
             <ButtonsContainer>
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
                     Voltar

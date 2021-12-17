@@ -2,36 +2,58 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { useAuth } from "contexts/Auth";
+
+import { RotasService } from "services/Rotas";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
+import ReactHookInputMultiSelect from "components/micro/Inputs/ReactHookInputMultiSelect";
 
 import { Container, mediaQuery } from "./styles";
 
+type SelectOptions = {
+    value: string;
+    label: string;
+};
+
 const DadosTransporte: React.FC = () => {
+    const { user } = useAuth();
     const { previousStep } = useReactHookNavCard();
+
+    const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
+
+    const fetchData = async () => {
+        try {
+            const codigo_cidade = user?.codigo_cidade || 0;
+            const rotasService = new RotasService();
+            const rotasResponse = await rotasService.listRotas(codigo_cidade);
+            setRotaOptions(rotasResponse.data.map((rota) => ({ value: rota.id_rota.toString(), label: rota.nome })));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <Container>
             <ReactHookFormItemCard>
-                <ReactHookInputText label="SALÁRIO*" name="salario" type="number" unitOfMeasure="R$" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard>
-            <ReactHookFormItemCard required>
-                <ReactHookMultiFormList
-                    label="O MOTORISTA ESTÁ HABILITADO A DIRIGIR QUAIS CATEGORIAS DE VEÍCULOS?*"
-                    name="tipo_cnh"
-                    formListSpacing="40px"
+                <ReactHookInputMultiSelect
+                    label="QUAL A ROTA DO ALUNO?"
+                    name="rotas"
+                    options={rotaOptions}
+                    placeholder="Escolha uma rota"
                     isHorizontal={mediaQuery.desktop}
-                    fieldsHorizontal={mediaQuery.mobile}
-                >
-                    <ReactHookInputCheckbox label="A" name="tipo_cnh[0]" />
-                    <ReactHookInputCheckbox label="B" name="tipo_cnh[1]" />
-                    <ReactHookInputCheckbox label="C" name="tipo_cnh[2]" />
-                    <ReactHookInputCheckbox label="D" name="tipo_cnh[3]" />
-                    <ReactHookInputCheckbox label="E" name="tipo_cnh[4]" />
-                </ReactHookMultiFormList>
+                />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="SALÁRIO*" name="salario" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

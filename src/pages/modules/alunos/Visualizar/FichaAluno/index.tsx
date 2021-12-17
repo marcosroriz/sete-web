@@ -68,8 +68,8 @@ const FichaAluno: React.FC = () => {
                     .filter((val) => val !== "")
                     .join(", "),
                 Localização: alunoData.loc_longitude ? `${alunoData.loc_latitude || ""}, ${alunoData.loc_longitude || ""}` : "",
-                // Escola: alunoData.escola,
-                // "Contato da Escola": alunoData,
+                "Tipo de localização": alunoData.mec_tp_localizacao == 1 ? "Urbana" : alunoData.mec_tp_localizacao == 2 ? "Rural" : null,
+                //Escola: alunoData.escola,
                 // "Telefone de Contato": alunoData.ensino_fundamental,
                 // ROTA: alunoData.ensino_fundamental,
             };

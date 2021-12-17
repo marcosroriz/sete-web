@@ -23,6 +23,7 @@ type FormData = {
     sexo: string;
     telefone: string;
     vinculo: string;
+    rotas: string;
     salario: number;
     turno: boolean[];
 };
@@ -56,12 +57,13 @@ const Cadastrar: React.FC = () => {
                 sexo: Number(data.sexo),
                 telefone: data.telefone,
                 vinculo: Number(data.vinculo),
+                rotas: data.rotas,
                 salario: data.salario,
                 turno_manha: data.turno[0] ? "S" : "N",
                 turno_tarde: data.turno[1] ? "S" : "N",
                 turno_noite: data.turno[2] ? "S" : "N",
             };
-
+            console.log(body);
             const monitoresResponse = await monitoresService.createMonitor(body, codigo_cidade);
             if (!monitoresResponse.result) {
                 throw { ...monitoresResponse };

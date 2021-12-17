@@ -53,6 +53,7 @@ class AlunosService {
     }
 
     public async createAluno(body: CreateAlunoRequestBody, codigo_cidade: number): Promise<CreateAlunoResponse> {
+        console.log(body);
         const response = await this.api({
             method: "post",
             url: `/alunos/${codigo_cidade}`,
@@ -95,14 +96,13 @@ class AlunosService {
     }
 
     public async bindEscolaToAluno(body: BindEscolaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<any> {
+        console.log(body);
         const response = await this.api({
             method: "put",
             url: `/alunos/${codigo_cidade}/${id_aluno}/escola`,
             data: body,
         });
         const data = await response.data;
-        console.log("BindEscolaToAluno");
-        console.log(data);
     }
 
     public async listBindEscolaToAluno(id_aluno: number, codigo_cidade: number): Promise<ListBindEscolaToAlunoResponse> {

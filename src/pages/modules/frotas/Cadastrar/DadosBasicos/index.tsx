@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useFormContext } from "react-hook-form";
+import { useWatch, useFormContext } from "react-hook-form";
 
 import { formatHelper } from "helpers/FormatHelper";
 import { VeiculosService } from "services/Veiculos";
@@ -21,9 +21,22 @@ type SelectOptionsObj = {
     2: { label: string; value: string }[];
 };
 
+const caminho_escola = [
+    { label: "Não se aplica", value: "0" },
+    { label: "ORE 1", value: "1" },
+    { label: "ORE 1 (4x4)", value: "2" },
+    { label: "ORE 2", value: "3" },
+    { label: "ORE 3", value: "4" },
+    { label: "ORE 4", value: "5" },
+    { label: "ONUREA", value: "6" },
+    { label: "Lancha a Gasolina", value: "7" },
+    { label: "Lancha a Diesel", value: "8" },
+];
+
 const DadosBasicos: React.FC = () => {
     const { nextStep } = useReactHookNavCard();
     const { watch, setValue } = useFormContext();
+
     const [optionsTipo, setOptionsTipo] = React.useState<SelectOptionsObj>({ 1: [], 2: [] });
     const [optionsMarca, setOptionsMarca] = React.useState<SelectOptionsObj>({ 1: [], 2: [] });
 
@@ -63,6 +76,10 @@ const DadosBasicos: React.FC = () => {
         fetchData();
     }, []);
 
+    const check = useWatch({
+        name: "modo",
+    });
+
     return (
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DO VEÍCULO SENDO CADASTRADO." />
@@ -78,8 +95,8 @@ const DadosBasicos: React.FC = () => {
                         setValue("marca", "");
                     }}
                 >
-                    <ReactHookInputRadio label="Rodoviário (Ônibus, Van, etc)" value="1" name="modo" position="right" />
-                    <ReactHookInputRadio label="Aquaviário (Lancha, Barco, etc)" value="2" name="modo" position="right" />
+                    <ReactHookInputRadio label="Rodoviário (Ônibus, Van, etc)" value="0" position="right" name="modo" />
+                    <ReactHookInputRadio label="Aquaviário (Lancha, Barco, etc)" value="1" position="right" name="modo" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
@@ -107,6 +124,41 @@ const DadosBasicos: React.FC = () => {
 
             <ReactHookFormItemCard required>
                 <ReactHookInputText label="ANO DE AQUISIÇÃO DO VEÍCULO*" name="ano" type="number" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
+            {check == 0 && (
+                <ReactHookFormItemCard required>
+                    <ReactHookInputText label="NÚMERO DE PNEUS" name="numero_pneus" type="number" isHorizontal={mediaQuery.desktop} />
+                </ReactHookFormItemCard>
+            )}
+
+            {check == 0 && (
+                <ReactHookFormItemCard>
+                    <ReactHookInputText
+                        label="VIDA ÚTIL DO PNEU"
+                        name="vida_util_pneu"
+                        type="number"
+                        unitOfMeasure="KM RODADOS"
+                        isHorizontal={mediaQuery.desktop}
+                    />
+                </ReactHookFormItemCard>
+            )}
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="POTÊNCIA DO MOTOR" name="potencia" type="number" unitOfMeasure={"CAVALOS"} isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputSelect
+                    label="CASO TENHA ADIQUIRIDO O VEÍCULO PELO PORGRAMA CAMINHO DA ESCOLA, SELECIONE O MODELO DO MESMO:"
+                    name="caminho_escola"
+                    options={caminho_escola}
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="PREÇO DO VEÍCULO" name="preco" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

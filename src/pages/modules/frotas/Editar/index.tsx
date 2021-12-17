@@ -24,15 +24,23 @@ type FormData = {
     tipo: string;
     marca: string;
     modelo: string;
-    ano_programa: string;
     ano: number;
+    numero_pneus: number;
+    vida_util_pneu: number;
+    potencia: number;
+    preco: number;
     origem: string;
     placa: string;
     renavam: string;
-    km_atual: string;
-    km_inicial: string;
+    km_atual: number;
+    km_inicial: number;
     capacidade: number;
     manutencao: string;
+    ipva: number;
+    dpvat: number;
+    seguro_anual: number;
+    consumo: number;
+    tipo_combustivel: string;
 };
 
 const formData = {
@@ -64,11 +72,11 @@ const Editar: React.FC = () => {
             const veiculosService = new VeiculosService();
             const codigo_cidade = user?.codigo_cidade || 0;
             const body = {
-                modo: data.modo,
+                modo: Number(data.modo),
                 tipo: Number(data.tipo),
                 marca: data.marca,
-                modelo: data.modelo,
-                ano: Number(data.ano),
+                modelo: Number(data.modelo),
+                ano: data.ano,
                 origem: Number(data.origem),
                 placa: data.placa.replace("-", ""),
                 renavam: data.renavam,

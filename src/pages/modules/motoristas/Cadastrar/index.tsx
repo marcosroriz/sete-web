@@ -25,6 +25,8 @@ type FormData = {
     telefone: string;
     cnh: string;
     data_validade_cnh: string;
+    vinculo: string;
+    salario: number;
     tipo_cnh: boolean[];
     turno: boolean[];
     arquivos: FileData[];
@@ -61,6 +63,8 @@ const Cadastrar: React.FC = () => {
                 data_nascimento: data.data_nascimento,
                 sexo: Number(data.sexo),
                 telefone: data.telefone,
+                vinculo: Number(data.vinculo),
+                salario: data.salario,
                 cnh: data.cnh,
                 data_validade_cnh: data.data_validade_cnh,
                 turno_manha: data.turno[0] ? "S" : "N",

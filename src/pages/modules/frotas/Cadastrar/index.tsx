@@ -21,15 +21,23 @@ type FormData = {
     tipo: string;
     marca: string;
     modelo: string;
-    ano_programa: string;
     ano: number;
+    numero_pneus: number;
+    vida_util_pneu: number;
+    potencia: number;
+    preco: number;
     origem: string;
     placa: string;
     renavam: string;
-    km_atual: string;
-    km_inicial: string;
+    km_atual: number;
+    km_inicial: number;
     capacidade: number;
     manutencao: string;
+    ipva: number;
+    dpvat: number;
+    seguro_anual: number;
+    consumo: number;
+    tipo_combustivel: string;
 };
 
 const formData = {
@@ -38,6 +46,10 @@ const formData = {
     marca: "",
     modelo: "",
     ano: "",
+    numero_pneus: "",
+    vida_util_pneu: "",
+    potencia: "",
+    preco: "",
     origem: "",
     placa: "",
     renavam: "",
@@ -45,6 +57,11 @@ const formData = {
     km_inicial: "",
     capacidade: "",
     manutencao: "",
+    ipva: "",
+    dpvat: "",
+    seguro_anual: "",
+    consumo: "",
+    tipo_combustivel: "",
 };
 
 const Cadastrar: React.FC = () => {
@@ -58,18 +75,23 @@ const Cadastrar: React.FC = () => {
             const veiculosService = new VeiculosService();
             const codigo_cidade = user?.codigo_cidade || 0;
             const body = {
-                modo: data.modo,
+                modo: Number(data.modo),
                 tipo: Number(data.tipo),
                 marca: data.marca,
-                modelo: data.modelo,
+                modelo: Number(data.modelo),
                 ano: Number(data.ano),
                 origem: Number(data.origem),
                 placa: data.placa.replace("-", ""),
-                renavam: data.renavam,
+                //renavam: data.renavam,
                 km_inicial: data.km_inicial,
                 km_atual: data.km_atual,
                 capacidade: data.capacidade,
-                manutencao: data.manutencao,
+                //manutencao: data.manutencao,
+                ipva: data.ipva,
+                dpvat: data.dpvat,
+                seguro_anual: data.seguro_anual,
+                consumo: data.consumo,
+                tipo_combustivel: data.tipo_combustivel,
             };
             const response = await veiculosService.createVeiculo(body, codigo_cidade);
             if (!response.result) {

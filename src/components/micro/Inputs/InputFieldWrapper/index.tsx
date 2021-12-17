@@ -17,10 +17,17 @@ const InputFieldWrapper: React.FC<InputFieldWrapperProps> = ({ unitOfMeasure, is
     return (
         <InputField isInvalid={isInvalid} isTouched={isTouched} thinBorder={thinBorder}>
             {unitOfMeasure ? (
-                <div className="input-group">
-                    {inputChild}
-                    <div className="input-group-text">{unitOfMeasure}</div>
-                </div>
+                unitOfMeasure === "R$" ? (
+                    <div className="input-group">
+                        <div className="input-group-text">{unitOfMeasure}</div>
+                        {inputChild}
+                    </div>
+                ) : (
+                    <div className="input-group">
+                        {inputChild}
+                        <div className="input-group-text">{unitOfMeasure}</div>
+                    </div>
+                )
             ) : (
                 inputChild
             )}

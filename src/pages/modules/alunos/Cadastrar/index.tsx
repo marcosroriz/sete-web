@@ -49,7 +49,6 @@ type FormData = {
 };
 
 const Cadastrar: React.FC = () => {
-    const { id: alunoId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
     const { createModal } = useAlertModal();
@@ -87,20 +86,11 @@ const Cadastrar: React.FC = () => {
             };
             const response = await alunosService.createAluno(body, codigo_cidade);
             if (!response.result) {
-                console.log("err1");
                 throw { ...response };
             }
-            console.log("aqui", response.messages);
-            const responseE = await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any)?.id, codigo_cidade);
-            if (!responseE.result) {
-                console.log("err2");
-                throw { ...responseE };
-            }
-            const responseR = await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
-            if (!responseR.result) {
-                console.log("err3");
-                throw { ...responseR };
-            }
+            await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any)?.id, codigo_cidade);
+            await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
+
             createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar aluno" });

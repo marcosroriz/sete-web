@@ -34,6 +34,7 @@ class MonitoresService {
     }
 
     public async createMonitor(body: CreateMonitorRequestBody, codigo_cidade: number): Promise<CreateMonitorResponse> {
+        console.log(body);
         const response = await this.api({
             url: `/Monitores/${codigo_cidade}`,
             method: "post",

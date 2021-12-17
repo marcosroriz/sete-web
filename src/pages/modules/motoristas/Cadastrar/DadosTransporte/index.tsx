@@ -8,6 +8,7 @@ import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNu
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
+import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 
 import { Container, mediaQuery } from "./styles";
 
@@ -15,6 +16,10 @@ const DadosTransporte: React.FC = () => {
     const { previousStep } = useReactHookNavCard();
     return (
         <Container>
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="SALÁRIO*" name="salario" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
             <ReactHookFormItemCard name="cnh" required>
                 <ReactHookInputNumberFormat
                     label="CARTEIRA NACIONAL DE HABILITAÇÃO (CNH)*"

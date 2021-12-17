@@ -14,7 +14,9 @@ const FichaVeiculo: React.FC = () => {
     const [tableData, setTableData] = React.useState<any>(null);
     React.useEffect(() => {
         if (motoristaData) {
-            const data = {};
+            const data = {
+                Nome: motoristaData.nome,
+            };
             setTableData(data);
         }
     }, [motoristaData]);

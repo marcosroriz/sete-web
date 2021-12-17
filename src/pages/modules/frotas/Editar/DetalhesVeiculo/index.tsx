@@ -56,7 +56,7 @@ const DetalhesVeiculo: React.FC = () => {
                     label="QUILOMETRAGEM INICIAL DO VEÍCULO*"
                     name="km_inicial"
                     type="number"
-                    unitOfMeasure="KM"
+                    unitOfMeasure={"KM"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
@@ -66,7 +66,7 @@ const DetalhesVeiculo: React.FC = () => {
                     label="QUILOMETRAGEM ATUAL DO VEÍCULO*"
                     name="km_atual"
                     type="number"
-                    unitOfMeasure="KM"
+                    unitOfMeasure={"KM"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
@@ -76,7 +76,7 @@ const DetalhesVeiculo: React.FC = () => {
                     label="CAPACIDADE DO VEÍCULO*"
                     name="capacidade"
                     type="number"
-                    unitOfMeasure="PASSAGEIROS"
+                    unitOfMeasure={"PASSAGEIROS"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>

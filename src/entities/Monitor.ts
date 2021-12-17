@@ -6,6 +6,7 @@ interface Monitor {
     sexo?: number;
     telefone?: string;
     vinculo?: number;
+    rotas?: string;
     salario?: number;
     turno_manha?: string;
     turno_tarde?: string;

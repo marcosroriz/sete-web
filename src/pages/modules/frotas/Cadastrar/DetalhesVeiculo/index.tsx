@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { useWatch } from "react-hook-form";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -15,6 +16,9 @@ import { Container, mediaQuery } from "./styles";
 
 const DetalhesVeiculo: React.FC = () => {
     const { previousStep } = useReactHookNavCard();
+    const check = useWatch({
+        name: "modo",
+    });
     return (
         <Container>
             <BlockTitle message="POR FIM, INFORME OS DADOS CADASTRAIS DO VEÍCULO." />
@@ -31,7 +35,7 @@ const DetalhesVeiculo: React.FC = () => {
                     label="QUILOMETRAGEM INICIAL DO VEÍCULO*"
                     name="km_inicial"
                     type="number"
-                    unitOfMeasure="KM"
+                    unitOfMeasure={"KM"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
@@ -41,7 +45,7 @@ const DetalhesVeiculo: React.FC = () => {
                     label="QUILOMETRAGEM ATUAL DO VEÍCULO*"
                     name="km_atual"
                     type="number"
-                    unitOfMeasure="KM"
+                    unitOfMeasure={"KM"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
@@ -51,7 +55,7 @@ const DetalhesVeiculo: React.FC = () => {
                     label="CAPACIDADE DO VEÍCULO*"
                     name="capacidade"
                     type="number"
-                    unitOfMeasure="PASSAGEIROS"
+                    unitOfMeasure={"PASSAGEIROS"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
@@ -72,30 +76,32 @@ const DetalhesVeiculo: React.FC = () => {
             <ReactHookFormItemCard>
                 <ReactHookInputText
                     label="VALOR DO IPVA DO VEÍCULO (ANUAL E COM LICENSIAMENTO)"
-                    name="valor_ipva"
+                    name="ipva"
                     type="number"
-                    unitOfMeasure="R$"
+                    unitOfMeasure={"R$"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText
-                    label="VALOR ANUAL DO DPVAT DO VEÍCULO"
-                    name="valor_dpvat"
-                    type="integer"
-                    unitOfMeasure="R$"
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputText label="VALOR ANUAL DO DPVAT DO VEÍCULO" name="dpvat" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="SEGURO ANUAL DO VEÍCULO" name="seguro_anual" type="number" unitOfMeasure="R$" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="SEGURO ANUAL DO VEÍCULO" name="seguro_anual" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
-            <ReactHookFormItemCard>
-                <ReactHookInputText label="CONSUMO DO VEÍCULO (L/HORA)" name="consumo" type="number" unitOfMeasure="R$" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard>
+            {check == 1 && (
+                <ReactHookFormItemCard>
+                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" unitOfMeasure={"KM/L"} isHorizontal={mediaQuery.desktop} />
+                </ReactHookFormItemCard>
+            )}
+
+            {check == 2 && (
+                <ReactHookFormItemCard>
+                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" unitOfMeasure={"L/HORA"} isHorizontal={mediaQuery.desktop} />
+                </ReactHookFormItemCard>
+            )}
 
             <ReactHookFormItemCard>
                 <ReactHookMultiFormList
@@ -104,11 +110,11 @@ const DetalhesVeiculo: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Gasolina" value="falsee" name="tipo_combustivel" position="right" />
-                    <ReactHookInputRadio label="Diesel" value="false" name="tipo_combustivel" position="right" />
-                    <ReactHookInputRadio label="Etanol" value="false" name="tipo_combustivel" position="right" />
-                    <ReactHookInputRadio label="Gás Natural" value="false" name="tipo_combustivel" position="right" />
-                    <ReactHookInputRadio label="Outro" value="false" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Gasolina" value="G" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Diesel" value="D" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Etanol" value="E" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Gás Natural" value="N" name="tipo_combustivel" position="right" />
+                    <ReactHookInputRadio label="Outro" value="O" name="tipo_combustivel" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 

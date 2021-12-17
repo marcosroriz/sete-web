@@ -46,6 +46,7 @@ class VeiculosService {
     }
 
     public async createVeiculo(body: CreateVeiculoRequestBody, codigo_cidade: number): Promise<CreateVeiculoResponse> {
+        console.log("TESTE VEICULO", body);
         const response = await this.api({
             url: `/veiculos/${codigo_cidade}`,
             method: "post",
