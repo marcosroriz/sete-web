@@ -26,7 +26,7 @@ class MonitoresService {
 
     public async listMonitores(codigo_cidade: number): Promise<ListMonitorResponse> {
         const response = await this.api({
-            url: `/Monitores/${codigo_cidade}`,
+            url: `/monitores/${codigo_cidade}`,
             method: "get",
         });
         const data = (await response.data) as ListMonitorResponse;
@@ -36,7 +36,7 @@ class MonitoresService {
     public async createMonitor(body: CreateMonitorRequestBody, codigo_cidade: number): Promise<CreateMonitorResponse> {
         console.log(body);
         const response = await this.api({
-            url: `/Monitores/${codigo_cidade}`,
+            url: `/monitores/${codigo_cidade}`,
             method: "post",
             data: body,
         });
@@ -44,9 +44,9 @@ class MonitoresService {
         return data;
     }
 
-    public async getMonitor(cpf_Monitor: string, codigo_cidade: number): Promise<GetMonitorResponse> {
+    public async getMonitor(cpf_monitor: string, codigo_cidade: number): Promise<GetMonitorResponse> {
         const response = await this.api({
-            url: `/Monitores/${codigo_cidade}/${cpf_Monitor}`,
+            url: `/monitores/${codigo_cidade}/${cpf_monitor}`,
             method: "get",
         });
         const data = (await response.data) as GetMonitorResponse;
@@ -55,7 +55,7 @@ class MonitoresService {
 
     public async updateMonitor(body: UpdateMonitorRequestBody, cpf_Monitor: string, codigo_cidade: number): Promise<UpdateMonitorResponse> {
         const response = await this.api({
-            url: `/Monitores/${codigo_cidade}/${cpf_Monitor}`,
+            url: `/monitores/${codigo_cidade}/${cpf_Monitor}`,
             method: "put",
             data: body,
         });
@@ -63,9 +63,9 @@ class MonitoresService {
         return data;
     }
 
-    public async deleteMonitor(cpf_Monitor: string, codigo_cidade: number): Promise<void> {
+    public async deleteMonitor(cpf_monitor: string, codigo_cidade: number): Promise<void> {
         const response = await this.api({
-            url: `/Monitores/${codigo_cidade}/${cpf_Monitor}`,
+            url: `/monitores/${codigo_cidade}/${cpf_monitor}`,
             method: "delete",
         });
         const data = await response.data;

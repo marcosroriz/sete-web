@@ -25,27 +25,55 @@ type FormData = {
     mec_tp_localizacao: string;
     loc_endereco: string;
     loc_cep: string;
-    da_porteira: boolean; // S/N pra api
-    da_mataburro: boolean; // S/N pra api
-    da_colchete: boolean; // S/N pra api
-    da_atoleiro: boolean; // S/N pra api
-    da_ponterustica: boolean; // S/N pra api
+    da_porteira: boolean;
+    da_mataburro: boolean;
+    da_colchete: boolean;
+    da_atoleiro: boolean;
+    da_ponterustica: boolean;
     nome: string;
-    cpf: string; // Não pode ter formato normal
+    cpf: string;
     data_nascimento: string;
     nome_responsavel: string;
     telefone_responsavel: string;
-    grau_responsavel: string; // número pra api
-    sexo: string; // número pra api
-    cor: string; // número pra api
-    def_caminhar: boolean; // S/N pra api
-    def_ouvir: boolean; // S/N pra api
-    def_enxergar: boolean; // S/N pra api
-    def_mental: boolean; // S/N pra api
+    grau_responsavel: string;
+    sexo: string;
+    cor: string;
+    def_caminhar: boolean;
+    def_ouvir: boolean;
+    def_enxergar: boolean;
+    def_mental: boolean;
     escola: string;
     rota: string;
-    turno: string; // número pra api
-    nivel: string; // número pra api
+    turno: string;
+    nivel: string;
+};
+
+const formData = {
+    latlng: ["", ""],
+    mec_tp_localizacao: "",
+    loc_endereco: "",
+    loc_cep: "",
+    da_porteira: false,
+    da_mataburro: false,
+    da_colchete: false,
+    da_atoleiro: false,
+    da_ponterustica: false,
+    nome: "",
+    cpf: "",
+    data_nascimento: "",
+    nome_responsavel: "",
+    telefone_responsavel: "",
+    grau_responsavel: "",
+    sexo: "",
+    cor: "",
+    def_caminhar: false,
+    def_ouvir: false,
+    def_enxergar: false,
+    def_mental: false,
+    escola: "",
+    rota: "",
+    turno: "",
+    nivel: "",
 };
 
 const Cadastrar: React.FC = () => {
@@ -100,7 +128,7 @@ const Cadastrar: React.FC = () => {
     return (
         <>
             <PageTitle message="Cadastrar Aluno" icon={AlunosCadastroIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" reValidateMode="onChange" onSubmit={handleSubmit}>
+            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleSubmit}>
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />} validationSchema={localizacaoSchema}>
                     <Localizacao />
                 </ReactHookNavCardTab>

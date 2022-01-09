@@ -13,6 +13,22 @@ type ListRotaResponse = {
     result: boolean;
 };
 
+type GetRotaResponse = Rota & { result: boolean };
+
+type UpdateRotaRequestBody = Rota;
+type UpdateRotaResponse = {
+    messages: string | { [key: string]: any };
+    result: boolean;
+};
+
+type BindEscolasToRotaRequestBody = {
+    escolas: number[];
+};
+
+type BindAlunosToRotaRequestBody = {
+    alunos: number[];
+};
+
 class RotasService {
     private api: ApiInstance;
 
@@ -38,6 +54,27 @@ class RotasService {
         });
 
         const data = (await response.data) as ListRotaResponse;
+        return data;
+    }
+
+    public async getRota(id_rota: number, codigo_cidade: number): Promise<GetRotaResponse> {
+        const response = await this.api({
+            method: "get",
+            url: `/rotas/${codigo_cidade}/${id_rota}`,
+        });
+
+        const data = (await response.data) as GetRotaResponse;
+        return data;
+    }
+
+    public async updateRota(body: UpdateRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<UpdateRotaResponse> {
+        const response = await this.api({
+            method: "put",
+            url: `/rotas/${codigo_cidade}/${id_rota}`,
+            data: body,
+        });
+
+        const data = (await response.data) as UpdateRotaResponse;
         return data;
     }
 }

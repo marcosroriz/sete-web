@@ -9,13 +9,14 @@ import { Container } from "./styles";
 type MultiOptions = { label: string; value: string };
 
 type MultiSelectProps = {
+    title: string;
     selectedValues: string[];
     setSelectedValues: React.Dispatch<React.SetStateAction<string[]>>;
     options: MultiOptions[];
     selected?: string[];
 };
 
-const MultiSelect: React.FC<MultiSelectProps> = ({ options, selectedValues, setSelectedValues }) => {
+const MultiSelect: React.FC<MultiSelectProps> = ({ title, options, selectedValues, setSelectedValues }) => {
     const [inputText, setInputText] = React.useState("");
 
     const handleInputChange = useDebounce((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +35,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ options, selectedValues, setS
 
     return (
         <Container thinBorder={false}>
-            <InputText label="Lista de Escolas Selecionadas" onChange={handleInputChange} />
+            <InputText label={title} onChange={handleInputChange} />
             <select value={selectedValues} className="multi-select__box form-control" onChange={handleMultiSelectChange} multiple aria-invalid="false">
                 {filterText(options).map((option) => (
                     <option value={option.value} key={option.value}>

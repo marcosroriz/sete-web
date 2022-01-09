@@ -12,10 +12,11 @@ type MultiOptions = { label: string; value: string };
 
 type ReactHookDualMultiSelectProps = {
     name: string;
-    options?: MultiOptions[];
+    options: MultiOptions[];
+    title: string[];
 };
 
-const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ name, options = optionsJson }) => {
+const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ name, options, title }) => {
     const { register } = useFormContext();
     const selected = (useWatch({ name }) as string[]) || [];
     const [notSelectedValues, setNotSelectedValues] = React.useState<string[]>([]);
@@ -42,7 +43,7 @@ const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ nam
     return (
         <Container>
             <div className="multi-select__select-container">
-                <MultiSelect options={displayedNotSelected} selectedValues={notSelectedValues} setSelectedValues={setNotSelectedValues} />
+                <MultiSelect title={title[0]} options={displayedNotSelected} selectedValues={notSelectedValues} setSelectedValues={setNotSelectedValues} />
             </div>
             <div className="multi-select__action-container">
                 <ActionButtons
@@ -54,7 +55,7 @@ const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ nam
                 />
             </div>
             <div className="multi-select__select-container">
-                <MultiSelect options={displayedSelected} selectedValues={selectedValues} setSelectedValues={setSelectedValues} />
+                <MultiSelect title={title[1]} options={displayedSelected} selectedValues={selectedValues} setSelectedValues={setSelectedValues} />
             </div>
         </Container>
     );

@@ -1,5 +1,6 @@
 interface Rota {
     codigo_cidade?: number;
+    id_rota?: number;
     nome?: string;
     km?: number;
     tempo?: number;
@@ -17,6 +18,9 @@ interface Rota {
     hora_ida_termino?: string;
     hora_volta_inicio?: string;
     hora_volta_termino?: string;
+    _links?: {
+        _self?: string;
+    };
 }
 
 interface RotaListObj {

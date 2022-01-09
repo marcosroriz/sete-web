@@ -17,7 +17,7 @@ interface Aluno {
     turno: number;
     nivel: number;
     nome_responsavel?: string;
-    telefone_responsavel?: string;
+    telefone_responsavel?: string; //Não tem na API
     grau_responsavel?: number;
     cpf?: string;
     def_caminhar?: string; // 'S' ou 'N'
@@ -53,4 +53,9 @@ interface AlunosTableField {
     rota: string;
 }
 
-export type { Aluno, AlunoListObj, AlunosTableField };
+interface AlunosListRota {
+    label: string;
+    value: string;
+}
+
+export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

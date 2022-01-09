@@ -35,13 +35,15 @@ type FormData = {
 const formData = {
     nome: "",
     cpf: "",
-    ant_criminais: "",
-    telefone: "",
     data_nascimento: "",
+    ant_criminais: "",
     sexo: "",
+    telefone: "",
     cnh: "",
     data_validade_cnh: "",
-    tipo_cnh: [false, false, false, false, false],
+    vinculo: "",
+    salario: "",
+    tipo_cnh: [false, false, false, false],
     turno: [false, false, false],
 };
 
@@ -65,7 +67,7 @@ const Cadastrar: React.FC = () => {
                 telefone: data.telefone,
                 vinculo: Number(data.vinculo),
                 salario: data.salario,
-                cnh: data.cnh,
+                cnh: data.cnh.replace(/[-]/g, ""),
                 data_validade_cnh: data.data_validade_cnh,
                 turno_manha: data.turno[0] ? "S" : "N",
                 turno_tarde: data.turno[1] ? "S" : "N",

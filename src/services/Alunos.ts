@@ -74,10 +74,10 @@ class AlunosService {
         return data;
     }
 
-    public async getAluno(alunoId: number, codigo_cidade: number): Promise<GetAlunoResponse> {
+    public async getAluno(id_aluno: number, codigo_cidade: number): Promise<GetAlunoResponse> {
         const response = await this.api({
             method: "get",
-            url: `/alunos/${codigo_cidade}/${alunoId}`,
+            url: `/alunos/${codigo_cidade}/${id_aluno}`,
         });
 
         const data = (await response.data) as GetAlunoResponse;
@@ -103,6 +103,7 @@ class AlunosService {
             data: body,
         });
         const data = await response.data;
+        return data;
     }
 
     public async listBindEscolaToAluno(id_aluno: number, codigo_cidade: number): Promise<ListBindEscolaToAlunoResponse> {
@@ -121,7 +122,7 @@ class AlunosService {
             data: body,
         });
         const data = await response.data;
-        console.log(data);
+        return data;
     }
 
     public async listBindRotaToAluno(id_aluno: number, codigo_cidade: number): Promise<void> {

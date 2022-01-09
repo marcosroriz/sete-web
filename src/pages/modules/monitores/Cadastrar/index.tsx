@@ -34,8 +34,8 @@ const formData = {
     data_nascimento: "",
     sexo: "",
     telefone: "",
-    vinculo: null,
-    salario: null,
+    vinculo: "",
+    salario: "",
     turno: [false, false, false],
 };
 
@@ -57,7 +57,7 @@ const Cadastrar: React.FC = () => {
                 sexo: Number(data.sexo),
                 telefone: data.telefone,
                 vinculo: Number(data.vinculo),
-                rotas: data.rotas,
+                //rotas: data.rotas,
                 salario: data.salario,
                 turno_manha: data.turno[0] ? "S" : "N",
                 turno_tarde: data.turno[1] ? "S" : "N",

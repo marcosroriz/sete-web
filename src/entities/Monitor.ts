@@ -1,7 +1,7 @@
 interface Monitor {
     codigo_cidade?: number;
-    nome?: string;
     cpf?: string;
+    nome?: string;
     data_nascimento?: string;
     sexo?: number;
     telefone?: string;
@@ -11,11 +11,14 @@ interface Monitor {
     turno_manha?: string;
     turno_tarde?: string;
     turno_noite?: string;
+    loc_latitude?: string;
+    loc_longitude?: string;
 }
 
 interface MonitorListObj {
     nome: string;
     telefone: string;
+    cpf: string;
     turno_manha?: string;
     turno_tarde?: string;
     turno_noite?: string;
