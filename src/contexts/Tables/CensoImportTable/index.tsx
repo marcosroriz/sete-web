@@ -1,12 +1,16 @@
 import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
 import { CensoHelper } from "helpers/CensoHelper";
+import { Aluno } from "entities/Aluno";
+import { Escola } from "entities/Escola";
 import { COLUMNS } from "./columns";
 
 export type TableData = {
     id: string;
     nome: string;
     numero_alunos: number;
+    alunos: Aluno[];
+    escola: Escola;
 };
 
 export type CensoImportTableContextProps = {
@@ -25,14 +29,17 @@ export const CensoImportTableProvider = ({ children }: CensoImportTableProviderP
     const columns = React.useMemo(() => COLUMNS, []);
 
     const createTable = (base: any) => {
+        const censoHelper = new CensoHelper();
         const data = [] as TableData[];
         for (let [escolaId, escolaValues] of Object.entries<any>(base)) {
-            let escola = {
+            let escolaData = {
                 id: escolaId,
                 nome: escolaValues["NOME"] as string,
                 numero_alunos: Object.keys(escolaValues["ALUNOS"]).length,
+                alunos: Object.values(escolaValues["ALUNOS"])?.map((alunoObj: any) => censoHelper.convertBaseToAluno(alunoObj, escolaId)),
+                escola: censoHelper.convertBaseToEscola(escolaValues),
             };
-            data.push(escola);
+            data.push(escolaData);
         }
         setTableData(data);
     };
