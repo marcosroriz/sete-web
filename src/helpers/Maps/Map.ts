@@ -184,4 +184,4 @@ class Map {
 }
 
 export { Map };
-export type { MapConstructorViewOptionsDTO, CreateMapViewOptionsDTO };
+export type { MapConstructorViewOptionsDTO, CreateMapViewOptionsDTO, LayerObj };
