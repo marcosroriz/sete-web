@@ -1,12 +1,8 @@
 import React from "react";
-import { useWatch } from "react-hook-form";
+import { useWatch, useFormContext } from "react-hook-form";
 import { Button } from "react-bootstrap";
-import * as format from "ol/format";
-import simplify from "simplify-geojson";
-import GpxParser from "gpxparser";
 
-import { LayerObj } from "helpers/Maps/Map";
-import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+import { MapGeoJSONParser } from "helpers/Maps/MapGeoJSONParser";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import BlockTitle from "components/micro/BlockTitle";
@@ -15,91 +11,44 @@ import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import { Container } from "./styles";
 
 const PreVisualizacao: React.FC = () => {
+    const { setValue } = useFormContext();
     const arquivoGpx = useWatch({ name: "arquivo" });
-    const mapController = React.useRef<MapControlEvents | null>(null);
-    const malhaController = React.useRef<LayerObj | null>(null);
+    const mapController = React.useRef<MapGeoJSONParser | null>(null);
     const { previousStep, nextStep, step } = useReactHookNavCard();
 
-    const generateRouteFromGeoJSON = (geoJSON: any) => {
-        const mapInstance = mapController.current?.mapInstance;
-        const malhaSource = malhaController.current?.source;
-        let trackFeatures = null as any;
+    const handleReverseRoute = () => {
+        const processedGeoJSON = mapController.current?.reverseRoute();
+        setValue("gpx", processedGeoJSON);
+    };
 
-        for (let i = 0; i < geoJSON.features.length; i++) {
-            if (geoJSON.features[i].geometry.type == "LineString") {
-                if (trackFeatures) {
-                    trackFeatures.geometry.coordinates.push(...geoJSON.features[i].geometry.coordinates);
-                } else {
-                    trackFeatures = geoJSON.features[i];
-                }
-            }
-
-            if (geoJSON.features[i].geometry.type == "MultiLineString") {
-                let lineStringCoordinates = [] as any[];
-                for (let ls of geoJSON.features[i].geometry.coordinates) {
-                    lineStringCoordinates.push(...(ls as unknown as any[]));
-                }
-
-                if (trackFeatures) {
-                    trackFeatures.geometry.coordinates.push(...lineStringCoordinates);
-                } else {
-                    let feature = {
-                        type: "Feature",
-                        geometry: {
-                            type: "LineString",
-                            properties: {},
-                            options: {},
-                        },
-                        properties: {},
-                    } as any;
-                    feature.geometry.coordinates = lineStringCoordinates;
-                    trackFeatures = feature;
-                }
-            }
+    const handleReadFile = async (file?: File) => {
+        if (!file) {
+            return;
         }
-        geoJSON.features = [trackFeatures];
-        const gpxSimplificado = simplify(geoJSON, 0.0001);
-        console.log(gpxSimplificado);
-        console.log(malhaSource);
-
-        malhaSource?.clear();
-        malhaSource?.addFeatures(new format.GeoJSON().readFeatures(gpxSimplificado));
-
-        mapInstance?.getView().fit(malhaSource?.getExtent() as any);
+        const geoJSON = await mapController.current?.readGpxFile(file);
+        if (geoJSON) {
+            const processedGeoJSON = mapController.current?.generateRouteFromGeoJSON(geoJSON);
+            setValue("gpx", processedGeoJSON);
+        }
     };
 
     React.useEffect(() => {
         if (!mapController?.current) {
-            mapController.current = new MapControlEvents("map");
-            const mapInstance = mapController.current;
-            malhaController.current = mapInstance.addLayer("Malha");
+            mapController.current = new MapGeoJSONParser("map");
         }
     }, []);
 
     React.useEffect(() => {
         if (step === 1) {
             mapController.current?.mapInstance.updateSize();
-
-            if (arquivoGpx) {
-                if (!arquivoGpx) {
-                    return;
-                }
-                console.log(arquivoGpx);
-                const fileReader = new FileReader();
-                const gpxParser = new GpxParser();
-                fileReader.readAsText(arquivoGpx, "UTF8");
-                fileReader.onload = function () {
-                    gpxParser.parse(fileReader.result as string);
-                    const gpx = (gpxParser as any).toGeoJSON();
-                    generateRouteFromGeoJSON(gpx);
-                };
-            }
+            handleReadFile(arquivoGpx);
         }
     }, [step]);
 
     return (
         <Container>
             <BlockTitle message="PRÉ-VISUALIZAÇÃO DA ROTA IMPORTADA." />
+            <Button onClick={handleReverseRoute}>Reverter Rotas</Button>
             <div id="map" className="map-container"></div>
             <ButtonsContainer position="evenly">
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>

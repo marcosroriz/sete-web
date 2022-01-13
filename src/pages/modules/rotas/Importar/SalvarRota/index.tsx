@@ -1,5 +1,4 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
 
 import { RotasService } from "services/Rotas";
 
@@ -18,7 +17,6 @@ type SelectOptions = {
 
 const SalvarRota: React.FC = () => {
     const { user } = useAuth();
-    const { setValue } = useFormContext();
 
     const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
 
@@ -37,6 +35,7 @@ const SalvarRota: React.FC = () => {
     React.useEffect(() => {
         fetchData();
     }, []);
+
     return (
         <Container>
             <BlockTitle message="POR FAVOR SELECIONE PARA QUAL ROTA O ARQUIVO GPX SERÁ IMPORTADO." />
