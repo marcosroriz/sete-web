@@ -2,12 +2,34 @@
     "name": "sete-web",
     "version": "0.1.0",
     "private": false,
+    "homepage": "./",
+    "author": {
+        "name": "SETE",
+        "email": "sete@gmail.com"
+    },
+    "build": {
+        "appId": "com.website.sete-web",
+        "productName": "Sete",
+        "copyright": "Copyright © 2022 ${author}",
+        "mac": {
+            "category": "public.app-category.utilities"
+        },
+        "files": [
+            "build/**/*",
+            "node_modules/**/*"
+        ],
+        "directories": {
+            "buildResources": "assets"
+        }
+    },
+    "main": "public/electron.js",
     "dependencies": {
         "@hookform/resolvers": "^2.7.1",
         "@sweetalert2/theme-bootstrap-4": "^5.0.2",
         "axios": "^0.21.1",
         "bootstrap": "5.0.2",
         "cookie": "^0.4.1",
+        "electron-is-dev": "^2.0.0",
         "hamburger-react": "^2.4.1",
         "jspdf": "^2.4.0",
         "md5": "^2.3.0",
@@ -36,11 +58,16 @@
         "yup": "^0.32.9"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --watchAll false",
-        "test:coverage": "react-scripts test --coverage --watchAll false",
-        "eject": "react-scripts eject"
+        "test": "rescripts test --watchAll false",
+        "test:coverage": "rescripts test --coverage --watchAll false",
+        "eject": "rescripts eject",
+        "web:build": "cross-env APP_ENV=web rescripts build",
+        "web:dev": "cross-env APP_ENV=web rescripts start",
+        "desktop:dev": "concurrently -k \"cross-env APP_ENV=desktop BROWSER=none rescripts start\" \"yarn electron\"",
+        "desktop:build": "electron-builder -w",
+        "predesktop:build": "cross-env APP_ENV=desktop rescripts build",
+        "electron": "wait-on tcp:3000 && electron .",
+        "postinstall": "electron-builder install-app-deps"
     },
     "browserslist": {
         "production": [
@@ -65,10 +92,13 @@
         ]
     },
     "devDependencies": {
+        "@rescripts/cli": "^0.0.16",
+        "@rescripts/rescript-env": "^0.0.14",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
         "@types/cookie": "^0.4.1",
+        "@types/electron": "^1.6.10",
         "@types/jest": "^26.0.15",
         "@types/md5": "^2.3.1",
         "@types/node": "^12.0.0",
@@ -86,6 +116,10 @@
         "@typescript-eslint/eslint-plugin": "^4.28.4",
         "@typescript-eslint/parser": "^4.28.4",
         "babel-plugin-module-resolver": "^4.1.0",
+        "concurrently": "^7.0.0",
+        "cross-env": "^7.0.3",
+        "electron": "^16.0.7",
+        "electron-builder": "^22.14.5",
         "eslint": "^7.31.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-import-resolver-typescript": "^2.4.0",
@@ -96,6 +130,7 @@
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.2.0",
         "prettier": "^2.3.2",
-        "typescript": "^4.1.2"
+        "typescript": "^4.1.2",
+        "wait-on": "^6.0.0"
     }
 }
