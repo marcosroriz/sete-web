@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import DashboardRoutes from "./dashboard";
 import SignRoutes from "./sign";
@@ -21,6 +21,7 @@ const Routes: React.FC = () => {
             {EscolasRoutes}
             {FornecedoresRoutes}
             {RotasRoutes}
+            <Route render={() => <Redirect to="/" />} />
         </Switch>
     );
 };
