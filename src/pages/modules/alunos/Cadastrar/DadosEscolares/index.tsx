@@ -3,7 +3,6 @@ import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
-
 import { EscolasService } from "services/Escolas";
 import { RotasService } from "services/Rotas";
 

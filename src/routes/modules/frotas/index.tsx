@@ -3,7 +3,7 @@ import React from "react";
 import AuthRoute from "routes/AuthRoute";
 
 import Cadastrar from "pages/modules/frotas/Cadastrar";
-import Editar from "pages/modules/frotas/Editar";
+import Editar from "pages/modules/frotas/Cadastrar";
 import Gerenciar from "pages/modules/frotas/Gerenciar";
 import Visualizar from "pages/modules/frotas/Visualizar";
 

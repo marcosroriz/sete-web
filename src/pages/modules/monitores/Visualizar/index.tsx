@@ -5,8 +5,7 @@ import { NavCardProvider, NavCardTab } from "contexts/NavCard";
 import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
-import { MotoristasService } from "services/Motoristas";
-import { Motorista } from "entities/Motorista";
+import { MonitoresService } from "services/Monitores";
 
 import PageTitle from "components/micro/PageTitle";
 
@@ -14,11 +13,12 @@ import PageIconOnibus from "assets/icons/frotas/frotas-onibus.png";
 import PageIconLancha from "assets/icons/frotas/frotas-lancha.png";
 import FrotasFichaVeiculoIcon from "assets/icons/frotas/frotas-ficha-veiculo.png";
 
-import FichaVeiculo from "./FichaVeiculo";
+import { Monitor } from "entities/Monitor";
+import FichaMonitor from "./FichaVeiculo";
 
 const Visualizar: React.FC = () => {
-    const { id: motoristaId } = useParams<{ id: string }>();
-    const [motoristaData, setMotoristaData] = React.useState<Motorista | null>(null);
+    const { id: monitorId } = useParams<{ id: string }>();
+    const [monitorData, setMonitorData] = React.useState<Monitor | null>(null);
 
     const { errorHandler } = useError();
     const { clearModal, createModal } = useAlertModal();
@@ -29,12 +29,12 @@ const Visualizar: React.FC = () => {
             try {
                 createModal();
                 const codigo_cidade = user?.codigo_cidade || 0;
-                const motoristasService = new MotoristasService();
-                const response = await motoristasService.getMotorista(motoristaId, codigo_cidade);
-                setMotoristaData(response);
+                const motoristasService = new MonitoresService();
+                const response = await motoristasService.getMonitor(monitorId, codigo_cidade);
+                setMonitorData(response);
                 clearModal();
             } catch (err) {
-                errorHandler(err, { title: "Erro ao buscar dados do veículo" });
+                errorHandler(err, { title: "Erro ao buscar dados do monitor" });
             }
         };
         fetchData();
@@ -42,9 +42,9 @@ const Visualizar: React.FC = () => {
     return (
         <>
             <PageTitle message="Dados do Motorista" icon={PageIconOnibus} iconRight={PageIconLancha} />
-            <NavCardProvider aditionalData={{ motoristaData: [motoristaData, setMotoristaData] }}>
-                <NavCardTab name="FICHA DO MOTORISTA" icon={<img src={FrotasFichaVeiculoIcon} alt="" aria-hidden="true" />}>
-                    <FichaVeiculo />
+            <NavCardProvider aditionalData={{ monitorData: [monitorData, setMonitorData] }}>
+                <NavCardTab name="FICHA DO MONITOR" icon={<img src={FrotasFichaVeiculoIcon} alt="" aria-hidden="true" />}>
+                    <FichaMonitor />
                 </NavCardTab>
             </NavCardProvider>
         </>

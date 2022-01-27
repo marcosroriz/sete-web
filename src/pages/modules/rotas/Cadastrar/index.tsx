@@ -17,6 +17,7 @@ import EscolasAtendidasIcon from "assets/icons/rotas/rotas-escolas-atendidas.svg
 import DadosBasicosIcon from "assets/icons/rotas/rotas-dados-basicos.png";
 import AlunosAtendidosIcon from "assets/icons/rotas/rotas-alunos-atendidos.png";
 import RotasCadastroIcon from "assets/icons/rotas/rotas-cadastro.png";
+import rotas from "routes/modules/rotas";
 
 type FormData = {
     nome: string;
@@ -29,8 +30,8 @@ type FormData = {
     da_atoleiro: boolean;
     da_ponterustica: boolean;
     tempo: string;
-    alunos: string[];
-    escolas: string[];
+    alunos: number[];
+    escolas: number[];
 };
 
 const formData = {
@@ -82,6 +83,18 @@ const Cadastrar: React.FC = () => {
             console.log(data);
 
             const response = await rotasService.createRota(body, codigo_cidade);
+
+            for (let i = 0; data.escolas[i] != null; i++) {
+                data.escolas[i] = Number(data.escolas[i]);
+            }
+
+            for (let i = 0; data.alunos[i] != null; i++) {
+                data.alunos[i] = Number(data.alunos[i]);
+            }
+
+            await rotasService.bindEscolasToRota({ escolas: data.escolas }, (response.messages as any)?.id, codigo_cidade);
+            await rotasService.bindAlunosToRota({ alunos: data.escolas }, (response.messages as any)?.id, codigo_cidade);
+
             if (!response.result) {
                 throw { ...response };
             }

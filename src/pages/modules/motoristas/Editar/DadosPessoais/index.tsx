@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
@@ -11,11 +12,31 @@ import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import BlockTitle from "components/micro/BlockTitle";
+import { Motorista } from "entities/Motorista";
 
 import { Container, mediaQuery } from "./styles";
 
+type MotoristaData = [Motorista | null, React.Dispatch<React.SetStateAction<Motorista | null>>];
+
 const DadosPessoais: React.FC = () => {
-    const { nextStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
+
+    const [motoristaData] = aditionalData?.motoristaData as MotoristaData;
+
+    React.useEffect(() => {
+        if (motoristaData) {
+            setValue("nome", motoristaData?.nome || "");
+            setValue("cpf", motoristaData?.cpf || "");
+            setValue("data_nascimento", motoristaData?.data_nascimento.toString() || "");
+            setValue("telefone", motoristaData?.telefone || "");
+            setValue("vinculo", motoristaData?.vinculo?.toString() || "");
+            setValue("sexo", motoristaData?.sexo?.toString() || "");
+            setValue("ant_criminais", motoristaData?.ant_criminais || "");
+            //setValue("arquivos", motoristaData?.arquivos || "");
+        }
+    }, [motoristaData]);
+
     return (
         <Container>
             <BlockTitle message="Forneça as informações básicas a respeito do aluno sendo cadastrado." />

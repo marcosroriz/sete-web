@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useWatch } from "react-hook-form";
@@ -13,9 +14,37 @@ import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, mediaQuery } from "./styles";
+import { Veiculo } from "entities/Veiculo";
+
+type VeiculoData = [Veiculo | null, React.Dispatch<React.SetStateAction<Veiculo | null>>];
 
 const DetalhesVeiculo: React.FC = () => {
-    const { previousStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { step, previousStep, aditionalData } = useReactHookNavCard();
+    const [veiculoData] = aditionalData?.veiculoData as VeiculoData;
+
+    React.useEffect(() => {
+        if (veiculoData) {
+            setValue("placa", veiculoData?.placa || "");
+            setValue("renavam", veiculoData?.renavam || "");
+            setValue("km_inicial", Number(veiculoData?.km_inicial) || 0);
+            setValue("km_atual", Number(veiculoData?.km_atual) || 0);
+            setValue("capacidade", veiculoData?.capacidade?.toString() || "");
+            setValue("manutencao", veiculoData?.manutencao === "1" ? "true" : "false");
+            setValue("ipva", veiculoData?.ipva || "");
+            setValue("dpvat", veiculoData?.dpvat || "");
+            setValue("ipva", veiculoData?.ipva || "");
+            setValue("consumo", veiculoData?.consumo || "");
+            setValue("tipo_combustivel", veiculoData?.tipo_combustivel || "");
+        }
+    }, [veiculoData]);
+
+    React.useEffect(() => {
+        if (step === 1) {
+            (document.getElementById("placa") as any).focus();
+            (document.getElementById("placa") as any).blur();
+        }
+    }, [step]);
     const check = useWatch({
         name: "modo",
     });

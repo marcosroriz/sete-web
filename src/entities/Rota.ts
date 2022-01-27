@@ -37,13 +37,13 @@ interface RotaListObj {
     };
 }
 
-interface RotasTableField {
+interface RotaTableField {
     nome: string;
     turno: string;
     gps: string;
-    quilometragem: string;
+    quilometragem: number;
     alunos_atendidos: number;
     escolas_atendidas: number;
 }
 
-export type { Rota, RotaListObj, RotasTableField };
+export type { Rota, RotaListObj, RotaTableField };

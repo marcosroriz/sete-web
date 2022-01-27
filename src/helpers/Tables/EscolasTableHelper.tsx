@@ -73,6 +73,35 @@ class EscolasTableHelper {
             </div>
         );
     }
+
+    public treatDataAlunosAtendidos(data: any[]): any[] {
+        return data.map((alunoObj) => ({
+            nome: alunoObj.nome,
+            cpf: alunoObj.cpf || "-",
+            turno:
+                alunoObj.turno == 1
+                    ? "Matutino"
+                    : alunoObj.turno == 2
+                    ? "Vespertino"
+                    : alunoObj.turno == 3
+                    ? "Integral"
+                    : alunoObj.mec_tp_dependencia == 4
+                    ? "Noturno"
+                    : "-",
+            nivel:
+                alunoObj.nivel == 1
+                    ? "Infantil"
+                    : alunoObj.nivel == 2
+                    ? "Fundamental"
+                    : alunoObj.nivel == 3
+                    ? "Médio"
+                    : alunoObj.nivel == 4
+                    ? "Superior"
+                    : alunoObj.nivel == 5
+                    ? "Outro"
+                    : "-",
+        }));
+    }
 }
 
 const escolasTableHelper = new EscolasTableHelper();

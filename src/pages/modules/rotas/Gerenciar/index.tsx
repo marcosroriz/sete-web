@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MotoristasTableProvider } from "contexts/Tables/MotoristasTableContext";
+import { RotasTableProvider } from "contexts/Tables/RotasTableContext";
 
 import TableComponent from "./TableComponent";
 
@@ -12,12 +12,12 @@ import MotoristaCadastroIcon from "assets/icons/motoristas/motorista-cadastro.pn
 const Gerenciar: React.FC = () => {
     return (
         <>
-            <PageTitle message="Motoristas" icon={MotoristaCadastroIcon} />
-            <MotoristasTableProvider>
+            <PageTitle message="Rotas" icon={MotoristaCadastroIcon} />
+            <RotasTableProvider>
                 <TableCard>
                     <TableComponent />
                 </TableCard>
-            </MotoristasTableProvider>
+            </RotasTableProvider>
         </>
     );
 };

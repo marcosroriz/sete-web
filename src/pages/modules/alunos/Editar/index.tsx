@@ -21,30 +21,30 @@ import AlunosCadastroIcon from "assets/icons/alunos/alunos-cadastro.svg";
 
 type FormData = {
     latlng: [string, string];
-    loc_endereco: string;
     mec_tp_localizacao: string;
-    endereco: string;
-    da_porteira: boolean; // S/N pra api
-    da_mataburro: boolean; // S/N pra api
-    da_colchete: boolean; // S/N pra api
-    da_atoleiro: boolean; // S/N pra api
-    da_ponterustica: boolean; // S/N pra api
+    loc_endereco: string;
+    loc_cep: string;
+    da_porteira: boolean;
+    da_mataburro: boolean;
+    da_colchete: boolean;
+    da_atoleiro: boolean;
+    da_ponterustica: boolean;
     nome: string;
-    cpf: string; // Não pode ter formato normal
+    cpf: string;
     data_nascimento: string;
     nome_responsavel: string;
     telefone_responsavel: string;
-    grau_responsavel: string; // número pra api
-    sexo: string; // número pra api
-    cor: string; // número pra api
-    def_caminhar: boolean; // S/N pra api
-    def_ouvir: boolean; // S/N pra api
-    def_enxergar: boolean; // S/N pra api
-    def_mental: boolean; // S/N pra api
-    escola: any;
-    rota: any;
-    turno: string; // número pra api
-    nivel: string; // número pra api
+    grau_responsavel: string;
+    sexo: string;
+    cor: string;
+    def_caminhar: boolean;
+    def_ouvir: boolean;
+    def_enxergar: boolean;
+    def_mental: boolean;
+    escola: string;
+    rota: string;
+    turno: string;
+    nivel: string;
 };
 
 const Editar: React.FC = () => {
@@ -54,6 +54,8 @@ const Editar: React.FC = () => {
     const { createModal, clearModal } = useAlertModal();
 
     const [alunoData, setAlunoData] = React.useState<Aluno | null>(null);
+    const [escolaData, setEscolaData] = React.useState<any>(null);
+    const [rotaData, setRotaData] = React.useState<any>(null);
 
     const handleFormSubmit = async (data: FormData) => {
         try {
@@ -64,8 +66,8 @@ const Editar: React.FC = () => {
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
                 loc_endereco: data.loc_endereco,
+                loc_cep: data.loc_cep,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),
-                endereco: data.endereco,
                 da_porteira: data.da_porteira ? "S" : "N",
                 da_mataburro: data.da_mataburro ? "S" : "N",
                 da_colchete: data.da_colchete ? "S" : "N",
@@ -90,8 +92,8 @@ const Editar: React.FC = () => {
             if (!response.result) {
                 throw { ...response };
             }
-            await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, alunoData?.id_aluno as number, codigo_cidade);
-            await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, alunoData?.id_aluno as number, codigo_cidade);
+            //await alunosService.bindEscolaToAlunoEdit({ id_escola: Number(data.escola) }, alunoData?.id_aluno as number, codigo_cidade);
+            //await alunosService.bindRotaToAlunoEdit({ id_rota: Number(data.rota) }, alunoData?.id_aluno as number, codigo_cidade);
             createModal("success", { title: "Sucesso", html: "Aluno editado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao editar aluno" });
@@ -105,15 +107,19 @@ const Editar: React.FC = () => {
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const alunosService = new AlunosService();
                 const response = await alunosService.getAluno(Number(alunoId), codigo_cidade);
-                // const escolaVinculada = await alunosService.getAluno(Number(alunoId), codigo_cidade);
-                // const rotaVinculada = await alunosService.getAluno(Number(alunoId), codigo_cidade);
+                const escolaVinculada = await alunosService.listBindEscolaToAluno(Number(alunoId), codigo_cidade);
+                const rotaVinculada = await alunosService.listBindRotaToAluno(Number(alunoId), codigo_cidade);
+
                 setAlunoData(response);
+                setEscolaData(escolaVinculada);
+                setRotaData(rotaVinculada);
+
                 if (!response.result) {
                     throw { ...response };
                 }
                 clearModal();
             } catch (err) {
-                errorHandler(err, { title: "Erro ao buscar dados do veículo" });
+                errorHandler(err, { title: "Erro ao buscar dados do aluno" });
             }
         };
         fetchData();
@@ -126,6 +132,8 @@ const Editar: React.FC = () => {
                 onSubmit={handleFormSubmit}
                 aditionalData={{
                     alunoData: [alunoData, setAlunoData],
+                    escolaData: [escolaData, setEscolaData],
+                    rotaData: [rotaData, setRotaData],
                 }}
             >
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />}>

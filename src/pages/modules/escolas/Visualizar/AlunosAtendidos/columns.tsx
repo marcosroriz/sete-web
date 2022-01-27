@@ -2,28 +2,26 @@
 import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
 import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "helpers/Tables/columnFilters";
-import { disable } from "ol/rotationconstraint";
 
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "NOME",
-        accessor: "nome" || "-",
+        accessor: "nome",
         disableFilters: true,
     },
     {
-        Header: "TELEFONE",
-        accessor: "telefone" || "-",
+        Header: "CPF",
+        accessor: "cpf",
         disableFilters: true,
     },
     {
         Header: "TURNO",
-        accessor: "turno" || "-",
-        Filter: SelectColumnFilter,
-        filter: "includes",
+        accessor: "turno",
+        disableFilters: true,
     },
     {
-        Header: "AÇÕES",
-        accessor: "acoes" || "-",
+        Header: "NIVEL",
+        accessor: "nivel",
         disableFilters: true,
     },
 ];

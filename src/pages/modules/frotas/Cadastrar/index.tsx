@@ -1,10 +1,12 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { VeiculosService } from "services/Veiculos";
+import { Veiculo } from "entities/Veiculo";
 import { dadosBasicosSchema, detalhesVeiculoSchema } from "validators/modules/frotas";
 
 import PageTitle from "components/micro/PageTitle";
@@ -65,9 +67,12 @@ const formData = {
 };
 
 const Cadastrar: React.FC = () => {
+    const { id: veiculoId } = useParams<{ id: string }>();
+    const [veiculoData, setVeiculoData] = React.useState<Veiculo | null>(null);
+
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { clearModal, createModal } = useAlertModal();
 
     const handleFormSubmit = async (data: FormData) => {
         try {
@@ -80,6 +85,10 @@ const Cadastrar: React.FC = () => {
                 marca: data.marca,
                 modelo: Number(data.modelo),
                 ano: Number(data.ano),
+                //numero_pneus: data.numero_pneus,
+                //vida_util_pneu: data.vida_util_pneu,
+                //potencia: data.potencia,
+                //preco: data.preco,
                 origem: Number(data.origem),
                 placa: data.placa.replace("-", ""),
                 //renavam: data.renavam,
@@ -93,20 +102,58 @@ const Cadastrar: React.FC = () => {
                 consumo: data.consumo,
                 tipo_combustivel: data.tipo_combustivel,
             };
-            const response = await veiculosService.createVeiculo(body, codigo_cidade);
-            if (!response.result) {
-                throw { ...response };
+
+            if (!!veiculoId) {
+                const response = await veiculosService.updateVeiculo(body, Number(veiculoId), codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Veículo editado com sucesso" });
+            } else {
+                const response = await veiculosService.createVeiculo(body, codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
             }
-            createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar veículo" });
+            errorHandler(err, { title: "Ocorreu alguma erro! Tente novamente." });
         }
     };
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                createModal();
+                const codigo_cidade = user?.codigo_cidade || 0;
+                const veiculosService = new VeiculosService();
+                if (!!veiculoId) {
+                    const veiculosResponse = await veiculosService.getVeiculo(Number(veiculoId), codigo_cidade);
+                    setVeiculoData(veiculosResponse);
+                    if (!veiculosResponse.result) {
+                        throw { ...veiculosResponse };
+                    }
+                }
+                clearModal();
+            } catch (err) {
+                errorHandler(err, { title: "Erro ao buscar dados do veículo" });
+            }
+        };
+        fetchData();
+    }, [veiculoId]);
 
     return (
         <>
             <PageTitle message="Cadastro de Veículo" icon={PageIconOnibus} iconRight={PageIconLancha} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleFormSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                mode="onSubmit"
+                defaultValues={formData}
+                reValidateMode="onChange"
+                onSubmit={handleFormSubmit}
+                aditionalData={{
+                    veiculoData: [veiculoData, setVeiculoData],
+                }}
+            >
                 <ReactHookNavCardTab name="DADOS BÁSICOS" icon={<img src={DadosBasicosIcon} alt="" aria-hidden="true" />} validationSchema={dadosBasicosSchema}>
                     <DadosBasicos />
                 </ReactHookNavCardTab>

@@ -19,10 +19,12 @@ import EscolasCadastroIcon from "assets/icons/escolas/escolas-cadastro.png";
 import FichaEscola from "./FichaEscola";
 import AlunosAtendidos from "./AlunosAtendidos";
 import Localizacao from "./Localizacao";
+import alunos from "routes/modules/alunos";
 
 const Visualizar: React.FC = () => {
     const { id: escolaId } = useParams<{ id: string }>();
     const [escolaData, setEscolaData] = React.useState<Escola | null>(null);
+    const [alunosData, setAlunosData] = React.useState<any | null>(null);
 
     const { errorHandler } = useError();
     const { clearModal, createModal } = useAlertModal();
@@ -35,7 +37,11 @@ const Visualizar: React.FC = () => {
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const escolasService = new EscolasService();
                 const escolasResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
+                const alunosVinculados = await escolasService.listBindAlunosToEscola(Number(escolaId), codigo_cidade);
+
                 setEscolaData(escolasResponse);
+                setAlunosData(alunosVinculados);
+
                 if (!escolasResponse.result) {
                     throw { ...escolasResponse };
                 }
@@ -50,7 +56,7 @@ const Visualizar: React.FC = () => {
     return (
         <>
             <PageTitle message="Escolas Cadastradas" icon={EscolasCadastroIcon} />
-            <NavCardProvider aditionalData={{ escolaData: [escolaData, setEscolaData] }}>
+            <NavCardProvider aditionalData={{ escolaData: [escolaData, setEscolaData], alunosData: [alunosData, setAlunosData] }}>
                 <NavCardTab name="FICHA DA ESCOLA" icon={<img src={DadosBasicosIcon} alt="" aria-hidden="true" />}>
                     <FichaEscola />
                 </NavCardTab>

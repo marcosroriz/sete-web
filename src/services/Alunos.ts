@@ -96,7 +96,16 @@ class AlunosService {
     }
 
     public async bindEscolaToAluno(body: BindEscolaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<any> {
-        console.log(body);
+        const response = await this.api({
+            method: "post",
+            url: `/alunos/${codigo_cidade}/${id_aluno}/escola`,
+            data: body,
+        });
+        const data = await response.data;
+        return data;
+    }
+
+    public async bindEscolaToAlunoEdit(body: BindEscolaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<any> {
         const response = await this.api({
             method: "put",
             url: `/alunos/${codigo_cidade}/${id_aluno}/escola`,
@@ -117,6 +126,16 @@ class AlunosService {
 
     public async bindRotaToAluno(body: BindRotaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<any> {
         const response = await this.api({
+            method: "post",
+            url: `/alunos/${codigo_cidade}/${id_aluno}/rota`,
+            data: body,
+        });
+        const data = await response.data;
+        return data;
+    }
+
+    public async bindRotaToAlunoEdit(body: BindRotaToAlunoRequestBody, id_aluno: number, codigo_cidade: number): Promise<any> {
+        const response = await this.api({
             method: "put",
             url: `/alunos/${codigo_cidade}/${id_aluno}/rota`,
             data: body,
@@ -125,12 +144,14 @@ class AlunosService {
         return data;
     }
 
-    public async listBindRotaToAluno(id_aluno: number, codigo_cidade: number): Promise<void> {
+    public async listBindRotaToAluno(id_aluno: number, codigo_cidade: number): Promise<ListBindRotaToAlunoResponse> {
+        console.log(id_aluno);
         const response = await this.api({
             method: "get",
             url: `/alunos/${codigo_cidade}/${id_aluno}/rota`,
         });
         const data = (await response.data) as ListBindRotaToAlunoResponse;
+        return data;
     }
 
     public async deleteAluno(id_aluno: number, codigo_cidade: number): Promise<void> {

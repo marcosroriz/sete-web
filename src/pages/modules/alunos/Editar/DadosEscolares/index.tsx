@@ -3,12 +3,10 @@ import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
 import { Aluno } from "entities/Aluno";
-
-import { EscolasService } from "services/Escolas";
-import { RotasService } from "services/Rotas";
-
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
+import { EscolasService } from "services/Escolas";
+import { RotasService } from "services/Rotas";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
@@ -24,6 +22,8 @@ type SelectOptions = {
 };
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
+type EscolaData = any;
+type RotaData = any;
 
 const DadosEscolares: React.FC = () => {
     const { user } = useAuth();
@@ -31,6 +31,9 @@ const DadosEscolares: React.FC = () => {
     const { previousStep, aditionalData } = useReactHookNavCard();
 
     const [alunoData] = aditionalData?.alunoData as AlunoData;
+    const [escolaData] = aditionalData?.escolaData as EscolaData;
+    const [rotaData] = aditionalData?.rotaData as RotaData;
+
     const [escolaOptions, setEscolaOptions] = React.useState<SelectOptions[]>([]);
     const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
 
@@ -59,6 +62,19 @@ const DadosEscolares: React.FC = () => {
             setValue("nivel", alunoData?.nivel.toString() || "");
         }
     }, [alunoData]);
+    React.useEffect(() => {
+        if (escolaData) {
+            setValue("escola", escolaData?.id_escola.toString() || "");
+        }
+    }, [escolaData]);
+
+    React.useEffect(() => {
+        if (rotaData) {
+            setValue("rota", rotaData?.id_rota.toString());
+        }
+        console.log(rotaData?.id_rota);
+    }, [rotaData]);
+
     return (
         <Container>
             <BlockTitle message="A RESPEITO DOS DADOS ESCOLARES DO ALUNO, RESPONDA:" />
@@ -76,8 +92,8 @@ const DadosEscolares: React.FC = () => {
                 <ReactHookInputSelect
                     label="QUAL A ROTA DO ALUNO?"
                     name="rota"
-                    placeholder="Escolha uma rota"
                     options={rotaOptions}
+                    placeholder="Escolha uma rota"
                     isHorizontal={mediaQuery.desktop}
                     hasPlaceholderOption
                 />

@@ -20,6 +20,7 @@ interface Veiculo {
     vida_util_pneu?: number;
     potencia?: number;
     preco?: number;
+    caminho_escola?: string;
     renavam?: string;
     manutencao?: string;
     id_firebase?: string;

@@ -1,5 +1,6 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { Escola, EscolaTableField, EscolaListObj } from "entities/Escola";
+import { Console } from "console";
 
 type CreateEscolaRequestBody = Escola;
 type CreateEscolaResponse = {
@@ -14,6 +15,12 @@ type ListEscolaResponse = {
 };
 
 type GetEscolaResponse = Escola & { result: boolean };
+
+type UpdateEscolaRequestBody = Escola;
+type UpdateEscolaResponse = {
+    messages: string | { [key: string]: any };
+    result: boolean;
+};
 
 class EscolasService {
     private api: ApiInstance;
@@ -41,12 +48,24 @@ class EscolasService {
         return data;
     }
 
-    public async getEscola(veiculo_id: number, codigo_cidade: number): Promise<GetEscolaResponse> {
+    public async getEscola(id_escola: number, codigo_cidade: number): Promise<GetEscolaResponse> {
         const response = await this.api({
             method: "get",
-            url: `/escolas/${codigo_cidade}/${veiculo_id}`,
+            url: `/escolas/${codigo_cidade}/${id_escola}`,
         });
         const data = (await response.data) as GetEscolaResponse;
+        return data;
+    }
+
+    public async updateEscola(body: UpdateEscolaRequestBody, id_escola: number, codigo_cidade: number): Promise<UpdateEscolaResponse> {
+        console.log("BODYYYY", body);
+        const response = await this.api({
+            method: "put",
+            url: `/escolas/${codigo_cidade}/${id_escola}`,
+            data: body,
+        });
+
+        const data = (await response.data) as UpdateEscolaResponse;
         return data;
     }
 
@@ -56,6 +75,16 @@ class EscolasService {
             url: `/escolas/${codigo_cidade}/${id_escola}`,
         });
         const data = await response.data;
+    }
+
+    public async listBindAlunosToEscola(id_escola: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            method: "get",
+            url: `/escolas/${codigo_cidade}/${id_escola}/alunos`,
+        });
+        const data = await response.data;
+        console.log("reqq", data);
+        return data;
     }
 }
 

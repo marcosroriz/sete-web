@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
@@ -6,6 +7,7 @@ import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { MotoristasService } from "services/Motoristas";
 import { dadosPessoaisSchema, dadosTransportesSchema } from "validators/modules/motoristas";
+import { Motorista } from "entities/Motorista";
 import { FileData } from "entities/FileData";
 
 import PageTitle from "components/micro/PageTitle";
@@ -15,6 +17,7 @@ import DadosTransporte from "./DadosTransporte";
 import PageIcon from "assets/icons/motoristas/motorista-cadastro.png";
 import DadosPessoaisIcon from "assets/icons/motoristas/motorista-dados-pessoais.svg";
 import DadosTransportesIcon from "assets/icons/motoristas/motorista-dados-transportes.png";
+import motoristas from "routes/modules/motoristas";
 
 type FormData = {
     nome: string;
@@ -32,32 +35,19 @@ type FormData = {
     arquivos: FileData[];
 };
 
-const formData = {
-    nome: "",
-    cpf: "",
-    data_nascimento: "",
-    ant_criminais: "",
-    sexo: "",
-    telefone: "",
-    cnh: "",
-    data_validade_cnh: "",
-    vinculo: "",
-    salario: "",
-    tipo_cnh: [false, false, false, false],
-    turno: [false, false, false],
-};
-
-const Cadastrar: React.FC = () => {
+const Editar: React.FC = () => {
+    const { id: motoristaCpf } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { createModal, clearModal } = useAlertModal();
+
+    const [motoristaData, setMotoristaData] = React.useState<Motorista | null>(null);
 
     const handleFormSubmit = async (data: FormData) => {
         try {
             createModal();
             const motoristasService = new MotoristasService();
             const codigo_cidade = user?.codigo_cidade || 0;
-
             const body = {
                 nome: data.nome,
                 cpf: data.cpf.replace(/[-.]/g, ""),
@@ -79,20 +69,47 @@ const Cadastrar: React.FC = () => {
                 tem_cnh_e: data.tipo_cnh[4] ? "S" : "N",
             };
 
-            const motoristasResponse = await motoristasService.createMotorista(body, codigo_cidade);
+            const motoristasResponse = await motoristasService.updateMotorista(body, motoristaCpf, codigo_cidade);
             if (!motoristasResponse.result) {
                 throw { ...motoristasResponse };
             }
-            createModal("success", { title: "Sucesso", html: "Motorista cadastrado com sucesso" });
+            createModal("success", { title: "Sucesso", html: "Motorista editado com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar motorista" });
+            errorHandler(err, { title: "Erro ao editar motorista" });
         }
     };
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                createModal();
+                const codigo_cidade = user?.codigo_cidade || 0;
+                const motoristasService = new MotoristasService();
+                const response = await motoristasService.getMotorista(motoristaCpf, codigo_cidade);
+
+                console.log(response);
+                setMotoristaData(response);
+
+                if (!response.result) {
+                    throw { ...response };
+                }
+                clearModal();
+            } catch (err) {
+                errorHandler(err, { title: "Erro ao buscar dados do aluno" });
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <>
             <PageTitle message="Cadastro de Motorista" icon={PageIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleFormSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                onSubmit={handleFormSubmit}
+                aditionalData={{
+                    motoristaData: [motoristaData, setMotoristaData],
+                }}
+            >
                 <ReactHookNavCardTab
                     name="DADOS PESSOAIS"
                     icon={<img src={DadosPessoaisIcon} alt="" aria-hidden="true" />}
@@ -113,4 +130,4 @@ const Cadastrar: React.FC = () => {
     );
 };
 
-export default Cadastrar;
+export default Editar;

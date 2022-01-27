@@ -1,8 +1,8 @@
 interface Motorista {
     codigo_cidade?: number;
-    nome?: string;
-    cpf?: string;
-    data_nascimento?: string;
+    nome: string;
+    cpf: string;
+    data_nascimento: string;
     sexo?: number;
     telefone?: string;
     cnh?: string;

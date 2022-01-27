@@ -42,7 +42,6 @@ class RotasService {
             url: `/rotas/${codigo_cidade}`,
             data: body,
         });
-
         const data = (await response.data) as CreateRotaResponse;
         return data;
     }
@@ -75,6 +74,29 @@ class RotasService {
         });
 
         const data = (await response.data) as UpdateRotaResponse;
+        return data;
+    }
+
+    public async bindEscolasToRota(body: BindEscolasToRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<any> {
+        const response = await this.api({
+            method: "post",
+            url: `/rotas/${codigo_cidade}/${id_rota}/escolas`,
+            data: body,
+        });
+
+        const data = (await response.data) as any;
+        return data;
+    }
+
+    public async bindAlunosToRota(body: BindAlunosToRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<any> {
+        console.log(body);
+        const response = await this.api({
+            method: "post",
+            url: `/rotas/${codigo_cidade}/${id_rota}/alunos`,
+            data: body,
+        });
+
+        const data = (await response.data) as any;
         return data;
     }
 }

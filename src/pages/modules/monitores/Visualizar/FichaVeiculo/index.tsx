@@ -1,26 +1,26 @@
 import React from "react";
 
-import { Motorista } from "entities/Motorista";
+import { Monitor } from "entities/Monitor";
 
 import { useNavCard } from "contexts/NavCard";
 
 import RecordTable from "components/micro/RecordTable";
 
-type MotoristaData = [Motorista | null, React.Dispatch<React.SetStateAction<Motorista | null>>];
+type MonitorData = [Monitor | null, React.Dispatch<React.SetStateAction<Monitor | null>>];
 
-const FichaVeiculo: React.FC = () => {
+const FichaMonitor: React.FC = () => {
     const { aditionalData } = useNavCard();
-    const [motoristaData] = aditionalData?.motoristaData as MotoristaData;
+    const [monitorData] = aditionalData?.motoristaData as MonitorData;
     const [tableData, setTableData] = React.useState<any>(null);
     React.useEffect(() => {
-        if (motoristaData) {
+        if (monitorData) {
             const data = {
-                Nome: motoristaData.nome,
+                Nome: monitorData.nome,
             };
             setTableData(data);
         }
-    }, [motoristaData]);
-    return <RecordTable title="MOTORISTA" data={tableData} />;
+    }, [monitorData]);
+    return <RecordTable title="MONITOR" data={tableData} />;
 };
 
-export default FichaVeiculo;
+export default FichaMonitor;

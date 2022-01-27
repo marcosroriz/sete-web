@@ -1,8 +1,10 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useWatch, useFormContext } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 import { formatHelper } from "helpers/FormatHelper";
+import { Veiculo } from "entities/Veiculo";
 import { VeiculosService } from "services/Veiculos";
 import { useError } from "hooks/Errors";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
@@ -15,11 +17,14 @@ import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard"
 import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, ButtonsContainer, mediaQuery } from "./styles";
+import { copyFileSync } from "fs";
 
 type SelectOptionsObj = {
     1: { label: string; value: string }[];
     2: { label: string; value: string }[];
 };
+
+type VeiculoData = [Veiculo | null, React.Dispatch<React.SetStateAction<Veiculo | null>>];
 
 const caminho_escola = [
     { label: "Não se aplica", value: "0" },
@@ -34,13 +39,32 @@ const caminho_escola = [
 ];
 
 const DadosBasicos: React.FC = () => {
-    const { nextStep } = useReactHookNavCard();
+    const { step, nextStep, aditionalData } = useReactHookNavCard();
     const { watch, setValue } = useFormContext();
 
     const [optionsTipo, setOptionsTipo] = React.useState<SelectOptionsObj>({ 1: [], 2: [] });
     const [optionsMarca, setOptionsMarca] = React.useState<SelectOptionsObj>({ 1: [], 2: [] });
+    const [optionsModelo, setOptionsModelo] = React.useState<SelectOptionsObj>({ 1: [], 2: [] });
 
     const { errorHandler } = useError();
+
+    const [veiculoData] = aditionalData?.veiculoData as VeiculoData;
+
+    React.useEffect(() => {
+        if (!!veiculoData) {
+            setValue("modo", veiculoData?.modo?.toString() || "");
+            setValue("tipo", veiculoData?.tipo?.toString() || "");
+            setValue("marca", veiculoData?.marca?.toString() || "");
+            setValue("modelo", veiculoData?.modelo?.toString() || "");
+            setValue("ano", veiculoData?.ano || "");
+            setValue("numero_pneus", veiculoData?.numero_pneus || null);
+            setValue("vida_util_pneu", veiculoData?.vida_util_pneu || null);
+            setValue("potencia", veiculoData?.potencia || null);
+            setValue("caminho_escola", veiculoData?.caminho_escola || "");
+            setValue("preco", veiculoData?.preco || null);
+            setValue("origem", veiculoData?.origem?.toString() || "");
+        }
+    }, [veiculoData]);
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -48,8 +72,10 @@ const DadosBasicos: React.FC = () => {
                 const veiculosService = new VeiculosService();
                 const tiposVeiculo = await veiculosService.getTiposVeiculo();
                 const marcasVeiculo = await veiculosService.getMarcasVeiculo();
+                const modelosVeiculo = await veiculosService.getModelosVeiculo();
+
                 tiposVeiculo.data.forEach((tipo) => {
-                    if (tipo.id < 9) {
+                    if (tipo.id < tiposVeiculo.total) {
                         setOptionsTipo((prev) => ({ ...prev, 1: [...prev[1], { label: tipo.tipo, value: tipo.id.toString() }] }));
                     } else {
                         setOptionsTipo((prev) => ({ ...prev, 2: [...prev[2], { label: tipo.tipo, value: tipo.id.toString() }] }));
@@ -57,7 +83,7 @@ const DadosBasicos: React.FC = () => {
                 });
 
                 marcasVeiculo.data.forEach((marca) => {
-                    if (marca.id < 13) {
+                    if (marca.id < marcasVeiculo.total) {
                         setOptionsMarca((prev) => ({
                             ...prev,
                             1: [...prev[1], { label: formatHelper.capitalize(marca.marca), value: marca.id.toString() }],
@@ -69,12 +95,33 @@ const DadosBasicos: React.FC = () => {
                         }));
                     }
                 });
+
+                modelosVeiculo.data.forEach((modelo) => {
+                    if (modelo.id < modelosVeiculo.total) {
+                        setOptionsModelo((prev) => ({
+                            ...prev,
+                            1: [...prev[1], { label: formatHelper.capitalize(modelo.modelo), value: modelo.id.toString() }],
+                        }));
+                    } else {
+                        setOptionsModelo((prev) => ({
+                            ...prev,
+                            2: [...prev[2], { label: formatHelper.capitalize(modelo.modelo), value: modelo.id.toString() }],
+                        }));
+                    }
+                });
             } catch (err) {
                 errorHandler(err, { title: "Atenção!" });
             }
         };
         fetchData();
     }, []);
+
+    React.useEffect(() => {
+        if (step === 1) {
+            (document.getElementById("placa") as any).focus();
+            (document.getElementById("placa") as any).blur();
+        }
+    }, [step]);
 
     const check = useWatch({
         name: "modo",
@@ -119,7 +166,12 @@ const DadosBasicos: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="MODELO DO VEÍCULO*" name="modelo" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputSelect
+                    label="MODELO DO VEÍCULO?*"
+                    name="modelo"
+                    options={optionsModelo[watch("modo")] || []}
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

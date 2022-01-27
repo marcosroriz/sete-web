@@ -29,6 +29,11 @@ type GetMarcasVeiculoResponse = {
     result: boolean;
     total: number;
 };
+type GetModelosVeiculoResponse = {
+    data: { id: number; modelo: string }[];
+    result: boolean;
+    total: number;
+};
 
 class VeiculosService {
     private api: ApiInstance;
@@ -90,6 +95,15 @@ class VeiculosService {
             method: "get",
         });
         const data = (await response.data) as GetMarcasVeiculoResponse;
+        return data;
+    }
+
+    public async getModelosVeiculo() {
+        const response = await this.api({
+            url: "/veiculos/modelos",
+            method: "get",
+        });
+        const data = (await response.data) as GetModelosVeiculoResponse;
         return data;
     }
 

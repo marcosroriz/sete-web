@@ -3,13 +3,14 @@ import React from "react";
 import { Aluno } from "entities/Aluno";
 
 import { useNavCard } from "contexts/NavCard";
+import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import RecordTable from "components/micro/RecordTable";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
 const FichaAluno: React.FC = () => {
-    const { aditionalData } = useNavCard();
+    const { aditionalData } = useReactHookNavCard();
     const [alunoData] = aditionalData?.alunoData;
     const [tableData, setTableData] = React.useState<any>(null);
 

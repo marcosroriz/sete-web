@@ -28,11 +28,9 @@ const DadosBasicos: React.FC = () => {
         if (escolaData) {
             setValue("nome", escolaData?.nome);
             setValue("contato_responsavel", escolaData?.contato_responsavel);
+            setValue("contato_telefone", escolaData?.contato_telefone);
             setValue("contato_email", escolaData?.contato_email);
             setValue("mec_tp_dependencia", escolaData?.mec_tp_dependencia?.toString() || "");
-            setValue("ensino_fundamental", escolaData?.ensino_fundamental);
-            setValue("ensino_medio", escolaData?.ensino_medio);
-            setValue("ensino_superior", escolaData?.ensino_superior);
         }
     }, [escolaData]);
 
