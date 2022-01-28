@@ -11,8 +11,9 @@ import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormLi
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 import BlockTitle from "components/micro/BlockTitle";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 
-import { ButtonsContainer, Container, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
 
 type SelectOptions = {
     value: string;

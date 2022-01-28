@@ -1,12 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-import { AlunosService } from "services/Alunos";
-
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
+import { AlunosService } from "services/Alunos";
+import { Aluno } from "entities/Aluno";
 
 import PageTitle from "components/micro/PageTitle";
 
@@ -77,9 +77,14 @@ const formData = {
 };
 
 const Cadastrar: React.FC = () => {
+    const { id: alunoId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { createModal, clearModal } = useAlertModal();
+
+    const [alunoData, setAlunoData] = React.useState<Aluno | null>(null);
+    const [escolaData, setEscolaData] = React.useState<any>(null);
+    const [rotaData, setRotaData] = React.useState<any>(null);
 
     const handleSubmit = async (data: FormData) => {
         try {
@@ -112,12 +117,22 @@ const Cadastrar: React.FC = () => {
                 turno: Number(data.turno),
                 nivel: Number(data.nivel),
             };
-            const response = await alunosService.createAluno(body, codigo_cidade);
-            if (!response.result) {
-                throw { ...response };
+            if (!!alunoId) {
+                const response = await alunosService.updateAluno(body, Number(alunoId), codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Aluno editado com sucesso" });
+            } else {
+                const response = await alunosService.createAluno(body, codigo_cidade);
+                await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any)?.id, codigo_cidade);
+                await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
+
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
             }
-            await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any)?.id, codigo_cidade);
-            await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
 
             createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
         } catch (err) {
@@ -125,10 +140,47 @@ const Cadastrar: React.FC = () => {
         }
     };
 
+    React.useEffect(() => {
+        if (!!alunoId) {
+            const fetchData = async () => {
+                try {
+                    createModal();
+                    const codigo_cidade = user?.codigo_cidade || 0;
+                    const alunosService = new AlunosService();
+                    const response = await alunosService.getAluno(Number(alunoId), codigo_cidade);
+                    const escolaVinculada = await alunosService.listBindEscolaToAluno(Number(alunoId), codigo_cidade);
+                    const rotaVinculada = await alunosService.listBindRotaToAluno(Number(alunoId), codigo_cidade);
+
+                    setAlunoData(response);
+                    setEscolaData(escolaVinculada);
+                    setRotaData(rotaVinculada);
+
+                    if (!response.result) {
+                        throw { ...response };
+                    }
+                    clearModal();
+                } catch (err) {
+                    errorHandler(err, { title: "Erro ao buscar dados do aluno" });
+                }
+            };
+            fetchData();
+        }
+    }, []);
+
     return (
         <>
             <PageTitle message="Cadastrar Aluno" icon={AlunosCadastroIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                mode="onSubmit"
+                defaultValues={formData}
+                reValidateMode="onChange"
+                onSubmit={handleSubmit}
+                aditionalData={{
+                    alunoData: [alunoData, setAlunoData],
+                    escolaData: [escolaData, setEscolaData],
+                    rotaData: [rotaData, setRotaData],
+                }}
+            >
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />} validationSchema={localizacaoSchema}>
                     <Localizacao />
                 </ReactHookNavCardTab>
