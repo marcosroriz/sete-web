@@ -20,10 +20,15 @@
         ],
         "directories": {
             "buildResources": "assets"
+        },
+        "win": {
+            "icon": "./src/assets/images/sete-logo.ico"
         }
     },
+    "license": "MIT",
     "main": "public/electron.js",
     "dependencies": {
+        "@craco/craco": "^6.4.3",
         "@hookform/resolvers": "^2.7.1",
         "@sweetalert2/theme-bootstrap-4": "^5.0.2",
         "axios": "^0.21.1",
@@ -58,14 +63,14 @@
         "yup": "^0.32.9"
     },
     "scripts": {
-        "test": "rescripts test --watchAll false",
-        "test:coverage": "rescripts test --coverage --watchAll false",
-        "eject": "rescripts eject",
-        "web:build": "cross-env REACT_APP_APP_ENV=web rescripts build",
-        "web:dev": "cross-env REACT_APP_APP_ENV=web rescripts start",
-        "desktop:dev": "concurrently -k \"cross-env REACT_APP_APP_ENV=desktop BROWSER=none rescripts start\" \"yarn electron\"",
+        "test:coverage": "craco test --coverage --watchAll false",
+        "test": "craco test --watchAll false",
+        "eject": "craco eject",
+        "build": "cross-env REACT_APP_APP_ENV=web craco build",
+        "dev": "cross-env REACT_APP_APP_ENV=web craco start",
+        "desktop:dev": "concurrently -k \"cross-env REACT_APP_APP_ENV=desktop BROWSER=none craco start\" \"yarn electron\"",
         "desktop:build": "electron-builder -w",
-        "predesktop:build": "cross-env REACT_APP_APP_ENV=desktop rescripts build",
+        "predesktop:build": "cross-env REACT_APP_APP_ENV=desktop craco build",
         "electron": "wait-on tcp:3000 && electron .",
         "postinstall": "electron-builder install-app-deps"
     },
@@ -81,9 +86,6 @@
             "last 1 safari version"
         ]
     },
-    "browser": {
-        "fs": false
-    },
     "jest": {
         "collectCoverageFrom": [
             "src/pages/**/*.tsx",
@@ -92,8 +94,6 @@
         ]
     },
     "devDependencies": {
-        "@rescripts/cli": "^0.0.16",
-        "@rescripts/rescript-env": "^0.0.14",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
