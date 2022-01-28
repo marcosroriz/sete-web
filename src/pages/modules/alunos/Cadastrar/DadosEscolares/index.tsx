@@ -1,10 +1,12 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
 import { EscolasService } from "services/Escolas";
 import { RotasService } from "services/Rotas";
+import { Aluno } from "entities/Aluno";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
@@ -20,9 +22,19 @@ type SelectOptions = {
     label: string;
 };
 
+type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
+type EscolaData = any;
+type RotaData = any;
+
 const DadosEscolares: React.FC = () => {
     const { user } = useAuth();
-    const { previousStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { previousStep, aditionalData } = useReactHookNavCard();
+
+    const [alunoData] = aditionalData?.alunoData as AlunoData;
+    const [escolaData] = aditionalData?.escolaData as EscolaData;
+    const [rotaData] = aditionalData?.rotaData as RotaData;
+
     const [escolaOptions, setEscolaOptions] = React.useState<SelectOptions[]>([]);
     const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
 
@@ -44,6 +56,24 @@ const DadosEscolares: React.FC = () => {
     React.useEffect(() => {
         fetchData();
     }, []);
+
+    React.useEffect(() => {
+        if (!!alunoData) {
+            setValue("turno", alunoData?.turno.toString() || "");
+            setValue("nivel", alunoData?.nivel.toString() || "");
+        }
+    }, [alunoData]);
+    React.useEffect(() => {
+        if (!!escolaData) {
+            setValue("escola", escolaData?.id_escola.toString() || "");
+        }
+    }, [escolaData]);
+
+    React.useEffect(() => {
+        if (!!rotaData) {
+            setValue("rota", rotaData?.id_rota.toString());
+        }
+    }, [rotaData]);
 
     return (
         <Container>

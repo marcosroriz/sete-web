@@ -6,25 +6,25 @@ import { useNavCard } from "contexts/NavCard";
 
 import TableCard from "components/micro/Cards/TableCard";
 import SeteTable from "components/micro/SeteTable";
-import { alunosTableHelper } from "helpers/Tables/AlunosTableHelper";
+import { escolasTableHelper } from "helpers/Tables/EscolasTableHelper";
 
-const AlunosAtendidos: React.FC = () => {
+const EscolasAtendidas: React.FC = () => {
     const { aditionalData } = useNavCard();
 
     const columns = React.useMemo(() => COLUMNS, []);
 
-    const [alunosData] = aditionalData?.alunosData as any;
+    const [escolasData] = aditionalData?.escolasData as any;
     const [tableData, setTableData] = React.useState<any[]>([]);
 
     React.useEffect(() => {
-        if (alunosData) {
-            const treatedData = alunosTableHelper.treatDataAlunosAtendidos(alunosData.data);
+        if (escolasData) {
+            const treatedData = escolasTableHelper.treatDataEscolasAtendidas(escolasData.data);
 
             setTableData(treatedData);
         }
-    }, [alunosData]);
+    }, [escolasData]);
 
-    return <SeteTable columns={columns} name={"Alunos Atendidos"} data={tableData} />;
+    return <SeteTable columns={columns} name={"escolas Atendidos"} data={tableData} />;
 };
 
-export default AlunosAtendidos;
+export default EscolasAtendidas;

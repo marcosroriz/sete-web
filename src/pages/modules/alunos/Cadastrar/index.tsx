@@ -124,17 +124,21 @@ const Cadastrar: React.FC = () => {
                 }
                 createModal("success", { title: "Sucesso", html: "Aluno editado com sucesso" });
             } else {
+                console.log("aqui cadas");
                 const response = await alunosService.createAluno(body, codigo_cidade);
-                await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any)?.id, codigo_cidade);
-                await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
+
+                if (data.escola != "") {
+                    await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any)?.id, codigo_cidade);
+                }
+                if (data.rota != "") {
+                    await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
+                }
 
                 if (!response.result) {
                     throw { ...response };
                 }
                 createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
             }
-
-            createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar aluno" });
         }
@@ -144,6 +148,7 @@ const Cadastrar: React.FC = () => {
         if (!!alunoId) {
             const fetchData = async () => {
                 try {
+                    console.log("EFECTAL ALUNO");
                     createModal();
                     const codigo_cidade = user?.codigo_cidade || 0;
                     const alunosService = new AlunosService();

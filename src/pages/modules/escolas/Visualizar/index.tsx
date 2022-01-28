@@ -19,7 +19,6 @@ import EscolasCadastroIcon from "assets/icons/escolas/escolas-cadastro.png";
 import FichaEscola from "./FichaEscola";
 import AlunosAtendidos from "./AlunosAtendidos";
 import Localizacao from "./Localizacao";
-import alunos from "routes/modules/alunos";
 
 const Visualizar: React.FC = () => {
     const { id: escolaId } = useParams<{ id: string }>();

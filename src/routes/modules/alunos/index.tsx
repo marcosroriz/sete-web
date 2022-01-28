@@ -10,6 +10,6 @@ import Gerenciar from "pages/modules/alunos/Gerenciar";
 export default [
     <AuthRoute path="/alunos/cadastrar" component={Cadastrar} permission="reader" key="cadastrar" isPrivate exact />,
     <AuthRoute path="/alunos/gerenciar" component={Gerenciar} permission="reader" key="gerenciar" isPrivate exact />,
-    <AuthRoute path="/alunos/gerenciar/editar/:id" component={Editar} permission="reader" key="gerenciar/editar/:id" isPrivate exact />,
+    <AuthRoute path="/alunos/gerenciar/editar/:id" component={Cadastrar} permission="reader" key="gerenciar/editar/:id" isPrivate exact />,
     <AuthRoute path="/alunos/gerenciar/visualizar/:id" component={Visualizar} permission="reader" key="gerenciar/visualizar/:id" isPrivate exact />,
 ];

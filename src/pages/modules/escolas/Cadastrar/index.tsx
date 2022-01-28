@@ -1,8 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 
 import { EscolasService } from "services/Escolas";
+import { Escola } from "entities/Escola";
 
 import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
@@ -57,9 +59,13 @@ const formData = {
 };
 
 const Cadastrar: React.FC = () => {
+    const { id: escolaId } = useParams<{ id: string }>();
     const { user } = useAuth();
-    const { createModal } = useAlertModal();
+    const { createModal, clearModal } = useAlertModal();
     const { errorHandler } = useError();
+
+    const [escolaData, setEscolaData] = React.useState<Escola | null>(null);
+
     const handleSubmit = async (data: FormData) => {
         try {
             createModal();
@@ -93,19 +99,60 @@ const Cadastrar: React.FC = () => {
                 horario_noturno: data.horario[2] ? "S" : "N",
             };
 
-            const response = await escolasService.createEscolas(body, codigo_cidade);
-            if (!response.result) {
-                throw { ...response };
+            if (!!escolaId) {
+                const response = await escolasService.updateEscola(body, Number(escolaId), codigo_cidade);
+
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Escola editada com sucesso" });
+            } else {
+                const response = await escolasService.createEscolas(body, codigo_cidade);
+
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Escola cadastrada com sucesso" });
             }
-            createModal("success", { title: "Sucesso", html: "Escola cadastrada com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar Escola" });
         }
     };
+
+    React.useEffect(() => {
+        if (!!escolaId) {
+            const fetchData = async () => {
+                try {
+                    createModal();
+                    const codigo_cidade = user?.codigo_cidade || 0;
+                    const escolasService = new EscolasService();
+                    const response = await escolasService.getEscola(Number(escolaId), codigo_cidade);
+
+                    setEscolaData(response);
+                    if (!response.result) {
+                        throw { ...response };
+                    }
+                    clearModal();
+                } catch (err) {
+                    errorHandler(err, { title: "Erro ao buscar dados da escola" });
+                }
+            };
+            fetchData();
+        }
+    }, []);
+
     return (
         <>
             <PageTitle message="Cadastrar Escola" icon={EscolasCadastroIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                mode="onSubmit"
+                defaultValues={formData}
+                reValidateMode="onChange"
+                onSubmit={handleSubmit}
+                aditionalData={{
+                    escolaData: [escolaData, setEscolaData],
+                }}
+            >
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />} validationSchema={localizacaoSchema}>
                     <Localizacao />
                 </ReactHookNavCardTab>

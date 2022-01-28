@@ -1,7 +1,11 @@
 import React from "react";
+import { useFormContext } from "react-hook-form";
+
 import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+
+import { Escola } from "entities/Escola";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -12,8 +16,24 @@ import BlockTitle from "components/micro/BlockTitle";
 
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
+type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
+
 const DadosBasicos: React.FC = () => {
-    const { nextStep, previousStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { previousStep, nextStep, aditionalData } = useReactHookNavCard();
+
+    const [escolaData] = aditionalData?.escolaData as EscolaData;
+
+    React.useEffect(() => {
+        if (!!escolaData) {
+            setValue("nome", escolaData?.nome);
+            setValue("contato_responsavel", escolaData?.contato_responsavel);
+            setValue("contato_telefone", escolaData?.contato_telefone);
+            setValue("contato_email", escolaData?.contato_email);
+            setValue("mec_tp_dependencia", escolaData?.mec_tp_dependencia?.toString() || "");
+        }
+    }, [escolaData]);
+
     return (
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DA ESCOLA" />

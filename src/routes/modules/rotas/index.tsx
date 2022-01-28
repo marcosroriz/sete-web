@@ -4,8 +4,10 @@ import AuthRoute from "routes/AuthRoute";
 
 import Cadastrar from "pages/modules/rotas/Cadastrar";
 import Gerencidar from "pages/modules/rotas/Gerenciar";
+import Visualizar from "pages/modules/rotas/Visualizar";
 
 export default [
     <AuthRoute path="/rotas/cadastrar" component={Cadastrar} permission="reader" key="cadastrar" isPrivate exact />,
     <AuthRoute path="/rotas/gerenciar" component={Gerencidar} permission="reader" key="gerenciar/gerenciar" isPrivate exact />,
+    <AuthRoute path="/rotas/gerenciar/visualizar/:id" component={Visualizar} permission="reader" key="gerenciar/visualizar/:id" isPrivate exact />,
 ];

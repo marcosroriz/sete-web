@@ -88,12 +88,32 @@ class RotasService {
         return data;
     }
 
+    public async listBindEscolasToRota(id_rota: number, codigo_cidade: number): Promise<any> {
+        const response = await this.api({
+            method: "get",
+            url: `/rotas/${codigo_cidade}/${id_rota}/escolas`,
+        });
+
+        const data = (await response.data) as any;
+        return data;
+    }
+
     public async bindAlunosToRota(body: BindAlunosToRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<any> {
         console.log(body);
         const response = await this.api({
             method: "post",
             url: `/rotas/${codigo_cidade}/${id_rota}/alunos`,
             data: body,
+        });
+
+        const data = (await response.data) as any;
+        return data;
+    }
+
+    public async listBindAlunosToRota(id_rota: number, codigo_cidade: number): Promise<any> {
+        const response = await this.api({
+            method: "get",
+            url: `/rotas/${codigo_cidade}/${id_rota}/alunos`,
         });
 
         const data = (await response.data) as any;

@@ -74,32 +74,32 @@ class EscolasTableHelper {
         );
     }
 
-    public treatDataAlunosAtendidos(data: any[]): any[] {
-        return data.map((alunoObj) => ({
-            nome: alunoObj.nome,
-            cpf: alunoObj.cpf || "-",
-            turno:
-                alunoObj.turno == 1
-                    ? "Matutino"
-                    : alunoObj.turno == 2
-                    ? "Vespertino"
-                    : alunoObj.turno == 3
-                    ? "Integral"
-                    : alunoObj.mec_tp_dependencia == 4
-                    ? "Noturno"
-                    : "-",
-            nivel:
-                alunoObj.nivel == 1
-                    ? "Infantil"
-                    : alunoObj.nivel == 2
-                    ? "Fundamental"
-                    : alunoObj.nivel == 3
-                    ? "Médio"
-                    : alunoObj.nivel == 4
-                    ? "Superior"
-                    : alunoObj.nivel == 5
-                    ? "Outro"
-                    : "-",
+    public treatDataEscolasAtendidas(data: any[]): any[] {
+        return data.map((escolaObj) => ({
+            nome: escolaObj.nome,
+            // cpf: escolaObj.cpf || "-",
+            // turno:
+            //     escolaObj.turno == 1
+            //         ? "Matutino"
+            //         : escolaObj.turno == 2
+            //         ? "Vespertino"
+            //         : escolaObj.turno == 3
+            //         ? "Integral"
+            //         : escolaObj.mec_tp_dependencia == 4
+            //         ? "Noturno"
+            //         : "-",
+            // nivel:
+            //     escolaObj.nivel == 1
+            //         ? "Infantil"
+            //         : escolaObj.nivel == 2
+            //         ? "Fundamental"
+            //         : escolaObj.nivel == 3
+            //         ? "Médio"
+            //         : escolaObj.nivel == 4
+            //         ? "Superior"
+            //         : escolaObj.nivel == 5
+            //         ? "Outro"
+            //         : "-",
         }));
     }
 }
