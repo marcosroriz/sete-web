@@ -59,7 +59,7 @@ const RotasTableProvider = ({ children }: RotasTableProviderProps) => {
             const rotasService = new RotasService();
             const codigo_cidade = user?.codigo_cidade || 0;
             const response = await rotasService.listRotas(codigo_cidade);
-            const treatedData = rotasTableHelper.treatData(response.data);
+            const treatedData = rotasTableHelper.treatData(response.data, codigo_cidade);
             setTableData(treatedData);
         };
         fetchData();

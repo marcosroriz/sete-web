@@ -42,7 +42,7 @@ interface RotaTableField {
     turno: string;
     gps: string;
     quilometragem: number;
-    alunos_atendidos: number;
+    alunos_atendidos: any;
     escolas_atendidas: number;
 }
 

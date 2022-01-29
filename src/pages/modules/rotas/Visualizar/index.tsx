@@ -39,11 +39,11 @@ const Visualizar: React.FC = () => {
                 const rotasService = new RotasService();
                 const rotasResponse = await rotasService.getRota(Number(rotaId), codigo_cidade);
                 const alunosVinculados = await rotasService.listBindAlunosToRota(Number(rotaId), codigo_cidade);
-                const escolasVinculadas = await rotasService.listBindEscolasToRota(Number(rotaId), codigo_cidade);
+                //const escolasVinculadas = await rotasService.listBindEscolasToRota(Number(rotaId), codigo_cidade);
 
                 setRotaData(rotasResponse);
                 setAlunosData(alunosVinculados);
-                setEscolasData(escolasVinculadas);
+                //setEscolasData(escolasVinculadas);
 
                 clearModal();
             } catch (err) {

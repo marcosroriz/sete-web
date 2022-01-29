@@ -31,6 +31,7 @@ const Visualizar: React.FC = () => {
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const motoristasService = new MonitoresService();
                 const response = await motoristasService.getMonitor(monitorId, codigo_cidade);
+                console.log("AQUIIIII monito", response);
                 setMonitorData(response);
                 clearModal();
             } catch (err) {

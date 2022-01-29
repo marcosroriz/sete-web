@@ -1,5 +1,6 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { Rota, RotaListObj } from "entities/Rota";
+import { Console } from "console";
 
 type CreateRotaRequestBody = Rota;
 type CreateRotaResponse = {
@@ -37,12 +38,14 @@ class RotasService {
     }
 
     public async createRota(body: CreateRotaRequestBody, codigo_cidade: number): Promise<CreateRotaResponse> {
+        console.log("CREATE ROTA", body);
         const response = await this.api({
             method: "post",
             url: `/rotas/${codigo_cidade}`,
             data: body,
         });
         const data = (await response.data) as CreateRotaResponse;
+        console.log("RESPONSE rota", data);
         return data;
     }
 
@@ -53,16 +56,19 @@ class RotasService {
         });
 
         const data = (await response.data) as ListRotaResponse;
+        console.log("LIST", data);
         return data;
     }
 
     public async getRota(id_rota: number, codigo_cidade: number): Promise<GetRotaResponse> {
+        console.log("GET ROTA");
         const response = await this.api({
             method: "get",
             url: `/rotas/${codigo_cidade}/${id_rota}`,
         });
 
         const data = (await response.data) as GetRotaResponse;
+        console.log(data);
         return data;
     }
 
@@ -78,6 +84,7 @@ class RotasService {
     }
 
     public async bindEscolasToRota(body: BindEscolasToRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<any> {
+        console.log("escoals rota", body);
         const response = await this.api({
             method: "post",
             url: `/rotas/${codigo_cidade}/${id_rota}/escolas`,
@@ -85,6 +92,7 @@ class RotasService {
         });
 
         const data = (await response.data) as any;
+        console.log(data);
         return data;
     }
 
@@ -99,7 +107,7 @@ class RotasService {
     }
 
     public async bindAlunosToRota(body: BindAlunosToRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<any> {
-        console.log(body);
+        console.log("alunos rota", body);
         const response = await this.api({
             method: "post",
             url: `/rotas/${codigo_cidade}/${id_rota}/alunos`,
@@ -107,6 +115,7 @@ class RotasService {
         });
 
         const data = (await response.data) as any;
+        console.log(data);
         return data;
     }
 
@@ -117,6 +126,7 @@ class RotasService {
         });
 
         const data = (await response.data) as any;
+        console.log("oooooooooooooooooooo", data);
         return data;
     }
 }

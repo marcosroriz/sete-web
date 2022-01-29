@@ -80,20 +80,21 @@ const Cadastrar: React.FC = () => {
                 //alunos: data.alunos,
                 //escolas: data.escolas,
             };
-            console.log(data);
 
             const response = await rotasService.createRota(body, codigo_cidade);
 
-            for (let i = 0; data.escolas[i] != null; i++) {
-                data.escolas[i] = Number(data.escolas[i]);
+            if (data.escolas.length > 0) {
+                for (let i = 0; data.escolas[i] != null; i++) {
+                    data.escolas[i] = Number(data.escolas[i]);
+                }
+                await rotasService.bindEscolasToRota({ escolas: data.escolas }, (response.messages as any)?.id, codigo_cidade);
             }
-
-            for (let i = 0; data.alunos[i] != null; i++) {
-                data.alunos[i] = Number(data.alunos[i]);
+            if (data.alunos.length > 0) {
+                for (let i = 0; data.alunos[i] != null; i++) {
+                    data.alunos[i] = Number(data.alunos[i]);
+                }
+                await rotasService.bindAlunosToRota({ alunos: data.escolas }, (response.messages as any)?.id, codigo_cidade);
             }
-
-            await rotasService.bindEscolasToRota({ escolas: data.escolas }, (response.messages as any)?.id, codigo_cidade);
-            await rotasService.bindAlunosToRota({ alunos: data.escolas }, (response.messages as any)?.id, codigo_cidade);
 
             if (!response.result) {
                 throw { ...response };
