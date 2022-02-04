@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { Monitor } from "entities/Monitor";
 import { useAuth } from "contexts/Auth";
 
 import { RotasService } from "services/Rotas";
@@ -20,9 +22,24 @@ type SelectOptions = {
     label: string;
 };
 
+type MonitorData = [Monitor | null, React.Dispatch<React.SetStateAction<Monitor | null>>];
+
 const DadosTransporte: React.FC = () => {
     const { user } = useAuth();
-    const { previousStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { previousStep, nextStep, aditionalData } = useReactHookNavCard();
+
+    const [monitorData] = aditionalData?.monitorData as MonitorData;
+
+    React.useEffect(() => {
+        if (!!monitorData) {
+            setValue("rotas", monitorData?.rotas || "");
+            setValue("salario", monitorData?.salario || "");
+            setValue("turno[0]", monitorData?.turno_manha === "S" ? true : false);
+            setValue("turno[1]", monitorData?.turno_tarde === "S" ? true : false);
+            setValue("turno[2]", monitorData?.turno_noite === "S" ? true : false);
+        }
+    }, [monitorData]);
 
     const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
 

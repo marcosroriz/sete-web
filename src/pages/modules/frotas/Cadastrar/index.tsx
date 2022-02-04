@@ -117,7 +117,7 @@ const Cadastrar: React.FC = () => {
                 createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
             }
         } catch (err) {
-            errorHandler(err, { title: "Ocorreu alguma erro! Tente novamente." });
+            errorHandler(err, { title: "Ocorreu alguma erro! Tente novamente" });
         }
     };
 

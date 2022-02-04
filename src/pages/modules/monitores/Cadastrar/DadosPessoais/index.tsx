@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { Monitor } from "entities/Monitor";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputMultiFiles from "components/micro/Inputs/ReactHookInputMultiFiles";
@@ -14,8 +16,25 @@ import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, mediaQuery } from "./styles";
 
+type MonitorData = [Monitor | null, React.Dispatch<React.SetStateAction<Monitor | null>>];
+
 const DadosPessoais: React.FC = () => {
-    const { nextStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
+
+    const [monitorData] = aditionalData?.monitorData as MonitorData;
+
+    React.useEffect(() => {
+        if (!!monitorData) {
+            setValue("nome", monitorData?.nome || "");
+            setValue("cpf", monitorData?.cpf || "");
+            setValue("data_nascimento", monitorData?.data_nascimento || "");
+            setValue("telefone", monitorData?.telefone || "");
+            setValue("vinculo", monitorData?.vinculo?.toString() || "");
+            setValue("sexo", monitorData?.sexo?.toString() || "");
+        }
+    }, [monitorData]);
+
     return (
         <Container>
             <BlockTitle message="Forneça as informações básicas a respeito do monitor sendo cadastrado." />

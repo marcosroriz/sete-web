@@ -13,10 +13,13 @@ type ListMonitorResponse = {
     total: number;
 };
 
-type GetMonitorResponse = Monitor;
+type GetMonitorResponse = Monitor & { result: boolean };
 
 type UpdateMonitorRequestBody = Monitor;
-type UpdateMonitorResponse = Monitor;
+type UpdateMonitorResponse = {
+    messages: string | { [key: string]: any };
+    result: boolean;
+};
 
 class MonitoresService {
     private api: ApiInstance;

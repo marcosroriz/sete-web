@@ -1,12 +1,12 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { MonitoresService } from "services/Monitores";
-//import { dadosPessoaisSchema, dadosTransportesSchema } from "validators/modules/monitores";
-import { FileData } from "entities/FileData";
+import { Monitor } from "entities/Monitor";
 
 import PageTitle from "components/micro/PageTitle";
 import DadosPessoais from "./DadosPessoais";
@@ -40,9 +40,12 @@ const formData = {
 };
 
 const Cadastrar: React.FC = () => {
+    const { id: monitorId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { createModal, clearModal } = useAlertModal();
+
+    const [monitorData, setmonitorData] = React.useState<Monitor | null>(null);
 
     const handleFormSubmit = async (data: FormData) => {
         try {
@@ -63,17 +66,46 @@ const Cadastrar: React.FC = () => {
                 turno_tarde: data.turno[1] ? "S" : "N",
                 turno_noite: data.turno[2] ? "S" : "N",
             };
-            console.log(body);
-            const monitoresResponse = await monitoresService.createMonitor(body, codigo_cidade);
-            if (!monitoresResponse.result) {
-                throw { ...monitoresResponse };
+            if (!!monitorId) {
+                const response = await monitoresService.updateMonitor(body, monitorId, codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "monitor editado com sucesso" });
+            } else {
+                const response = await monitoresService.createMonitor(body, codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Monitor(a) cadastrado com sucesso" });
             }
-            createModal("success", { title: "Sucesso", html: "Monitor(a) cadastrado com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar monitor(a)" });
         }
     };
 
+    React.useEffect(() => {
+        if (!!monitorId) {
+            const fetchData = async () => {
+                try {
+                    createModal();
+                    const codigo_cidade = user?.codigo_cidade || 0;
+                    const monitoresService = new MonitoresService();
+                    const response = await monitoresService.getMonitor(monitorId, codigo_cidade);
+
+                    setmonitorData(response);
+
+                    if (!response.result) {
+                        throw { ...response };
+                    }
+                    clearModal();
+                } catch (err) {
+                    errorHandler(err, { title: "Erro ao buscar dados do monitor" });
+                }
+            };
+            fetchData();
+        }
+    }, []);
     return (
         <>
             <PageTitle message="Cadastro de Monitor(a)" icon={PageIcon} />

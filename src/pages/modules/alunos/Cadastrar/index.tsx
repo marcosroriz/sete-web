@@ -148,7 +148,6 @@ const Cadastrar: React.FC = () => {
         if (!!alunoId) {
             const fetchData = async () => {
                 try {
-                    console.log("EFECTAL ALUNO");
                     createModal();
                     const codigo_cidade = user?.codigo_cidade || 0;
                     const alunosService = new AlunosService();
