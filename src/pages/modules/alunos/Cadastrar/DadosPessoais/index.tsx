@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
-import { Aluno } from "entities/Aluno";
+import { Aluno, GrauParentescoEnum, GrauParentescoLabel } from "entities/Aluno";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -19,12 +19,7 @@ import { Container, mediaQuery } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
-const grauOptions = [
-    { label: "Não Informado", value: "0" },
-    { label: "Pai, Mãe Padrasto ou Madrasta", value: "1" },
-    { label: "Avô ou Avó", value: "2" },
-    { label: "Irmão ou Irmã", value: "4" },
-];
+const grauOptions = Object.values(GrauParentescoEnum).map((val) => ({ label: GrauParentescoLabel.get(val) || "", value: val }));
 
 const DadosPessoais: React.FC = () => {
     const { setValue } = useFormContext();
