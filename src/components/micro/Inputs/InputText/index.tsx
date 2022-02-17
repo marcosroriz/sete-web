@@ -13,7 +13,8 @@ export type InputTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
     name?: string;
     error?: string;
     touched?: boolean;
-    unitOfMeasure?: string;
+    prefix?: string;
+    suffix?: string;
     isHorizontal?: boolean | string;
     thinBorder?: boolean;
     containerClassName?: string;
@@ -28,7 +29,8 @@ const InputText: React.FC<InputTextProps> = ({
     containerClassName,
     isHorizontal,
     thinBorder,
-    unitOfMeasure,
+    prefix,
+    suffix,
     dontShowError,
     ...props
 }) => {
@@ -40,7 +42,7 @@ const InputText: React.FC<InputTextProps> = ({
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
-            <InputFieldWrapper isTouched={touched} isInvalid={!!error} thinBorder={thinBorder} unitOfMeasure={unitOfMeasure}>
+            <InputFieldWrapper isTouched={touched} isInvalid={!!error} thinBorder={thinBorder} suffix={suffix} prefix={prefix}>
                 <input id={name} className="form-control" aria-invalid={!!error} {...props} />
                 {!dontShowError && <span className="form-error">{error}</span>}
             </InputFieldWrapper>

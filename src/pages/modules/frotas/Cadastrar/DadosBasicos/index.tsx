@@ -186,18 +186,12 @@ const DadosBasicos: React.FC = () => {
 
             {check == 0 && (
                 <ReactHookFormItemCard>
-                    <ReactHookInputText
-                        label="VIDA ÚTIL DO PNEU"
-                        name="vida_util_pneu"
-                        type="number"
-                        unitOfMeasure="KM RODADOS"
-                        isHorizontal={mediaQuery.desktop}
-                    />
+                    <ReactHookInputText label="VIDA ÚTIL DO PNEU" name="vida_util_pneu" type="number" suffix="KM RODADOS" isHorizontal={mediaQuery.desktop} />
                 </ReactHookFormItemCard>
             )}
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="POTÊNCIA DO MOTOR" name="potencia" type="number" unitOfMeasure={"CAVALOS"} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="POTÊNCIA DO MOTOR" name="potencia" type="number" suffix="CAVALOS" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
@@ -210,7 +204,7 @@ const DadosBasicos: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="PREÇO DO VEÍCULO" name="preco" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="PREÇO DO VEÍCULO" name="preco" type="number" prefix="R$" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

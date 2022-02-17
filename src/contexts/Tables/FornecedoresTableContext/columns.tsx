@@ -6,27 +6,27 @@ import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "helpe
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "NOME",
-        accessor: "nome" || "-",
+        accessor: "nome",
         Filter: ColumnFilter,
     },
     {
         Header: "TELEFONE",
-        accessor: "telefone" || "-",
+        accessor: "telefone",
         disableFilters: true,
     },
     {
         Header: "SERVIÇOS OFERECIDOS",
-        accessor: "servicos_oferecidos" || "-",
+        accessor: "servicos_oferecidos",
         disableFilters: true,
     },
     {
         Header: "TOTAL DE SERVIÇOS REALIZADOS",
-        accessor: "numero_servicos" || "-",
+        accessor: "numero_servicos",
         disableFilters: true,
     },
     {
         Header: "AÇÕES",
-        accessor: "acoes" || "-",
+        accessor: "acoes",
         disableFilters: true,
     },
 ];

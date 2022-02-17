@@ -5,37 +5,37 @@ import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "helpe
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "NOME",
-        accessor: "nome" || "-",
+        accessor: "nome",
         disableFilters: true,
     },
     {
         Header: "GPS",
-        accessor: "gps" || "-",
+        accessor: "gps",
         disableFilters: true,
     },
     {
         Header: "QUILOMETRAGEM",
-        accessor: "quilometragem" || "-",
+        accessor: "quilometragem",
         disableFilters: true,
     },
     {
         Header: "TURNO",
-        accessor: "turno" || "-",
+        accessor: "turno",
         disableFilters: true,
     },
     {
         Header: "ESCOLAS ATENDITAS",
-        accessor: "escolas_atendidas" || "-",
+        accessor: "escolas_atendidas",
         disableFilters: true,
     },
     {
         Header: "ALUNOS ATENDIDOS",
-        accessor: "alunos_atendidos" || "-",
+        accessor: "alunos_atendidos",
         disableFilters: true,
     },
     {
         Header: "AÇÕES",
-        accessor: "acoes" || "-",
+        accessor: "acoes",
         disableFilters: true,
     },
 ];

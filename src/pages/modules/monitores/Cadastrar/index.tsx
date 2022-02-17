@@ -45,7 +45,7 @@ const Cadastrar: React.FC = () => {
     const { errorHandler } = useError();
     const { createModal, clearModal } = useAlertModal();
 
-    const [monitorData, setmonitorData] = React.useState<Monitor | null>(null);
+    const [monitorData, setMonitorData] = React.useState<Monitor | null>(null);
 
     const handleFormSubmit = async (data: FormData) => {
         try {
@@ -60,7 +60,7 @@ const Cadastrar: React.FC = () => {
                 sexo: Number(data.sexo),
                 telefone: data.telefone,
                 vinculo: Number(data.vinculo),
-                //rotas: data.rotas,
+                rotas: data.rotas,
                 salario: data.salario,
                 turno_manha: data.turno[0] ? "S" : "N",
                 turno_tarde: data.turno[1] ? "S" : "N",
@@ -93,7 +93,7 @@ const Cadastrar: React.FC = () => {
                     const monitoresService = new MonitoresService();
                     const response = await monitoresService.getMonitor(monitorId, codigo_cidade);
 
-                    setmonitorData(response);
+                    setMonitorData(response);
 
                     if (!response.result) {
                         throw { ...response };
@@ -109,7 +109,15 @@ const Cadastrar: React.FC = () => {
     return (
         <>
             <PageTitle message="Cadastro de Monitor(a)" icon={PageIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleFormSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                mode="onSubmit"
+                defaultValues={formData}
+                reValidateMode="onChange"
+                onSubmit={handleFormSubmit}
+                aditionalData={{
+                    monitorData: [monitorData, setMonitorData],
+                }}
+            >
                 <ReactHookNavCardTab
                     name="DADOS PESSOAIS"
                     icon={<img src={DadosPessoaisIcon} alt="" aria-hidden="true" />}

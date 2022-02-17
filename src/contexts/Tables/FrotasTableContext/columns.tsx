@@ -7,48 +7,48 @@ import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "helpe
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "PLACA",
-        accessor: "placa" || "-",
+        accessor: "placa",
         Filter: ColumnFilter,
     },
     {
         Header: "TIPO",
-        accessor: "tipo" || "-",
+        accessor: "tipo",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "MARCA",
-        accessor: "marca" || "-",
+        accessor: "marca",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "MODELO",
-        accessor: "modelo" || "-",
+        accessor: "modelo",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "CAPACIDADE MÁXIMA",
-        accessor: "capacidade" || "-",
+        accessor: "capacidade",
         Filter: NumberRangeColumnFilter,
         filter: "between",
     },
     {
         Header: "EM MANUTENÇÃO",
-        accessor: "manutencao" || "-",
+        accessor: "manutencao",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "ORIGEM",
-        accessor: "origem" || "-",
+        accessor: "origem",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "AÇÕES",
-        accessor: "acoes" || "-",
+        accessor: "acoes",
         disableFilters: true,
     },
 ];

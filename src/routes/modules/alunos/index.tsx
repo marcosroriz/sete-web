@@ -3,7 +3,6 @@ import React from "react";
 import AuthRoute from "routes/AuthRoute";
 
 import Cadastrar from "pages/modules/alunos/Cadastrar";
-
 import Visualizar from "pages/modules/alunos/Visualizar";
 import Gerenciar from "pages/modules/alunos/Gerenciar";
 

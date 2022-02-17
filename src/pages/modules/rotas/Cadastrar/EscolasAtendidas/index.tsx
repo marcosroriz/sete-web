@@ -14,7 +14,7 @@ import ReactHookDualMultiSelect from "components/micro/Inputs/ReactHookDualMulti
 
 import { Container } from "./styles";
 
-const titles = ["Lista de Escolas", "Escolas atendidos pela rota"];
+const texts = { selected: { title: "Lista de Escolas" }, notSelected: { title: "Escolas atendidos pela rota" } };
 
 const EscolasAtendidas: React.FC = () => {
     const { previousStep, nextStep } = useReactHookNavCard();
@@ -39,7 +39,7 @@ const EscolasAtendidas: React.FC = () => {
         <Container>
             <BlockTitle message="ESCOLAS ATENDIDAS" />
 
-            <ReactHookDualMultiSelect title={titles} name="escolas" options={escolasList} />
+            <ReactHookDualMultiSelect texts={texts} name="escolas" options={escolasList} />
             <ButtonsContainer>
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
                     Voltar

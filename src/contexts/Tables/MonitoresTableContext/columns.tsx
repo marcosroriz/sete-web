@@ -7,23 +7,23 @@ import { disable } from "ol/rotationconstraint";
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "NOME",
-        accessor: "nome" || "-",
+        accessor: "nome",
         disableFilters: true,
     },
     {
         Header: "TELEFONE",
-        accessor: "telefone" || "-",
+        accessor: "telefone",
         disableFilters: true,
     },
     {
         Header: "TURNO",
-        accessor: "turno" || "-",
+        accessor: "turno",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "AÇÕES",
-        accessor: "acoes" || "-",
+        accessor: "acoes",
         disableFilters: true,
     },
 ];

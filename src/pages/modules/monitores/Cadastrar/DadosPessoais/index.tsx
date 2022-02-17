@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { Monitor } from "entities/Monitor";
+import { useAuth } from "contexts/Auth";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputMultiFiles from "components/micro/Inputs/ReactHookInputMultiFiles";
@@ -19,8 +20,9 @@ import { Container, mediaQuery } from "./styles";
 type MonitorData = [Monitor | null, React.Dispatch<React.SetStateAction<Monitor | null>>];
 
 const DadosPessoais: React.FC = () => {
+    const { user } = useAuth();
     const { setValue } = useFormContext();
-    const { nextStep, aditionalData } = useReactHookNavCard();
+    const { previousStep, nextStep, aditionalData } = useReactHookNavCard();
 
     const [monitorData] = aditionalData?.monitorData as MonitorData;
 
@@ -33,7 +35,7 @@ const DadosPessoais: React.FC = () => {
             setValue("vinculo", monitorData?.vinculo?.toString() || "");
             setValue("sexo", monitorData?.sexo?.toString() || "");
         }
-    }, [monitorData]);
+    }, []);
 
     return (
         <Container>

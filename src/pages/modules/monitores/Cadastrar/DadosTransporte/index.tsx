@@ -70,7 +70,7 @@ const DadosTransporte: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="SALÁRIO*" name="salario" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="SALÁRIO*" name="salario" type="number" prefix="R$" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

@@ -6,42 +6,42 @@ import { SelectColumnFilter, NumberRangeColumnFilter, ColumnFilter } from "helpe
 export const COLUMNS: ColumnWithLooseAccessor[] = [
     {
         Header: "NOME",
-        accessor: "nome" || "-",
+        accessor: "nome",
         Filter: ColumnFilter,
     },
     {
         Header: "LOCALIZAÇÃO",
-        accessor: "localizacao" || "-",
+        accessor: "localizacao",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "GPS",
-        accessor: "gps " || -"",
+        accessor: "gps",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "NÍVEL",
-        accessor: "nivel" || "-",
+        accessor: "nivel",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
     {
         Header: "HORÁRIO DE FUNCIONAMENTO",
-        accessor: "horario_funcionamento" || "-",
+        accessor: "horario_funcionamento",
         Filter: SelectColumnFilter,
         filter: "between",
     },
     {
         Header: "QUANTIDADE DE ALUNOS",
-        accessor: "qtd_alunos" || "-",
+        accessor: "qtd_alunos",
         Filter: NumberRangeColumnFilter,
         filter: "between",
     },
     {
         Header: "AÇÕES",
-        accessor: "acoes" || "-",
+        accessor: "acoes",
         disableFilters: true,
     },
 ];

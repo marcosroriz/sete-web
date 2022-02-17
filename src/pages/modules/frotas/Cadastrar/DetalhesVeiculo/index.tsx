@@ -60,33 +60,15 @@ const DetalhesVeiculo: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText
-                    label="QUILOMETRAGEM INICIAL DO VEÍCULO*"
-                    name="km_inicial"
-                    type="number"
-                    unitOfMeasure={"KM"}
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputText label="QUILOMETRAGEM INICIAL DO VEÍCULO*" name="km_inicial" type="number" suffix="KM" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText
-                    label="QUILOMETRAGEM ATUAL DO VEÍCULO*"
-                    name="km_atual"
-                    type="number"
-                    unitOfMeasure={"KM"}
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputText label="QUILOMETRAGEM ATUAL DO VEÍCULO*" name="km_atual" type="number" suffix="KM" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText
-                    label="CAPACIDADE DO VEÍCULO*"
-                    name="capacidade"
-                    type="number"
-                    unitOfMeasure={"PASSAGEIROS"}
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputText label="CAPACIDADE DO VEÍCULO*" name="capacidade" type="number" suffix="PASSAGEIROS" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
@@ -107,28 +89,28 @@ const DetalhesVeiculo: React.FC = () => {
                     label="VALOR DO IPVA DO VEÍCULO (ANUAL E COM LICENSIAMENTO)"
                     name="ipva"
                     type="number"
-                    unitOfMeasure={"R$"}
+                    prefix={"R$"}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="VALOR ANUAL DO DPVAT DO VEÍCULO" name="dpvat" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="VALOR ANUAL DO DPVAT DO VEÍCULO" name="dpvat" type="number" prefix="R$" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="SEGURO ANUAL DO VEÍCULO" name="seguro_anual" type="number" unitOfMeasure={"R$"} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="SEGURO ANUAL DO VEÍCULO" name="seguro_anual" type="number" prefix="R$" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             {check == 1 && (
                 <ReactHookFormItemCard>
-                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" unitOfMeasure={"KM/L"} isHorizontal={mediaQuery.desktop} />
+                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" suffix="KM/L" isHorizontal={mediaQuery.desktop} />
                 </ReactHookFormItemCard>
             )}
 
             {check == 2 && (
                 <ReactHookFormItemCard>
-                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" unitOfMeasure={"L/HORA"} isHorizontal={mediaQuery.desktop} />
+                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" suffix="L/HORA" isHorizontal={mediaQuery.desktop} />
                 </ReactHookFormItemCard>
             )}
 
