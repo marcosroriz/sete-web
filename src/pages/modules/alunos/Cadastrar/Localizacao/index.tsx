@@ -1,9 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { Aluno } from "entities/Aluno";
 
 import BlockTitle from "components/micro/BlockTitle";
 import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
@@ -12,14 +15,43 @@ import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormLi
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
+import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 
 import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
 
-import { ButtonsContainer, Container, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
+
+type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
-    const { nextStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
+    const history = useHistory();
+
+    const [alunoData] = aditionalData?.alunoData as AlunoData;
+
+    React.useEffect(() => {
+        if (!!alunoData) {
+            setValue("latlng[0]", alunoData?.loc_latitude || "");
+            setValue("latlng[1]", alunoData.loc_longitude || "");
+            setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
+            setValue("loc_endereco", alunoData?.loc_endereco || "");
+            setValue("da_porteira", alunoData?.da_porteira === "S");
+            setValue("da_mataburro", alunoData?.da_mataburro === "S");
+            setValue("da_colchete", alunoData?.da_colchete === "S");
+            setValue("da_atoleiro", alunoData?.da_atoleiro === "S");
+            setValue("da_ponterustica", alunoData?.da_ponterustica === "S");
+            if (alunoData?.loc_latitude && alunoData?.loc_longitude) {
+                mapRef.current?.goToLocation([Number(alunoData?.loc_longitude), Number(alunoData?.loc_latitude)]);
+            }
+        }
+    }, [alunoData]);
+
+    const handleCancelEditClick = () => {
+        history.goBack();
+    };
 
     return (
         <Container>
@@ -47,6 +79,9 @@ const Localizacao: React.FC = () => {
                 <ReactHookInputText label="ENDEREÇO" name="loc_endereco" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
+                <ReactHookInputNumberFormat label="CEP" name="loc_cep" format="#####-###" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+            <ReactHookFormItemCard>
                 <ReactHookMultiFormList
                     label="O LOCAL POSSUI ALGUMA DIFICULDADE DE ACESSO? SE SIM, MARQUE AS DIFICULDADES:"
                     formListSpacing="30px"
@@ -60,6 +95,9 @@ const Localizacao: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>
+                <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
+                    Cancelar Edição
+                </Button>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>

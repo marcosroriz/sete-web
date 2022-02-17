@@ -13,10 +13,13 @@ type ListMotoristaResponse = {
     total: number;
 };
 
-type GetMotoristaResponse = Motorista;
+type GetMotoristaResponse = Motorista & { result: boolean };
 
 type UpdateMotoristaRequestBody = Motorista;
-type UpdateMotoristaResponse = Motorista;
+type UpdateMotoristaResponse = {
+    messages: string | { [key: string]: any };
+    result: boolean;
+};
 
 class MotoristasService {
     private api: ApiInstance;
@@ -44,6 +47,7 @@ class MotoristasService {
     }
 
     public async getMotorista(cpf_motorista: string, codigo_cidade: number): Promise<GetMotoristaResponse> {
+        console.log("CPF", cpf_motorista);
         const response = await this.api({
             url: `/motoristas/${codigo_cidade}/${cpf_motorista}`,
             method: "get",

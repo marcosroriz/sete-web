@@ -12,11 +12,10 @@ export const Container = styled.div`
 `;
 
 export const ButtonsContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     width: 100%;
     button {
         display: block;
+        width: 120px;
+        margin-left: auto;
     }
 `;

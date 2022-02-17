@@ -8,10 +8,10 @@ interface Escola {
     mec_tp_dependencia?: number;
     mec_tp_localizacao?: number;
     mec_tp_localizacao_diferenciada?: number;
-    mec_in_regular?: string;
-    mec_in_eja?: string;
-    mec_in_profissionalizante?: string;
-    mec_in_especial_exclusiva?: string;
+    mec_in_regular?: string; // S N
+    mec_in_eja?: string; // S N
+    mec_in_profissionalizante?: string; // S N
+    mec_in_especial_exclusiva?: string; // S N
     loc_latitude?: string;
     loc_longitude?: string;
     loc_endereco?: string;
@@ -19,20 +19,22 @@ interface Escola {
     contato_responsavel?: string;
     contato_telefone?: string;
     contato_email?: string;
-    horario_matutino?: string;
-    horario_vespertino?: string;
-    horario_noturno?: string;
-    ensino_superior?: string;
-    ensino_medio?: string;
-    ensino_fundamental?: string;
-    ensino_pre_escola?: string;
+    horario_matutino?: string; // S N
+    horario_vespertino?: string; // S N
+    horario_noturno?: string; // S N
+    ensino_superior?: string; // S N
+    ensino_medio?: string; // S N
+    ensino_fundamental?: string; // S N
+    ensino_pre_escola?: string; // S N
     _links?: {
         _self?: string;
     };
 }
 
 interface EscolaListObj {
+    id_escola: number;
     codigo_cidade: number;
+    mec_tp_localizacao: number;
     ensino_fundamental: string; // 'S' ou 'N'
     ensino_medio: string; // 'S' ou 'N'
     ensino_pre_escola: string; // 'S' ou 'N'
@@ -40,7 +42,6 @@ interface EscolaListObj {
     horario_matutino: string; // 'S' ou 'N'
     horario_noturno: string; // 'S' ou 'N'
     horario_vespertino: string; // 'S' ou 'N'
-    id_escola: number;
     loc_latitude: string;
     loc_longitude: string;
     nome: string;
@@ -59,4 +60,9 @@ interface EscolaTableField {
     qtd_alunos: number;
 }
 
-export type { Escola, EscolaListObj, EscolaTableField };
+interface EscolaListRota {
+    label: string;
+    value: string;
+}
+
+export type { Escola, EscolaListObj, EscolaTableField, EscolaListRota };

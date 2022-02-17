@@ -34,20 +34,14 @@ const DadosBasicos: React.FC = () => {
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DA ROTA SENDO CADASTRADA" />
             <ReactHookFormItemCard required>
-                <ReactHookMultiFormList
-                    label="TIPO DE ROTA*"
-                    name="tipo_rota"
-                    isHorizontal={mediaQuery.desktop}
-                    fieldsHorizontal={mediaQuery.mobile}
-                    formListSpacing="20px"
-                >
-                    <ReactHookInputRadio label="Rodoviária" value="1" name="rodoviaria" position="right" />
-                    <ReactHookInputRadio label="Aquaviária" value="2" name="aquaviaria" position="right" />
-                    <ReactHookInputRadio label="Mista" value="3" name="mista" position="right" />
+                <ReactHookMultiFormList label="TIPO DE ROTA*" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
+                    <ReactHookInputRadio label="Rodoviária" value="1" name="tipo" position="right" />
+                    <ReactHookInputRadio label="Aquaviária" value="2" name="tipo" position="right" />
+                    <ReactHookInputRadio label="Mista" value="3" name="tipo" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="NOME DA ROTA*" name="nome_rota" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="NOME DA ROTA*" name="nome" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
                 <ReactHookInputSelect
@@ -71,10 +65,11 @@ const DadosBasicos: React.FC = () => {
                     formListSpacing="30px"
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
+                    name="turno"
                 >
-                    <ReactHookInputCheckbox label="Manhã" name="manha" />
-                    <ReactHookInputCheckbox label="Tarde" name="tarde" />
-                    <ReactHookInputCheckbox label="Noite" name="noite" />
+                    <ReactHookInputCheckbox label="Manhã" name="turno[0]" />
+                    <ReactHookInputCheckbox label="Tarde" name="turno[1]" />
+                    <ReactHookInputCheckbox label="Noite" name="turno[2]" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
@@ -83,18 +78,18 @@ const DadosBasicos: React.FC = () => {
                     formListSpacing="30px"
                     fieldsHorizontal={mediaQuery.mobile}
                 >
-                    <ReactHookInputCheckbox label="Porteira" name="porteira" />
-                    <ReactHookInputCheckbox label="Mata-Burro" name="mataburro" />
-                    <ReactHookInputCheckbox label="Colchete" name="colchete" />
-                    <ReactHookInputCheckbox label="Atoleiro" name="atoleiro" />
-                    <ReactHookInputCheckbox label="Ponte Rústica" name="ponterustica" />
+                    <ReactHookInputCheckbox label="Porteira" name="da_porteira" />
+                    <ReactHookInputCheckbox label="Mata-Burro" name="da_mataburro" />
+                    <ReactHookInputCheckbox label="Colchete" name="da_colchete" />
+                    <ReactHookInputCheckbox label="Atoleiro" name="da_atoleiro" />
+                    <ReactHookInputCheckbox label="Ponte Rústica" name="da_ponterustica" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="INFORME A QUILOMETRAGEM ESTIMADA PARA ESTA ROTA:" name="km_estimada" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="INFORME A QUILOMETRAGEM ESTIMADA PARA ESTA ROTA:" type="number" name="km" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="INFORME O TEMPO ESTIMADO PARA ESTA ROTA:" name="tmp_estimado" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="INFORME O TEMPO ESTIMADO PARA ESTA ROTA:" type="number" name="tempo" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>

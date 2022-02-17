@@ -8,16 +8,31 @@ type AdditionalOptions = {
     delete: (escola: AlunoListObj) => Promise<void>;
 };
 
+const nivelMap = {
+    1: "Infantil",
+    2: "Fundamental",
+    3: "Médio",
+    4: "Superior",
+    5: "Outro",
+};
+
+const turnoMap = {
+    1: "Matutino",
+    2: "Vespertino",
+    3: "Integral",
+    4: "Noturno",
+};
+
 class AlunosTableHelper {
     public treatData(data: AlunoListObj[], addOptions?: AdditionalOptions): AlunosTableField[] {
         return data.map((alunoObj) => ({
             escola: alunoObj.escola,
             rota: alunoObj.rota,
             nome: alunoObj.nome,
-            localizacao: "-",
-            gps: alunoObj.loc_latitude && alunoObj.log_longitude ? "Sim" : "Não",
-            nivel: alunoObj.nivel.toString(),
-            turno: alunoObj.turno.toString(),
+            localizacao: alunoObj.mec_tp_localizacao == 1 ? "Urbana" : alunoObj.mec_tp_localizacao == 2 ? "Rural" : "-",
+            gps: alunoObj.loc_latitude === null ? "Não" : alunoObj.log_longitude === null ? "Não" : "Sim",
+            nivel: nivelMap[alunoObj.nivel],
+            turno: turnoMap[alunoObj.turno],
             acoes: this.acoesComponent(alunoObj, addOptions),
         }));
     }
@@ -61,6 +76,35 @@ class AlunosTableHelper {
                 </button>
             </div>
         );
+    }
+
+    public treatDataAlunosAtendidos(data: any[]): any[] {
+        return data.map((alunoObj) => ({
+            nome: alunoObj.nome,
+            cpf: alunoObj.cpf || "-",
+            turno:
+                alunoObj.turno == 1
+                    ? "Matutino"
+                    : alunoObj.turno == 2
+                    ? "Vespertino"
+                    : alunoObj.turno == 3
+                    ? "Integral"
+                    : alunoObj.mec_tp_dependencia == 4
+                    ? "Noturno"
+                    : "-",
+            nivel:
+                alunoObj.nivel == 1
+                    ? "Infantil"
+                    : alunoObj.nivel == 2
+                    ? "Fundamental"
+                    : alunoObj.nivel == 3
+                    ? "Médio"
+                    : alunoObj.nivel == 4
+                    ? "Superior"
+                    : alunoObj.nivel == 5
+                    ? "Outro"
+                    : "-",
+        }));
     }
 }
 

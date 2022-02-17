@@ -218,6 +218,29 @@ const SidebarLayout: React.FC = ({ children }) => {
 
                             <NavItem>
                                 <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.monitores)}
+                                    icon={IconMotoristas}
+                                    name="Monitores"
+                                    isActive={activeAccordionKey === SidebarItemKeys.monitores}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.monitores}>
+                                    <NavItemBody>
+                                        <li>
+                                            <NavLink to="/monitores/cadastrar" activeClassName="isActive" exact>
+                                                Cadastrar
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/monitores/gerenciar" activeClassName="isActive">
+                                                Gerenciar
+                                            </NavLink>
+                                        </li>
+                                    </NavItemBody>
+                                </Accordion.Collapse>
+                            </NavItem>
+
+                            <NavItem>
+                                <AccordionButton
                                     onClick={() => changeAccordionKey(SidebarItemKeys.frotas)}
                                     icon={IconFrotas}
                                     name="Frotas"

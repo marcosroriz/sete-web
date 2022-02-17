@@ -1,7 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { useAuth } from "contexts/Auth";
+import { FornecedoresService } from "services/Fornecedores";
+import { Fornecedor } from "entities/Fornecedor";
 
 import BlockTitle from "components/micro/BlockTitle";
 import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
@@ -13,8 +17,26 @@ import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNu
 
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
+type FornecedorData = [Fornecedor | null, React.Dispatch<React.SetStateAction<Fornecedor | null>>];
+
 const DadosInstitucionais: React.FC = () => {
-    const { previousStep, nextStep } = useReactHookNavCard();
+    const { user } = useAuth();
+    const { setValue } = useFormContext();
+    const { nextStep, previousStep, aditionalData } = useReactHookNavCard();
+
+    const [fornecedorData] = aditionalData?.fornecedorData as FornecedorData;
+
+    React.useEffect(() => {
+        if (!!fornecedorData) {
+            setValue("nome", fornecedorData?.nome || "");
+            setValue("telefone", fornecedorData?.telefone || "");
+            setValue("cnpj", fornecedorData?.cnpj || "");
+            setValue("ramo[0]", fornecedorData?.ramo_mecanica === "S");
+            setValue("ramo[1]", fornecedorData?.ramo_combustivel === "S");
+            setValue("ramo[2]", fornecedorData?.ramo_seguro === "S");
+        }
+    }, [fornecedorData]);
+
     return (
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES EMPRESARIAIS A RESPEITO DO FORNECEDOR SENDO CADASTRADO" />

@@ -1,4 +1,5 @@
 interface Fornecedor {
+    id_fornecedor?: number;
     cnpj?: string;
     nome?: string;
     ramo_mecanica?: string;
