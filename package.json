@@ -8,8 +8,11 @@
         "email": "sete@gmail.com"
     },
     "build": {
+        "extraResources": [
+            "./bin/**"
+        ],
         "appId": "com.website.sete-web",
-        "productName": "Sete",
+        "productName": "SETE-DESKTOP",
         "copyright": "Copyright © 2022 ${author}",
         "mac": {
             "category": "public.app-category.utilities"
@@ -24,6 +27,9 @@
         "win": {
             "icon": "./src/assets/images/sete-logo.ico"
         }
+    },
+    "config": {
+        "forge": "./forge.config.js"
     },
     "license": "MIT",
     "main": "public/electron.js",
@@ -69,10 +75,12 @@
         "build": "cross-env REACT_APP_APP_ENV=web craco build",
         "dev": "cross-env REACT_APP_APP_ENV=web craco start",
         "desktop:dev": "concurrently -k \"cross-env REACT_APP_APP_ENV=desktop BROWSER=none craco start\" \"yarn electron\"",
-        "desktop:build": "electron-builder -w",
+        "desktop:build": "electron-forge make",
         "predesktop:build": "cross-env REACT_APP_APP_ENV=desktop craco build",
-        "electron": "wait-on tcp:3000 && electron .",
-        "postinstall": "electron-builder install-app-deps"
+        "electron": "wait-on tcp:3000 && electron-forge start",
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make"
     },
     "browserslist": {
         "production": [
@@ -94,6 +102,13 @@
         ]
     },
     "devDependencies": {
+        "@electron-forge/cli": "^6.0.0-beta.63",
+        "@electron-forge/maker-deb": "^6.0.0-beta.63",
+        "@electron-forge/maker-dmg": "^6.0.0-beta.63",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+        "@electron-forge/maker-wix": "^6.0.0-beta.63",
+        "@electron-forge/maker-zip": "^6.0.0-beta.63",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
@@ -119,7 +134,6 @@
         "concurrently": "^7.0.0",
         "cross-env": "^7.0.3",
         "electron": "^16.0.7",
-        "electron-builder": "^22.14.5",
         "eslint": "^7.31.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-import-resolver-typescript": "^2.4.0",
@@ -129,6 +143,7 @@
         "eslint-plugin-promise": "^5.1.0",
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.2.0",
+        "exe-icon-extractor": "^1.0.8",
         "prettier": "^2.3.2",
         "typescript": "^4.1.2",
         "wait-on": "^6.0.0"
