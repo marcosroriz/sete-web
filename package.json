@@ -2,12 +2,45 @@
     "name": "sete-web",
     "version": "0.1.0",
     "private": false,
+    "homepage": "./",
+    "author": {
+        "name": "SETE",
+        "email": "sete@gmail.com"
+    },
+    "build": {
+        "extraResources": [
+            "./bin/**"
+        ],
+        "appId": "com.website.sete-web",
+        "productName": "SETE-DESKTOP",
+        "copyright": "Copyright © 2022 ${author}",
+        "mac": {
+            "category": "public.app-category.utilities"
+        },
+        "files": [
+            "build/**/*",
+            "node_modules/**/*"
+        ],
+        "directories": {
+            "buildResources": "assets"
+        },
+        "win": {
+            "icon": "./src/assets/images/sete-logo.ico"
+        }
+    },
+    "config": {
+        "forge": "./forge.config.js"
+    },
+    "license": "MIT",
+    "main": "public/electron.js",
     "dependencies": {
+        "@craco/craco": "^6.4.3",
         "@hookform/resolvers": "^2.7.1",
         "@sweetalert2/theme-bootstrap-4": "^5.0.2",
         "axios": "^0.21.1",
         "bootstrap": "5.0.2",
         "cookie": "^0.4.1",
+        "electron-is-dev": "^2.0.0",
         "hamburger-react": "^2.4.1",
         "jspdf": "^2.4.0",
         "md5": "^2.3.0",
@@ -36,11 +69,17 @@
         "yup": "^0.32.9"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --watchAll false",
-        "test:coverage": "react-scripts test --coverage --watchAll false",
-        "eject": "react-scripts eject"
+        "test:coverage": "craco test --coverage --watchAll false",
+        "test": "craco test --watchAll false",
+        "eject": "craco eject",
+        "start": "craco start",
+        "build": "cross-env REACT_APP_APP_ENV=web craco build",
+        "dev": "cross-env REACT_APP_APP_ENV=web craco start",
+        "desktop:dev": "concurrently -k \"cross-env REACT_APP_APP_ENV=desktop BROWSER=none craco start\" \"yarn electron\"",
+        "desktop:build": "electron-forge make",
+        "predesktop:build": "cross-env REACT_APP_APP_ENV=desktop craco build",
+        "electron": "wait-on tcp:3000 && electron-forge start",
+        "package": "electron-forge package"
     },
     "browserslist": {
         "production": [
@@ -54,9 +93,6 @@
             "last 1 safari version"
         ]
     },
-    "browser": {
-        "fs": false
-    },
     "jest": {
         "collectCoverageFrom": [
             "src/pages/**/*.tsx",
@@ -65,10 +101,18 @@
         ]
     },
     "devDependencies": {
+        "@electron-forge/cli": "^6.0.0-beta.63",
+        "@electron-forge/maker-deb": "^6.0.0-beta.63",
+        "@electron-forge/maker-dmg": "^6.0.0-beta.63",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+        "@electron-forge/maker-wix": "^6.0.0-beta.63",
+        "@electron-forge/maker-zip": "^6.0.0-beta.63",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",
         "@types/cookie": "^0.4.1",
+        "@types/electron": "^1.6.10",
         "@types/jest": "^26.0.15",
         "@types/md5": "^2.3.1",
         "@types/node": "^12.0.0",
@@ -86,6 +130,9 @@
         "@typescript-eslint/eslint-plugin": "^4.28.4",
         "@typescript-eslint/parser": "^4.28.4",
         "babel-plugin-module-resolver": "^4.1.0",
+        "concurrently": "^7.0.0",
+        "cross-env": "^7.0.3",
+        "electron": "^16.0.7",
         "eslint": "^7.31.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-import-resolver-typescript": "^2.4.0",
@@ -95,7 +142,9 @@
         "eslint-plugin-promise": "^5.1.0",
         "eslint-plugin-react": "^7.24.0",
         "eslint-plugin-react-hooks": "^4.2.0",
+        "exe-icon-extractor": "^1.0.8",
         "prettier": "^2.3.2",
-        "typescript": "^4.1.2"
+        "typescript": "^4.1.2",
+        "wait-on": "^6.0.0"
     }
 }
