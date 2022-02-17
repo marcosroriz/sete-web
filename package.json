@@ -36,6 +36,7 @@
     "dependencies": {
         "@craco/craco": "^6.4.3",
         "@hookform/resolvers": "^2.7.1",
+        "@react-pdf/renderer": "^2.0.21",
         "@sweetalert2/theme-bootstrap-4": "^5.0.2",
         "axios": "^0.21.1",
         "bootstrap": "5.0.2",
