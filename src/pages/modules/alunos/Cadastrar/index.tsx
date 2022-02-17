@@ -1,11 +1,12 @@
 import React from "react";
-
-import { AlunosService } from "services/Alunos";
+import { useParams } from "react-router-dom";
 
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
+import { AlunosService } from "services/Alunos";
+import { Aluno } from "entities/Aluno";
 
 import PageTitle from "components/micro/PageTitle";
 
@@ -23,34 +24,67 @@ type FormData = {
     latlng: [string, string];
     mec_tp_localizacao: string;
     loc_endereco: string;
-    endereco: string;
-    da_porteira: boolean; // S/N pra api
-    da_mataburro: boolean; // S/N pra api
-    da_colchete: boolean; // S/N pra api
-    da_atoleiro: boolean; // S/N pra api
-    da_ponterustica: boolean; // S/N pra api
+    loc_cep: string;
+    da_porteira: boolean;
+    da_mataburro: boolean;
+    da_colchete: boolean;
+    da_atoleiro: boolean;
+    da_ponterustica: boolean;
     nome: string;
-    cpf: string; // Não pode ter formato normal
+    cpf: string;
     data_nascimento: string;
     nome_responsavel: string;
     telefone_responsavel: string;
-    grau_responsavel: string; // número pra api
-    sexo: string; // número pra api
-    cor: string; // número pra api
-    def_caminhar: boolean; // S/N pra api
-    def_ouvir: boolean; // S/N pra api
-    def_enxergar: boolean; // S/N pra api
-    def_mental: boolean; // S/N pra api
+    grau_responsavel: string;
+    sexo: string;
+    cor: string;
+    def_caminhar: boolean;
+    def_ouvir: boolean;
+    def_enxergar: boolean;
+    def_mental: boolean;
     escola: string;
     rota: string;
-    turno: string; // número pra api
-    nivel: string; // número pra api
+    turno: string;
+    nivel: string;
+};
+
+const formData = {
+    latlng: ["", ""],
+    mec_tp_localizacao: "",
+    loc_endereco: "",
+    loc_cep: "",
+    da_porteira: false,
+    da_mataburro: false,
+    da_colchete: false,
+    da_atoleiro: false,
+    da_ponterustica: false,
+    nome: "",
+    cpf: "",
+    data_nascimento: "",
+    nome_responsavel: "",
+    telefone_responsavel: "",
+    grau_responsavel: "",
+    sexo: "",
+    cor: "",
+    def_caminhar: false,
+    def_ouvir: false,
+    def_enxergar: false,
+    def_mental: false,
+    escola: "",
+    rota: "",
+    turno: "",
+    nivel: "",
 };
 
 const Cadastrar: React.FC = () => {
+    const { id: alunoId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { createModal, clearModal } = useAlertModal();
+
+    const [alunoData, setAlunoData] = React.useState<Aluno | null>(null);
+    const [escolaData, setEscolaData] = React.useState<any>(null);
+    const [rotaData, setRotaData] = React.useState<any>(null);
 
     const handleSubmit = async (data: FormData) => {
         try {
@@ -61,8 +95,8 @@ const Cadastrar: React.FC = () => {
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
                 loc_endereco: data.loc_endereco,
+                loc_cep: data.loc_cep,
                 mec_tp_localizacao: Number(data.mec_tp_localizacao),
-                endereco: data.endereco,
                 da_porteira: data.da_porteira ? "S" : "N",
                 da_mataburro: data.da_mataburro ? "S" : "N",
                 da_colchete: data.da_colchete ? "S" : "N",
@@ -83,22 +117,74 @@ const Cadastrar: React.FC = () => {
                 turno: Number(data.turno),
                 nivel: Number(data.nivel),
             };
-            const response = await alunosService.createAluno(body, codigo_cidade);
-            if (!response.result) {
-                throw { ...response };
+            if (!!alunoId) {
+                const response = await alunosService.updateAluno(body, Number(alunoId), codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Aluno editado com sucesso" });
+            } else {
+                console.log("aqui cadas");
+                const response = await alunosService.createAluno(body, codigo_cidade);
+
+                if (data.escola != "") {
+                    await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any)?.id, codigo_cidade);
+                }
+                if (data.rota != "") {
+                    await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
+                }
+
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
             }
-            await alunosService.bindEscolaToAluno({ id_escola: Number(data.escola) }, (response.messages as any).id, codigo_cidade);
-            await alunosService.bindRotaToAluno({ id_rota: Number(data.rota) }, (response.messages as any)?.id, codigo_cidade);
-            createModal("success", { title: "Sucesso", html: "Veículo cadastrado com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar veículo" });
+            errorHandler(err, { title: "Erro ao cadastrar aluno" });
         }
     };
+
+    React.useEffect(() => {
+        if (!!alunoId) {
+            const fetchData = async () => {
+                try {
+                    createModal();
+                    const codigo_cidade = user?.codigo_cidade || 0;
+                    const alunosService = new AlunosService();
+                    const response = await alunosService.getAluno(Number(alunoId), codigo_cidade);
+                    const escolaVinculada = await alunosService.listBindEscolaToAluno(Number(alunoId), codigo_cidade);
+                    const rotaVinculada = await alunosService.listBindRotaToAluno(Number(alunoId), codigo_cidade);
+
+                    setAlunoData(response);
+                    setEscolaData(escolaVinculada);
+                    setRotaData(rotaVinculada);
+
+                    if (!response.result) {
+                        throw { ...response };
+                    }
+                    clearModal();
+                } catch (err) {
+                    errorHandler(err, { title: "Erro ao buscar dados do aluno" });
+                }
+            };
+            fetchData();
+        }
+    }, []);
 
     return (
         <>
             <PageTitle message="Cadastrar Aluno" icon={AlunosCadastroIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" reValidateMode="onChange" onSubmit={handleSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                mode="onSubmit"
+                defaultValues={formData}
+                reValidateMode="onChange"
+                onSubmit={handleSubmit}
+                aditionalData={{
+                    alunoData: [alunoData, setAlunoData],
+                    escolaData: [escolaData, setEscolaData],
+                    rotaData: [rotaData, setRotaData],
+                }}
+            >
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />} validationSchema={localizacaoSchema}>
                     <Localizacao />
                 </ReactHookNavCardTab>

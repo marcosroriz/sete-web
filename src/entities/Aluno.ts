@@ -4,6 +4,7 @@ interface Aluno {
     loc_longitude?: string;
     loc_endereco?: string;
     loc_cep?: string;
+    mec_tp_localizacao: number;
     da_porteira?: string; // 'S' ou 'N'
     da_mataburro?: string; // 'S' ou 'N'
     da_colchete?: string; // 'S' ou 'N'
@@ -16,9 +17,8 @@ interface Aluno {
     turno: number;
     nivel: number;
     nome_responsavel?: string;
-    telefone_responsavel?: string;
+    telefone_responsavel?: string; //Não tem na API
     grau_responsavel?: number;
-    mec_tp_localizacao: number;
     cpf?: string;
     def_caminhar?: string; // 'S' ou 'N'
     def_ouvir?: string; // 'S' ou 'N'
@@ -33,6 +33,7 @@ interface AlunoListObj {
     cpf: string;
     loc_latitude: string;
     log_longitude: string;
+    mec_tp_localizacao: number;
     nivel: number;
     turno: number;
     escola: string;
@@ -52,4 +53,9 @@ interface AlunosTableField {
     rota: string;
 }
 
-export type { Aluno, AlunoListObj, AlunosTableField };
+interface AlunosListRota {
+    label: string;
+    value: string;
+}
+
+export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

@@ -26,7 +26,7 @@ const Importar: React.FC = () => {
     const file = useWatch({ name: "arquivo" });
 
     const onSelectedDataChange = (val: TableData[]) => {
-        setValue("selecionado", val, { shouldValidate: true });
+        setValue("escolas_selecionadas", val, { shouldValidate: true });
     };
 
     React.useEffect(() => {

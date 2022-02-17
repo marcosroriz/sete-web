@@ -1,12 +1,14 @@
 interface Motorista {
     codigo_cidade?: number;
-    nome?: string;
-    cpf?: string;
-    data_nascimento?: string;
+    nome: string;
+    cpf: string;
+    data_nascimento: string;
     sexo?: number;
     telefone?: string;
     cnh?: string;
     data_validade_cnh?: string;
+    vinculo?: number;
+    salario?: number;
     turno_manha?: string;
     turno_tarde?: string;
     turno_noite?: string;
@@ -15,6 +17,7 @@ interface Motorista {
     tem_cnh_c?: string;
     tem_cnh_d?: string;
     tem_cnh_e?: string;
+    ant_criminais?: string;
 }
 
 interface MotoristaListObj {

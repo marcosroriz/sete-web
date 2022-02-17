@@ -141,9 +141,6 @@ const Localizacao: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>
-                <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
-                    Cancelar Edição
-                </Button>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>

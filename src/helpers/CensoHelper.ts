@@ -1,4 +1,6 @@
 import Papa from "papaparse";
+import { Aluno } from "entities/Aluno";
+import { Escola } from "entities/Escola";
 
 class CensoHelper {
     public baseDados: any;
@@ -354,6 +356,56 @@ class CensoHelper {
                 }
             }
         }
+    }
+    public convertBaseToAluno(aluno: any, idEscola: string): Aluno {
+        let alunoJSON = {
+            id_escola: Number(idEscola),
+            nome: aluno["NOME"], // string
+            data_nascimento: aluno["DATA_NASCIMENTO"], // string
+            nome_responsavel: aluno["NOME_RESPONSAVEL"],
+            sexo: aluno["SEXO"], // int
+            cor: aluno["COR"], // int
+            mec_tp_localizacao: aluno["MEC_TP_LOCALIZACAO"],
+            turno: aluno["TURNO"], // int
+            nivel: aluno["NIVEL"],
+            def_caminhar: aluno["DEF_CAMINHAR"] ? "S" : "N", // str
+            def_ouvir: aluno["DEF_OUVIR"] ? "S" : "N", // str
+            def_enxergar: aluno["DEF_ENXERGAR"] ? "S" : "N", // str
+            def_mental: aluno["DEF_MENTAL"] ? "S" : "N", // str
+        };
+        if (aluno["mec_id_inep"]) alunoJSON["mec_id_inep"] = aluno["mec_id_inep"];
+        if (aluno["mec_id_proprio"]) alunoJSON["mec_id_proprio"] = aluno["mec_id_proprio"];
+        if (aluno["LOC_CEP"]) alunoJSON["loc_cep"] = aluno["LOC_CEP"];
+        if (aluno["CPF"]) alunoJSON["cpf"] = String(aluno["CPF"]).replace(/\D/g, "");
+
+        return alunoJSON;
+    }
+
+    public convertBaseToEscola(escola: any): Escola {
+        let escolaJSON = {};
+        for (let attr of Object.keys(escola)) {
+            escolaJSON[attr.toLowerCase()] = escola[attr];
+        }
+        delete escolaJSON["alunos"];
+
+        let booleanProps = [
+            "mec_in_regular",
+            "mec_in_eja",
+            "mec_in_profissionalizante",
+            "mec_in_especial_exclusiva",
+            "ensino_fundamental",
+            "ensino_pre_escola",
+            "ensino_medio",
+            "ensino_superior",
+            "horario_matutino",
+            "horario_vespertino",
+            "horario_noturno",
+        ];
+
+        for (let prop of booleanProps) {
+            escolaJSON[prop] = escolaJSON[prop] ? "S" : "N";
+        }
+        return escolaJSON;
     }
 }
 

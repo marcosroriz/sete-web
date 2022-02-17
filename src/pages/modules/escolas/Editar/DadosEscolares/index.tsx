@@ -23,16 +23,17 @@ const DadosEscolares: React.FC = () => {
 
     React.useEffect(() => {
         if (escolaData) {
-            setValue("mec_in_regular", escolaData?.mec_in_regular === "S" || "");
-            setValue("mec_in_eja", escolaData?.mec_in_eja === "S" || "");
-            setValue("mec_in_profissionalizante", escolaData?.mec_in_profissionalizante === "S" || "");
-            setValue("ensino_pre_escola", escolaData?.ensino_pre_escola === "S" || "");
-            setValue("ensino_fundamental", escolaData?.ensino_fundamental === "S" || "");
-            setValue("ensino_medio", escolaData?.ensino_medio === "S" || "");
-            setValue("ensino_superior", escolaData?.ensino_superior === "S" || "");
-            setValue("horario_matutino", escolaData?.horario_matutino === "S" || "");
-            setValue("horario_vespertino", escolaData?.horario_vespertino === "S" || "");
-            setValue("horario_noturno", escolaData?.horario_noturno === "S" || "");
+            setValue("mec_in[0]", escolaData?.mec_in_regular === "S" || "");
+            setValue("mec_in[1]", escolaData?.mec_in_eja === "S" || "");
+            setValue("mec_in[2]", escolaData?.mec_in_profissionalizante === "S" || "");
+            setValue("mec_in[3]", escolaData?.mec_in_especial_exclusiva === "S" || "");
+            setValue("ensino[0]", escolaData?.ensino_pre_escola === "S" || "");
+            setValue("ensino[1]", escolaData?.ensino_fundamental === "S" || "");
+            setValue("ensino[2]", escolaData?.ensino_medio === "S" || "");
+            setValue("ensino[3]", escolaData?.ensino_superior === "S" || "");
+            setValue("horario[0]", escolaData?.horario_matutino === "S" || "");
+            setValue("horario[1]", escolaData?.horario_vespertino === "S" || "");
+            setValue("horario[2]", escolaData?.horario_noturno === "S" || "");
         }
     }, [escolaData]);
 
@@ -45,10 +46,12 @@ const DadosEscolares: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
+                    name="mec_in"
                 >
-                    <ReactHookInputCheckbox label="Regular" name="mec_in_regular" />
-                    <ReactHookInputCheckbox label="EJA" name="mec_in_eja" />
-                    <ReactHookInputCheckbox label="Profissionalizante" name="mec_in_profissionalizante" />
+                    <ReactHookInputCheckbox label="Regular" name="mec_in[0]" /*mec_in_regular*/ />
+                    <ReactHookInputCheckbox label="EJA" name="mec_in[1]" /*mec_in_eja*/ />
+                    <ReactHookInputCheckbox label="Profissionalizante" name="mec_in[2]" /*mec_in_profissionalizante*/ />
+                    <ReactHookInputCheckbox label="Especial e/ou exclusiva" name="mec_in[3]" /*mec_in_especial_exclusiva*/ />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
@@ -57,11 +60,12 @@ const DadosEscolares: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
+                    name="ensino"
                 >
-                    <ReactHookInputCheckbox label="Infantil" name="ensino_pre_escola" />
-                    <ReactHookInputCheckbox label="Fundamental" name="ensino_fundamental" />
-                    <ReactHookInputCheckbox label="Médio" name="ensino_medio" />
-                    <ReactHookInputCheckbox label="Superior" name="ensino_superior" />
+                    <ReactHookInputCheckbox label="Infantil" name="ensino[0]" /*ensino_pre_escola*/ />
+                    <ReactHookInputCheckbox label="Fundamental" name="ensino[1]" /*ensino_fundamental*/ />
+                    <ReactHookInputCheckbox label="Médio" name="ensino[2]" /*ensino_medio*/ />
+                    <ReactHookInputCheckbox label="Superior" name="ensino[3]" /*ensino_superior*/ />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
@@ -70,10 +74,11 @@ const DadosEscolares: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
+                    name="horario"
                 >
-                    <ReactHookInputCheckbox label="Manhã" name="horario_matutino" />
-                    <ReactHookInputCheckbox label="Tarde" name="horario_vespertino" />
-                    <ReactHookInputCheckbox label="Noite" name="horario_noturno" />
+                    <ReactHookInputCheckbox label="Manhã" name="horario[0]" /*horario_matutino*/ />
+                    <ReactHookInputCheckbox label="Tarde" name="horario[1]" /*horario_vespertino*/ />
+                    <ReactHookInputCheckbox label="Noite" name="horario[2]" /*horario_noturno*/ />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>

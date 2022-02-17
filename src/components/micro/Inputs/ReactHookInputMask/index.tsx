@@ -15,7 +15,8 @@ export type ReactHookInputMaskProps = Omit<ReactInputMaskProps, "mask"> & {
     label: string;
     name: string;
     format: string;
-    unitOfMeasure?: string;
+    prefix?: string;
+    suffix?: string;
     mask?: string;
     isFormated?: boolean;
     isHorizontal?: boolean | string;
@@ -27,7 +28,8 @@ const ReactHookInputMask: React.FC<ReactHookInputMaskProps> = ({
     label,
     format,
     name,
-    unitOfMeasure,
+    prefix,
+    suffix,
     isFormated = true,
     containerClassName,
     isHorizontal,
@@ -54,7 +56,7 @@ const ReactHookInputMask: React.FC<ReactHookInputMaskProps> = ({
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
-            <InputFieldWrapper isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} unitOfMeasure={unitOfMeasure}>
+            <InputFieldWrapper isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} prefix={prefix} suffix={suffix}>
                 <InputMask
                     id={name}
                     maskChar={mask}

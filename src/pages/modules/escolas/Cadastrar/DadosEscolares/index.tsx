@@ -1,7 +1,10 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+
+import { Escola } from "entities/Escola";
 
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
@@ -10,8 +13,30 @@ import BlockTitle from "components/micro/BlockTitle";
 
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
+type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
+
 const DadosEscolares: React.FC = () => {
-    const { previousStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { previousStep, aditionalData } = useReactHookNavCard();
+
+    const [escolaData] = aditionalData?.escolaData as EscolaData;
+
+    React.useEffect(() => {
+        if (!!escolaData) {
+            setValue("mec_in[0]", escolaData?.mec_in_regular === "S" || "");
+            setValue("mec_in[1]", escolaData?.mec_in_eja === "S" || "");
+            setValue("mec_in[2]", escolaData?.mec_in_profissionalizante === "S" || "");
+            setValue("mec_in[3]", escolaData?.mec_in_especial_exclusiva === "S" || "");
+            setValue("ensino[0]", escolaData?.ensino_pre_escola === "S" || "");
+            setValue("ensino[1]", escolaData?.ensino_fundamental === "S" || "");
+            setValue("ensino[2]", escolaData?.ensino_medio === "S" || "");
+            setValue("ensino[3]", escolaData?.ensino_superior === "S" || "");
+            setValue("horario[0]", escolaData?.horario_matutino === "S" || "");
+            setValue("horario[1]", escolaData?.horario_vespertino === "S" || "");
+            setValue("horario[2]", escolaData?.horario_noturno === "S" || "");
+        }
+    }, [escolaData]);
+
     return (
         <Container>
             <BlockTitle message="POR FIM, FORNEÇA AS INFORMAÇÕES RELACIONADOS AO TIPO DE ENSINO DA ESCOLA:" />

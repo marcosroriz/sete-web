@@ -32,7 +32,7 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
         disableFilters: true,
     },
     {
-        Header: "NÚMERO DE ROTAS DIRIGIDAS",
+        Header: "#NÚMERO DE ROTAS DIRIGIDAS",
         accessor: "rotas_dirigidas",
         disableFilters: true,
     },

@@ -15,7 +15,8 @@ export type ReactHookInputNumberFormatProps = React.InputHTMLAttributes<HTMLInpu
     Omit<NumberFormatProps, "format"> & {
         label: string;
         name: string;
-        unitOfMeasure?: string;
+        prefix?: string;
+        suffix?: string;
         format: string | [string, string];
         isFormated?: boolean;
         isHorizontal?: boolean | string;
@@ -27,7 +28,8 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
     label,
     format,
     name,
-    unitOfMeasure,
+    prefix,
+    suffix,
     isFormated = true,
     containerClassName,
     isHorizontal,
@@ -49,7 +51,7 @@ const ReactHookInputNumberFormat: React.FC<ReactHookInputNumberFormatProps> = ({
             horizontalMedia={(isHorizontal as any) instanceof String || typeof isHorizontal === "string" ? (isHorizontal as string) : ""}
         >
             <label htmlFor={name}>{label}</label>
-            <InputFieldWrapper isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} unitOfMeasure={unitOfMeasure}>
+            <InputFieldWrapper isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} prefix={prefix} suffix={suffix}>
                 <Controller
                     name={name}
                     render={({ field: { onChange, ...fieldProps } }) => (

@@ -4,10 +4,11 @@ enum SidebarItemKeys {
     alunos = "2",
     escolas = "3",
     motoristas = "4",
-    frotas = "5",
-    fornecedores = "6",
-    rotas = "7",
-    relatorios = "8",
+    monitores = "5",
+    frotas = "6",
+    fornecedores = "7",
+    rotas = "8",
+    relatorios = "9",
 }
 
 export { SidebarItemKeys };
