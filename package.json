@@ -72,15 +72,14 @@
         "test:coverage": "craco test --coverage --watchAll false",
         "test": "craco test --watchAll false",
         "eject": "craco eject",
+        "start": "craco start",
         "build": "cross-env REACT_APP_APP_ENV=web craco build",
         "dev": "cross-env REACT_APP_APP_ENV=web craco start",
         "desktop:dev": "concurrently -k \"cross-env REACT_APP_APP_ENV=desktop BROWSER=none craco start\" \"yarn electron\"",
         "desktop:build": "electron-forge make",
         "predesktop:build": "cross-env REACT_APP_APP_ENV=desktop craco build",
         "electron": "wait-on tcp:3000 && electron-forge start",
-        "start": "electron-forge start",
-        "package": "electron-forge package",
-        "make": "electron-forge make"
+        "package": "electron-forge package"
     },
     "browserslist": {
         "production": [
