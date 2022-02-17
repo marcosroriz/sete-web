@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { recuperarsenhaSchema } from "validators/sign";
+import { FileService } from "services/File";
 
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 
@@ -26,6 +27,15 @@ const RecuperarSenha: React.FC = () => {
                     <ReactHookInputText label="E-MAIL:" name="email" placeholder="Endereço de e-mail" isHorizontal={mediaQuery.mobile} thinBorder />
                     <div className="submitContainer">
                         <button type="submit">Recuperar Senha</button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                const fileService = new FileService();
+                                fileService.saveFile();
+                            }}
+                        >
+                            Buscar arquivo
+                        </button>
                     </div>
                 </Container>
             </Form>
