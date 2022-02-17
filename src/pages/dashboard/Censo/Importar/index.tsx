@@ -49,7 +49,7 @@ const Importar: React.FC = () => {
                     POR FIM, CLIQUE NO BOTÃO <span>importar</span> PARA CONCLUIR O PROCESSO
                 </InfoListItem>
             </InfoList>
-            <ImportTable data={tableData} columns={columns} onSelectedDataChange={onSelectedDataChange} />
+            <ImportTable data={tableData} columns={columns as any} onSelectedDataChange={onSelectedDataChange} />
             {errors.selecionado && <span className="selected-error-message">{errors.selecionado?.message}</span>}
             <ButtonsContainer position="evenly">
                 <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>

@@ -108,7 +108,12 @@ const Cadastrar: React.FC = () => {
     return (
         <>
             <PageTitle message="Cadastrar Escola" icon={RotasCadastroIcon} />
-            <ReactHookNavCardProvider mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleFormSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                mode="onSubmit"
+                defaultValues={formData as unknown as FormData}
+                reValidateMode="onChange"
+                onSubmit={handleFormSubmit}
+            >
                 <ReactHookNavCardTab name="Dados Básicos" icon={<img src={DadosBasicosIcon} alt="" />}>
                     <DadosBasicos />
                 </ReactHookNavCardTab>

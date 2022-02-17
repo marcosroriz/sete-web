@@ -27,7 +27,7 @@ type ReactHookNavCardData = {
     previousStep: () => void;
 };
 
-type ReactHookNavCardProviderProps<FormValues> = UseFormProps & {
+type ReactHookNavCardProviderProps<FormValues> = UseFormProps<FormValues> & {
     children: React.ReactNode;
     isDashboard?: boolean;
     aditionalData?: {
@@ -56,7 +56,7 @@ const ReactHookNavCardProvider = <FormValues extends FieldValues>({
     const currentTab = tabs[step];
     const isLastStep = step === tabs.length - 1;
 
-    const methods = useForm({
+    const methods = useForm<FormValues>({
         ...props,
         resolver: yupResolver(currentTab.validationSchema || yup.object().shape({})),
     });

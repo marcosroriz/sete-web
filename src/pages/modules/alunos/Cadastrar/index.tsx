@@ -176,7 +176,7 @@ const Cadastrar: React.FC = () => {
             <PageTitle message="Cadastrar Aluno" icon={AlunosCadastroIcon} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
-                defaultValues={formData}
+                defaultValues={formData as FormData}
                 reValidateMode="onChange"
                 onSubmit={handleSubmit}
                 aditionalData={{

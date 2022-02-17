@@ -1,6 +1,6 @@
 import React from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
-import { useTable, useGlobalFilter, usePagination, useRowSelect, useSortBy, ColumnWithLooseAccessor } from "react-table";
+import { useTable, useGlobalFilter, usePagination, useRowSelect, useSortBy, ColumnWithLooseAccessor, Column } from "react-table";
 
 import { useSelection } from "hooks/Table";
 
@@ -9,7 +9,7 @@ import InputText from "../Inputs/InputText";
 import { Container } from "./styles";
 
 type ImportTableProps = {
-    columns: ColumnWithLooseAccessor[];
+    columns: Column<any>[];
     data: any[];
     onSelectedDataChange: (arr: any[]) => void;
 };
