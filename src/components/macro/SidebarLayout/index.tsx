@@ -315,8 +315,8 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/rotas/visualizar" activeClassName="isActive" exact>
-                                                Visualizar
+                                            <NavLink to="/rotas/importar" activeClassName="isActive" exact>
+                                                Importar
                                             </NavLink>
                                         </li>
                                     </NavItemBody>

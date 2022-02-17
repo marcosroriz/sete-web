@@ -9,7 +9,7 @@ import InputFieldWrapper from "../InputFieldWrapper";
 import { Container } from "./styles";
 
 export type InputTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
-    label: string;
+    label?: string;
     name?: string;
     error?: string;
     touched?: boolean;
