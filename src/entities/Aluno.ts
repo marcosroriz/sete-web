@@ -58,4 +58,20 @@ interface AlunosListRota {
     value: string;
 }
 
+enum GrauParentescoEnum {
+    NaoInformado = "-1",
+    PaiMae = "0",
+    Avo = "1",
+    Irma = "2",
+    OutroParente = "4",
+}
+const GrauParentescoLabel = new Map<GrauParentescoEnum, string>([
+    [GrauParentescoEnum.NaoInformado, "Não Informado"],
+    [GrauParentescoEnum.PaiMae, "Pai, Mãe Padrasto ou Madrasta"],
+    [GrauParentescoEnum.Avo, "Avô ou Avó"],
+    [GrauParentescoEnum.Irma, "Irmão ou Irmã"],
+    [GrauParentescoEnum.OutroParente, "Outro parente"],
+]);
+
+export { GrauParentescoEnum, GrauParentescoLabel };
 export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

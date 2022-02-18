@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Aluno } from "entities/Aluno";
+import { Aluno, GrauParentescoEnum, GrauParentescoLabel } from "entities/Aluno";
 
 import { useNavCard } from "contexts/NavCard";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
@@ -20,7 +20,7 @@ const corMap = {
 
 const FichaAluno: React.FC = () => {
     const { aditionalData } = useReactHookNavCard();
-    const [alunoData] = aditionalData?.alunoData;
+    const [alunoData] = aditionalData?.alunoData as AlunoData;
     const [tableData, setTableData] = React.useState<any>(null);
 
     React.useEffect(() => {
@@ -40,18 +40,7 @@ const FichaAluno: React.FC = () => {
                     .filter((val) => val !== "")
                     .join(", "),
                 "Nome do responsável": alunoData.nome_responsavel,
-                "Grau de parentesco":
-                    alunoData.grau_responsavel == -1
-                        ? "Não informado"
-                        : alunoData.grau_responsavel == 0
-                        ? "Pai, Mãe, Padrasto ou Madrasta"
-                        : alunoData.grau_responsavel == 1
-                        ? "Avô ou Avó"
-                        : alunoData.grau_responsavel == 2
-                        ? "Irmão ou Irmã"
-                        : alunoData.grau_responsavel == 3
-                        ? "Outro parente"
-                        : null,
+                "Grau de parentesco": GrauParentescoLabel.get((alunoData.grau_responsavel?.toString() || "-1") as GrauParentescoEnum),
                 "Telefonde do responsável": alunoData.telefone_responsavel,
                 "Endereço do Aluno": alunoData.loc_endereco,
                 "CEP da residência": alunoData.loc_cep,

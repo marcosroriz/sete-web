@@ -6,7 +6,7 @@ import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { AlunosService } from "services/Alunos";
-import { Aluno } from "entities/Aluno";
+import { Aluno, GrauParentescoEnum } from "entities/Aluno";
 
 import PageTitle from "components/micro/PageTitle";
 
@@ -35,7 +35,7 @@ type FormData = {
     data_nascimento: string;
     nome_responsavel: string;
     telefone_responsavel: string;
-    grau_responsavel: string;
+    grau_responsavel: GrauParentescoEnum;
     sexo: string;
     cor: string;
     def_caminhar: boolean;
@@ -63,7 +63,7 @@ const formData = {
     data_nascimento: "",
     nome_responsavel: "",
     telefone_responsavel: "",
-    grau_responsavel: "",
+    grau_responsavel: "" as GrauParentescoEnum,
     sexo: "",
     cor: "",
     def_caminhar: false,
@@ -74,7 +74,7 @@ const formData = {
     rota: "",
     turno: "",
     nivel: "",
-};
+} as FormData;
 
 const Cadastrar: React.FC = () => {
     const { id: alunoId } = useParams<{ id: string }>();
