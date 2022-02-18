@@ -38,6 +38,8 @@ const DadosEscolares: React.FC = () => {
     const [escolaOptions, setEscolaOptions] = React.useState<SelectOptions[]>([]);
     const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
 
+    const buttonPosition = !!alunoData ? "evenly" : "right";
+
     const fetchData = async () => {
         try {
             const codigo_cidade = user?.codigo_cidade || 0;
@@ -55,25 +57,18 @@ const DadosEscolares: React.FC = () => {
 
     React.useEffect(() => {
         fetchData();
-    }, []);
 
-    React.useEffect(() => {
         if (!!alunoData) {
             setValue("turno", alunoData?.turno.toString() || "");
             setValue("nivel", alunoData?.nivel.toString() || "");
         }
-    }, [alunoData]);
-    React.useEffect(() => {
         if (!!escolaData) {
             setValue("escola", escolaData?.id_escola.toString() || "");
         }
-    }, [escolaData]);
-
-    React.useEffect(() => {
         if (!!rotaData) {
             setValue("rota", rotaData?.id_rota.toString());
         }
-    }, [rotaData]);
+    }, []);
 
     return (
         <Container>
@@ -120,10 +115,12 @@ const DadosEscolares: React.FC = () => {
                     <ReactHookInputRadio label="Outro" value="5" name="nivel" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer>
-                <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
-                    Voltar
-                </Button>
+            <ButtonsContainer position={buttonPosition}>
+                {!!alunoData && (
+                    <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
+                        Voltar
+                    </Button>
+                )}
                 <Button variant="info" type="submit" className="btn-fill">
                     Concluír
                 </Button>

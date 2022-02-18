@@ -30,11 +30,11 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
     const [tableData, setTableData] = React.useState<AlunosTableField[]>([]);
     const columns = React.useMemo(() => COLUMNS, []);
 
-    const handleDeleteAluno = async (escola: AlunoListObj) => {
+    const handleDeleteAluno = async (aluno: AlunoListObj) => {
         try {
             const alertResponse = await createModalAsync("warning", {
                 title: "Atenção!",
-                html: `Deseja remover a Escola:<br /> <b>${escola.nome}</b>?`,
+                html: `Deseja remover o Aluno:<br /> <b>${aluno.nome}</b>?`,
                 confirmButtonText: "Remover",
                 confirmButtonColor: "var(--color-red-500)",
                 showCancelButton: true,
@@ -49,7 +49,7 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
             const alunosService = new AlunosService();
             const codigo_cidade = user?.codigo_cidade || 0;
 
-            await alunosService.deleteAluno(escola.id_aluno, codigo_cidade);
+            await alunosService.deleteAluno(aluno.id_aluno, codigo_cidade);
         } catch (err) {
             errorHandler(err, { title: "Erro ao remover Aluno" });
         }

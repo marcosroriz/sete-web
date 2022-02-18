@@ -12,7 +12,6 @@ const handleAtLeastOne: yup.TestFunction<(string | undefined)[] | undefined, {}>
 };
 
 const localizacaoSchema = yup.object().shape({
-    latlng: yup.array().of(yup.string()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
     mec_tp_localizacao: yup.string().required("Esse campo é obrigatório").nullable(true),
 });
 

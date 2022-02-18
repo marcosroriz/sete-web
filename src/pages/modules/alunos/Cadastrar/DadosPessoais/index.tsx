@@ -32,6 +32,8 @@ const DadosPessoais: React.FC = () => {
 
     const [alunoData] = aditionalData?.alunoData as AlunoData;
 
+    const buttonPosition = !!alunoData ? "evenly" : "right";
+
     React.useEffect(() => {
         if (!!alunoData) {
             setValue("nome", alunoData?.nome || "");
@@ -47,7 +49,8 @@ const DadosPessoais: React.FC = () => {
             setValue("def_enxergar", alunoData?.def_enxergar === "S");
             setValue("def_mental", alunoData?.def_mental === "S");
         }
-    }, [alunoData]);
+    }, []);
+
     return (
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DO ALUNO SENDO CADASTRADO." />
@@ -116,10 +119,12 @@ const DadosPessoais: React.FC = () => {
                     <ReactHookInputCheckbox label="Mental ou Intelectual" name="def_mental" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer>
-                <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
-                    Voltar
-                </Button>
+            <ButtonsContainer position={buttonPosition}>
+                {!!alunoData && (
+                    <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
+                        Voltar
+                    </Button>
+                )}
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>
