@@ -1,3 +1,5 @@
+import { parseNode } from "ol/xml";
+
 interface Aluno {
     id_aluno?: number;
     loc_latitude?: string;
@@ -58,6 +60,34 @@ interface AlunosListRota {
     value: string;
 }
 
+enum SexoEnum {
+    Masculino = "1",
+    Feminino = "2",
+    NaoInformado = "3",
+}
+const SexoEnumLabel = new Map<SexoEnum, string>([
+    [SexoEnum.NaoInformado, "Não Informado"],
+    [SexoEnum.Masculino, "Masculino"],
+    [SexoEnum.Feminino, "Feminino"],
+]);
+
+enum CorEnum {
+    NãoInformada = "0",
+    Amarelo = "1",
+    Branco = "2",
+    Indigena = "3",
+    Pardo = "4",
+    Preto = "5",
+}
+const CorEnumLabel = new Map<CorEnum, string>([
+    [CorEnum.NãoInformada, "Não Informada"],
+    [CorEnum.Amarelo, "Amarelo"],
+    [CorEnum.Branco, "Branco"],
+    [CorEnum.Indigena, "Indígena"],
+    [CorEnum.Pardo, "Pardo"],
+    [CorEnum.Preto, "Preto"],
+]);
+
 enum GrauParentescoEnum {
     NaoInformado = "-1",
     PaiMae = "0",
@@ -73,5 +103,5 @@ const GrauParentescoLabel = new Map<GrauParentescoEnum, string>([
     [GrauParentescoEnum.OutroParente, "Outro parente"],
 ]);
 
-export { GrauParentescoEnum, GrauParentescoLabel };
+export { GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoEnumLabel, CorEnum, CorEnumLabel };
 export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

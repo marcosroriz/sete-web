@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
-import { Aluno, GrauParentescoEnum, GrauParentescoLabel } from "entities/Aluno";
+import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoEnumLabel, CorEnum, CorEnumLabel } from "entities/Aluno";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -19,15 +19,19 @@ import { Container, mediaQuery } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
-const grauOptions = Object.values(GrauParentescoEnum).map((val) => ({ label: GrauParentescoLabel.get(val) || "", value: val }));
+const sexoOptions = Object.values(SexoEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="sexo" label={SexoEnumLabel.get(value) || ""} value={value} position="right" />
+));
+const corOptions = Object.values(CorEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="cor" label={CorEnumLabel.get(value) || ""} value={value} position="right" />
+));
+const grauOptions = Object.values(GrauParentescoEnum).map((value) => ({ label: GrauParentescoLabel.get(value) || "", value: value }));
 
 const DadosPessoais: React.FC = () => {
     const { setValue } = useFormContext();
     const { nextStep, previousStep, aditionalData } = useReactHookNavCard();
 
     const [alunoData] = aditionalData?.alunoData as AlunoData;
-
-    const buttonPosition = !!alunoData ? "evenly" : "right";
 
     React.useEffect(() => {
         if (!!alunoData) {
@@ -85,9 +89,7 @@ const DadosPessoais: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Masculino" value="1" name="sexo" position="right" />
-                    <ReactHookInputRadio label="Feminino" value="2" name="sexo" position="right" />
-                    <ReactHookInputRadio label="Não Informado" value="3" name="sexo" position="right" />
+                    {sexoOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
@@ -98,12 +100,7 @@ const DadosPessoais: React.FC = () => {
                     fieldsHorizontal={mediaQuery.corHorizontal}
                     formListSpacing="10px"
                 >
-                    <ReactHookInputRadio label="Não declarada" value="1" name="cor" position="right" />
-                    <ReactHookInputRadio label="Amarelo" value="2" name="cor" position="right" />
-                    <ReactHookInputRadio label="Branco" value="3" name="cor" position="right" />
-                    <ReactHookInputRadio label="Indígena" value="4" name="cor" position="right" />
-                    <ReactHookInputRadio label="Pardo" value="5" name="cor" position="right" />
-                    <ReactHookInputRadio label="Preto" value="6" name="cor" position="right" />
+                    {corOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
@@ -114,7 +111,7 @@ const DadosPessoais: React.FC = () => {
                     <ReactHookInputCheckbox label="Mental ou Intelectual" name="def_mental" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer position={buttonPosition}>
+            <ButtonsContainer position={!!alunoData ? "evenly" : "right"}>
                 {!!alunoData && (
                     <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
                         Voltar

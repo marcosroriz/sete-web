@@ -32,8 +32,6 @@ const Localizacao: React.FC = () => {
 
     const [alunoData] = aditionalData?.alunoData as AlunoData;
 
-    const buttonPosition = !!alunoData ? "evenly" : "right";
-
     React.useEffect(() => {
         if (!!alunoData) {
             setValue("latlng[0]", alunoData?.loc_latitude || "");
@@ -96,7 +94,7 @@ const Localizacao: React.FC = () => {
                     <ReactHookInputCheckbox label="Ponte Rústica" name="da_ponterustica" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer position={buttonPosition}>
+            <ButtonsContainer position={!!alunoData ? "evenly" : "right"}>
                 {!!alunoData && (
                     <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
                         Cancelar Edição

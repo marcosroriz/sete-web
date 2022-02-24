@@ -38,8 +38,6 @@ const DadosEscolares: React.FC = () => {
     const [escolaOptions, setEscolaOptions] = React.useState<SelectOptions[]>([]);
     const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
 
-    const buttonPosition = !!alunoData ? "evenly" : "right";
-
     const fetchData = async () => {
         try {
             const codigo_cidade = user?.codigo_cidade || 0;
@@ -115,7 +113,7 @@ const DadosEscolares: React.FC = () => {
                     <ReactHookInputRadio label="Outro" value="5" name="nivel" position="right" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer position={buttonPosition}>
+            <ButtonsContainer position={!!alunoData ? "evenly" : "right"}>
                 {!!alunoData && (
                     <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
                         Voltar
