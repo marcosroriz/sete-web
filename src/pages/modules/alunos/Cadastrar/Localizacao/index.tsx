@@ -32,6 +32,8 @@ const Localizacao: React.FC = () => {
 
     const [alunoData] = aditionalData?.alunoData as AlunoData;
 
+    const buttonPosition = !!alunoData ? "evenly" : "right";
+
     React.useEffect(() => {
         if (!!alunoData) {
             setValue("latlng[0]", alunoData?.loc_latitude || "");
@@ -47,7 +49,7 @@ const Localizacao: React.FC = () => {
                 mapRef.current?.goToLocation([Number(alunoData?.loc_longitude), Number(alunoData?.loc_latitude)]);
             }
         }
-    }, [alunoData]);
+    }, []);
 
     const handleCancelEditClick = () => {
         history.goBack();
@@ -57,7 +59,7 @@ const Localizacao: React.FC = () => {
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
             <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" mapController={mapRef} name="latlng" icon={AlunosMarker} />
-            <ReactHookFormItemCard placeItems="center" required>
+            <ReactHookFormItemCard placeItems="center">
                 <ReactHookMultiFormList name="latlng" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />
                     <ReactHookInputText label="LONGITUDE:" name="latlng[1]" isHorizontal={mediaQuery.desktop} dontShowError />
@@ -94,10 +96,12 @@ const Localizacao: React.FC = () => {
                     <ReactHookInputCheckbox label="Ponte Rústica" name="da_ponterustica" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer>
-                <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
-                    Cancelar Edição
-                </Button>
+            <ButtonsContainer position={buttonPosition}>
+                {!!alunoData && (
+                    <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
+                        Cancelar Edição
+                    </Button>
+                )}
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>

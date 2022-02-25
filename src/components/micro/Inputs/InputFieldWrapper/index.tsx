@@ -17,13 +17,15 @@ const InputFieldWrapper: React.FC<InputFieldWrapperProps> = ({ prefix, suffix, i
     const [inputChild, ...rest] = React.Children.toArray(children) as React.ReactElement[];
     return (
         <InputField isInvalid={isInvalid} isTouched={isTouched} thinBorder={thinBorder}>
-            {
+            {prefix || suffix ? (
                 <div className="input-group">
                     {prefix && <div className="input-group-text">{prefix}</div>}
                     {inputChild}
                     {suffix && <div className="input-group-text">{suffix}</div>}
                 </div>
-            }
+            ) : (
+                inputChild
+            )}
             {rest}
         </InputField>
     );
