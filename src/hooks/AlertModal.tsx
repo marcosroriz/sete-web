@@ -11,11 +11,9 @@ import Spinner from "assets/icons/spinner.svg";
 
 type SwalOptions = SweetAlertOptions;
 
-type AlertTypesStrings = "loading" | "success" | "error" | "warning" | "info" | "progress";
-
 const swal = withReactContent(sweetalert);
 
-const alertTypes: { [key: string]: SwalOptions } = {
+const alertTypes = {
     loading: {
         title: "Carregando...",
         text: "Procurando e carregando dados",
@@ -39,6 +37,15 @@ const alertTypes: { [key: string]: SwalOptions } = {
         },
         allowOutsideClick: false,
     },
+    confirm_remove: {
+        title: "Atenção!",
+        confirmButtonText: "Remover",
+        confirmButtonColor: "var(--color-red-500)",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        cancelButtonColor: "var(--color-grey-650)",
+        reverseButtons: true,
+    },
     success: {
         icon: "success",
     },
@@ -51,7 +58,9 @@ const alertTypes: { [key: string]: SwalOptions } = {
     info: {
         icon: "info",
     },
-};
+} as const;
+
+type AlertTypesStrings = keyof typeof alertTypes;
 
 interface IAlertModal {
     createModal: (type?: AlertTypesStrings, options?: SwalOptions) => void;

@@ -1,7 +1,7 @@
 const path = require("path");
 const electronInstaller = require("electron-winstaller");
 
-resultPromise = electronInstaller.createWindowsInstaller({
+let resultPromise = electronInstaller.createWindowsInstaller({
     appDirectory: path.resolve(__dirname, "out", "SETE-win32-x64"),
     outputDirectory: path.resolve(__dirname, "out"),
     name: "SETE",

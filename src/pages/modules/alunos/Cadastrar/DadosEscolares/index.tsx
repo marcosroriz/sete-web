@@ -78,7 +78,7 @@ const DadosEscolares: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="A RESPEITO DOS DADOS ESCOLARES DO ALUNO, RESPONDA:" />
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="QUAL A ESCOLA DO ALUNO?"
                     name="escola"
@@ -88,7 +88,7 @@ const DadosEscolares: React.FC = () => {
                     hasPlaceholderOption
                 />
             </ReactHookFormItemCard>
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="QUAL A ROTA DO ALUNO?"
                     name="rota"
