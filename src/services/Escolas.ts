@@ -58,7 +58,6 @@ class EscolasService {
     }
 
     public async updateEscola(body: UpdateEscolaRequestBody, id_escola: number, codigo_cidade: number): Promise<UpdateEscolaResponse> {
-        console.log("BODYYYY", body);
         const response = await this.api({
             method: "put",
             url: `/escolas/${codigo_cidade}/${id_escola}`,
@@ -83,7 +82,6 @@ class EscolasService {
             url: `/escolas/${codigo_cidade}/${id_escola}/alunos`,
         });
         const data = await response.data;
-        console.log("reqq", data);
         return data;
     }
 }

@@ -124,7 +124,6 @@ const Cadastrar: React.FC = () => {
                 }
                 createModal("success", { title: "Sucesso", html: "Aluno editado com sucesso" });
             } else {
-                console.log("aqui cadas");
                 const response = await alunosService.createAluno(body, codigo_cidade);
 
                 if (data.escola != "") {

@@ -6,7 +6,7 @@ import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
 import { EscolasService } from "services/Escolas";
 import { RotasService } from "services/Rotas";
-import { Aluno } from "entities/Aluno";
+import { Aluno, TurnoEnum, TurnoLabel, NivelEnum, NivelLabel } from "entities/Aluno";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
@@ -25,6 +25,14 @@ type SelectOptions = {
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 type EscolaData = any;
 type RotaData = any;
+
+const turnoOptions = Object.values(TurnoEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="turno" label={TurnoLabel.get(value) || ""} value={value} position="right" />
+));
+
+const nivelOptions = Object.values(NivelEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="nivel" label={NivelLabel.get(value) || ""} value={value} position="right" />
+));
 
 const DadosEscolares: React.FC = () => {
     const { user } = useAuth();
@@ -71,7 +79,7 @@ const DadosEscolares: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="A RESPEITO DOS DADOS ESCOLARES DO ALUNO, RESPONDA:" />
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="QUAL A ESCOLA DO ALUNO?"
                     name="escola"
@@ -93,10 +101,7 @@ const DadosEscolares: React.FC = () => {
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList label="QUAL O TURNO QUE O ALUNO ESTUDA?*" name="turno" isHorizontal={mediaQuery.desktop} formListSpacing="20px">
-                    <ReactHookInputRadio label="Manhã" value="1" name="turno" position="right" />
-                    <ReactHookInputRadio label="Tarde (Vespertino)" value="2" name="turno" position="right" />
-                    <ReactHookInputRadio label="Integral (Manhã + Tarde)" value="3" name="turno" position="right" />
-                    <ReactHookInputRadio label="Noite (Noturno)" value="4" name="turno" position="right" />
+                    {turnoOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
@@ -106,11 +111,7 @@ const DadosEscolares: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Infantil(Creche e Pré-Escola)" value="1" name="nivel" position="right" />
-                    <ReactHookInputRadio label="Fundamental" value="2" name="nivel" position="right" />
-                    <ReactHookInputRadio label="Médio" value="3" name="nivel" position="right" />
-                    <ReactHookInputRadio label="Superior" value="4" name="nivel" position="right" />
-                    <ReactHookInputRadio label="Outro" value="5" name="nivel" position="right" />
+                    {nivelOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer position={!!alunoData ? "evenly" : "right"}>

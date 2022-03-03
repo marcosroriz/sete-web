@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoEnumLabel, CorEnum, CorEnumLabel } from "entities/Aluno";
+import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel } from "entities/Aluno";
 
 import { useNavCard } from "contexts/NavCard";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
@@ -12,15 +12,16 @@ type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null
 const FichaAluno: React.FC = () => {
     const { aditionalData } = useReactHookNavCard();
     const [alunoData] = aditionalData?.alunoData as AlunoData;
+    const [escolaData] = aditionalData?.escolaData as any;
     const [tableData, setTableData] = React.useState<any>(null);
 
     React.useEffect(() => {
-        if (alunoData) {
+        if (alunoData && escolaData) {
             const data = {
                 "Nome do Aluno": alunoData.nome,
                 "Data de nascimento": alunoData.data_nascimento,
-                Sexo: SexoEnumLabel.get((alunoData.sexo?.toString() || "3") as SexoEnum),
-                "Cor/Raça": CorEnumLabel.get((alunoData.cor?.toString() || "0") as CorEnum),
+                Sexo: SexoLabel.get((alunoData.sexo?.toString() || "3") as SexoEnum),
+                "Cor/Raça": CorLabel.get((alunoData.cor?.toString() || "0") as CorEnum),
                 CPF: alunoData.cpf,
                 "Possui alguma deficiência": [
                     alunoData.def_caminhar === "S" ? "Física" : "",
@@ -32,7 +33,7 @@ const FichaAluno: React.FC = () => {
                     .join(", "),
                 "Nome do responsável": alunoData.nome_responsavel,
                 "Grau de parentesco": GrauParentescoLabel.get((alunoData.grau_responsavel?.toString() || "-1") as GrauParentescoEnum),
-                "Telefonde do responsável": alunoData.telefone_responsavel,
+                "Telefonde do responsável": alunoData.telefone_responsavel || "Telefone de contato não informado",
                 "Endereço do Aluno": alunoData.loc_endereco,
                 "CEP da residência": alunoData.loc_cep,
                 "Dificuldade de Acesso": [
@@ -46,13 +47,15 @@ const FichaAluno: React.FC = () => {
                     .join(", "),
                 Localização: alunoData.loc_longitude ? `${alunoData.loc_latitude || ""}, ${alunoData.loc_longitude || ""}` : "",
                 "Tipo de localização": alunoData.mec_tp_localizacao == 1 ? "Urbana" : alunoData.mec_tp_localizacao == 2 ? "Rural" : null,
-                //Escola: alunoData.escola,
-                // "Telefone de Contato": alunoData.ensino_fundamental,
-                // ROTA: alunoData.ensino_fundamental,
+
+                Escola: escolaData.nome,
+                "Contato da escola": escolaData.contato_responsavel,
+                "Telefone de contato": escolaData.contato_telefone,
+                //ROTA: alunoData.ensino_fundamental,
             };
             setTableData(data);
         }
-    }, []);
+    }, [alunoData, escolaData]);
     return <RecordTable title={alunoData?.nome || ""} data={tableData} />;
 };
 

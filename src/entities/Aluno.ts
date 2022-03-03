@@ -26,6 +26,7 @@ interface Aluno {
     def_ouvir?: string; // 'S' ou 'N'
     def_enxergar?: string; // 'S' ou 'N'
     def_mental?: string; // 'S' ou 'N'
+    id_escola?: number;
 }
 
 interface AlunoListObj {
@@ -65,7 +66,7 @@ enum SexoEnum {
     Feminino = "2",
     NaoInformado = "3",
 }
-const SexoEnumLabel = new Map<SexoEnum, string>([
+const SexoLabel = new Map<SexoEnum, string>([
     [SexoEnum.NaoInformado, "Não Informado"],
     [SexoEnum.Masculino, "Masculino"],
     [SexoEnum.Feminino, "Feminino"],
@@ -79,7 +80,7 @@ enum CorEnum {
     Pardo = "4",
     Preto = "5",
 }
-const CorEnumLabel = new Map<CorEnum, string>([
+const CorLabel = new Map<CorEnum, string>([
     [CorEnum.NãoInformada, "Não Informada"],
     [CorEnum.Amarelo, "Amarelo"],
     [CorEnum.Branco, "Branco"],
@@ -103,5 +104,33 @@ const GrauParentescoLabel = new Map<GrauParentescoEnum, string>([
     [GrauParentescoEnum.OutroParente, "Outro parente"],
 ]);
 
-export { GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoEnumLabel, CorEnum, CorEnumLabel };
+enum TurnoEnum {
+    Manha = "1",
+    Tarde = "2",
+    Integral = "3",
+    Noite = "4",
+}
+const TurnoLabel = new Map<TurnoEnum, string>([
+    [TurnoEnum.Manha, "Manhã"],
+    [TurnoEnum.Tarde, "Tarde (Vespertino)"],
+    [TurnoEnum.Integral, "Integral (Manhã + Tarde)"],
+    [TurnoEnum.Noite, "Noite (Noturno)"],
+]);
+
+enum NivelEnum {
+    Infantil = "1",
+    Fundamental = "2",
+    Medio = "3",
+    Superior = "4",
+    Outro = "5",
+}
+const NivelLabel = new Map<NivelEnum, string>([
+    [NivelEnum.Infantil, "Infantil(Creche e Pré-Escola)"],
+    [NivelEnum.Fundamental, "Fundamental"],
+    [NivelEnum.Medio, "Médio"],
+    [NivelEnum.Superior, "Noite (Noturno)"],
+    [NivelEnum.Outro, "Outro"],
+]);
+
+export { GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel, TurnoEnum, TurnoLabel, NivelEnum, NivelLabel };
 export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

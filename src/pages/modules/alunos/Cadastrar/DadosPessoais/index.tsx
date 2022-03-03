@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
-import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoEnumLabel, CorEnum, CorEnumLabel } from "entities/Aluno";
+import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel } from "entities/Aluno";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -20,11 +20,13 @@ import { Container, mediaQuery } from "./styles";
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
 const sexoOptions = Object.values(SexoEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="sexo" label={SexoEnumLabel.get(value) || ""} value={value} position="right" />
+    <ReactHookInputRadio key={value} name="sexo" label={SexoLabel.get(value) || ""} value={value} position="right" />
 ));
+
 const corOptions = Object.values(CorEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="cor" label={CorEnumLabel.get(value) || ""} value={value} position="right" />
+    <ReactHookInputRadio key={value} name="cor" label={CorLabel.get(value) || ""} value={value} position="right" />
 ));
+
 const grauOptions = Object.values(GrauParentescoEnum).map((value) => ({ label: GrauParentescoLabel.get(value) || "", value: value }));
 
 const DadosPessoais: React.FC = () => {
