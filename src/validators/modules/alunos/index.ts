@@ -31,8 +31,10 @@ const dadosPessoaisSchema = yup.object().shape({
 });
 
 const dadosEscolaresSchema = yup.object().shape({
-    turno: yup.string().required("Esse campo é obrigatório").nullable(true),
-    nivel: yup.string().required("Esse campo é obrigatório").nullable(true),
+    turno: yup.string().required("Esse campo é obrigatório"),
+    nivel: yup.string().required("Esse campo é obrigatório"),
+    escola: yup.string().required("Esse campo é obrigatório"),
+    rota: yup.string().required("Esse campo é obrigatório"),
 });
 
 export { localizacaoSchema, dadosPessoaisSchema, dadosEscolaresSchema };

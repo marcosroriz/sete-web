@@ -15,6 +15,10 @@ import { COLUMNS } from "./columns";
 type AlunosTableContextProps = {
     tableData: AlunosTableField[];
     columns: ColumnWithLooseAccessor<{}>[];
+    handleSelectedData: (arr: AlunosTableField[]) => void;
+    handleDeleteSelectedAlunos: () => void;
+    handleExportExcel: () => void;
+    handleExportPdf: () => void;
 };
 
 type AlunosTableProviderProps = {
@@ -28,19 +32,30 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
     const { errorHandler } = useError();
     const { user } = useAuth();
     const [tableData, setTableData] = React.useState<AlunosTableField[]>([]);
+    const [selectedData, setSelectedData] = React.useState<AlunosTableField[]>([]);
     const columns = React.useMemo(() => COLUMNS, []);
+
+    const handleSelectedData = (arr: AlunosTableField[]) => {
+        setSelectedData(arr);
+    };
+
+    const handleDeleteSelectedAlunos = async () => {
+        // Confirmação para deletar usuário.
+        // Delete selectedData.
+    };
+
+    const handleExportExcel = async () => {
+        // Abrir local para salvar.
+    };
+
+    const handleExportPdf = async () => {
+        // Abrir local para salvar pdf.
+    };
 
     const handleDeleteAluno = async (aluno: AlunoListObj) => {
         try {
-            const alertResponse = await createModalAsync("warning", {
-                title: "Atenção!",
-                html: `Deseja remover o Aluno:<br /> <b>${aluno.nome}</b>?`,
-                confirmButtonText: "Remover",
-                confirmButtonColor: "var(--color-red-500)",
-                showCancelButton: true,
-                cancelButtonText: "Cancelar",
-                cancelButtonColor: "var(--color-grey-650)",
-                reverseButtons: true,
+            const alertResponse = await createModalAsync("confirm_remove", {
+                html: `Deseja remover o(a) Aluno:<br /> <b>${aluno.nome}</b>?`,
             });
             if (!alertResponse.isConfirmed) {
                 return;
@@ -67,7 +82,11 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
         fetchData();
     }, []);
 
-    return <AlunosTableContext.Provider value={{ tableData, columns }}>{children}</AlunosTableContext.Provider>;
+    return (
+        <AlunosTableContext.Provider value={{ tableData, columns, handleSelectedData, handleDeleteSelectedAlunos, handleExportExcel, handleExportPdf }}>
+            {children}
+        </AlunosTableContext.Provider>
+    );
 };
 
 const useAlunosTable = () => {

@@ -89,7 +89,7 @@ const DadosEscolares: React.FC = () => {
                     hasPlaceholderOption
                 />
             </ReactHookFormItemCard>
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="QUAL A ROTA DO ALUNO?"
                     name="rota"

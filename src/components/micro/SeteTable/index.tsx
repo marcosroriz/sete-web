@@ -3,20 +3,9 @@
  * pages/modules/{modulo}/Gerenciar ou /{modulo}/gerenciar
  */
 
-import React, { useEffect } from "react";
+import React from "react";
 
-import {
-    CellProps,
-    HeaderProps,
-    Hooks,
-    ColumnWithLooseAccessor,
-    TableOptions,
-    useFilters,
-    usePagination,
-    useRowSelect,
-    useSortBy,
-    useTable,
-} from "react-table";
+import { ColumnWithLooseAccessor, useFilters, usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 
 import { useLocalStorage } from "hooks/LocalStorage";
 
@@ -32,9 +21,10 @@ type SeteTableProps = {
     name: string;
     columns: ColumnWithLooseAccessor[];
     data: any[];
+    onSelectedDataChange?: (arr: any[]) => void;
 };
 
-const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) => {
+const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, onSelectedDataChange, ...props }) => {
     const [initialState, setInitialState] = useLocalStorage(`tableState:${name}`, {});
 
     const instance = useTable(
@@ -60,10 +50,11 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
         nextPage,
         previousPage,
         setPageSize,
+        selectedFlatRows,
         state: { pageIndex, pageSize, sortBy, filters },
     } = instance;
 
-    useEffect(() => {
+    React.useEffect(() => {
         const val = {
             sortBy,
             filters,
@@ -71,6 +62,12 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
         };
         setInitialState(val);
     }, [setInitialState]);
+
+    React.useEffect(() => {
+        if (onSelectedDataChange) {
+            onSelectedDataChange(selectedFlatRows.map((d) => d.original));
+        }
+    }, [selectedFlatRows]);
 
     return (
         <TableContainer>
