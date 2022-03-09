@@ -47,6 +47,7 @@ interface AlunoListObj {
 }
 
 interface AlunosTableField {
+    id_aluno: number;
     nome: string;
     localizacao: string;
     gps: string;
@@ -105,10 +106,10 @@ const GrauParentescoLabel = new Map<GrauParentescoEnum, string>([
 ]);
 
 enum TurnoEnum {
-    Manha = "1",
-    Tarde = "2",
-    Integral = "3",
-    Noite = "4",
+    Manha = 1,
+    Tarde = 2,
+    Integral = 3,
+    Noite = 4,
 }
 const TurnoLabel = new Map<TurnoEnum, string>([
     [TurnoEnum.Manha, "Manhã"],
@@ -118,11 +119,11 @@ const TurnoLabel = new Map<TurnoEnum, string>([
 ]);
 
 enum NivelEnum {
-    Infantil = "1",
-    Fundamental = "2",
-    Medio = "3",
-    Superior = "4",
-    Outro = "5",
+    Infantil = 1,
+    Fundamental = 2,
+    Medio = 3,
+    Superior = 4,
+    Outro = 5,
 }
 const NivelLabel = new Map<NivelEnum, string>([
     [NivelEnum.Infantil, "Infantil(Creche e Pré-Escola)"],

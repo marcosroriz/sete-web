@@ -3,7 +3,7 @@ import { StyleSheet, Image, View, Document, Page, Text } from "@react-pdf/render
 
 const TableHead: React.FC = () => {
     const getRowColor = (index: number) => {
-        if (index % 2 === 1) {
+        if (index % 2 === 0) {
             return styles.odd;
         }
         return styles.even;

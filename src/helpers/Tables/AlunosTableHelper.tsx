@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AlunoListObj, AlunosTableField } from "entities/Aluno";
+import { AlunoListObj, AlunosTableField, TurnoLabel, NivelLabel } from "entities/Aluno";
 import { Link } from "react-router-dom";
 import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
 
@@ -8,31 +8,17 @@ type AdditionalOptions = {
     delete: (escola: AlunoListObj) => Promise<void>;
 };
 
-const nivelMap = {
-    1: "Infantil",
-    2: "Fundamental",
-    3: "Médio",
-    4: "Superior",
-    5: "Outro",
-};
-
-const turnoMap = {
-    1: "Matutino",
-    2: "Vespertino",
-    3: "Integral",
-    4: "Noturno",
-};
-
 class AlunosTableHelper {
     public treatData(data: AlunoListObj[], addOptions?: AdditionalOptions): AlunosTableField[] {
         return data.map((alunoObj) => ({
+            id_aluno: alunoObj.id_aluno,
             escola: alunoObj.escola,
             rota: alunoObj.rota,
             nome: alunoObj.nome,
             localizacao: alunoObj.mec_tp_localizacao == 1 ? "Urbana" : alunoObj.mec_tp_localizacao == 2 ? "Rural" : "-",
             gps: alunoObj.loc_latitude === null ? "Não" : alunoObj.log_longitude === null ? "Não" : "Sim",
-            nivel: nivelMap[alunoObj.nivel],
-            turno: turnoMap[alunoObj.turno],
+            nivel: TurnoLabel.get(alunoObj.turno) || "",
+            turno: NivelLabel.get(alunoObj.nivel) || "",
             acoes: this.acoesComponent(alunoObj, addOptions),
         }));
     }
@@ -70,7 +56,10 @@ class AlunosTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => addOptions?.delete(alunoObj)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        addOptions?.delete(alunoObj);
+                    }}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>
@@ -82,28 +71,8 @@ class AlunosTableHelper {
         return data.map((alunoObj) => ({
             nome: alunoObj.nome,
             cpf: alunoObj.cpf || "-",
-            turno:
-                alunoObj.turno == 1
-                    ? "Matutino"
-                    : alunoObj.turno == 2
-                    ? "Vespertino"
-                    : alunoObj.turno == 3
-                    ? "Integral"
-                    : alunoObj.mec_tp_dependencia == 4
-                    ? "Noturno"
-                    : "-",
-            nivel:
-                alunoObj.nivel == 1
-                    ? "Infantil"
-                    : alunoObj.nivel == 2
-                    ? "Fundamental"
-                    : alunoObj.nivel == 3
-                    ? "Médio"
-                    : alunoObj.nivel == 4
-                    ? "Superior"
-                    : alunoObj.nivel == 5
-                    ? "Outro"
-                    : "-",
+            turno: TurnoLabel.get(alunoObj.turno),
+            nivel: NivelLabel.get(alunoObj.nivel),
         }));
     }
 }

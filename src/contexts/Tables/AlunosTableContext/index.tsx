@@ -2,7 +2,6 @@ import React from "react";
 import { ColumnWithLooseAccessor } from "react-table";
 
 import { AlunosService } from "services/Alunos";
-import { EscolasService } from "services/Escolas";
 import { AlunosTableField, AlunoListObj } from "entities/Aluno";
 
 import { useAlertModal } from "hooks/AlertModal";
@@ -28,7 +27,7 @@ type AlunosTableProviderProps = {
 const AlunosTableContext = React.createContext({} as AlunosTableContextProps);
 
 const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
-    const { createModalAsync } = useAlertModal();
+    const { createModalAsync, createModal, incrementProgress } = useAlertModal();
     const { errorHandler } = useError();
     const { user } = useAuth();
     const [tableData, setTableData] = React.useState<AlunosTableField[]>([]);
@@ -40,8 +39,34 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
     };
 
     const handleDeleteSelectedAlunos = async () => {
-        // Confirmação para deletar usuário.
-        // Delete selectedData.
+        try {
+            const { isConfirmed } = await createModalAsync("confirm_remove", { html: "Deseja remover os alunos selecionados?" });
+            if (!isConfirmed) {
+                return;
+            }
+            const codigo_cidade = user?.codigo_cidade || 0;
+            const alunosService = new AlunosService();
+
+            const errorStudents = [] as AlunosTableField[];
+            const incrementValue = Number(100 / selectedData.length);
+            createModal("progress");
+
+            for (let aluno of selectedData) {
+                try {
+                    await alunosService.deleteAluno(aluno.id_aluno, codigo_cidade);
+                } catch (err) {
+                    errorStudents.push(aluno);
+                }
+                incrementProgress(incrementValue);
+            }
+            if (errorStudents.length > 0) {
+                throw { message: errorStudents.map((aluno) => `Não foi possível remover o(a) aluno(a): ${aluno.nome}`) };
+            }
+            await fetchData();
+            createModal("success", { title: "Sucesso!", html: "Alunos removicos com sucesso" });
+        } catch (err) {
+            errorHandler(err, { title: "Falha ao remover Alunos" });
+        }
     };
 
     const handleExportExcel = async () => {
@@ -70,15 +95,14 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
         }
     };
 
+    const fetchData = async () => {
+        const alunosService = new AlunosService();
+        const codigo_cidade = user?.codigo_cidade || 0;
+        const response = await alunosService.listAlunos(codigo_cidade);
+        const treatedData = alunosTableHelper.treatData(response.data, { delete: handleDeleteAluno });
+        setTableData(treatedData);
+    };
     React.useEffect(() => {
-        const fetchData = async () => {
-            const alunosService = new AlunosService();
-            const codigo_cidade = user?.codigo_cidade || 0;
-            const response = await alunosService.listAlunos(codigo_cidade);
-            const treatedData = alunosTableHelper.treatData(response.data, { delete: handleDeleteAluno });
-            setTableData(treatedData);
-        };
-
         fetchData();
     }, []);
 

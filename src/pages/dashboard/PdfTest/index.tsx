@@ -9,7 +9,7 @@ const PdfTest: React.FC = () => {
     return (
         <Container>
             <h2>Component</h2>
-            <PDFViewer width="100%" height="650px">
+            <PDFViewer width="100%" height="750px">
                 <TableDocument />
             </PDFViewer>
         </Container>
