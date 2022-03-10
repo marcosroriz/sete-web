@@ -1,8 +1,8 @@
 import React from "react";
 
-import { AlunoListObj, AlunosTableField, TurnoLabel, NivelLabel } from "entities/Aluno";
+import { AlunoListObj, AlunosTableField, TurnoTableLabel, NivelTableLabel } from "entities/Aluno";
 import { Link } from "react-router-dom";
-import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
+import { FaEdit, FaRegTimesCircle, FaSearch } from "react-icons/fa";
 
 type AdditionalOptions = {
     delete: (escola: AlunoListObj) => Promise<void>;
@@ -17,8 +17,8 @@ class AlunosTableHelper {
             nome: alunoObj.nome,
             localizacao: alunoObj.mec_tp_localizacao == 1 ? "Urbana" : alunoObj.mec_tp_localizacao == 2 ? "Rural" : "-",
             gps: alunoObj.loc_latitude === null ? "Não" : alunoObj.log_longitude === null ? "Não" : "Sim",
-            nivel: TurnoLabel.get(alunoObj.turno) || "",
-            turno: NivelLabel.get(alunoObj.nivel) || "",
+            nivel: NivelTableLabel.get(alunoObj.nivel) || "",
+            turno: TurnoTableLabel.get(alunoObj.turno) || "",
             acoes: this.acoesComponent(alunoObj, addOptions),
         }));
     }
@@ -71,8 +71,8 @@ class AlunosTableHelper {
         return data.map((alunoObj) => ({
             nome: alunoObj.nome,
             cpf: alunoObj.cpf || "-",
-            turno: TurnoLabel.get(alunoObj.turno),
-            nivel: NivelLabel.get(alunoObj.nivel),
+            turno: TurnoTableLabel.get(alunoObj.turno),
+            nivel: NivelTableLabel.get(alunoObj.nivel),
         }));
     }
 }

@@ -118,6 +118,13 @@ const TurnoLabel = new Map<TurnoEnum, string>([
     [TurnoEnum.Noite, "Noite (Noturno)"],
 ]);
 
+const TurnoTableLabel = new Map<TurnoEnum, string>([
+    [TurnoEnum.Manha, "Manhã"],
+    [TurnoEnum.Tarde, "Tarde"],
+    [TurnoEnum.Integral, "Integral"],
+    [TurnoEnum.Noite, "Noite"],
+]);
+
 enum NivelEnum {
     Infantil = 1,
     Fundamental = 2,
@@ -125,6 +132,7 @@ enum NivelEnum {
     Superior = 4,
     Outro = 5,
 }
+
 const NivelLabel = new Map<NivelEnum, string>([
     [NivelEnum.Infantil, "Infantil(Creche e Pré-Escola)"],
     [NivelEnum.Fundamental, "Fundamental"],
@@ -133,5 +141,26 @@ const NivelLabel = new Map<NivelEnum, string>([
     [NivelEnum.Outro, "Outro"],
 ]);
 
-export { GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel, TurnoEnum, TurnoLabel, NivelEnum, NivelLabel };
+const NivelTableLabel = new Map<NivelEnum, string>([
+    [NivelEnum.Infantil, "Infantil"],
+    [NivelEnum.Fundamental, "Fundamental"],
+    [NivelEnum.Medio, "Médio"],
+    [NivelEnum.Superior, "Noite"],
+    [NivelEnum.Outro, "Outro"],
+]);
+
+export {
+    GrauParentescoEnum,
+    GrauParentescoLabel,
+    SexoEnum,
+    SexoLabel,
+    CorEnum,
+    CorLabel,
+    TurnoEnum,
+    TurnoLabel,
+    TurnoTableLabel,
+    NivelEnum,
+    NivelLabel,
+    NivelTableLabel,
+};
 export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

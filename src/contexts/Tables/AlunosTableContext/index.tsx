@@ -1,18 +1,34 @@
 import React from "react";
+import { pdf } from "@react-pdf/renderer";
 import { ColumnWithLooseAccessor } from "react-table";
 
 import { AlunosService } from "services/Alunos";
 import { AlunosTableField, AlunoListObj } from "entities/Aluno";
 
+import { alunosTableHelper } from "helpers/Tables/AlunosTableHelper";
+import { filesHelper } from "helpers/FilesHelper";
+
 import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
 import { useAuth } from "contexts/Auth";
-import { alunosTableHelper } from "helpers/Tables/AlunosTableHelper";
+
+import TableDocument from "components/micro/Pdf/TableDocument";
+import { Column } from "components/micro/Pdf/Global";
 
 import { COLUMNS } from "./columns";
 
+const pdfColumns = [
+    { acessor: "nome", Header: "Nome", width: "25%" },
+    { acessor: "localizacao", Header: "Localização", width: "12%" },
+    { acessor: "gps", Header: "GPS", width: "8%" },
+    { acessor: "escola", Header: "Escola", width: "20%" },
+    { acessor: "nivel", Header: "Nível", width: "20%" },
+    { acessor: "turno", Header: "Turno", width: "10%" },
+] as Column[];
+
 type AlunosTableContextProps = {
     tableData: AlunosTableField[];
+    selectedData: AlunosTableField[];
     columns: ColumnWithLooseAccessor<{}>[];
     handleSelectedData: (arr: AlunosTableField[]) => void;
     handleDeleteSelectedAlunos: () => void;
@@ -27,7 +43,7 @@ type AlunosTableProviderProps = {
 const AlunosTableContext = React.createContext({} as AlunosTableContextProps);
 
 const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
-    const { createModalAsync, createModal, incrementProgress } = useAlertModal();
+    const { createModalAsync, createModal, clearModal, incrementProgress } = useAlertModal();
     const { errorHandler } = useError();
     const { user } = useAuth();
     const [tableData, setTableData] = React.useState<AlunosTableField[]>([]);
@@ -74,7 +90,22 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
     };
 
     const handleExportPdf = async () => {
-        // Abrir local para salvar pdf.
+        try {
+            createModal("loading");
+            await filesHelper.delay(600);
+            const blob = await pdf(
+                <TableDocument
+                    titleCity="Aparecida de Goiânia (Goiás)"
+                    titleRecords={`${selectedData.length} Alunos Cadastrados`}
+                    data={selectedData}
+                    columns={pdfColumns}
+                />,
+            ).toBlob();
+            filesHelper.downloadBlob(blob);
+            clearModal();
+        } catch (err) {
+            errorHandler(err, { title: "Falha ao fazer download do pdf" });
+        }
     };
 
     const handleDeleteAluno = async (aluno: AlunoListObj) => {
@@ -107,7 +138,9 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
     }, []);
 
     return (
-        <AlunosTableContext.Provider value={{ tableData, columns, handleSelectedData, handleDeleteSelectedAlunos, handleExportExcel, handleExportPdf }}>
+        <AlunosTableContext.Provider
+            value={{ tableData, selectedData, columns, handleSelectedData, handleDeleteSelectedAlunos, handleExportExcel, handleExportPdf }}
+        >
             {children}
         </AlunosTableContext.Provider>
     );

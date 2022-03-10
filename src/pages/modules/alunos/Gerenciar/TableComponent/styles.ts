@@ -7,7 +7,11 @@ export const mediaQuery = {
 
 export const Container = styled.div`
     .btn-group {
-        width: 56%;
+        width: 40%;
         margin-top: 25px;
+        button.btn-fill {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 `;

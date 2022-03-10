@@ -1,7 +1,7 @@
 import React from "react";
 import { PDFViewer } from "@react-pdf/renderer";
 
-import TableDocument from "./TableDocument";
+import TableDocument from "components/micro/Pdf/TableDocument";
 
 import { Container } from "./styles";
 
@@ -10,7 +10,7 @@ const PdfTest: React.FC = () => {
         <Container>
             <h2>Component</h2>
             <PDFViewer width="100%" height="750px">
-                <TableDocument />
+                <TableDocument titleCity="Hello" titleRecords="adasd" />
             </PDFViewer>
         </Container>
     );
