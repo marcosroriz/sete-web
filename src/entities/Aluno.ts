@@ -61,6 +61,15 @@ interface AlunosListRota {
     value: string;
 }
 
+enum MecTpLocalizacaoEnum {
+    Urbana = "1",
+    Rural = "2",
+}
+const MecTpLocalizacaoLabel = new Map<MecTpLocalizacaoEnum, string>([
+    [MecTpLocalizacaoEnum.Urbana, "Área Urbana"],
+    [MecTpLocalizacaoEnum.Rural, "Área Rural"],
+]);
+
 enum SexoEnum {
     Masculino = "1",
     Feminino = "2",
@@ -132,5 +141,18 @@ const NivelLabel = new Map<NivelEnum, string>([
     [NivelEnum.Outro, "Outro"],
 ]);
 
-export { GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel, TurnoEnum, TurnoLabel, NivelEnum, NivelLabel };
+export {
+    MecTpLocalizacaoEnum,
+    MecTpLocalizacaoLabel,
+    GrauParentescoEnum,
+    GrauParentescoLabel,
+    SexoEnum,
+    SexoLabel,
+    CorEnum,
+    CorLabel,
+    TurnoEnum,
+    TurnoLabel,
+    NivelEnum,
+    NivelLabel,
+};
 export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

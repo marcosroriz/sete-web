@@ -6,7 +6,15 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
-import { Escola } from "entities/Escola";
+import {
+    Escola,
+    MecTpDependenciaEnum,
+    MecTpDependenciaLabel,
+    MecTpLocalizacaoEnum,
+    MecTpLocalizacaoLabel,
+    MecTpLocalizacaoDiferenciadaEnum,
+    MecTpLocalizacaoDiferenciadaLabel,
+} from "entities/Escola";
 import { LocalidadeService } from "services/Localidade";
 
 import BlockTitle from "components/micro/BlockTitle";
@@ -24,6 +32,20 @@ import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import { Container, mediaQuery } from "./styles";
 
 type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
+
+const mec_tp_localizacaoOptions = Object.values(MecTpLocalizacaoEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="mec_tp_localizacao" label={MecTpLocalizacaoLabel.get(value) || ""} value={value} position="right" />
+));
+
+const mec_tp_localizacao_diferenciadaOptions = Object.values(MecTpLocalizacaoDiferenciadaEnum).map((value) => (
+    <ReactHookInputRadio
+        key={value}
+        name="mec_tp_localizacao_diferenciada"
+        label={MecTpLocalizacaoDiferenciadaLabel.get(value) || ""}
+        value={value}
+        position="right"
+    />
+));
 
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
@@ -124,8 +146,7 @@ const Localizacao: React.FC = () => {
                     fieldsHorizontal
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Área Urbana" value="1" name="mec_tp_localizacao" position="right" />
-                    <ReactHookInputRadio label="Área Rural" value="2" name="mec_tp_localizacao" position="right" />
+                    {mec_tp_localizacaoOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
@@ -135,16 +156,15 @@ const Localizacao: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Não se aplica" value="7" name="mec_tp_localizacao_diferenciada" position="right" />
-                    <ReactHookInputRadio label="Área de Assentamento" value="1" name="mec_tp_localizacao_diferenciada" position="right" />
-                    <ReactHookInputRadio label="Terra Indígena" value="2" name="mec_tp_localizacao_diferenciada" position="right" />
-                    <ReactHookInputRadio label="Área remanescente de Quilombo" value="3" name="mec_tp_localizacao_diferenciada" position="right" />
+                    {mec_tp_localizacao_diferenciadaOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer>
-                <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
-                    Cancelar Edição
-                </Button>
+            <ButtonsContainer position={!!escolaData ? "evenly" : "right"}>
+                {!!escolaData && (
+                    <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
+                        Cancelar Edição
+                    </Button>
+                )}
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>

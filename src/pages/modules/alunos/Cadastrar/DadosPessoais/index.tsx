@@ -50,7 +50,7 @@ const DadosPessoais: React.FC = () => {
             setValue("def_enxergar", alunoData?.def_enxergar === "S");
             setValue("def_mental", alunoData?.def_mental === "S");
         }
-    }, []);
+    }, [alunoData]);
 
     return (
         <Container>

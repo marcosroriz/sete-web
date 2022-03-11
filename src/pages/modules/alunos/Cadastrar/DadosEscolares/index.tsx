@@ -74,7 +74,7 @@ const DadosEscolares: React.FC = () => {
         if (!!rotaData) {
             setValue("rota", rotaData?.id_rota.toString());
         }
-    }, []);
+    }, [alunoData, escolaData, rotaData]);
 
     return (
         <Container>

@@ -10,8 +10,9 @@ import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckb
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import BlockTitle from "components/micro/BlockTitle";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 
-import { ButtonsContainer, Container, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
 
 type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
 
@@ -81,10 +82,12 @@ const DadosEscolares: React.FC = () => {
                     <ReactHookInputCheckbox label="Noite" name="horario[2]" /*horario_noturno*/ />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer>
-                <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
-                    Voltar
-                </Button>
+            <ButtonsContainer position={!!escolaData ? "evenly" : "right"}>
+                {!!escolaData && (
+                    <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
+                        Voltar
+                    </Button>
+                )}
                 <Button variant="info" type="submit" className="btn-fill">
                     Concluír
                 </Button>

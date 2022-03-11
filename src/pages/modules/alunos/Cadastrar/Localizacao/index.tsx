@@ -6,7 +6,7 @@ import { useFormContext } from "react-hook-form";
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
-import { Aluno } from "entities/Aluno";
+import { Aluno, MecTpLocalizacaoEnum, MecTpLocalizacaoLabel } from "entities/Aluno";
 
 import BlockTitle from "components/micro/BlockTitle";
 import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
@@ -24,6 +24,10 @@ import { Container, mediaQuery } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
+const mec_tp_localizacaoOptions = Object.values(MecTpLocalizacaoEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="mec_tp_localizacao" label={MecTpLocalizacaoLabel.get(value) || ""} value={value} position="right" />
+));
+
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
     const { setValue } = useFormContext();
@@ -34,20 +38,21 @@ const Localizacao: React.FC = () => {
 
     React.useEffect(() => {
         if (!!alunoData) {
-            setValue("latlng[0]", alunoData?.loc_latitude || "");
-            setValue("latlng[1]", alunoData.loc_longitude || "");
-            setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString() || "");
-            setValue("loc_endereco", alunoData?.loc_endereco || "");
+            setValue("latlng[0]", alunoData?.loc_latitude);
+            setValue("latlng[1]", alunoData.loc_longitude);
+            setValue("mec_tp_localizacao", alunoData?.mec_tp_localizacao?.toString());
+            setValue("loc_endereco", alunoData?.loc_endereco);
             setValue("da_porteira", alunoData?.da_porteira === "S");
             setValue("da_mataburro", alunoData?.da_mataburro === "S");
             setValue("da_colchete", alunoData?.da_colchete === "S");
             setValue("da_atoleiro", alunoData?.da_atoleiro === "S");
             setValue("da_ponterustica", alunoData?.da_ponterustica === "S");
+
             if (alunoData?.loc_latitude && alunoData?.loc_longitude) {
                 mapRef.current?.goToLocation([Number(alunoData?.loc_longitude), Number(alunoData?.loc_latitude)]);
             }
         }
-    }, []);
+    }, [alunoData]);
 
     const handleCancelEditClick = () => {
         history.goBack();
@@ -71,8 +76,7 @@ const Localizacao: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Área urbana" value="1" name="mec_tp_localizacao" position="right" />
-                    <ReactHookInputRadio label="Área rural" value="2" name="mec_tp_localizacao" position="right" />
+                    {mec_tp_localizacaoOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
