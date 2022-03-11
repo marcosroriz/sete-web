@@ -27,11 +27,11 @@ type EscolaData = any;
 type RotaData = any;
 
 const turnoOptions = Object.values(TurnoEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="turno" label={TurnoLabel.get(value) || ""} value={value} position="right" />
+    <ReactHookInputRadio key={value} name="turno" label={TurnoLabel.get(value as TurnoEnum) || ""} value={value.toString()} position="right" />
 ));
 
 const nivelOptions = Object.values(NivelEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="nivel" label={NivelLabel.get(value) || ""} value={value} position="right" />
+    <ReactHookInputRadio key={value} name="nivel" label={NivelLabel.get(value as NivelEnum) || ""} value={value.toString()} position="right" />
 ));
 
 const DadosEscolares: React.FC = () => {
