@@ -5,6 +5,9 @@ import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, Co
 import { useNavCard } from "contexts/NavCard";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
+import { Button } from "react-bootstrap";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
+
 import RecordTable from "components/micro/RecordTable";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
@@ -16,7 +19,7 @@ const FichaAluno: React.FC = () => {
     const [tableData, setTableData] = React.useState<any>(null);
 
     React.useEffect(() => {
-        if (alunoData && escolaData) {
+        if (!!alunoData && !!escolaData) {
             const data = {
                 "Nome do Aluno": alunoData.nome,
                 "Data de nascimento": alunoData.data_nascimento,

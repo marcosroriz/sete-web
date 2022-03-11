@@ -137,6 +137,10 @@ class Map {
         this.mapInstance.getView().setCenter(location);
     }
 
+    public updateSize(): void {
+        this.mapInstance.updateSize();
+    }
+
     public activatePrinting(): void {
         let printControl = new PrintDialog({ lang: "pt" });
         printControl.setSize("A4");

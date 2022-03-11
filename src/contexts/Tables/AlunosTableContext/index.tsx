@@ -122,6 +122,25 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
         }
     };
 
+    const handleExportPdf_View = async () => {
+        try {
+            createModal("loading");
+            await filesHelper.delay(600);
+            const blob = await pdf(
+                <TableDocument
+                    titleCity="Aparecida de Goiânia (Goiás)"
+                    //titleRecords={`${selectedData.length} Alunos Cadastrados`}
+                    data={selectedData}
+                    //columns={pdfColumns}
+                />,
+            ).toBlob();
+            filesHelper.downloadBlob(blob, "Alunos");
+            clearModal();
+        } catch (err) {
+            errorHandler(err, { title: "Falha ao fazer download do pdf" });
+        }
+    };
+
     const handleDeleteAluno = async (aluno: AlunoListObj) => {
         try {
             const { isConfirmed } = await createModalAsync("confirm_remove", {
@@ -157,7 +176,15 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
 
     return (
         <AlunosTableContext.Provider
-            value={{ tableData, selectedData, columns, handleSelectedData, handleDeleteSelectedAlunos, handleExportExcel, handleExportPdf }}
+            value={{
+                tableData,
+                selectedData,
+                columns,
+                handleSelectedData,
+                handleDeleteSelectedAlunos,
+                handleExportExcel,
+                handleExportPdf,
+            }}
         >
             {children}
         </AlunosTableContext.Provider>

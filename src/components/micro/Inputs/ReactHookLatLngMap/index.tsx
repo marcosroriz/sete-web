@@ -16,9 +16,10 @@ type ReactHookLatLngMapProps = {
     anchor?: [number, number];
     children?: React.ReactNode;
     title?: string;
+    isView?: boolean;
 };
 
-const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name, icon, anchor, children }) => {
+const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name, icon, anchor, isView, children }) => {
     const transladeRef = React.useRef<boolean>(false);
     const { setValue } = useFormContext();
     const inputValue = useWatch({
@@ -29,10 +30,13 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
         if (!mapController?.current) {
             mapController!.current = new MapControlEvents("map");
             const map = mapController?.current;
-            map.mapInstance.on("singleclick", (event) => {
-                const [lng, lat] = event.coordinate;
-                setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
-            });
+            {
+                !isView &&
+                    map.mapInstance.on("singleclick", (event) => {
+                        const [lng, lat] = event.coordinate;
+                        setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
+                    });
+            }
             // map.activatePrinting();
             map.activateImageLayerSwitcher();
         }
@@ -47,6 +51,7 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
             if (!translate) {
                 return;
             }
+
             translate.on("translateend", (translateEvent) => {
                 const [lng, lat] = translateEvent.coordinate;
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);

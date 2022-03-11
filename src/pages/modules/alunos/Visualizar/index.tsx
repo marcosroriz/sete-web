@@ -5,6 +5,7 @@ import { NavCardProvider, NavCardTab } from "contexts/NavCard";
 import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
+import { AlunosTableProvider } from "contexts/Tables/AlunosTableContext";
 
 import { Aluno } from "entities/Aluno";
 import { AlunosService } from "services/Alunos";
@@ -21,6 +22,14 @@ import AlunosListar from "assets/icons/alunos/alunos-listar.png";
 import FichaAlunoIcon from "assets/icons/alunos/alunos-dados-escolares.svg";
 import LocalizacaoIcon from "assets/icons/alunos/alunos-localizacao.svg";
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
+
+type FormData = {
+    latlng: [string, string];
+};
+
+const formData = {
+    latlng: ["", ""],
+} as FormData;
 
 const Visualizar: React.FC = () => {
     const { id: alunoId } = useParams<{ id: string }>();
@@ -61,7 +70,17 @@ const Visualizar: React.FC = () => {
     return (
         <>
             <PageTitle message="Vizualizar dados do Aluno" icon={AlunosListar} />
-            <ReactHookNavCardProvider
+
+            {/* <NavCardProvider aditionalData={{ alunoData: [alunoData, setAlunoData], escolaData: [escolaData, setEscolaData] }}>
+                <NavCardTab name="FICHA DO ALUNO" icon={<img src={FichaAlunoIcon} alt="" aria-hidden="true" />}>
+                    <FichaAluno />
+                </NavCardTab>
+                <NavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
+                    <Localizacao />
+                </NavCardTab>
+            </NavCardProvider> */}
+
+            <ReactHookNavCardProvider<FormData>
                 onSubmit={() => console.log("")}
                 aditionalData={{ alunoData: [alunoData, setAlunoData], escolaData: [escolaData, setEscolaData] }}
             >
