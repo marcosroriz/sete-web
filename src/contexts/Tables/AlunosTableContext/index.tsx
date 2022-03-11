@@ -1,6 +1,7 @@
 import React from "react";
 import { pdf } from "@react-pdf/renderer";
 import { ColumnWithLooseAccessor } from "react-table";
+import * as XLSX from "xlsx";
 
 import { AlunosService } from "services/Alunos";
 import { AlunosTableField, AlunoListObj } from "entities/Aluno";
@@ -86,7 +87,20 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
     };
 
     const handleExportExcel = async () => {
-        // Abrir local para salvar.
+        const xlsxData = [pdfColumns.map((val) => val.Header)].concat(selectedData.map((data) => pdfColumns.map((val) => data[val.acessor])));
+
+        let worksheet = XLSX.utils.aoa_to_sheet(xlsxData);
+        let new_workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(new_workbook, worksheet, "SheetJS");
+        const writtenFile = XLSX.write(new_workbook, { bookType: "xlsx", type: "binary" });
+
+        function s2ab(s: any) {
+            let buf = new ArrayBuffer(s.length);
+            let view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+            return buf;
+        }
+        filesHelper.downloadBlob(new Blob([s2ab(writtenFile)], { type: "application/octet-stream" }), "Alunos.xlsx");
     };
 
     const handleExportPdf = async () => {
@@ -101,7 +115,7 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
                     columns={pdfColumns}
                 />,
             ).toBlob();
-            filesHelper.downloadBlob(blob);
+            filesHelper.downloadBlob(blob, "Alunos");
             clearModal();
         } catch (err) {
             errorHandler(err, { title: "Falha ao fazer download do pdf" });
@@ -110,17 +124,20 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
 
     const handleDeleteAluno = async (aluno: AlunoListObj) => {
         try {
-            const alertResponse = await createModalAsync("confirm_remove", {
+            const { isConfirmed } = await createModalAsync("confirm_remove", {
                 html: `Deseja remover o(a) Aluno:<br /> <b>${aluno.nome}</b>?`,
             });
-            if (!alertResponse.isConfirmed) {
+            if (!isConfirmed) {
                 return;
             }
+            createModal();
 
             const alunosService = new AlunosService();
             const codigo_cidade = user?.codigo_cidade || 0;
 
             await alunosService.deleteAluno(aluno.id_aluno, codigo_cidade);
+            await fetchData();
+            clearModal();
         } catch (err) {
             errorHandler(err, { title: "Erro ao remover Aluno" });
         }
@@ -133,6 +150,7 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
         const treatedData = alunosTableHelper.treatData(response.data, { delete: handleDeleteAluno });
         setTableData(treatedData);
     };
+
     React.useEffect(() => {
         fetchData();
     }, []);

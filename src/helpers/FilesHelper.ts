@@ -1,9 +1,9 @@
 class FilesHelper {
-    public downloadBlob(blob: Blob) {
+    public downloadBlob(blob: Blob, fileName: string) {
         const blobUrl = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = blobUrl;
-        a.download = "alunos";
+        a.download = fileName;
         a.click();
         window.URL.revokeObjectURL(blobUrl);
         a.remove();
