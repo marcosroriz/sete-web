@@ -1,22 +1,66 @@
 import React from "react";
+import { Button } from "react-bootstrap";
+import { useHistory, useParams } from "react-router-dom";
 
 import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel } from "entities/Aluno";
+import { filesHelper } from "helpers/FilesHelper";
+import { AlunosService } from "services/Alunos";
 
-import { useNavCard } from "contexts/NavCard";
+import { useError } from "hooks/Errors";
+import { useAlertModal } from "hooks/AlertModal";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { useAuth } from "contexts/Auth";
 
-import { Button } from "react-bootstrap";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
-
 import RecordTable from "components/micro/RecordTable";
+
+import { Container } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
 const FichaAluno: React.FC = () => {
+    const history = useHistory();
+    const { id: alunoId } = useParams<{ id: string }>();
+    const { errorHandler } = useError();
+    const { createModalAsync, createModal } = useAlertModal();
+    const { user } = useAuth();
     const { aditionalData } = useReactHookNavCard();
     const [alunoData] = aditionalData?.alunoData as AlunoData;
     const [escolaData] = aditionalData?.escolaData as any;
     const [tableData, setTableData] = React.useState<any>(null);
+
+    const handleVoltarClick = () => {
+        history.goBack();
+    };
+
+    const handleModificarClick = () => {
+        history.push(`/alunos/gerenciar/editar/${alunoId}`);
+    };
+
+    const handleDownloadExcelClick = () => {
+        console.log("Excel");
+    };
+
+    const handleDownloadPdfClick = () => {
+        console.log("Pdf");
+    };
+
+    const handleDeleteContaClick = async () => {
+        try {
+            const { isConfirmed } = await createModalAsync("confirm_remove", { html: "Deseja remover os alunos selecionados?" });
+            if (!isConfirmed) {
+                return;
+            }
+            createModal();
+            const codigo_cidade = user?.codigo_cidade || 0;
+            const alunosService = new AlunosService();
+            await alunosService.deleteAluno(Number(alunoId), codigo_cidade);
+            createModal("success", { title: "Sucesso!", html: "Aluno removido com sucesso" });
+            history.goBack();
+        } catch (err) {
+            errorHandler(err, { title: "Erro ao remover Aluno" });
+        }
+    };
 
     React.useEffect(() => {
         if (!!alunoData && !!escolaData) {
@@ -59,7 +103,28 @@ const FichaAluno: React.FC = () => {
             setTableData(data);
         }
     }, [alunoData, escolaData]);
-    return <RecordTable title={alunoData?.nome || ""} data={tableData} />;
+    return (
+        <Container>
+            <RecordTable title={alunoData?.nome || ""} data={tableData} />
+            <ButtonsContainer containerClassName="dt-buttons btn-group">
+                <Button variant="info" type="button" className="btn-fill" onClick={handleVoltarClick}>
+                    Voltar
+                </Button>
+                <Button variant="" className="btn-fill btn-excel" onClick={handleDownloadExcelClick}>
+                    Exportar para Excel/LibreOffice
+                </Button>
+                <Button variant="secondary" className="btn-fill" onClick={handleDownloadPdfClick}>
+                    Exportar para PDF
+                </Button>
+                <Button variant="warning" className="btn-fill" onClick={handleModificarClick}>
+                    Modificar
+                </Button>
+                <Button variant="danger" className="btn-fill" onClick={handleDeleteContaClick}>
+                    Apagar
+                </Button>
+            </ButtonsContainer>
+        </Container>
+    );
 };
 
 export default FichaAluno;

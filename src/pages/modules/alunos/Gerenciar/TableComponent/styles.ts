@@ -10,6 +10,8 @@ export const Container = styled.div`
         width: 40%;
         margin-top: 25px;
         button.btn-fill {
+            padding-top: 6px;
+            padding-bottom: 6px;
             padding-left: 0;
             padding-right: 0;
         }

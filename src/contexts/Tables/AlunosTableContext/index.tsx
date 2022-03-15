@@ -1,7 +1,7 @@
 import React from "react";
 import { pdf } from "@react-pdf/renderer";
 import { ColumnWithLooseAccessor } from "react-table";
-import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 import { AlunosService } from "services/Alunos";
 import { AlunosTableField, AlunoListObj } from "entities/Aluno";
@@ -89,18 +89,9 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
     const handleExportExcel = async () => {
         const xlsxData = [pdfColumns.map((val) => val.Header)].concat(selectedData.map((data) => pdfColumns.map((val) => data[val.acessor])));
 
-        let worksheet = XLSX.utils.aoa_to_sheet(xlsxData);
-        let new_workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(new_workbook, worksheet, "SheetJS");
-        const writtenFile = XLSX.write(new_workbook, { bookType: "xlsx", type: "binary" });
+        const blob = filesHelper.processXslxFile(xlsxData);
 
-        function s2ab(s: any) {
-            let buf = new ArrayBuffer(s.length);
-            let view = new Uint8Array(buf);
-            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
-            return buf;
-        }
-        filesHelper.downloadBlob(new Blob([s2ab(writtenFile)], { type: "application/octet-stream" }), "Alunos.xlsx");
+        saveAs(blob, "Alunos.xlsx");
     };
 
     const handleExportPdf = async () => {
@@ -110,31 +101,12 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
             const blob = await pdf(
                 <TableDocument
                     titleCity="Aparecida de Goiânia (Goiás)"
-                    titleRecords={`${selectedData.length} Alunos Cadastrados`}
+                    titleRecords={`${selectedData.length}/${tableData.length} Alunos Cadastrados`}
                     data={selectedData}
                     columns={pdfColumns}
                 />,
             ).toBlob();
-            filesHelper.downloadBlob(blob, "Alunos");
-            clearModal();
-        } catch (err) {
-            errorHandler(err, { title: "Falha ao fazer download do pdf" });
-        }
-    };
-
-    const handleExportPdf_View = async () => {
-        try {
-            createModal("loading");
-            await filesHelper.delay(600);
-            const blob = await pdf(
-                <TableDocument
-                    titleCity="Aparecida de Goiânia (Goiás)"
-                    //titleRecords={`${selectedData.length} Alunos Cadastrados`}
-                    data={selectedData}
-                    //columns={pdfColumns}
-                />,
-            ).toBlob();
-            filesHelper.downloadBlob(blob, "Alunos");
+            saveAs(blob, "Alunos.pdf");
             clearModal();
         } catch (err) {
             errorHandler(err, { title: "Falha ao fazer download do pdf" });

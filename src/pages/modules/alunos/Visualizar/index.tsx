@@ -46,15 +46,15 @@ const Visualizar: React.FC = () => {
                 createModal();
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const alunoService = new AlunosService();
+
                 const alunoResponse = await alunoService.getAluno(Number(alunoId), codigo_cidade);
+                setAlunoData(alunoResponse);
 
                 const escolaService = new EscolasService();
-
-                const idEscola = alunoResponse.id_escola != null ? Number(alunoResponse.id_escola) : Number(52272457);
-                const escolaResponse = await escolaService.getEscola(idEscola, codigo_cidade);
-
-                setAlunoData(alunoResponse);
-                setEscolaData(escolaResponse);
+                if (alunoResponse.id_escola) {
+                    const escolaResponse = await escolaService.getEscola(alunoResponse.id_escola, codigo_cidade);
+                    setEscolaData(escolaResponse);
+                }
 
                 if (!alunoResponse.result) {
                     throw { ...alunoResponse };
