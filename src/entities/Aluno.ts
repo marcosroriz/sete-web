@@ -62,21 +62,17 @@ interface AlunosListRota {
     value: string;
 }
 
-type ValueOf<T> = T[keyof T];
+enum MecTpLocalizacaoEnum {
+    Urbana = 1,
+    Rural = 2,
+}
 
-const MecTpLocalizacaoEnum = {
-    Urbana: 1,
-    Rural: 2,
-} as const;
-
-type MecTpLocalizacaoEnumValues = ValueOf<typeof MecTpLocalizacaoEnum>;
-
-const MecTpLocalizacaoLabel = new Map<MecTpLocalizacaoEnumValues, string>([
+const MecTpLocalizacaoLabel = new Map<MecTpLocalizacaoEnum, string>([
     [MecTpLocalizacaoEnum.Urbana, "Área Urbana"],
     [MecTpLocalizacaoEnum.Rural, "Área Rural"],
 ]);
 
-const MecTpLocalizacaoTableLabel = new Map<ValueOf<typeof MecTpLocalizacaoEnum>, string>([
+const MecTpLocalizacaoTableLabel = new Map<MecTpLocalizacaoEnum, string>([
     [MecTpLocalizacaoEnum.Urbana, "Urbana"],
     [MecTpLocalizacaoEnum.Rural, "Rural"],
 ]);
@@ -185,4 +181,4 @@ export {
     NivelLabel,
     NivelTableLabel,
 };
-export type { MecTpLocalizacaoEnumValues, Aluno, AlunoListObj, AlunosTableField, AlunosListRota };
+export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };

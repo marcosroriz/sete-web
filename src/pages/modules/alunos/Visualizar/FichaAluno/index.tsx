@@ -12,7 +12,6 @@ import {
     CorLabel,
     MecTpLocalizacaoEnum,
     MecTpLocalizacaoLabel,
-    MecTpLocalizacaoEnumValues,
 } from "entities/Aluno";
 import { filesHelper } from "helpers/FilesHelper";
 import { AlunosService } from "services/Alunos";
@@ -103,7 +102,7 @@ const FichaAluno: React.FC = () => {
                 ]
                     .filter((val) => val !== "")
                     .join(", "),
-                ["Localização"]: MecTpLocalizacaoLabel.get(alunoData.mec_tp_localizacao as MecTpLocalizacaoEnumValues) || "Sem localização",
+                ["Localização"]: MecTpLocalizacaoLabel.get(alunoData.mec_tp_localizacao as MecTpLocalizacaoEnum) || "Sem localização",
 
                 ["Escola"]: escolaData.nome,
                 ["Contato da escola"]: escolaData.contato_responsavel,

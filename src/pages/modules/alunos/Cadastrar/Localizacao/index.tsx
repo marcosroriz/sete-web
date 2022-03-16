@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+import { formatHelper } from "helpers/FormatHelper";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { Aluno, MecTpLocalizacaoEnum, MecTpLocalizacaoLabel } from "entities/Aluno";
@@ -24,9 +25,9 @@ import { Container, mediaQuery } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
-const mec_tp_localizacaoOptions = Object.values(MecTpLocalizacaoEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="mec_tp_localizacao" label={MecTpLocalizacaoLabel.get(value)!} value={value} position="right" />
-));
+const mec_tp_localizacaoOptions = formatHelper
+    .getNumbersEnumValues(MecTpLocalizacaoEnum)
+    .map((value) => <ReactHookInputRadio key={value} name="mec_tp_localizacao" label={MecTpLocalizacaoLabel.get(value)!} value={value} position="right" />);
 
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
