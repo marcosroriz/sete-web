@@ -5,7 +5,7 @@ type ContainerProps = {
 };
 
 export const Container = styled.div<ContainerProps>`
-    border: 1.5px solid #6f6f6f;
+    border: 1.5px solid;
     border-radius: 0px 0px 20px 20px;
     border-color: #adadad;
     border-top: none;

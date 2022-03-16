@@ -2,7 +2,18 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 
-import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel } from "entities/Aluno";
+import {
+    Aluno,
+    GrauParentescoEnum,
+    GrauParentescoLabel,
+    SexoEnum,
+    SexoLabel,
+    CorEnum,
+    CorLabel,
+    MecTpLocalizacaoEnum,
+    MecTpLocalizacaoLabel,
+    MecTpLocalizacaoEnumValues,
+} from "entities/Aluno";
 import { filesHelper } from "helpers/FilesHelper";
 import { AlunosService } from "services/Alunos";
 
@@ -65,12 +76,12 @@ const FichaAluno: React.FC = () => {
     React.useEffect(() => {
         if (!!alunoData && !!escolaData) {
             const data = {
-                "Nome do Aluno": alunoData.nome,
-                "Data de nascimento": alunoData.data_nascimento,
-                Sexo: SexoLabel.get((alunoData.sexo?.toString() || "3") as SexoEnum),
-                "Cor/Raça": CorLabel.get((alunoData.cor?.toString() || "0") as CorEnum),
-                CPF: alunoData.cpf,
-                "Possui alguma deficiência": [
+                ["Nome do Aluno"]: alunoData.nome,
+                ["Data de nascimento"]: alunoData.data_nascimento,
+                ["Sexo"]: SexoLabel.get((alunoData.sexo?.toString() || "3") as SexoEnum),
+                ["Cor/Raça"]: CorLabel.get((alunoData.cor?.toString() || "0") as CorEnum),
+                ["CPF"]: alunoData.cpf,
+                ["Possui alguma deficiência"]: [
                     alunoData.def_caminhar === "S" ? "Física" : "",
                     alunoData.def_ouvir === "S" ? "Auditiva" : "",
                     alunoData.def_enxergar === "S" ? "Visual" : "",
@@ -78,12 +89,12 @@ const FichaAluno: React.FC = () => {
                 ]
                     .filter((val) => val !== "")
                     .join(", "),
-                "Nome do responsável": alunoData.nome_responsavel,
-                "Grau de parentesco": GrauParentescoLabel.get((alunoData.grau_responsavel?.toString() || "-1") as GrauParentescoEnum),
-                "Telefonde do responsável": alunoData.telefone_responsavel || "Telefone de contato não informado",
-                "Endereço do Aluno": alunoData.loc_endereco,
-                "CEP da residência": alunoData.loc_cep,
-                "Dificuldade de Acesso": [
+                ["Nome do responsável"]: alunoData.nome_responsavel,
+                ["Grau de parentesco"]: GrauParentescoLabel.get((alunoData.grau_responsavel?.toString() || "-1") as GrauParentescoEnum),
+                ["Telefonde do responsável"]: alunoData.telefone_responsavel || "Telefone de contato não informado",
+                ["Endereço do Aluno"]: alunoData.loc_endereco,
+                ["CEP da residência"]: alunoData.loc_cep,
+                ["Dificuldade de Acesso"]: [
                     alunoData.da_porteira === "S" ? "Porteira" : "",
                     alunoData.da_mataburro === "S" ? "Mataburro" : "",
                     alunoData.da_colchete === "S" ? "Colchete" : "",
@@ -92,13 +103,11 @@ const FichaAluno: React.FC = () => {
                 ]
                     .filter((val) => val !== "")
                     .join(", "),
-                Localização: alunoData.loc_longitude ? `${alunoData.loc_latitude || ""}, ${alunoData.loc_longitude || ""}` : "",
-                "Tipo de localização": alunoData.mec_tp_localizacao == 1 ? "Urbana" : alunoData.mec_tp_localizacao == 2 ? "Rural" : null,
+                ["Localização"]: MecTpLocalizacaoLabel.get(alunoData.mec_tp_localizacao as MecTpLocalizacaoEnumValues) || "Sem localização",
 
-                Escola: escolaData.nome,
-                "Contato da escola": escolaData.contato_responsavel,
-                "Telefone de contato": escolaData.contato_telefone,
-                //ROTA: alunoData.ensino_fundamental,
+                ["Escola"]: escolaData.nome,
+                ["Contato da escola"]: escolaData.contato_responsavel,
+                ["Telefone de contato"]: escolaData.contato_telefone,
             };
             setTableData(data);
         }
