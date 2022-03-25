@@ -29,6 +29,11 @@ type GetMarcasVeiculoResponse = {
     result: boolean;
     total: number;
 };
+type GetModelosVeiculoResponse = {
+    data: { id: number; modelo: string }[];
+    result: boolean;
+    total: number;
+};
 
 class VeiculosService {
     private api: ApiInstance;
@@ -46,6 +51,7 @@ class VeiculosService {
     }
 
     public async createVeiculo(body: CreateVeiculoRequestBody, codigo_cidade: number): Promise<CreateVeiculoResponse> {
+        console.log("TESTE VEICULO", body);
         const response = await this.api({
             url: `/veiculos/${codigo_cidade}`,
             method: "post",
@@ -90,6 +96,23 @@ class VeiculosService {
         });
         const data = (await response.data) as GetMarcasVeiculoResponse;
         return data;
+    }
+
+    public async getModelosVeiculo() {
+        const response = await this.api({
+            url: "/veiculos/modelos",
+            method: "get",
+        });
+        const data = (await response.data) as GetModelosVeiculoResponse;
+        return data;
+    }
+
+    public async deleteVeiculo(id_veiculo: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/veiculos/${codigo_cidade}/${id_veiculo}`,
+            method: "delete",
+        });
+        const data = await response.data;
     }
 }
 

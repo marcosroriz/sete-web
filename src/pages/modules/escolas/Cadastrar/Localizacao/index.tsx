@@ -1,11 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { useWatch } from "react-hook-form";
-
-import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
+import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+import { Escola } from "entities/Escola";
 import { LocalidadeService } from "services/Localidade";
 
 import BlockTitle from "components/micro/BlockTitle";
@@ -15,27 +16,52 @@ import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
+import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 
 import EscolasMarker from "assets/icons/escolas/escolas-marker.png";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 
-import { ButtonsContainer, Container, mediaQuery } from "./styles";
-import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
+import { Container, mediaQuery } from "./styles";
+
+type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
 
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
+    const history = useHistory();
+    const { setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
     const mec_co_uf = useWatch({
         name: "mec_co_uf",
     });
-    const { nextStep } = useReactHookNavCard();
+
     const [estadoOptions, setEstadoOptions] = React.useState<{ label: string; value: string }[]>([{ label: "Escolher rota depois", value: "0" }]);
     const [cidadeOptions, setCidadeOptions] = React.useState<{ label: string; value: string }[]>([{ label: "Escolher rota depois", value: "0" }]);
+
+    const [escolaData] = aditionalData?.escolaData as EscolaData;
+
+    React.useEffect(() => {
+        if (!!escolaData) {
+            setValue("latlng[0]", escolaData?.loc_latitude || "");
+            setValue("latlng[1]", escolaData?.loc_longitude || "");
+            setValue("mec_co_uf", escolaData?.mec_co_uf?.toString() || "");
+            setValue("mec_co_municipio", escolaData?.mec_co_municipio?.toString() || "");
+            setValue("loc_endereco", escolaData?.loc_endereco || "");
+            setValue("loc_cep", escolaData?.loc_cep || "");
+            setValue("mec_tp_localizacao", escolaData?.mec_tp_localizacao?.toString() || "");
+            setValue("mec_tp_localizacao_diferenciada", escolaData?.mec_tp_localizacao_diferenciada?.toString() || "");
+
+            if (escolaData?.loc_latitude && escolaData?.loc_longitude) {
+                mapRef.current?.goToLocation([Number(escolaData?.loc_longitude), Number(escolaData?.loc_latitude)]);
+            }
+        }
+    }, [escolaData]);
 
     React.useEffect(() => {
         const fetchData = async () => {
             const localidadeService = new LocalidadeService();
             const response = await localidadeService.getEstados();
             const options = response.data.map((option) => ({ label: option.nome, value: option.codigo.toString() }));
-            setEstadoOptions([{ label: "Escolher rota depois", value: "0" }, ...options]);
+            setEstadoOptions(options);
         };
         fetchData();
     }, []);
@@ -44,13 +70,17 @@ const Localizacao: React.FC = () => {
         const fetchData = async (co_uf: number) => {
             const localidadeService = new LocalidadeService();
             const response = await localidadeService.getMunicipiosFromEstado(co_uf);
-            const options = response.data.map((option) => ({ label: option.nm_cidade, value: option.nm_cidade.toString() }));
-            setCidadeOptions([{ label: "Escolher rota depois", value: "0" }, ...options]);
+            const options = response.data.map((option) => ({ label: option.nm_cidade, value: option.codigo_cidade.toString() }));
+            setCidadeOptions(options);
         };
         if (mec_co_uf) {
             fetchData(Number(mec_co_uf));
         }
     }, [mec_co_uf]);
+
+    const handleCancelEditClick = () => {
+        history.goBack();
+    };
 
     return (
         <Container>
@@ -63,10 +93,22 @@ const Localizacao: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputSelect label="ESTADO*" name="mec_co_uf" options={estadoOptions} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputSelect
+                    label="ESTADO*"
+                    name="mec_co_uf"
+                    placeholder="Selecione uma Opção"
+                    options={estadoOptions}
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputSelect label="CIDADE*" name="mec_co_municipio" options={cidadeOptions} isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputSelect
+                    label="CIDADE*"
+                    name="mec_co_municipio"
+                    placeholder="Selecione uma Opção"
+                    options={cidadeOptions}
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
                 <ReactHookInputText label="ENDEREÇO DA ESCOLA" name="loc_endereco" isHorizontal={mediaQuery.desktop} />
@@ -100,6 +142,9 @@ const Localizacao: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>
+                <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>
+                    Cancelar Edição
+                </Button>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>

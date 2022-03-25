@@ -2,18 +2,28 @@ interface Veiculo {
     codigo_cidade?: number;
     id_veiculo?: number;
     placa?: string;
-    modelo?: string;
+    marca?: string;
+    modelo?: number;
     ano?: number;
-    modo?: string;
+    modo?: number;
     origem?: number;
-    km_inicial?: string;
+    km_atual?: number;
+    km_inicial?: number;
     capacidade?: number;
-    km_atual?: string;
     tipo?: number;
+    ipva?: number;
+    dpvat?: number;
+    seguro_anual?: number;
+    consumo?: number;
+    tipo_combustivel?: string;
+    numero_pneus?: number;
+    vida_util_pneu?: number;
+    potencia?: number;
+    preco?: number;
+    caminho_escola?: string;
     renavam?: string;
     manutencao?: string;
-    marca?: string;
-    id_firebase?: number;
+    id_firebase?: string;
     _links?: {
         _self?: string;
     };
@@ -21,7 +31,7 @@ interface Veiculo {
 }
 
 interface VeiculoListObj {
-    id_veiculo?: number;
+    id_veiculo: number;
     placa: string;
     tipo: string;
     marca: string;

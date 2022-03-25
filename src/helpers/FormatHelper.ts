@@ -11,6 +11,14 @@ class FormatHelper {
         return str.charAt(0).toUpperCase() + str.slice(1).toLocaleLowerCase();
     }
 
+    public normalize(str: string): string {
+        return str
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s/g, "")
+            .toLocaleLowerCase();
+    }
+
     public mergeArrayItemsWithBr(arr: string[]): string {
         const arrLength = arr.length;
         let str = "";

@@ -3,7 +3,6 @@
  * pages/modules/{modulo}/Gerenciar ou /{modulo}/gerenciar
  */
 
-/* eslint-disable react/jsx-key */
 import React, { useEffect } from "react";
 
 import {
@@ -13,7 +12,6 @@ import {
     ColumnWithLooseAccessor,
     TableOptions,
     useFilters,
-    useFlexLayout,
     usePagination,
     useRowSelect,
     useSortBy,
@@ -28,7 +26,7 @@ import { TableContainer, Pagination } from "./styles";
 
 import { useSelection } from "hooks/Table";
 
-const hooks = [useFilters, useSortBy, useFlexLayout, usePagination, useRowSelect, useSelection];
+const hooks = [useFilters, useSortBy, usePagination, useRowSelect, useSelection];
 
 type SeteTableProps = {
     name: string;
@@ -37,12 +35,12 @@ type SeteTableProps = {
 };
 
 const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) => {
-    const [initialState, setInitialState] = useLocalStorage(`tableState:${name}}`, {});
+    const [initialState, setInitialState] = useLocalStorage(`tableState:${name}`, {});
 
     const instance = useTable(
         {
             ...props,
-            columns: columns,
+            columns: columns as any,
             data: data,
             initialState,
         },
@@ -86,8 +84,8 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
                         <thead className="thead">
                             {headerGroups.map((headerGroup, i) => (
                                 <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-                                    {headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    {headerGroup.headers.map((column, j) => (
+                                        <th {...column.getHeaderProps(column.getSortByToggleProps())} key={j}>
                                             {column.render("Header")}
                                             <span className="IconsSorting">
                                                 {column.isSorted ? (
@@ -105,10 +103,10 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
                                 </tr>
                             ))}
 
-                            {headerGroups.map((headerGroup) => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps()}>
+                            {headerGroups.map((headerGroup, i) => (
+                                <tr {...headerGroup.getHeaderGroupProps()} key={i}>
+                                    {headerGroup.headers.map((column, j) => (
+                                        <th {...column.getHeaderProps()} key={j}>
                                             <div className="filter">{column.canFilter ? column.render("Filter") : null}</div>
                                         </th>
                                     ))}
@@ -117,7 +115,7 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
                         </thead>
 
                         <tbody {...getTableBodyProps()}>
-                            {page.map((row) => {
+                            {page.map((row, i) => {
                                 prepareRow(row);
                                 return (
                                     <tr
@@ -126,9 +124,14 @@ const SeteTable: React.FC<SeteTableProps> = ({ name, columns, data, ...props }) 
                                             row.toggleRowSelected();
                                         }}
                                         className={`${row.isSelected ? "selected" : "notSelected"}`}
+                                        key={i}
                                     >
-                                        {row.cells.map((cell) => {
-                                            return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                                        {row.cells.map((cell, j) => {
+                                            return (
+                                                <td {...cell.getCellProps()} key={j}>
+                                                    {cell.render("Cell")}
+                                                </td>
+                                            );
                                         })}
                                     </tr>
                                 );

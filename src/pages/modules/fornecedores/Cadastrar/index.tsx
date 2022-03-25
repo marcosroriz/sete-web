@@ -1,6 +1,8 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { FornecedoresService } from "services/Fornecedores";
+import { Fornecedor } from "entities/Fornecedor";
 
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
@@ -15,34 +17,36 @@ import DadosInstitucionais from "./DadosInstitucionais";
 import DadosInstitucionaisIcon from "assets/icons/fornecedores/fornecedores-dados-institucionais.svg";
 import LocalizacaoIcon from "assets/icons/fornecedores/fornecedores-localizacao.svg";
 import FornecedoresCadastroIcon from "assets/icons/fornecedores/fornecedores-cadastro.png";
+import { dadosInstitucionaisSchema } from "validators/modules/fornecedores";
 
 type FormData = {
     latlng: [string, string];
-    endereco: string;
-    cep: string;
+    loc_endereco: string;
+    loc_cep: string;
     nome: string;
     telefone: string;
-    cpf_cnpj: string;
-    so_mecaninca: boolean; // S/N pra api
-    so_combustivel_oleo: boolean; // S/N pra api
-    so_seguros: boolean; // S/N pra api
+    cnpj: string;
+    ramo: boolean[];
 };
 
 const formData = {
     latlng: ["", ""],
-    endereco: "",
-    cep: "",
+    loc_endereco: "",
+    loc_cep: "",
     nome: "",
     telefone: "",
-    cpf_cnpj: "",
-    so_mecaninca: false,
-    so_combustivel_oleo: false,
-    so_seguros: false,
+    cnpj: "",
+    ramo_mecanica: false,
+    ramo_combustivel: false,
+    ramo_seguro: false,
 };
 const Cadastrar: React.FC = () => {
+    const { id: fornecedorId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { createModal, clearModal } = useAlertModal();
+
+    const [fornecedorData, setFornecedorData] = React.useState<Fornecedor | null>(null);
 
     const handleFormSubmit = async (data: FormData) => {
         try {
@@ -50,36 +54,78 @@ const Cadastrar: React.FC = () => {
             const fornecedoresService = new FornecedoresService();
             const codigo_cidade = user?.codigo_cidade || 0;
             const body = {
-                cnpj: data.cpf_cnpj,
+                cnpj: data.cnpj,
                 nome: data.nome,
-                ramo_mecanica: data.so_mecaninca ? "S" : "N",
-                ramo_combustivel: data.so_combustivel_oleo ? "S" : "N",
-                ramo_seguro: data.so_seguros ? "S" : "N",
+                ramo_mecanica: data.ramo[0] ? "S" : "N",
+                ramo_combustivel: data.ramo[1] ? "S" : "N",
+                ramo_seguro: data.ramo[2] ? "S" : "N",
                 loc_latitude: data.latlng[0],
                 loc_longitude: data.latlng[1],
-                loc_endereco: data.endereco,
-                loc_cep: data.cep,
+                loc_endereco: data.loc_endereco,
+                loc_cep: data.loc_cep,
                 telefone: data.telefone,
             };
 
-            const response = await fornecedoresService.createFornecedor(body, codigo_cidade);
-            if (!response.result) {
-                throw { ...response };
+            if (!!fornecedorId) {
+                const response = await fornecedoresService.updateFornecedor(body, Number(fornecedorId), codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Fornecedor editado com sucesso" });
+            } else {
+                const response = await fornecedoresService.createFornecedor(body, codigo_cidade);
+                if (!response.result) {
+                    throw { ...response };
+                }
+                createModal("success", { title: "Sucesso", html: "Fornecedor cadastrado com sucesso" });
             }
-            createModal("success", { title: "Sucesso", html: "Fornecedor cadastrado com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar fornecedor" });
+            errorHandler(err, { title: "Ocorreu alguma erro! Tente novamente." });
         }
     };
+
+    React.useEffect(() => {
+        if (!!fornecedorId) {
+            const fetchData = async () => {
+                try {
+                    createModal();
+                    const codigo_cidade = user?.codigo_cidade || 0;
+                    const fornecedoresService = new FornecedoresService();
+                    const response = await fornecedoresService.getFornecedor(Number(fornecedorId), codigo_cidade);
+
+                    setFornecedorData(response);
+                    if (!response.result) {
+                        throw { ...response };
+                    }
+                    clearModal();
+                } catch (err) {
+                    errorHandler(err, { title: "Erro ao buscar dados do fornecedor" });
+                }
+            };
+            fetchData();
+        }
+    }, []);
 
     return (
         <>
             <PageTitle message="Cadastrar Fornecedor" icon={FornecedoresCadastroIcon} />
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleFormSubmit}>
+            <ReactHookNavCardProvider<FormData>
+                mode="onSubmit"
+                defaultValues={formData as unknown as FormData}
+                reValidateMode="onChange"
+                onSubmit={handleFormSubmit}
+                aditionalData={{
+                    fornecedorData: [fornecedorData, setFornecedorData],
+                }}
+            >
                 <ReactHookNavCardTab name="Localização" icon={<img src={LocalizacaoIcon} alt="" />}>
                     <Localizacao />
                 </ReactHookNavCardTab>
-                <ReactHookNavCardTab name="Dados Institucionais" icon={<img src={DadosInstitucionaisIcon} alt="" />}>
+                <ReactHookNavCardTab
+                    name="Dados Institucionais"
+                    icon={<img src={DadosInstitucionaisIcon} alt="" />}
+                    validationSchema={dadosInstitucionaisSchema}
+                >
                     <DadosInstitucionais />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>

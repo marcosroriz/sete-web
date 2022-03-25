@@ -1,4 +1,5 @@
 interface Fornecedor {
+    id_fornecedor?: number;
     cnpj?: string;
     nome?: string;
     ramo_mecanica?: string;
@@ -14,6 +15,7 @@ interface Fornecedor {
 interface FornecedorListObj {
     nome: string;
     telefone: string;
+    id_fornecedor: number;
     ramo_mecanica?: string;
     ramo_combustivel?: string;
     ramo_seguro?: string;

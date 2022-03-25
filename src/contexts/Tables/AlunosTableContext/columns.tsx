@@ -8,6 +8,7 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
         Header: "NOME",
         accessor: "nome",
         Filter: ColumnFilter,
+        width: "100px",
     },
     {
         Header: "LOCALIZAÇÃO",

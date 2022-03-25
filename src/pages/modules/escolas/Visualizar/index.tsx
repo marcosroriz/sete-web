@@ -7,6 +7,7 @@ import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { Escola } from "entities/Escola";
 import { EscolasService } from "services/Escolas";
+import { escolasTableHelper } from "helpers/Tables/EscolasTableHelper";
 
 import PageTitle from "components/micro/PageTitle";
 
@@ -22,6 +23,7 @@ import Localizacao from "./Localizacao";
 const Visualizar: React.FC = () => {
     const { id: escolaId } = useParams<{ id: string }>();
     const [escolaData, setEscolaData] = React.useState<Escola | null>(null);
+    const [alunosData, setAlunosData] = React.useState<any | null>(null);
 
     const { errorHandler } = useError();
     const { clearModal, createModal } = useAlertModal();
@@ -33,14 +35,18 @@ const Visualizar: React.FC = () => {
                 createModal();
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const escolasService = new EscolasService();
-                const veiculosResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
-                setEscolaData(veiculosResponse);
-                if (!veiculosResponse.result) {
-                    throw { ...veiculosResponse };
+                const escolasResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
+                const alunosVinculados = await escolasService.listBindAlunosToEscola(Number(escolaId), codigo_cidade);
+
+                setEscolaData(escolasResponse);
+                setAlunosData(alunosVinculados);
+
+                if (!escolasResponse.result) {
+                    throw { ...escolasResponse };
                 }
                 clearModal();
             } catch (err) {
-                errorHandler(err, { title: "Erro ao buscar dados do veículo" });
+                errorHandler(err, { title: "Erro ao buscar dados da escola" });
             }
         };
         fetchData();
@@ -49,7 +55,7 @@ const Visualizar: React.FC = () => {
     return (
         <>
             <PageTitle message="Escolas Cadastradas" icon={EscolasCadastroIcon} />
-            <NavCardProvider aditionalData={{ escolaData: [escolaData, setEscolaData] }}>
+            <NavCardProvider aditionalData={{ escolaData: [escolaData, setEscolaData], alunosData: [alunosData, setAlunosData] }}>
                 <NavCardTab name="FICHA DA ESCOLA" icon={<img src={DadosBasicosIcon} alt="" aria-hidden="true" />}>
                     <FichaEscola />
                 </NavCardTab>

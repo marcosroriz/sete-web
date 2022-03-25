@@ -3,7 +3,7 @@
  */
 
 import React from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext, useWatch, Controller } from "react-hook-form";
 import ReactSelect, { NamedProps } from "react-select";
 
 import { Container, InputField } from "./styles";
@@ -24,6 +24,7 @@ export type ReactHookInputSelectProps = React.SelectHTMLAttributes<HTMLSelectEle
         isHorizontal?: boolean | string;
         thinBorder?: boolean;
         containerClassName?: string;
+        hasPlaceholderOption?: boolean;
     };
 
 const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
@@ -36,12 +37,15 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
     placeholder = "Selecione uma Opção",
     isHorizontal,
     thinBorder,
+    hasPlaceholderOption,
     ...props
 }) => {
     const {
-        watch,
         formState: { errors, touchedFields },
     } = useFormContext();
+    const selectValue = useWatch({
+        name,
+    });
 
     return (
         <Container
@@ -52,7 +56,12 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
             <label htmlFor={name} id={`label-${name}`}>
                 {label}
             </label>
-            <InputField isTouched={touchedFields[name]} isInvalid={!!errors[name]} thinBorder={thinBorder} isPlaceholder={watch(name) === ""}>
+            <InputField
+                isTouched={touchedFields[name]}
+                isInvalid={!!errors[name]}
+                thinBorder={thinBorder}
+                isPlaceholder={!hasPlaceholderOption && selectValue === ""}
+            >
                 <Controller
                     name={name}
                     render={({ field: { onChange, value, ...field } }) => {
@@ -67,7 +76,7 @@ const ReactHookInputSelect: React.FC<ReactHookInputSelectProps> = ({
                                 placeholder={placeholder}
                                 onChange={handleSelectChange}
                                 className="select"
-                                options={options}
+                                options={hasPlaceholderOption ? [{ label: placeholder, value: "" }, ...options] : options}
                                 menuPlacement={menuPlacement}
                                 classNamePrefix="form-control"
                                 aria-invalid={!!errors[name]}

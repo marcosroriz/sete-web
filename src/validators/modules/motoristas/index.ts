@@ -29,7 +29,7 @@ const dadosPessoaisSchema = yup.object().shape({
                   .string()
                   .matches(/^\(?(?:[14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$/, "Deve ser um telefone"),
     ),
-    nascimento: yup
+    data_nascimento: yup
         .string()
         .matches(/^\d{2}\/\d{2}\/\d{4}/, "Esse campo deve ser valido")
         .required("Esse campo é obrigatório"),
@@ -38,8 +38,8 @@ const dadosPessoaisSchema = yup.object().shape({
 });
 
 const dadosTransportesSchema = yup.object().shape({
-    numero_cnh: yup.string().required("Esse campo é obrigatório"),
-    vencimento_cnh: yup.lazy((value) => (!value ? yup.string() : yup.string().matches(/^\d{2}\/\d{2}\/\d{4}/, "Esse campo deve ser valido"))),
+    cnh: yup.string().required("Esse campo é obrigatório"),
+    data_validade_cnh: yup.lazy((value) => (!value ? yup.string() : yup.string().matches(/^\d{2}\/\d{2}\/\d{4}/, "Esse campo deve ser valido"))),
     tipo_cnh: yup.array().of(yup.boolean()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
     turno: yup.array().of(yup.boolean()).test("atLeastOne", "Pelo menos um valor deve ser informado", handleAtLeastOne),
 });

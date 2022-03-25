@@ -12,7 +12,7 @@ import MotoristaCadastroIcon from "assets/icons/motoristas/motorista-cadastro.pn
 const Gerenciar: React.FC = () => {
     return (
         <>
-            <PageTitle message="Cadastro de Motorista" icon={MotoristaCadastroIcon} />
+            <PageTitle message="Motoristas" icon={MotoristaCadastroIcon} />
             <MotoristasTableProvider>
                 <TableCard>
                     <TableComponent />
