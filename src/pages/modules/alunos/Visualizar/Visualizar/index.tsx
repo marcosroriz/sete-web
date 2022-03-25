@@ -7,7 +7,7 @@ import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { AlunosTableProvider } from "contexts/Tables/AlunosTableContext";
 
-import { Aluno } from "entities/Aluno";
+import { Aluno, AlunoListObj, NivelEnum, NivelLabel } from "entities/Aluno";
 import { AlunosService } from "services/Alunos";
 
 import { Escola } from "entities/Escola";
@@ -15,8 +15,7 @@ import { EscolasService } from "services/Escolas";
 
 import PageTitle from "components/micro/PageTitle";
 
-import FichaAluno from "./FichaAluno";
-import Localizacao from "./Localizacao";
+import LocalizacaoAlunos from "./LocalizacaoAlunos";
 
 import AlunosListar from "assets/icons/alunos/alunos-listar.png";
 import FichaAlunoIcon from "assets/icons/alunos/alunos-dados-escolares.svg";
@@ -28,13 +27,11 @@ type FormData = {
 };
 
 const Visualizar: React.FC = () => {
-    const { id: alunoId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
     const { clearModal, createModal } = useAlertModal();
 
-    const [alunoData, setAlunoData] = React.useState<Aluno | null>(null);
-    const [escolaData, setEscolaData] = React.useState<Escola | null>(null);
+    const [alunosData, setAlunosData] = React.useState<AlunoListObj[] | null>(null);
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -43,21 +40,15 @@ const Visualizar: React.FC = () => {
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const alunoService = new AlunosService();
 
-                const alunoResponse = await alunoService.getAluno(Number(alunoId), codigo_cidade);
-                setAlunoData(alunoResponse);
+                const alunosResponse = await alunoService.listAlunos(codigo_cidade);
+                setAlunosData(alunosResponse.data);
 
-                const escolaService = new EscolasService();
-                if (alunoResponse.id_escola) {
-                    const escolaResponse = await escolaService.getEscola(alunoResponse.id_escola, codigo_cidade);
-                    setEscolaData(escolaResponse);
-                }
-
-                if (!alunoResponse.result) {
-                    throw { ...alunoResponse };
+                if (!alunosResponse.result) {
+                    throw { ...alunosResponse };
                 }
                 clearModal();
             } catch (err) {
-                errorHandler(err, { title: "Erro ao buscar dados do aluno" });
+                errorHandler(err, { title: "Erro ao buscar dados dos alunos" });
             }
         };
         fetchData();
@@ -76,15 +67,9 @@ const Visualizar: React.FC = () => {
                 </NavCardTab>
             </NavCardProvider> */}
 
-            <ReactHookNavCardProvider<FormData>
-                onSubmit={() => console.log("")}
-                aditionalData={{ alunoData: [alunoData, setAlunoData], escolaData: [escolaData, setEscolaData] }}
-            >
-                <ReactHookNavCardTab name="FICHA DO ALUNO" icon={<img src={FichaAlunoIcon} alt="" aria-hidden="true" />}>
-                    <FichaAluno />
-                </ReactHookNavCardTab>
+            <ReactHookNavCardProvider<FormData> onSubmit={() => console.log("")} aditionalData={{ alunosData: [alunosData, setAlunosData] }}>
                 <ReactHookNavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
-                    <Localizacao />
+                    <LocalizacaoAlunos />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>
         </>

@@ -116,6 +116,8 @@ const Cadastrar: React.FC = () => {
                 def_mental: data.def_mental ? "S" : "N",
                 turno: Number(data.turno),
                 nivel: Number(data.nivel),
+                id_escola: Number(data.escola),
+                id_rota: Number(data.rota),
             };
             if (!!alunoId) {
                 const response = await alunosService.updateAluno(body, Number(alunoId), codigo_cidade);
