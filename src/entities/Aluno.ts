@@ -27,6 +27,7 @@ interface Aluno {
     def_enxergar?: string; // 'S' ou 'N'
     def_mental?: string; // 'S' ou 'N'
     id_escola?: number;
+    id_rota?: number;
 }
 
 interface AlunoListObj {
@@ -35,7 +36,7 @@ interface AlunoListObj {
     nome: string;
     cpf: string;
     loc_latitude: string;
-    log_longitude: string;
+    loc_longitude: string;
     mec_tp_localizacao: number;
     nivel: number;
     turno: number;

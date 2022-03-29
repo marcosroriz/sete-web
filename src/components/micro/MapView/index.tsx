@@ -12,27 +12,23 @@ import { Container } from "./styles";
 type ReactHookLatLngMapProps = {
     name: string;
     mapController: React.MutableRefObject<MapControlEvents | null>;
-    icon?: string;
     anchor?: [number, number];
     children?: React.ReactNode;
     title?: string;
 };
 
-const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name, icon, anchor, children }) => {
+const MapView: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name, anchor, children }) => {
     const transladeRef = React.useRef<boolean>(false);
-    const { setValue } = useFormContext();
-    const inputValue = useWatch({
+    const locations = useWatch({
         name,
     });
+
+    const [oldLocations, setOldLocations] = React.useState<any | null>([]);
 
     React.useEffect(() => {
         if (!mapController?.current) {
             mapController!.current = new MapControlEvents("map");
             const map = mapController?.current;
-            map.mapInstance.on("singleclick", (event) => {
-                const [lng, lat] = event.coordinate;
-                setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
-            });
 
             // map.activatePrinting();
             map.activateImageLayerSwitcher();
@@ -40,24 +36,17 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
     }, []);
 
     React.useEffect(() => {
-        if (inputValue && mapController?.current && !transladeRef.current) {
+        if (locations && mapController?.current) {
             const map = mapController?.current;
-            const [lat, lng] = inputValue;
-            map.handleMarkerInstance({ lng: Number(lng), lat: Number(lat), icon: icon || "", anchor: anchor || [25, 50] });
-            const translate = map.getTranslateMarker();
-            if (!translate) {
-                return;
-            }
-
-            translate.on("translateend", (translateEvent) => {
-                const [lng, lat] = translateEvent.coordinate;
-                setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
-                transladeRef.current = true;
+            map.removeMarkers();
+            locations.forEach(([nivel, turno, lat, lng, icon]) => {
+                map.handleMarkerInstanceMapView({ lng: Number(lng), lat: Number(lat), icon: icon || "", anchor: anchor || [25, 50] });
             });
         } else {
             transladeRef.current = false;
         }
-    }, [inputValue]);
+        //setOldLocations(locations);
+    }, [locations]);
 
     return (
         <Container>
@@ -68,4 +57,4 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
     );
 };
 
-export default ReactHookLatLngMap;
+export default MapView;

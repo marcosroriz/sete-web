@@ -16,7 +16,7 @@ class AlunosTableHelper {
             rota: alunoObj.rota,
             nome: alunoObj.nome,
             localizacao: MecTpLocalizacaoTableLabel.get(alunoObj.mec_tp_localizacao as MecTpLocalizacaoEnum) || "-",
-            gps: !alunoObj.loc_latitude || !alunoObj.log_longitude ? "Não" : "Sim",
+            gps: !alunoObj.loc_latitude || !alunoObj.loc_longitude ? "Não" : "Sim",
             nivel: NivelTableLabel.get(alunoObj.nivel) || "",
             turno: TurnoTableLabel.get(alunoObj.turno) || "",
             acoes: this.acoesComponent(alunoObj, addOptions),

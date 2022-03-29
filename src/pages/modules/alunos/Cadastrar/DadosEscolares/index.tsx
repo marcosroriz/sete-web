@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
+import { formatHelper } from "helpers/FormatHelper";
+
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useAuth } from "contexts/Auth";
 import { EscolasService } from "services/Escolas";
@@ -26,13 +28,17 @@ type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null
 type EscolaData = any;
 type RotaData = any;
 
-const turnoOptions = Object.values(TurnoEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="turno" label={TurnoLabel.get(value as TurnoEnum) || ""} value={value.toString()} position="right" />
-));
+const turnoOptions = formatHelper
+    .getNumbersEnumValues(TurnoEnum)
+    .map((value) => (
+        <ReactHookInputRadio key={value} name="turno" label={TurnoLabel.get(value as TurnoEnum) || ""} value={value.toString()} position="right" />
+    ));
 
-const nivelOptions = Object.values(NivelEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="nivel" label={NivelLabel.get(value as NivelEnum) || ""} value={value.toString()} position="right" />
-));
+const nivelOptions = formatHelper
+    .getNumbersEnumValues(NivelEnum)
+    .map((value) => (
+        <ReactHookInputRadio key={value} name="nivel" label={NivelLabel.get(value as NivelEnum) || ""} value={value.toString()} position="right" />
+    ));
 
 const DadosEscolares: React.FC = () => {
     const { user } = useAuth();
