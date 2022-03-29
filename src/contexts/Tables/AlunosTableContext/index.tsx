@@ -1,7 +1,6 @@
 import React from "react";
 import { pdf } from "@react-pdf/renderer";
 import { ColumnWithLooseAccessor } from "react-table";
-import { saveAs } from "file-saver";
 
 import { AlunosService } from "services/Alunos";
 import { AlunosTableField, AlunoListObj } from "entities/Aluno";
@@ -91,7 +90,7 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
 
         const blob = filesHelper.processXslxFile(xlsxData);
 
-        saveAs(blob, "Alunos.xlsx");
+        filesHelper.downloadFile(blob, "Alunos.xlsx");
     };
 
     const handleExportPdf = async () => {
@@ -106,7 +105,7 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
                     columns={pdfColumns}
                 />,
             ).toBlob();
-            saveAs(blob, "Alunos.pdf");
+            filesHelper.downloadFile(blob, "Alunos.pdf");
             clearModal();
         } catch (err) {
             errorHandler(err, { title: "Falha ao fazer download do pdf" });

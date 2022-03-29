@@ -26,4 +26,10 @@ export type TableInfoProps = {
     titleRecords?: string;
     columns?: Column[];
     data?: Data[];
+    hasNoHeader?: boolean;
+};
+
+export type SingleTableInfoProps = {
+    titleCity?: string;
+    titleRecords?: string;
 };

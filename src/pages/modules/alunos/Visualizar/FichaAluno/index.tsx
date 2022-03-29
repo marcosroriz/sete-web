@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
+import { pdf } from "@react-pdf/renderer";
 
+import { filesHelper } from "helpers/FilesHelper";
 import {
     Aluno,
     GrauParentescoEnum,
@@ -13,7 +15,6 @@ import {
     MecTpLocalizacaoEnum,
     MecTpLocalizacaoLabel,
 } from "entities/Aluno";
-import { filesHelper } from "helpers/FilesHelper";
 import { AlunosService } from "services/Alunos";
 
 import { useError } from "hooks/Errors";
@@ -23,8 +24,15 @@ import { useAuth } from "contexts/Auth";
 
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import RecordTable from "components/micro/RecordTable";
+import TableDocument from "components/micro/Pdf/TableDocument";
+import { Column } from "components/micro/Pdf/Global";
 
 import { Container } from "./styles";
+
+const pdfColumns = [
+    { acessor: "key", Header: " ", width: "30%" },
+    { acessor: "value", Header: " ", width: "70%" },
+] as Column[];
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
@@ -32,12 +40,13 @@ const FichaAluno: React.FC = () => {
     const history = useHistory();
     const { id: alunoId } = useParams<{ id: string }>();
     const { errorHandler } = useError();
-    const { createModalAsync, createModal } = useAlertModal();
+    const { createModalAsync, createModal, clearModal } = useAlertModal();
     const { user } = useAuth();
     const { aditionalData } = useReactHookNavCard();
     const [alunoData] = aditionalData?.alunoData as AlunoData;
     const [escolaData] = aditionalData?.escolaData as any;
     const [tableData, setTableData] = React.useState<any>(null);
+    const downloadData = React.useMemo(() => Object.entries(tableData || {}).map(([key, value]) => ({ key, value })), [tableData]);
 
     const handleVoltarClick = () => {
         history.goBack();
@@ -48,16 +57,37 @@ const FichaAluno: React.FC = () => {
     };
 
     const handleDownloadExcelClick = () => {
-        console.log("Excel");
+        const xlsxData = downloadData.map((data) => pdfColumns.map((val) => data[val.acessor]));
+
+        const blob = filesHelper.processXslxFile(xlsxData);
+
+        filesHelper.downloadFile(blob, `Alunos ${alunoData?.nome}.xlsx`);
     };
 
-    const handleDownloadPdfClick = () => {
-        console.log("Pdf");
+    const handleDownloadPdfClick = async () => {
+        try {
+            createModal("loading");
+            await filesHelper.delay(600);
+            const blob = await pdf(
+                <TableDocument
+                    titleCity="Aparecida de Goiânia (Goiás)"
+                    titleRecords={`Aluno: ${alunoData?.nome}`}
+                    data={downloadData}
+                    columns={pdfColumns}
+                    hasNoHeader
+                />,
+            ).toBlob();
+            filesHelper.downloadFile(blob, `Alunos ${alunoData?.nome}.pdf`);
+            clearModal();
+        } catch (err) {
+            console.log("err", err);
+            errorHandler(err, { title: "Falha ao fazer download do pdf" });
+        }
     };
 
     const handleDeleteContaClick = async () => {
         try {
-            const { isConfirmed } = await createModalAsync("confirm_remove", { html: "Deseja remover os alunos selecionados?" });
+            const { isConfirmed } = await createModalAsync("confirm_remove", { html: `Deseja remover o aluno <b>${alunoData?.nome}</b>?` });
             if (!isConfirmed) {
                 return;
             }
@@ -79,29 +109,31 @@ const FichaAluno: React.FC = () => {
                 ["Data de nascimento"]: alunoData.data_nascimento,
                 ["Sexo"]: SexoLabel.get((alunoData.sexo?.toString() || "3") as SexoEnum),
                 ["Cor/Raça"]: CorLabel.get((alunoData.cor?.toString() || "0") as CorEnum),
-                ["CPF"]: alunoData.cpf,
-                ["Possui alguma deficiência"]: [
-                    alunoData.def_caminhar === "S" ? "Física" : "",
-                    alunoData.def_ouvir === "S" ? "Auditiva" : "",
-                    alunoData.def_enxergar === "S" ? "Visual" : "",
-                    alunoData.def_mental === "S" ? "Mental" : "",
-                ]
-                    .filter((val) => val !== "")
-                    .join(", "),
+                ["CPF"]: alunoData.cpf || "-",
+                ["Possui alguma deficiência"]:
+                    [
+                        alunoData.def_caminhar === "S" ? "Física" : "",
+                        alunoData.def_ouvir === "S" ? "Auditiva" : "",
+                        alunoData.def_enxergar === "S" ? "Visual" : "",
+                        alunoData.def_mental === "S" ? "Mental" : "",
+                    ]
+                        .filter((val) => val !== "")
+                        .join(", ") || "Não",
                 ["Nome do responsável"]: alunoData.nome_responsavel,
                 ["Grau de parentesco"]: GrauParentescoLabel.get((alunoData.grau_responsavel?.toString() || "-1") as GrauParentescoEnum),
                 ["Telefonde do responsável"]: alunoData.telefone_responsavel || "Telefone de contato não informado",
-                ["Endereço do Aluno"]: alunoData.loc_endereco,
+                ["Endereço do Aluno"]: alunoData.loc_endereco || "-",
                 ["CEP da residência"]: alunoData.loc_cep,
-                ["Dificuldade de Acesso"]: [
-                    alunoData.da_porteira === "S" ? "Porteira" : "",
-                    alunoData.da_mataburro === "S" ? "Mataburro" : "",
-                    alunoData.da_colchete === "S" ? "Colchete" : "",
-                    alunoData.da_atoleiro === "S" ? "Atoleiro" : "",
-                    alunoData.da_ponterustica === "S" ? "Ponte rústica" : "",
-                ]
-                    .filter((val) => val !== "")
-                    .join(", "),
+                ["Dificuldade de Acesso"]:
+                    [
+                        alunoData.da_porteira === "S" ? "Porteira" : "",
+                        alunoData.da_mataburro === "S" ? "Mataburro" : "",
+                        alunoData.da_colchete === "S" ? "Colchete" : "",
+                        alunoData.da_atoleiro === "S" ? "Atoleiro" : "",
+                        alunoData.da_ponterustica === "S" ? "Ponte rústica" : "",
+                    ]
+                        .filter((val) => val !== "")
+                        .join(", ") || "Não",
                 ["Localização"]: MecTpLocalizacaoLabel.get(alunoData.mec_tp_localizacao as MecTpLocalizacaoEnum) || "Sem localização",
 
                 ["Escola"]: escolaData.nome,

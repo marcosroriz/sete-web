@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet, View, Document, Page } from "@react-pdf/renderer";
 
 import Table from "./Table";
-import DocumentHeader from "./DocumentHeader";
-import DocumentFooter from "./DocumentFooter";
-import PageIndex from "./PageIndex";
+import DocumentHeader from "../DocumentHeader";
+import DocumentFooter from "../DocumentFooter";
+import PageIndex from "../PageIndex";
 
 import { TableInfoProps } from "components/micro/Pdf/Global";
 

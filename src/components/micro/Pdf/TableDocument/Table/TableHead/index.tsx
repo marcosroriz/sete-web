@@ -6,9 +6,10 @@ import { Column } from "components/micro/Pdf/Global";
 
 type TableHeadProps = Style & {
     columns?: Column[];
+    hasNoHeader?: boolean;
 };
 
-const TableHead: React.FC<TableHeadProps> = ({ columns, ...props }) => {
+const TableHead: React.FC<TableHeadProps> = ({ columns, hasNoHeader, ...props }) => {
     return (
         <View
             style={{
@@ -16,7 +17,7 @@ const TableHead: React.FC<TableHeadProps> = ({ columns, ...props }) => {
                 alignItems: "flex-start",
                 justifyContent: "space-between",
                 flexDirection: "row",
-                height: 25,
+                height: !hasNoHeader ? 25 : 6,
                 paddingTop: 5,
                 paddingBottom: 5,
                 borderRadius: 1,
@@ -25,7 +26,8 @@ const TableHead: React.FC<TableHeadProps> = ({ columns, ...props }) => {
                 ...props,
             }}
         >
-            {columns &&
+            {!hasNoHeader &&
+                columns &&
                 columns.map((column) => (
                     <View style={{ width: column.width, fontSize: 12, paddingLeft: 10, paddingRight: 10 }} key={column.acessor}>
                         <Text style={{ color: "#FFFFFF", fontFamily: "Roboto", fontSize: 12, fontWeight: 600 }}>{column.Header}</Text>
