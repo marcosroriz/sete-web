@@ -24,7 +24,16 @@ const Localizacao: React.FC = () => {
 
     const handleFormCancel = async () => {
         try {
-            createModal("warning", { title: "Cancelar Edição?", html: "Se você cancelar, nenhuma alteração será feita. " });
+            createModal("warning", {
+                title: "Cancelar Edição?",
+                text: "Se você cancelar, nenhuma alteração será feita.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Voltar a editar",
+                cancelButtonText: "Sim, cancelar",
+            });
         } catch (err) {
             errorHandler(err, { title: "Erro ao Cancelar Edição" });
         }
@@ -40,7 +49,7 @@ const Localizacao: React.FC = () => {
                 icon={GaragemMarker}
             />
             <ReactHookFormItemCard placeItems="center" required>
-                <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
+                <ReactHookMultiFormList name="latlng" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
                     <ReactHookInputText label="LATITUDE:*" name="latlng[0]" isHorizontal={mediaQuery.desktop} />
                     <ReactHookInputText label="LONGITUDE:*" name="latlng[1]" isHorizontal={mediaQuery.desktop} />
                 </ReactHookMultiFormList>
