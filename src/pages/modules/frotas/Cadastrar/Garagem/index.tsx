@@ -18,13 +18,13 @@ import MapaGaragemIcon from "assets/icons/garagem/mapa-garagem.png";
 import GaragemCadastroIcon from "assets/icons/garagem/tab-garagem.png";
 
 type FormData = {
-    latlng: [number, number];
+    latlng: [string, string];
     loc_endereco: string;
     loc_cep: string;
 };
 
 const formData = {
-    latlng: "",
+    latlng: ["", ""],
     loc_endereco: "",
     loc_cep: "",
 };
@@ -58,7 +58,7 @@ const Garagem: React.FC = () => {
         <>
             <PageTitle message="Garagem" icon={GaragemCadastroIcon} />
 
-            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData} reValidateMode="onChange" onSubmit={handleSubmit}>
+            <ReactHookNavCardProvider<FormData> mode="onSubmit" defaultValues={formData as FormData} reValidateMode="onChange" onSubmit={handleSubmit}>
                 <ReactHookNavCardTab name="MAPA DA GARAGEM" icon={<img src={MapaGaragemIcon} alt="" />} validationSchema={dadosGaragemSchema}>
                     <Localizacao />
                 </ReactHookNavCardTab>
