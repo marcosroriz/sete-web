@@ -17,7 +17,7 @@ class GaragemService {
     public async createGaragem(body: CreateGaragemRequestBody, codigo_cidade: number): Promise<CreateGaragemResponse> {
         const response = await this.api({
             method: "post",
-            url: `/garagem/${codigo_cidade}`,
+            url: `/garagens/${codigo_cidade}`,
             data: body,
         });
 
