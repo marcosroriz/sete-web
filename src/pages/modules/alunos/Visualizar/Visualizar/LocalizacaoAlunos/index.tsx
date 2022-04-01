@@ -5,33 +5,37 @@ import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useNavCard } from "contexts/NavCard";
-import { Aluno, AlunoListObj, NivelEnum, NivelLabel } from "entities/Aluno";
-import { Escola } from "entities/Escola";
+import { NivelEnum, NivelLabel, TurnoEnum, TurnoLabel } from "entities/Aluno";
 
 import MapView from "components/micro/MapView";
 
 import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
-import EscolasMarker from "assets/icons/escolas/escolas-marker.png";
 
 import { Container, mediaQuery } from "./styles";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import { formatHelper } from "helpers/FormatHelper";
-import { useError } from "hooks/Errors";
-import { useAlertModal } from "hooks/AlertModal";
-import { useAuth } from "contexts/Auth";
-import { AlunosService } from "services/Alunos";
-import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
-
-type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
-type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
 
 const nivelOptions = formatHelper
     .getNumbersEnumValues(NivelEnum)
     .map((value) => (
         <ReactHookInputCheckbox key={value} name="nivel" label={NivelLabel.get(value as NivelEnum) || ""} value={value.toString()} position="right" />
     ));
+
+const turnoOptions = formatHelper
+    .getNumbersEnumValues(TurnoEnum)
+    .map((value) => (
+        <ReactHookInputCheckbox key={value} name="turno" label={TurnoLabel.get(value as TurnoEnum) || ""} value={value.toString()} position="right" />
+    ));
+
+type AlunoLocation = {
+    loc_latitude: string;
+    loc_longitude: string;
+    nivel: string;
+    turno: string;
+    icon: string;
+};
 
 const LocalizacaoAlunos: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
@@ -40,57 +44,59 @@ const LocalizacaoAlunos: React.FC = () => {
 
     const [alunosData] = aditionalData?.alunosData as any;
 
-    const [alunosLocations, setAlunosLocations] = React.useState<any | null>([]);
-    const [locations, setLocations] = React.useState<any | null>([]);
-    const arrayAux: any[] = [];
-
-    React.useEffect(() => {
-        if (!!alunosData) {
-            alunosData.forEach((aluno) => {
-                if (aluno.loc_latitude != null && aluno?.loc_longitude != null) {
-                    let item = [aluno?.nivel, aluno?.turno, aluno?.loc_latitude, aluno?.loc_longitude, AlunosMarker];
-
-                    alunosLocations.push(item);
-                }
-            });
-            setAlunosLocations(alunosLocations);
-            setValue("alunosLoc", alunosLocations);
-        }
-    }, [alunosData]);
+    const [alunosLocations, setAlunosLocations] = React.useState<AlunoLocation[]>([]);
+    const locations: AlunoLocation[] = []; // Mudar para State / Ref
 
     const alunosNivel = useWatch({
         name: "nivel",
     });
 
+    const alunosTurno = useWatch({
+        name: "turno",
+    });
+
     React.useEffect(() => {
-        setLocations([]);
-        setValue("alunosLoc", locations);
-
-        alunosLocations.forEach((loc) => {
-            console.log("Nivel", alunosNivel);
-            console.log("loc[0]", loc[0]);
-
-            alunosNivel.forEach((val) => {
-                if (val == loc[0]) {
-                    arrayAux.push(loc);
+        if (!!alunosData) {
+            alunosData.forEach((aluno: AlunoLocation) => {
+                if (aluno.loc_latitude != null && aluno?.loc_longitude != null) {
+                    let item: AlunoLocation = {
+                        nivel: aluno?.nivel,
+                        turno: aluno?.turno,
+                        loc_latitude: aluno?.loc_latitude,
+                        loc_longitude: aluno?.loc_longitude,
+                        icon: AlunosMarker,
+                    };
+                    alunosLocations.push(item); // Mudar para State / Ref
                 }
             });
-        });
+            setValue("alunosLoc", alunosLocations);
+        }
+    }, [alunosData]);
 
-        setLocations(arrayAux);
+    React.useEffect(() => {
+        alunosLocations.forEach((aluno: AlunoLocation) => {
+            if (alunosNivel.includes(aluno.nivel.toString()) || alunosTurno.includes(aluno.turno.toString())) {
+                locations.push(aluno); // Mudar para State / Ref
+            }
+        });
         setValue("alunosLoc", locations);
-    }, [alunosNivel]);
+    }, [alunosNivel, alunosTurno]);
 
     return (
         <Container>
-            <ReactHookFormItemCard required>
+            <ReactHookFormItemCard>
                 <ReactHookMultiFormList
-                    label="EM QUAL NÍVEL DE ENSINO O ALUNO SE ENCONTRA?*"
+                    label="EM QUAL NÍVEL DE ENSINO O ALUNO SE ENCONTRA?"
                     name="nivel"
                     fieldsHorizontal={mediaQuery.desktop}
                     formListSpacing="30px"
                 >
                     {nivelOptions}
+                </ReactHookMultiFormList>
+            </ReactHookFormItemCard>
+            <ReactHookFormItemCard>
+                <ReactHookMultiFormList label="EM QUAL TURNO O ALUNO SE ESTÁ?" name="turno" fieldsHorizontal={mediaQuery.desktop} formListSpacing="30px">
+                    {turnoOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookMultiFormList

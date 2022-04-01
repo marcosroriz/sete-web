@@ -1,29 +1,30 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 
-import { NavCardProvider, NavCardTab } from "contexts/NavCard";
 import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
-import { AlunosTableProvider } from "contexts/Tables/AlunosTableContext";
 
-import { Aluno, AlunoListObj, NivelEnum, NivelLabel } from "entities/Aluno";
+import { AlunoListObj } from "entities/Aluno";
 import { AlunosService } from "services/Alunos";
-
-import { Escola } from "entities/Escola";
-import { EscolasService } from "services/Escolas";
 
 import PageTitle from "components/micro/PageTitle";
 
 import LocalizacaoAlunos from "./LocalizacaoAlunos";
 
 import AlunosListar from "assets/icons/alunos/alunos-listar.png";
-import FichaAlunoIcon from "assets/icons/alunos/alunos-dados-escolares.svg";
 import LocalizacaoIcon from "assets/icons/alunos/alunos-localizacao.svg";
 import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
 
 type FormData = {
     latlng: [string, string];
+    nivel: string[];
+    turno: string[];
+};
+
+const formData = {
+    latlng: ["", ""],
+    nivel: ["1", "2", "3", "4", "5"],
+    turno: ["1", "2", "3", "4"],
 };
 
 const Visualizar: React.FC = () => {
@@ -57,17 +58,11 @@ const Visualizar: React.FC = () => {
     return (
         <>
             <PageTitle message="Vizualizar dados do Aluno" icon={AlunosListar} />
-
-            {/* <NavCardProvider aditionalData={{ alunoData: [alunoData, setAlunoData], escolaData: [escolaData, setEscolaData] }}>
-                <NavCardTab name="FICHA DO ALUNO" icon={<img src={FichaAlunoIcon} alt="" aria-hidden="true" />}>
-                    <FichaAluno />
-                </NavCardTab>
-                <NavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
-                    <Localizacao />
-                </NavCardTab>
-            </NavCardProvider> */}
-
-            <ReactHookNavCardProvider<FormData> onSubmit={() => console.log("")} aditionalData={{ alunosData: [alunosData, setAlunosData] }}>
+            <ReactHookNavCardProvider<FormData>
+                defaultValues={formData as FormData}
+                onSubmit={() => console.log("")}
+                aditionalData={{ alunosData: [alunosData, setAlunosData] }}
+            >
                 <ReactHookNavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
                     <LocalizacaoAlunos />
                 </ReactHookNavCardTab>

@@ -20,7 +20,7 @@ type ReactHookLatLngMapProps = {
 const MapView: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name, anchor, children }) => {
     const transladeRef = React.useRef<boolean>(false);
     const locations = useWatch({
-        name,
+        name: name,
     });
 
     const [oldLocations, setOldLocations] = React.useState<any | null>([]);
@@ -29,22 +29,27 @@ const MapView: React.FC<ReactHookLatLngMapProps> = ({ title, mapController, name
         if (!mapController?.current) {
             mapController!.current = new MapControlEvents("map");
             const map = mapController?.current;
-
             // map.activatePrinting();
             map.activateImageLayerSwitcher();
         }
     }, []);
 
     React.useEffect(() => {
-        if (locations && mapController?.current) {
+        if (locations != null && mapController?.current) {
             const map = mapController?.current;
             map.removeMarkers();
-            locations.forEach(([nivel, turno, lat, lng, icon]) => {
-                map.handleMarkerInstanceMapView({ lng: Number(lng), lat: Number(lat), icon: icon || "", anchor: anchor || [25, 50] });
+            locations.forEach((item) => {
+                map.handleMarkerInstanceMapView({
+                    lng: Number(item.loc_longitude),
+                    lat: Number(item.loc_latitude),
+                    icon: item.icon || "",
+                    anchor: anchor || [25, 50],
+                });
             });
         } else {
             transladeRef.current = false;
         }
+
         //setOldLocations(locations);
     }, [locations]);
 
