@@ -5,7 +5,7 @@ import AuthRoute from "routes/AuthRoute";
 import Cadastrar from "pages/modules/frotas/Cadastrar";
 import Gerenciar from "pages/modules/frotas/Gerenciar";
 import Visualizar from "pages/modules/frotas/Visualizar";
-import Garagem from "pages/modules/frotas/Cadastrar/Garagem";
+import Garagem from "pages/modules/frotas/Garagem";
 
 export default [
     <AuthRoute path="/frotas/cadastrar" component={Cadastrar} permission="reader" key="cadastrar" isPrivate exact />,
