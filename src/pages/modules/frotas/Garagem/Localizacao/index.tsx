@@ -9,31 +9,38 @@ import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 
 import GaragemMarker from "assets/icons/garagem/garagem-marker.png";
 
-import { ButtonsContainer, Container, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
 
 import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
+import { useHistory } from "react-router-dom";
 
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
+    const history = useHistory();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { createModalAsync } = useAlertModal();
 
     const handleFormCancel = async () => {
         try {
-            createModal("warning", {
+            const alertResponse = await createModalAsync("warning", {
                 title: "Cancelar Edição?",
                 text: "Se você cancelar, nenhuma alteração será feita.",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Voltar a editar",
-                cancelButtonText: "Sim, cancelar",
+                confirmButtonColor: "var(--color-red-500",
+                confirmButtonText: "Sim, cancelar",
+                cancelButtonColor: "var(--color-grey-650)",
+                cancelButtonText: "Voltar a editar",
+                reverseButtons: true,
             });
+            if (alertResponse.isConfirmed) {
+                history.goBack();
+            }
         } catch (err) {
             errorHandler(err, { title: "Erro ao Cancelar Edição" });
         }
@@ -61,7 +68,7 @@ const Localizacao: React.FC = () => {
                 <ReactHookInputNumberFormat label="CEP:" name="loc_cep" format="#####-###" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
-            <ButtonsContainer>
+            <ButtonsContainer position="right">
                 <Button variant="danger" type="button" className="btn-fill" onClick={handleFormCancel}>
                     Cancelar Edição
                 </Button>
