@@ -254,6 +254,11 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
+                                            <NavLink to="/frotas/garagem" activeClassName="isActive" exact>
+                                                Garagem
+                                            </NavLink>
+                                        </li>
+                                        <li>
                                             <NavLink to="/frotas/gerenciar" activeClassName="isActive">
                                                 Gerenciar
                                             </NavLink>
