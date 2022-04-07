@@ -50,7 +50,7 @@ const Localizacao: React.FC = () => {
             setValue("mec_tp_localizacao_diferenciada", escolaData?.mec_tp_localizacao_diferenciada?.toString() || "");
 
             if (escolaData?.loc_latitude && escolaData?.loc_longitude) {
-                mapRef.current?.goToLocation([Number(escolaData?.loc_longitude), Number(escolaData?.loc_latitude)]);
+                mapRef.current?.goToLocation({ lng: Number(escolaData?.loc_longitude), lat: Number(escolaData?.loc_latitude) });
             }
         }
     }, [escolaData]);

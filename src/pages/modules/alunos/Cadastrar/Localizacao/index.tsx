@@ -50,7 +50,7 @@ const Localizacao: React.FC = () => {
             setValue("da_ponterustica", alunoData?.da_ponterustica === "S");
 
             if (alunoData?.loc_latitude && alunoData?.loc_longitude) {
-                mapRef.current?.goToLocation([Number(alunoData?.loc_longitude), Number(alunoData?.loc_latitude)]);
+                mapRef.current?.goToLocation({ lng: Number(alunoData?.loc_longitude), lat: Number(alunoData?.loc_latitude) });
             }
         }
     }, [alunoData]);

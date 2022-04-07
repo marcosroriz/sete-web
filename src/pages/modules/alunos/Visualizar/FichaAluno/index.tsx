@@ -19,7 +19,7 @@ import { AlunosService } from "services/Alunos";
 
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
-import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { useNavCard } from "contexts/NavCard";
 import { useAuth } from "contexts/Auth";
 
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
@@ -42,7 +42,7 @@ const FichaAluno: React.FC = () => {
     const { errorHandler } = useError();
     const { createModalAsync, createModal, clearModal } = useAlertModal();
     const { user } = useAuth();
-    const { aditionalData } = useReactHookNavCard();
+    const { aditionalData } = useNavCard();
     const [alunoData] = aditionalData?.alunoData as AlunoData;
     const [escolaData] = aditionalData?.escolaData as any;
     const [tableData, setTableData] = React.useState<any>(null);

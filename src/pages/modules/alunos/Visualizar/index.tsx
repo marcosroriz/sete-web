@@ -66,27 +66,14 @@ const Visualizar: React.FC = () => {
     return (
         <>
             <PageTitle message="Vizualizar dados do Aluno" icon={AlunosListar} />
-
-            {/* <NavCardProvider aditionalData={{ alunoData: [alunoData, setAlunoData], escolaData: [escolaData, setEscolaData] }}>
+            <NavCardProvider aditionalData={{ alunoData: [alunoData, setAlunoData], escolaData: [escolaData, setEscolaData] }}>
                 <NavCardTab name="FICHA DO ALUNO" icon={<img src={FichaAlunoIcon} alt="" aria-hidden="true" />}>
                     <FichaAluno />
                 </NavCardTab>
                 <NavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
                     <Localizacao />
                 </NavCardTab>
-            </NavCardProvider> */}
-
-            <ReactHookNavCardProvider<FormData>
-                onSubmit={() => console.log("")}
-                aditionalData={{ alunoData: [alunoData, setAlunoData], escolaData: [escolaData, setEscolaData] }}
-            >
-                <ReactHookNavCardTab name="FICHA DO ALUNO" icon={<img src={FichaAlunoIcon} alt="" aria-hidden="true" />}>
-                    <FichaAluno />
-                </ReactHookNavCardTab>
-                <ReactHookNavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
-                    <Localizacao />
-                </ReactHookNavCardTab>
-            </ReactHookNavCardProvider>
+            </NavCardProvider>
         </>
     );
 };
