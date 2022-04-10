@@ -1,7 +1,20 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { cookie } from "helpers/Cookie";
 import { formatHelper } from "helpers/FormatHelper";
-import { User } from "entities/User";
+import { User, UserListObj } from "entities/User";
+
+type CreateUserRequestBody = User;
+
+type CreateUserResponse = {
+    messages: string | { [key: string]: any };
+    result: boolean;
+};
+
+type ListUserResponse = {
+    data: UserListObj[];
+    total: number;
+    result: boolean;
+};
 
 type GetUserInfoResponse = {
     data: User;
@@ -28,6 +41,36 @@ class UsuariosService {
     private api: ApiInstance;
     constructor(env?: EnvOptions) {
         this.api = getApiClient(env);
+    }
+
+    public async createUser(body: CreateUserRequestBody, codigo_cidade: number): Promise<CreateUserResponse> {
+        const response = await this.api({
+            method: "post",
+            url: `/users/sete/${codigo_cidade}`,
+            data: body,
+        });
+
+        const data = (await response.data) as CreateUserResponse;
+        return data;
+    }
+
+    public async listUsers(codigo_cidade: number): Promise<ListUserResponse> {
+        const response = await this.api({
+            method: "get",
+            url: `/users/sete/${codigo_cidade}`,
+        });
+
+        const data = (await response.data) as ListUserResponse;
+        return data;
+    }
+
+    public async deleteUser(id_usuario: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            method: "delete",
+            url: `/users/sete/${codigo_cidade}/${id_usuario}`,
+        });
+
+        const data = await response.data;
     }
 
     public async getUserInfo(): Promise<GetUserInfoResponse | undefined> {
