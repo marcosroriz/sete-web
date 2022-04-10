@@ -1,16 +1,22 @@
 import React from "react";
-import { NavCardProvider, NavCardTab } from "contexts/NavCard";
-import { FaSignInAlt } from "react-icons/fa";
 
-import OpenLayers from "./OpenLayers";
+import { UsuariosTableProvider } from "contexts/Tables/UsuariosTableContext";
+import PageTitle from "components/micro/PageTitle";
+import TableCard from "components/micro/Cards/TableCard";
+import TableComponent from "./TableComponent";
+
+import UsuariosCadastroIcon from "assets/icons/usuarios/usuario-listar.png";
 
 const Usuarios: React.FC = () => {
     return (
-        <NavCardProvider isDashboard={false}>
-            <NavCardTab name="Login" icon={<FaSignInAlt />}>
-                <OpenLayers />
-            </NavCardTab>
-        </NavCardProvider>
+        <>
+            <PageTitle message="Usuários" icon={UsuariosCadastroIcon} />
+            <UsuariosTableProvider>
+                <TableCard>
+                    <TableComponent />
+                </TableCard>
+            </UsuariosTableProvider>
+        </>
     );
 };
 
