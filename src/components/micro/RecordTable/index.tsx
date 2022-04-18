@@ -36,11 +36,6 @@ const RecordTable: React.FC<RecordTableProps> = ({ title, data }) => {
                         ))}
                 </tbody>
             </table>
-            <div className="record-table-action-buttons">
-                <Button variant="info" type="button" className="btn-fill" onClick={handleVoltarClick}>
-                    Voltar
-                </Button>
-            </div>
         </Container>
     );
 };

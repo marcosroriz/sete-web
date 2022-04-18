@@ -155,11 +155,10 @@ class AlunosService {
     }
 
     public async deleteAluno(id_aluno: number, codigo_cidade: number): Promise<void> {
-        const response = await this.api({
+        await this.api({
             url: `/alunos/${codigo_cidade}/${id_aluno}`,
             method: "delete",
         });
-        const data = await response.data;
     }
 }
 

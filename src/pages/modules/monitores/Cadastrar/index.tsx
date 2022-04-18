@@ -118,19 +118,11 @@ const Cadastrar: React.FC = () => {
                     monitorData: [monitorData, setMonitorData],
                 }}
             >
-                <ReactHookNavCardTab
-                    name="DADOS PESSOAIS"
-                    icon={<img src={DadosPessoaisIcon} alt="" aria-hidden="true" />}
-                    //validationSchema={dadosPessoaisSchema}
-                >
+                <ReactHookNavCardTab name="DADOS PESSOAIS" icon={<img src={DadosPessoaisIcon} alt="" aria-hidden="true" />}>
                     <DadosPessoais />
                 </ReactHookNavCardTab>
 
-                <ReactHookNavCardTab
-                    name="DADOS DE TRANSPORTES"
-                    icon={<img src={DadosTransportesIcon} alt="" aria-hidden="true" />}
-                    //validationSchema={dadosTransportesSchema}
-                >
+                <ReactHookNavCardTab name="DADOS DE TRANSPORTES" icon={<img src={DadosTransportesIcon} alt="" aria-hidden="true" />}>
                     <DadosTransporte />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>

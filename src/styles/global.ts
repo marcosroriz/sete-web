@@ -186,5 +186,18 @@ export default createGlobalStyle`
             outline: none;
         }
     }
+    button.btn.btn-excel {
+        background-color: #43aa8b;
+        border-color: #43aa8b;
+        &:hover {
+            background-color: #457b6b;
+            border-color: #457b6b;
+        }
+        &:focus, &:active {
+            box-shadow: 0 0 0 0.25rem rgb(60 153 110 / 50%);
+            background-color: #457b6b;
+            border-color: #457b6b;
+        }
+    }
     /* UTILS */
 `;

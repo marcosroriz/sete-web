@@ -24,7 +24,7 @@ const FichaEscola: React.FC = () => {
     const [tableData, setTableData] = React.useState<any>(null);
 
     React.useEffect(() => {
-        if (escolaData) {
+        if (!!escolaData) {
             const data = {
                 "Nome da escola": escolaData.nome,
                 Estado: escolaData.mec_co_uf,

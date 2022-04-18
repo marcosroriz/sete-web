@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
-import { Aluno } from "entities/Aluno";
+import { Aluno, GrauParentescoEnum, GrauParentescoLabel, SexoEnum, SexoLabel, CorEnum, CorLabel } from "entities/Aluno";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -19,12 +19,15 @@ import { Container, mediaQuery } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
 
-const grauOptions = [
-    { label: "Não Informado", value: "0" },
-    { label: "Pai, Mãe Padrasto ou Madrasta", value: "1" },
-    { label: "Avô ou Avó", value: "2" },
-    { label: "Irmão ou Irmã", value: "4" },
-];
+const sexoOptions = Object.values(SexoEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="sexo" label={SexoLabel.get(value) || ""} value={value} position="right" />
+));
+
+const corOptions = Object.values(CorEnum).map((value) => (
+    <ReactHookInputRadio key={value} name="cor" label={CorLabel.get(value) || ""} value={value} position="right" />
+));
+
+const grauOptions = Object.values(GrauParentescoEnum).map((value) => ({ label: GrauParentescoLabel.get(value) || "", value: value }));
 
 const DadosPessoais: React.FC = () => {
     const { setValue } = useFormContext();
@@ -48,6 +51,7 @@ const DadosPessoais: React.FC = () => {
             setValue("def_mental", alunoData?.def_mental === "S");
         }
     }, [alunoData]);
+
     return (
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DO ALUNO SENDO CADASTRADO." />
@@ -87,9 +91,7 @@ const DadosPessoais: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"
                 >
-                    <ReactHookInputRadio label="Masculino" value="1" name="sexo" position="right" />
-                    <ReactHookInputRadio label="Feminino" value="2" name="sexo" position="right" />
-                    <ReactHookInputRadio label="Não Informado" value="3" name="sexo" position="right" />
+                    {sexoOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
@@ -100,12 +102,7 @@ const DadosPessoais: React.FC = () => {
                     fieldsHorizontal={mediaQuery.corHorizontal}
                     formListSpacing="10px"
                 >
-                    <ReactHookInputRadio label="Não declarada" value="1" name="cor" position="right" />
-                    <ReactHookInputRadio label="Amarelo" value="2" name="cor" position="right" />
-                    <ReactHookInputRadio label="Branco" value="3" name="cor" position="right" />
-                    <ReactHookInputRadio label="Indígena" value="4" name="cor" position="right" />
-                    <ReactHookInputRadio label="Pardo" value="5" name="cor" position="right" />
-                    <ReactHookInputRadio label="Preto" value="6" name="cor" position="right" />
+                    {corOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
@@ -116,10 +113,12 @@ const DadosPessoais: React.FC = () => {
                     <ReactHookInputCheckbox label="Mental ou Intelectual" name="def_mental" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer>
-                <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
-                    Voltar
-                </Button>
+            <ButtonsContainer position={!!alunoData ? "evenly" : "right"}>
+                {!!alunoData && (
+                    <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
+                        Voltar
+                    </Button>
+                )}
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>

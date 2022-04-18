@@ -33,6 +33,7 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
                 const [lng, lat] = event.coordinate;
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
             });
+
             // map.activatePrinting();
             map.activateImageLayerSwitcher();
         }
@@ -47,6 +48,7 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
             if (!translate) {
                 return;
             }
+
             translate.on("translateend", (translateEvent) => {
                 const [lng, lat] = translateEvent.coordinate;
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);

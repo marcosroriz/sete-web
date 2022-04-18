@@ -1,50 +1,42 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
 
-import { MapControlEvents } from "helpers/Maps/MapControlEvents";
-
-import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { useNavCard } from "contexts/NavCard";
 import { Aluno } from "entities/Aluno";
+import { Escola } from "entities/Escola";
 
-import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
+import { MapView, Marker } from "components/micro/MapView";
 
 import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
+import EscolasMarker from "assets/icons/escolas/escolas-marker.png";
 
-import { Container, mediaQuery } from "./styles";
-import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
-import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
-import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
+import { Container } from "./styles";
 
 type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null>>];
+type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
 
 const Localizacao: React.FC = () => {
-    const mapRef = React.useRef<MapControlEvents | null>(null);
-    const { aditionalData } = useReactHookNavCard();
-    const { setValue } = useFormContext();
+    const [center, setCenter] = React.useState<{ lat: number; lng: number } | undefined>();
+    const { aditionalData } = useNavCard();
 
     const [alunoData] = aditionalData?.alunoData as AlunoData;
+    const [escolaData] = aditionalData?.escolaData as EscolaData;
 
     React.useEffect(() => {
-        if (alunoData) {
-            setValue("latlng[0]", alunoData?.loc_latitude || "");
-            setValue("latlng[1]", alunoData.loc_longitude || "");
-
-            if (alunoData?.loc_latitude && alunoData?.loc_longitude) {
-                mapRef.current?.goToLocation([Number(alunoData?.loc_longitude), Number(alunoData?.loc_latitude)]);
+        if (alunoData && escolaData) {
+            if (alunoData.loc_latitude && alunoData.loc_longitude) {
+                setCenter({ lat: Number(alunoData.loc_latitude), lng: Number(alunoData.loc_longitude) });
+            } else if (escolaData.loc_latitude && escolaData.loc_longitude) {
+                setCenter({ lat: Number(escolaData.loc_latitude), lng: Number(escolaData.loc_longitude) });
             }
         }
-    }, [alunoData]);
+    }, [alunoData, escolaData]);
 
     return (
         <Container>
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO" mapController={mapRef} name="latlng" icon={AlunosMarker} />
-            <ReactHookFormItemCard placeItems="center" required>
-                <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
-                    <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError disabled />
-                    <ReactHookInputText label="LONGITUDE:" name="latlng[1]" isHorizontal={mediaQuery.desktop} dontShowError disabled />
-                </ReactHookMultiFormList>
-            </ReactHookFormItemCard>
+            <MapView title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO" center={center}>
+                {alunoData && <Marker lat={Number(alunoData.loc_latitude)} lng={Number(alunoData.loc_longitude)} icon={AlunosMarker} />}
+                {escolaData && <Marker lat={Number(escolaData.loc_latitude)} lng={Number(escolaData.loc_longitude)} icon={EscolasMarker} />}
+            </MapView>
         </Container>
     );
 };
