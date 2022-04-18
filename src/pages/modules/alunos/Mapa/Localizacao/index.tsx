@@ -26,9 +26,8 @@ type AlunoLocation = {
 const Localizacao: React.FC = () => {
     const [center, setCenter] = React.useState<{ lat: number; lng: number } | undefined>();
     const [locations, setLocations] = React.useState<AlunoLocation[]>([]);
-    const [locations2, setLocations2] = React.useState<AlunoLocation[]>([]);
-    const [checkedNivel, setCheckedNivel] = React.useState<any>([]);
-    const [checkedTurno, setCheckedTurno] = React.useState<any>([]);
+    const [checkedNivel, setCheckedNivel] = React.useState<string[]>([]);
+    const [checkedTurno, setCheckedTurno] = React.useState<string[]>([]);
 
     const { aditionalData } = useNavCard();
     const [alunosData] = aditionalData?.alunosData as [AlunoListObj[]];
@@ -94,12 +93,6 @@ const Localizacao: React.FC = () => {
     }, [alunosData]);
 
     React.useEffect(() => {
-        if (locations) {
-            setLocations2(locations.filter((loc) => checkedNivel.includes(loc.nivel.toString()) || checkedTurno.includes(loc.turno.toString())));
-        }
-    }, [checkedNivel, checkedTurno]);
-
-    React.useEffect(() => {
         locations.some((location) => {
             if (location.lat && location.lng) {
                 setCenter({ lat: location.lat, lng: location.lng });
@@ -122,7 +115,9 @@ const Localizacao: React.FC = () => {
                 </MultiFormList>
             </ContainerItem>
             <MapView title="LOCALIZAÇÃO ALUNOS" center={center}>
-                {locations2.map((location) => location.lat && location.lng && <Marker lat={location.lat} lng={location.lng} icon={location.icon} />)}
+                {locations
+                    .filter((loc) => checkedNivel.includes(loc.nivel.toString()) || checkedTurno.includes(loc.turno.toString()))
+                    .map((location) => location.lat && location.lng && <Marker lat={location.lat} lng={location.lng} icon={location.icon} />)}
             </MapView>
         </Container>
     );
