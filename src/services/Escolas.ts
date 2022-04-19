@@ -38,7 +38,6 @@ class EscolasService {
     }
 
     public async createEscolas(body: CreateEscolaRequestBody, codigo_cidade: number): Promise<CreateEscolaResponse> {
-        console.log(body);
         const response = await this.api({
             method: "post",
             url: `/escolas/${codigo_cidade}`,

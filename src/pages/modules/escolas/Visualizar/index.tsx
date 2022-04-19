@@ -36,10 +36,10 @@ const Visualizar: React.FC = () => {
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const escolasService = new EscolasService();
                 const escolasResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
-                const alunosVinculados = await escolasService.listBindAlunosToEscola(Number(escolaId), codigo_cidade);
+                // const alunosVinculados = await escolasService.listBindAlunosToEscola(Number(escolaId), codigo_cidade);
 
                 setEscolaData(escolasResponse);
-                setAlunosData(alunosVinculados);
+                // setAlunosData(alunosVinculados);
 
                 if (!escolasResponse.result) {
                     throw { ...escolasResponse };

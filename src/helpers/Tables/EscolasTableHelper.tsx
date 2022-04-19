@@ -1,7 +1,9 @@
 import React from "react";
-import { Escola, EscolaTableField, EscolaListObj } from "entities/Escola";
+import { EscolaTableField, EscolaListObj, MecTpLocalizacaoEnum, MecTpLocalizacaoLabel } from "entities/Escola";
 import { FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+
+import { formatHelper } from "helpers/FormatHelper";
 
 type AdditionalOptions = {
     delete: (escola: EscolaListObj) => Promise<void>;
@@ -11,23 +13,19 @@ class EscolasTableHelper {
     public treatData(data: EscolaListObj[], addOptions?: AdditionalOptions): EscolaTableField[] {
         return data.map((escolaObj) => ({
             nome: escolaObj.nome,
-            localizacao: escolaObj.mec_tp_localizacao == 1 ? "Urbana" : escolaObj.mec_tp_localizacao == 2 ? "Rural" : "-",
-            gps: escolaObj.loc_latitude === null ? "Não" : escolaObj.loc_longitude === null ? "Não" : "Sim",
+            localizacao: MecTpLocalizacaoLabel.get(escolaObj.mec_tp_localizacao) || "-",
+            gps: escolaObj.loc_latitude && escolaObj.loc_longitude ? "Sim" : "Não",
             nivel: [
-                escolaObj.ensino_pre_escola === "S" ? "Infantil" : "",
-                escolaObj.ensino_fundamental === "S" ? "Fundamental" : "",
-                escolaObj.ensino_medio === "S" ? "Médio" : "",
-                escolaObj.ensino_superior === "S" ? "Superior" : "",
-            ]
-                .filter((val) => val !== "")
-                .join(", "),
+                formatHelper.parseSNToString(escolaObj.ensino_pre_escola, "Infantil"),
+                formatHelper.parseSNToString(escolaObj.ensino_fundamental, "Fundamental"),
+                formatHelper.parseSNToString(escolaObj.ensino_medio, "Médio"),
+                formatHelper.parseSNToString(escolaObj.ensino_superior, "Superior"),
+            ].joinValid(", "),
             horario_funcionamento: [
-                escolaObj.horario_matutino === "S" ? "Manhã" : "",
-                escolaObj.horario_vespertino === "S" ? "Tarde" : "",
-                escolaObj.horario_noturno === "S" ? "Noite" : "",
-            ]
-                .filter((val) => val !== "")
-                .join(", "),
+                formatHelper.parseSNToString(escolaObj.horario_matutino, "Manhã"),
+                formatHelper.parseSNToString(escolaObj.horario_vespertino, "Tarde"),
+                formatHelper.parseSNToString(escolaObj.horario_noturno, "Noite"),
+            ].joinValid(", "),
             qtd_alunos: escolaObj.qtd_alunos,
             acoes: this.acoesComponent(escolaObj, addOptions),
         }));
