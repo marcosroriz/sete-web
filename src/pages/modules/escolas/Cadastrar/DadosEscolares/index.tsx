@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
+import { formatHelper } from "helpers/FormatHelper";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import { Escola } from "entities/Escola";
@@ -24,17 +25,17 @@ const DadosEscolares: React.FC = () => {
 
     React.useEffect(() => {
         if (!!escolaData) {
-            setValue("mec_in[0]", escolaData?.mec_in_regular === "S" || "");
-            setValue("mec_in[1]", escolaData?.mec_in_eja === "S" || "");
-            setValue("mec_in[2]", escolaData?.mec_in_profissionalizante === "S" || "");
-            setValue("mec_in[3]", escolaData?.mec_in_especial_exclusiva === "S" || "");
-            setValue("ensino[0]", escolaData?.ensino_pre_escola === "S" || "");
-            setValue("ensino[1]", escolaData?.ensino_fundamental === "S" || "");
-            setValue("ensino[2]", escolaData?.ensino_medio === "S" || "");
-            setValue("ensino[3]", escolaData?.ensino_superior === "S" || "");
-            setValue("horario[0]", escolaData?.horario_matutino === "S" || "");
-            setValue("horario[1]", escolaData?.horario_vespertino === "S" || "");
-            setValue("horario[2]", escolaData?.horario_noturno === "S" || "");
+            setValue("mec_in[0]", formatHelper.parseSNToBoolean(escolaData?.mec_in_regular));
+            setValue("mec_in[1]", formatHelper.parseSNToBoolean(escolaData?.mec_in_eja));
+            setValue("mec_in[2]", formatHelper.parseSNToBoolean(escolaData?.mec_in_profissionalizante));
+            setValue("mec_in[3]", formatHelper.parseSNToBoolean(escolaData?.mec_in_especial_exclusiva));
+            setValue("ensino[0]", formatHelper.parseSNToBoolean(escolaData?.ensino_pre_escola));
+            setValue("ensino[1]", formatHelper.parseSNToBoolean(escolaData?.ensino_fundamental));
+            setValue("ensino[2]", formatHelper.parseSNToBoolean(escolaData?.ensino_medio));
+            setValue("ensino[3]", formatHelper.parseSNToBoolean(escolaData?.ensino_superior));
+            setValue("horario[0]", formatHelper.parseSNToBoolean(escolaData?.horario_matutino));
+            setValue("horario[1]", formatHelper.parseSNToBoolean(escolaData?.horario_vespertino));
+            setValue("horario[2]", formatHelper.parseSNToBoolean(escolaData?.horario_noturno));
         }
     }, [escolaData]);
 
