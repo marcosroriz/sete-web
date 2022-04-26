@@ -35,7 +35,7 @@ type FormData = {
     data_nascimento: string;
     nome_responsavel: string;
     telefone_responsavel: string;
-    grau_responsavel: GrauParentescoEnum;
+    grau_responsavel: string;
     sexo: string;
     cor: string;
     def_caminhar: boolean;
@@ -63,7 +63,7 @@ const formData = {
     data_nascimento: "",
     nome_responsavel: "",
     telefone_responsavel: "",
-    grau_responsavel: "" as GrauParentescoEnum,
+    grau_responsavel: "",
     sexo: "",
     cor: "",
     def_caminhar: false,

@@ -79,9 +79,9 @@ const MecTpLocalizacaoTableLabel = new Map<MecTpLocalizacaoEnum, string>([
 ]);
 
 enum SexoEnum {
-    Masculino = "1",
-    Feminino = "2",
-    NaoInformado = "3",
+    Masculino = 1,
+    Feminino = 2,
+    NaoInformado = 3,
 }
 const SexoLabel = new Map<SexoEnum, string>([
     [SexoEnum.NaoInformado, "Não Informado"],
@@ -90,15 +90,15 @@ const SexoLabel = new Map<SexoEnum, string>([
 ]);
 
 enum CorEnum {
-    NãoInformada = "0",
-    Amarelo = "1",
-    Branco = "2",
-    Indigena = "3",
-    Pardo = "4",
-    Preto = "5",
+    NaoInformada = 0,
+    Amarelo = 1,
+    Branco = 2,
+    Indigena = 3,
+    Pardo = 4,
+    Preto = 5,
 }
 const CorLabel = new Map<CorEnum, string>([
-    [CorEnum.NãoInformada, "Não Informada"],
+    [CorEnum.NaoInformada, "Não Informada"],
     [CorEnum.Amarelo, "Amarelo"],
     [CorEnum.Branco, "Branco"],
     [CorEnum.Indigena, "Indígena"],
@@ -107,11 +107,11 @@ const CorLabel = new Map<CorEnum, string>([
 ]);
 
 enum GrauParentescoEnum {
-    NaoInformado = "-1",
-    PaiMae = "0",
-    Avo = "1",
-    Irma = "2",
-    OutroParente = "4",
+    NaoInformado = -1,
+    PaiMae = 0,
+    Avo = 1,
+    Irma = 2,
+    OutroParente = 4,
 }
 const GrauParentescoLabel = new Map<GrauParentescoEnum, string>([
     [GrauParentescoEnum.NaoInformado, "Não Informado"],

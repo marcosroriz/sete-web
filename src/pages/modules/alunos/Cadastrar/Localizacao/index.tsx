@@ -27,7 +27,15 @@ type AlunoData = [Aluno | null, React.Dispatch<React.SetStateAction<Aluno | null
 
 const mec_tp_localizacaoOptions = formatHelper
     .getNumbersEnumValues(MecTpLocalizacaoEnum)
-    .map((value) => <ReactHookInputRadio key={value} name="mec_tp_localizacao" label={MecTpLocalizacaoLabel.get(value)!} value={value} position="right" />);
+    .map((value) => (
+        <ReactHookInputRadio
+            key={value}
+            name="mec_tp_localizacao"
+            label={MecTpLocalizacaoLabel.get(value as MecTpLocalizacaoEnum)!}
+            value={value.toString()}
+            position="right"
+        />
+    ));
 
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
