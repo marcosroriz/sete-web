@@ -63,6 +63,7 @@ export const TableContainer = styled.div`
                 }
                 td {
                     padding: 10px 5px;
+                    vertical-align: middle;
                 }
             }
 

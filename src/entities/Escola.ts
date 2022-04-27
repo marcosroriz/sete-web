@@ -52,6 +52,7 @@ interface EscolaListObj {
 }
 
 interface EscolaTableField {
+    id_escola: number;
     nome: string;
     localizacao: string;
     gps: string;

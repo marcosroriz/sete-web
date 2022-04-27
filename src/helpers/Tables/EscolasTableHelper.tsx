@@ -12,6 +12,7 @@ type AdditionalOptions = {
 class EscolasTableHelper {
     public treatData(data: EscolaListObj[], addOptions?: AdditionalOptions): EscolaTableField[] {
         return data.map((escolaObj) => ({
+            id_escola: escolaObj.id_escola,
             nome: escolaObj.nome,
             localizacao: MecTpLocalizacaoLabel.get(escolaObj.mec_tp_localizacao) || "-",
             gps: escolaObj.loc_latitude && escolaObj.loc_longitude ? "Sim" : "Não",
@@ -64,7 +65,10 @@ class EscolasTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => addOptions?.delete(escolaObj)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        addOptions?.delete(escolaObj);
+                    }}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>

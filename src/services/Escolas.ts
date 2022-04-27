@@ -72,7 +72,7 @@ class EscolasService {
             method: "delete",
             url: `/escolas/${codigo_cidade}/${id_escola}`,
         });
-        const data = await response.data;
+        await response.data;
     }
 
     public async listBindAlunosToEscola(id_escola: number, codigo_cidade: number): Promise<void> {
