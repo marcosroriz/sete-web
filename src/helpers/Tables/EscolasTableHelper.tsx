@@ -1,6 +1,6 @@
 import React from "react";
 import { EscolaTableField, EscolaListObj, MecTpLocalizacaoEnum, MecTpLocalizacaoLabel } from "entities/Escola";
-import { FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
+import { FaSearch, FaEdit, FaRegTimesCircle, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import { formatHelper } from "helpers/FormatHelper";
@@ -35,6 +35,19 @@ class EscolasTableHelper {
     public acoesComponent(escolaObj: EscolaListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Link
+                    to={`/escolas/gerenciar/alunos/${escolaObj.id_escola}`}
+                    style={{
+                        display: "block",
+                        marginBottom: "-2px",
+                        marginRight: "4px",
+                        border: "none",
+                        backgroundColor: "transparent",
+                        cursor: "pointer",
+                    }}
+                >
+                    <FaUser size={"16px"} color={"#23CCEF"} />
+                </Link>
                 <Link
                     to={`/escolas/gerenciar/visualizar/${escolaObj.id_escola}`}
                     style={{
