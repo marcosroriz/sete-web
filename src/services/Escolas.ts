@@ -1,6 +1,5 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
-import { Escola, EscolaTableField, EscolaListObj } from "entities/Escola";
-import { Console } from "console";
+import { Escola, EscolaListObj } from "entities/Escola";
 
 type CreateEscolaRequestBody = Escola;
 type CreateEscolaResponse = {
