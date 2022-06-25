@@ -1,6 +1,15 @@
 import React from "react";
 
-import { AlunoListObj, AlunosTableField, TurnoTableLabel, NivelTableLabel, MecTpLocalizacaoEnum, MecTpLocalizacaoTableLabel } from "entities/Aluno";
+import {
+    AlunoListObj,
+    AlunosTableField,
+    TurnoTableLabel,
+    NivelTableLabel,
+    MecTpLocalizacaoEnum,
+    MecTpLocalizacaoTableLabel,
+    NivelEnum,
+    TurnoEnum,
+} from "entities/Aluno";
 import { Link } from "react-router-dom";
 import { FaEdit, FaRegTimesCircle, FaSearch } from "react-icons/fa";
 
@@ -17,8 +26,8 @@ class AlunosTableHelper {
             nome: alunoObj.nome,
             localizacao: MecTpLocalizacaoTableLabel.get(alunoObj.mec_tp_localizacao as MecTpLocalizacaoEnum) || "-",
             gps: !alunoObj.loc_latitude || !alunoObj.loc_longitude ? "Não" : "Sim",
-            nivel: NivelTableLabel.get(alunoObj.nivel) || "",
-            turno: TurnoTableLabel.get(alunoObj.turno) || "",
+            nivel: NivelTableLabel.get(alunoObj.nivel as NivelEnum) || "-",
+            turno: TurnoTableLabel.get(alunoObj.turno as TurnoEnum) || "-",
             acoes: this.acoesComponent(alunoObj, addOptions),
         }));
     }

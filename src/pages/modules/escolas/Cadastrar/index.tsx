@@ -21,43 +21,7 @@ import DadosEscolaresIcon from "assets/icons/escolas/escolas-dados-escolares.png
 import DadosBasicosIcon from "assets/icons/escolas/escolas-dados-basicos.svg";
 import LocalizacaoIcon from "assets/icons/escolas/escolas-localizacao.svg";
 import EscolasCadastroIcon from "assets/icons/escolas/escolas-cadastro.png";
-import { localizacaoSchema, dadosBasicosSchema, dadosEscolaresSchema } from "validators/modules/escolas";
-
-type FormData = {
-    latlng: [string, string];
-    mec_co_uf: string;
-    mec_co_municipio: string;
-    loc_endereco: string;
-    loc_cep: string;
-    mec_tp_localizacao: string;
-    mec_tp_localizacao_diferenciada: string;
-    mec_tp_dependencia: string;
-    nome: string;
-    contato_responsavel: string;
-    contato_telefone: string;
-    contato_email: string;
-    mec_in: boolean[];
-    ensino: boolean[];
-    horario: boolean[];
-};
-
-const formData = {
-    latlng: ["", ""],
-    mec_co_uf: "",
-    mec_co_municipio: "",
-    loc_endereco: "",
-    loc_cep: "",
-    mec_tp_localizacao: "",
-    mec_tp_localizacao_diferenciada: "",
-    mec_tp_dependencia: "",
-    nome: "",
-    contato_responsavel: "",
-    contato_telefone: "",
-    contato_email: "",
-    mec_in: [false, false, false, false],
-    ensino: [false, false, false, false],
-    horario: [false, false, false],
-};
+import { localizacaoSchema, dadosBasicosSchema, dadosEscolaresSchema, getBody, defaultValues, FormData } from "forms/EscolasForm";
 
 const Cadastrar: React.FC = () => {
     const { id: escolaId } = useParams<{ id: string }>();
@@ -72,34 +36,8 @@ const Cadastrar: React.FC = () => {
             createModal();
             const escolasService = new EscolasService();
             const codigo_cidade = user?.codigo_cidade || 0;
-            const body = {
-                loc_latitude: data.latlng[0],
-                loc_longitude: data.latlng[1],
-                mec_co_uf: Number(data.mec_co_uf),
-                mec_co_municipio: Number(data.mec_co_municipio),
-                mec_no_entidade: data.nome,
-                loc_endereco: data.loc_endereco,
-                loc_cep: data.loc_cep,
-                mec_tp_localizacao: Number(data.mec_tp_localizacao),
-                mec_tp_localizacao_diferenciada: Number(data.mec_tp_localizacao_diferenciada),
-                mec_tp_dependencia: Number(data.mec_tp_dependencia),
-                nome: data.nome,
-                contato_responsavel: data.contato_responsavel,
-                contato_telefone: data.contato_telefone,
-                contato_email: data.contato_email,
-                mec_in_regular: formatHelper.parseBooleanToSN(data.mec_in[0]),
-                mec_in_eja: formatHelper.parseBooleanToSN(data.mec_in[1]),
-                mec_in_profissionalizante: formatHelper.parseBooleanToSN(data.mec_in[2]),
-                mec_in_especial_exclusiva: formatHelper.parseBooleanToSN(data.mec_in[3]),
-                ensino_pre_escola: formatHelper.parseBooleanToSN(data.ensino[0]),
-                ensino_fundamental: formatHelper.parseBooleanToSN(data.ensino[1]),
-                ensino_medio: formatHelper.parseBooleanToSN(data.ensino[2]),
-                ensino_superior: formatHelper.parseBooleanToSN(data.ensino[3]),
-                horario_matutino: formatHelper.parseBooleanToSN(data.horario[0]),
-                horario_vespertino: formatHelper.parseBooleanToSN(data.horario[1]),
-                horario_noturno: formatHelper.parseBooleanToSN(data.horario[2]),
-            };
-
+            const body = getBody(data);
+          
             if (!!escolaId) {
                 const response = await escolasService.updateEscola(body, Number(escolaId), codigo_cidade);
 
@@ -147,7 +85,7 @@ const Cadastrar: React.FC = () => {
             <PageTitle message="Cadastrar Escola" icon={EscolasCadastroIcon} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
-                defaultValues={formData as FormData}
+                defaultValues={defaultValues}
                 reValidateMode="onChange"
                 onSubmit={handleSubmit}
                 aditionalData={{

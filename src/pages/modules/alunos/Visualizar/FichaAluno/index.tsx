@@ -103,12 +103,12 @@ const FichaAluno: React.FC = () => {
     };
 
     React.useEffect(() => {
-        if (!!alunoData && !!escolaData) {
+        if (!!alunoData) {
             const data = {
                 ["Nome do Aluno"]: alunoData.nome,
                 ["Data de nascimento"]: alunoData.data_nascimento,
-                ["Sexo"]: SexoLabel.get((alunoData.sexo?.toString() || "3") as SexoEnum),
-                ["Cor/Raça"]: CorLabel.get((alunoData.cor?.toString() || "0") as CorEnum),
+                ["Sexo"]: SexoLabel.get(alunoData.sexo as SexoEnum),
+                ["Cor/Raça"]: CorLabel.get(alunoData.cor as CorEnum),
                 ["CPF"]: alunoData.cpf || "-",
                 ["Possui alguma deficiência"]:
                     [
@@ -120,7 +120,7 @@ const FichaAluno: React.FC = () => {
                         .filter((val) => val !== "")
                         .join(", ") || "Não",
                 ["Nome do responsável"]: alunoData.nome_responsavel,
-                ["Grau de parentesco"]: GrauParentescoLabel.get((alunoData.grau_responsavel?.toString() || "-1") as GrauParentescoEnum),
+                ["Grau de parentesco"]: GrauParentescoLabel.get(alunoData.grau_responsavel as GrauParentescoEnum),
                 ["Telefonde do responsável"]: alunoData.telefone_responsavel || "Telefone de contato não informado",
                 ["Endereço do Aluno"]: alunoData.loc_endereco || "-",
                 ["CEP da residência"]: alunoData.loc_cep,
@@ -136,10 +136,16 @@ const FichaAluno: React.FC = () => {
                         .join(", ") || "Não",
                 ["Localização"]: MecTpLocalizacaoLabel.get(alunoData.mec_tp_localizacao as MecTpLocalizacaoEnum) || "Sem localização",
 
-                ["Escola"]: escolaData.nome,
-                ["Contato da escola"]: escolaData.contato_responsavel,
-                ["Telefone de contato"]: escolaData.contato_telefone,
+                ["Escola"]: "",
+                ["Contato da escola"]: "",
+                ["Telefone de contato"]: "",
             };
+
+            if (!!escolaData) {
+                data["Escola"] = escolaData.nome;
+                data["Contato da escola"] = escolaData.contato_responsavel;
+                data["Telefone de contato"] = escolaData.contato_telefone;
+            }
             setTableData(data);
         }
     }, [alunoData, escolaData]);

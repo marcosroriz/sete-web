@@ -22,13 +22,14 @@ const Localizacao: React.FC = () => {
     const [escolaData] = aditionalData?.escolaData as EscolaData;
 
     React.useEffect(() => {
-        if (alunoData && escolaData) {
+        if (!!alunoData)
             if (alunoData.loc_latitude && alunoData.loc_longitude) {
                 setCenter({ lat: Number(alunoData.loc_latitude), lng: Number(alunoData.loc_longitude) });
-            } else if (escolaData.loc_latitude && escolaData.loc_longitude) {
+            }
+        if (!!escolaData)
+            if (escolaData.loc_latitude && escolaData.loc_longitude) {
                 setCenter({ lat: Number(escolaData.loc_latitude), lng: Number(escolaData.loc_longitude) });
             }
-        }
     }, [alunoData, escolaData]);
 
     return (

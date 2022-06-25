@@ -7,7 +7,7 @@ import { AlunoListObj } from "entities/Aluno";
 import { useNavCard } from "contexts/NavCard";
 
 import MultiFormList from "components/micro/Inputs/MultiFormList";
-import InputCheckbox from "components/micro/Inputs/InputRadio";
+import InputCheckbox from "components/micro/Inputs/InputCheckbox";
 import { MapView, Marker } from "components/micro/MapView";
 
 import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
