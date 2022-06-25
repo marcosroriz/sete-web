@@ -58,6 +58,15 @@ class FormatHelper {
     public getNumbersEnumValues<Enum extends object = {}>(enValues: Enum): ValueOf<Enum>[] {
         return Object.values(enValues).filter((x) => typeof x === "number") as any;
     }
+    public parseBooleanToSN(bool?: boolean) {
+        return bool ? "S" : "N";
+    }
+    public parseSNToBoolean(str?: string) {
+        return str === "S";
+    }
+    public parseSNToString(sn?: string, str?: string) {
+        return this.parseSNToBoolean(sn) ? str : undefined;
+    }
 }
 
 const formatHelper = new FormatHelper();

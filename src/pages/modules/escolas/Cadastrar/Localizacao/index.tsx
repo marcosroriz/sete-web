@@ -6,6 +6,8 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+import { formatHelper } from "helpers/FormatHelper";
+
 import {
     Escola,
     MecTpDependenciaEnum,
@@ -33,19 +35,23 @@ import { Container, mediaQuery } from "./styles";
 
 type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
 
-const mec_tp_localizacaoOptions = Object.values(MecTpLocalizacaoEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="mec_tp_localizacao" label={MecTpLocalizacaoLabel.get(value) || ""} value={value} position="right" />
-));
+const mec_tp_localizacaoOptions = formatHelper
+    .getNumbersEnumValues(MecTpLocalizacaoEnum)
+    .map((value) => (
+        <ReactHookInputRadio key={value} name="mec_tp_localizacao" label={MecTpLocalizacaoLabel.get(value) || ""} value={value.toString()} position="right" />
+    ));
 
-const mec_tp_localizacao_diferenciadaOptions = Object.values(MecTpLocalizacaoDiferenciadaEnum).map((value) => (
-    <ReactHookInputRadio
-        key={value}
-        name="mec_tp_localizacao_diferenciada"
-        label={MecTpLocalizacaoDiferenciadaLabel.get(value) || ""}
-        value={value}
-        position="right"
-    />
-));
+const mec_tp_localizacao_diferenciadaOptions = formatHelper
+    .getNumbersEnumValues(MecTpLocalizacaoDiferenciadaEnum)
+    .map((value) => (
+        <ReactHookInputRadio
+            key={value}
+            name="mec_tp_localizacao_diferenciada"
+            label={MecTpLocalizacaoDiferenciadaLabel.get(value) || ""}
+            value={value.toString()}
+            position="right"
+        />
+    ));
 
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);

@@ -5,6 +5,8 @@ import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
+import { formatHelper } from "helpers/FormatHelper";
+
 import { Escola, MecTpDependenciaEnum, MecTpDependenciaLabel } from "entities/Escola";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
@@ -19,9 +21,11 @@ import { Container, mediaQuery } from "./styles";
 
 type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
 
-const mec_tp_dependenciaOptions = Object.values(MecTpDependenciaEnum).map((value) => (
-    <ReactHookInputRadio key={value} name="mec_tp_dependencia" label={MecTpDependenciaLabel.get(value) || ""} value={value} position="right" />
-));
+const mec_tp_dependenciaOptions = formatHelper
+    .getNumbersEnumValues(MecTpDependenciaEnum)
+    .map((value) => (
+        <ReactHookInputRadio key={value} name="mec_tp_dependencia" label={MecTpDependenciaLabel.get(value) || ""} value={value.toString()} position="right" />
+    ));
 
 const DadosBasicos: React.FC = () => {
     const { setValue } = useFormContext();

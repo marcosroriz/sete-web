@@ -58,7 +58,7 @@ interface AlunosTableField {
     rota: string;
 }
 
-interface AlunosListRota {
+interface AlunosList {
     label: string;
     value: string;
 }
@@ -182,4 +182,4 @@ export {
     NivelLabel,
     NivelTableLabel,
 };
-export type { Aluno, AlunoListObj, AlunosTableField, AlunosListRota };
+export type { Aluno, AlunoListObj, AlunosTableField, AlunosList };

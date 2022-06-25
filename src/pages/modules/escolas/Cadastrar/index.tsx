@@ -5,6 +5,7 @@ import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHoo
 
 import { EscolasService } from "services/Escolas";
 import { Escola } from "entities/Escola";
+import { formatHelper } from "helpers/FormatHelper";
 
 import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
@@ -86,17 +87,17 @@ const Cadastrar: React.FC = () => {
                 contato_responsavel: data.contato_responsavel,
                 contato_telefone: data.contato_telefone,
                 contato_email: data.contato_email,
-                mec_in_regular: data.mec_in[0] ? "S" : "N",
-                mec_in_eja: data.mec_in[1] ? "S" : "N",
-                mec_in_profissionalizante: data.mec_in[2] ? "S" : "N",
-                mec_in_especial_exclusiva: data.mec_in[3] ? "S" : "N",
-                ensino_pre_escola: data.ensino[0] ? "S" : "N",
-                ensino_fundamental: data.ensino[1] ? "S" : "N",
-                ensino_medio: data.ensino[2] ? "S" : "N",
-                ensino_superior: data.ensino[3] ? "S" : "N",
-                horario_matutino: data.horario[0] ? "S" : "N",
-                horario_vespertino: data.horario[1] ? "S" : "N",
-                horario_noturno: data.horario[2] ? "S" : "N",
+                mec_in_regular: formatHelper.parseBooleanToSN(data.mec_in[0]),
+                mec_in_eja: formatHelper.parseBooleanToSN(data.mec_in[1]),
+                mec_in_profissionalizante: formatHelper.parseBooleanToSN(data.mec_in[2]),
+                mec_in_especial_exclusiva: formatHelper.parseBooleanToSN(data.mec_in[3]),
+                ensino_pre_escola: formatHelper.parseBooleanToSN(data.ensino[0]),
+                ensino_fundamental: formatHelper.parseBooleanToSN(data.ensino[1]),
+                ensino_medio: formatHelper.parseBooleanToSN(data.ensino[2]),
+                ensino_superior: formatHelper.parseBooleanToSN(data.ensino[3]),
+                horario_matutino: formatHelper.parseBooleanToSN(data.horario[0]),
+                horario_vespertino: formatHelper.parseBooleanToSN(data.horario[1]),
+                horario_noturno: formatHelper.parseBooleanToSN(data.horario[2]),
             };
 
             if (!!escolaId) {

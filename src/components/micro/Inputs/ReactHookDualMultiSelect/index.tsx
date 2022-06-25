@@ -15,10 +15,11 @@ type Texts = { selected: { title: string; placeholder?: string }; notSelected: {
 type ReactHookDualMultiSelectProps = {
     name: string;
     options: MultiOptions[];
+    selectedOptions?: MultiOptions[];
     texts: Texts;
 };
 
-const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ name, options, texts }) => {
+const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ name, options, selectedOptions, texts }) => {
     const { register } = useFormContext();
     const selected = (useWatch({ name }) as string[]) || [];
     const [notSelectedValues, setNotSelectedValues] = React.useState<string[]>([]);

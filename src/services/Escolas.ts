@@ -1,6 +1,5 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
-import { Escola, EscolaTableField, EscolaListObj } from "entities/Escola";
-import { Console } from "console";
+import { Escola, EscolaListObj } from "entities/Escola";
 
 type CreateEscolaRequestBody = Escola;
 type CreateEscolaResponse = {
@@ -38,7 +37,6 @@ class EscolasService {
     }
 
     public async createEscolas(body: CreateEscolaRequestBody, codigo_cidade: number): Promise<CreateEscolaResponse> {
-        console.log(body);
         const response = await this.api({
             method: "post",
             url: `/escolas/${codigo_cidade}`,
@@ -73,7 +71,7 @@ class EscolasService {
             method: "delete",
             url: `/escolas/${codigo_cidade}/${id_escola}`,
         });
-        const data = await response.data;
+        await response.data;
     }
 
     public async listBindAlunosToEscola(id_escola: number, codigo_cidade: number): Promise<void> {

@@ -7,7 +7,6 @@ import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { Escola } from "entities/Escola";
 import { EscolasService } from "services/Escolas";
-import { escolasTableHelper } from "helpers/Tables/EscolasTableHelper";
 
 import PageTitle from "components/micro/PageTitle";
 
@@ -30,16 +29,14 @@ const Visualizar: React.FC = () => {
     const { user } = useAuth();
 
     React.useEffect(() => {
-        const fetchData = async () => {
+        const escolasService = new EscolasService();
+        const codigo_cidade = user?.codigo_cidade || 0;
+
+        (async () => {
             try {
                 createModal();
-                const codigo_cidade = user?.codigo_cidade || 0;
-                const escolasService = new EscolasService();
                 const escolasResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
-                const alunosVinculados = await escolasService.listBindAlunosToEscola(Number(escolaId), codigo_cidade);
-
                 setEscolaData(escolasResponse);
-                setAlunosData(alunosVinculados);
 
                 if (!escolasResponse.result) {
                     throw { ...escolasResponse };
@@ -48,8 +45,12 @@ const Visualizar: React.FC = () => {
             } catch (err) {
                 errorHandler(err, { title: "Erro ao buscar dados da escola" });
             }
-        };
-        fetchData();
+        })();
+
+        (async () => {
+            const alunosVinculados = await escolasService.listBindAlunosToEscola(Number(escolaId), codigo_cidade);
+            setAlunosData(alunosVinculados);
+        })();
     }, []);
 
     return (

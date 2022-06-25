@@ -5,7 +5,7 @@ import { useAuth } from "contexts/Auth";
 import { AlunosService } from "services/Alunos";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 
-import { AlunosListRota } from "entities/Aluno";
+import { AlunosList } from "entities/Aluno";
 import { alunosListHelper } from "helpers/DualMultiSelect/AlunosListRotaHelper";
 
 import BlockTitle from "components/micro/BlockTitle";
@@ -20,12 +20,11 @@ const AlunosAtendidos: React.FC = () => {
     const { previousStep } = useReactHookNavCard();
     const { user } = useAuth();
 
-    const [alunosList, setAlunosList] = React.useState<AlunosListRota[]>([]);
+    const [alunosList, setAlunosList] = React.useState<AlunosList[]>([]);
 
     const fetchData = async () => {
         const alunosService = new AlunosService();
         const codigo_cidade = user?.codigo_cidade || 0;
-
         const data = await alunosService.listAlunos(codigo_cidade);
         const treatedData = alunosListHelper.treatData(data.data);
         setAlunosList(treatedData);
