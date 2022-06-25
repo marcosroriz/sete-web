@@ -14,32 +14,12 @@ import PageTitle from "components/micro/PageTitle";
 import Localizacao from "./Localizacao";
 import DadosInstitucionais from "./DadosInstitucionais";
 
+import { dadosInstitucionaisSchema, FormData, defaultValues, getBody } from "forms/FornecedoresForm";
+
 import DadosInstitucionaisIcon from "assets/icons/fornecedores/fornecedores-dados-institucionais.svg";
 import LocalizacaoIcon from "assets/icons/fornecedores/fornecedores-localizacao.svg";
 import FornecedoresCadastroIcon from "assets/icons/fornecedores/fornecedores-cadastro.png";
-import { dadosInstitucionaisSchema } from "validators/modules/fornecedores";
 
-type FormData = {
-    latlng: [string, string];
-    loc_endereco: string;
-    loc_cep: string;
-    nome: string;
-    telefone: string;
-    cnpj: string;
-    ramo: boolean[];
-};
-
-const formData = {
-    latlng: ["", ""],
-    loc_endereco: "",
-    loc_cep: "",
-    nome: "",
-    telefone: "",
-    cnpj: "",
-    ramo_mecanica: false,
-    ramo_combustivel: false,
-    ramo_seguro: false,
-};
 const Cadastrar: React.FC = () => {
     const { id: fornecedorId } = useParams<{ id: string }>();
     const { user } = useAuth();
@@ -53,18 +33,7 @@ const Cadastrar: React.FC = () => {
             createModal();
             const fornecedoresService = new FornecedoresService();
             const codigo_cidade = user?.codigo_cidade || 0;
-            const body = {
-                cnpj: data.cnpj,
-                nome: data.nome,
-                ramo_mecanica: data.ramo[0] ? "S" : "N",
-                ramo_combustivel: data.ramo[1] ? "S" : "N",
-                ramo_seguro: data.ramo[2] ? "S" : "N",
-                loc_latitude: data.latlng[0],
-                loc_longitude: data.latlng[1],
-                loc_endereco: data.loc_endereco,
-                loc_cep: data.loc_cep,
-                telefone: data.telefone,
-            };
+            const body = getBody(data);
 
             if (!!fornecedorId) {
                 const response = await fornecedoresService.updateFornecedor(body, Number(fornecedorId), codigo_cidade);
@@ -111,7 +80,7 @@ const Cadastrar: React.FC = () => {
             <PageTitle message="Cadastrar Fornecedor" icon={FornecedoresCadastroIcon} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
-                defaultValues={formData as unknown as FormData}
+                defaultValues={defaultValues}
                 reValidateMode="onChange"
                 onSubmit={handleFormSubmit}
                 aditionalData={{

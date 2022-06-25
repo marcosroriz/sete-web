@@ -7,7 +7,6 @@ import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { MotoristasService } from "services/Motoristas";
 import { Motorista } from "entities/Motorista";
-import { FileData } from "entities/FileData";
 
 import PageTitle from "components/micro/PageTitle";
 import DadosPessoais from "./DadosPessoais";
@@ -16,38 +15,7 @@ import DadosTransporte from "./DadosTransporte";
 import PageIcon from "assets/icons/motoristas/motorista-cadastro.png";
 import DadosPessoaisIcon from "assets/icons/motoristas/motorista-dados-pessoais.svg";
 import DadosTransportesIcon from "assets/icons/motoristas/motorista-dados-transportes.png";
-import { dadosPessoaisSchema, dadosTransportesSchema } from "validators/modules/motoristas";
-
-type FormData = {
-    nome: string;
-    cpf: string;
-    data_nascimento: string;
-    ant_criminais: string;
-    sexo: string;
-    telefone: string;
-    cnh: string;
-    data_validade_cnh: string;
-    vinculo: string;
-    salario: string;
-    tipo_cnh: boolean[];
-    turno: boolean[];
-    arquivos: FileData[];
-};
-
-const formData = {
-    nome: "",
-    cpf: "",
-    data_nascimento: "",
-    ant_criminais: "",
-    sexo: "",
-    telefone: "",
-    cnh: "",
-    data_validade_cnh: "",
-    vinculo: "",
-    salario: "",
-    tipo_cnh: [false, false, false, false],
-    turno: [false, false, false],
-};
+import { dadosPessoaisSchema, dadosTransportesSchema, defaultValues, FormData, getBody } from "forms/MotoristasForm";
 
 const Cadastrar: React.FC = () => {
     const { id: motoristaId } = useParams<{ id: string }>();
@@ -63,26 +31,7 @@ const Cadastrar: React.FC = () => {
             const motoristasService = new MotoristasService();
             const codigo_cidade = user?.codigo_cidade || 0;
 
-            const body = {
-                nome: data.nome,
-                cpf: data.cpf.replace(/[-.]/g, ""),
-                ant_criminais: data.ant_criminais,
-                data_nascimento: data.data_nascimento,
-                sexo: Number(data.sexo),
-                telefone: data.telefone,
-                vinculo: Number(data.vinculo),
-                salario: Number(data.salario),
-                cnh: data.cnh.replace(/[-]/g, ""),
-                data_validade_cnh: data.data_validade_cnh,
-                turno_manha: data.turno[0] ? "S" : "N",
-                turno_tarde: data.turno[1] ? "S" : "N",
-                turno_noite: data.turno[2] ? "S" : "N",
-                tem_cnh_a: data.tipo_cnh[0] ? "S" : "N",
-                tem_cnh_b: data.tipo_cnh[1] ? "S" : "N",
-                tem_cnh_c: data.tipo_cnh[2] ? "S" : "N",
-                tem_cnh_d: data.tipo_cnh[3] ? "S" : "N",
-                tem_cnh_e: data.tipo_cnh[4] ? "S" : "N",
-            };
+            const body = getBody(data);
 
             if (!!motoristaId) {
                 const motoristasResponse = await motoristasService.updateMotorista(body, motoristaId, codigo_cidade);
@@ -130,7 +79,7 @@ const Cadastrar: React.FC = () => {
             <PageTitle message="Cadastro de Motorista" icon={PageIcon} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
-                defaultValues={formData}
+                defaultValues={defaultValues}
                 reValidateMode="onChange"
                 onSubmit={handleFormSubmit}
                 aditionalData={{

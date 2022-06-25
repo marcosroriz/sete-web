@@ -103,7 +103,7 @@ const FichaAluno: React.FC = () => {
     };
 
     React.useEffect(() => {
-        if (!!alunoData && !!escolaData) {
+        if (!!alunoData) {
             const data = {
                 ["Nome do Aluno"]: alunoData.nome,
                 ["Data de nascimento"]: alunoData.data_nascimento,
@@ -136,10 +136,16 @@ const FichaAluno: React.FC = () => {
                         .join(", ") || "Não",
                 ["Localização"]: MecTpLocalizacaoLabel.get(alunoData.mec_tp_localizacao as MecTpLocalizacaoEnum) || "Sem localização",
 
-                ["Escola"]: escolaData.nome,
-                ["Contato da escola"]: escolaData.contato_responsavel,
-                ["Telefone de contato"]: escolaData.contato_telefone,
+                ["Escola"]: "",
+                ["Contato da escola"]: "",
+                ["Telefone de contato"]: "",
             };
+
+            if (!!escolaData) {
+                data["Escola"] = escolaData.nome;
+                data["Contato da escola"] = escolaData.contato_responsavel;
+                data["Telefone de contato"] = escolaData.contato_telefone;
+            }
             setTableData(data);
         }
     }, [alunoData, escolaData]);
