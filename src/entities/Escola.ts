@@ -52,6 +52,7 @@ interface EscolaListObj {
 }
 
 interface EscolaTableField {
+    id_escola: number;
     nome: string;
     localizacao: string;
     gps: string;
@@ -66,10 +67,10 @@ interface EscolaListRota {
 }
 
 enum MecTpDependenciaEnum {
-    Federal = "1",
-    Estadual = "2",
-    Municipal = "3",
-    Privatizada = "4",
+    Federal = 1,
+    Estadual = 2,
+    Municipal = 3,
+    Privatizada = 4,
 }
 const MecTpDependenciaLabel = new Map<MecTpDependenciaEnum, string>([
     [MecTpDependenciaEnum.Federal, "Federal"],
@@ -79,8 +80,8 @@ const MecTpDependenciaLabel = new Map<MecTpDependenciaEnum, string>([
 ]);
 
 enum MecTpLocalizacaoEnum {
-    Urbana = "1",
-    Rural = "2",
+    Urbana = 1,
+    Rural = 2,
 }
 const MecTpLocalizacaoLabel = new Map<MecTpLocalizacaoEnum, string>([
     [MecTpLocalizacaoEnum.Urbana, "Área Urbana"],
@@ -88,16 +89,16 @@ const MecTpLocalizacaoLabel = new Map<MecTpLocalizacaoEnum, string>([
 ]);
 
 enum MecTpLocalizacaoDiferenciadaEnum {
-    NaoSeAplica = "7",
-    Assentamento = "1",
-    Indigena = "2",
-    Quilombo = "3",
+    NaoSeAplica = 7,
+    Assentamento = 1,
+    Indigena = 2,
+    Quilombo = 3,
 }
 const MecTpLocalizacaoDiferenciadaLabel = new Map<MecTpLocalizacaoDiferenciadaEnum, string>([
     [MecTpLocalizacaoDiferenciadaEnum.NaoSeAplica, "Não se aplica"],
     [MecTpLocalizacaoDiferenciadaEnum.Assentamento, "Área de Assentamento"],
-    [MecTpLocalizacaoDiferenciadaEnum.Assentamento, "Terra Indígena"],
-    [MecTpLocalizacaoDiferenciadaEnum.Assentamento, "Área remanescente de Quilombo"],
+    [MecTpLocalizacaoDiferenciadaEnum.Indigena, "Terra Indígena"],
+    [MecTpLocalizacaoDiferenciadaEnum.Quilombo, "Área remanescente de Quilombo"],
 ]);
 
 export {

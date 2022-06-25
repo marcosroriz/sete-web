@@ -1,10 +1,10 @@
 import React from "react";
-import { AlunoListObj, AlunosListRota } from "entities/Aluno";
+import { AlunoListObj, AlunosList } from "entities/Aluno";
 
 class AlunosListHelper {
-    public treatData(data: AlunoListObj[]): AlunosListRota[] {
+    public treatData(data: AlunoListObj[]): AlunosList[] {
         return data.map((alunoObj) => ({
-            label: alunoObj.nome,
+            label: alunoObj.nome || "",
             value: alunoObj.id_aluno.toString(),
         }));
     }

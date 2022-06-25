@@ -180,11 +180,6 @@ const SidebarLayout: React.FC = ({ children }) => {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to="/escolas/importar" activeClassName="isActive" exact>
-                                                Gerenciar
-                                            </NavLink>
-                                        </li>
-                                        <li>
                                             <NavLink to="/escolas/visualizar" activeClassName="isActive" exact>
                                                 Visualizar
                                             </NavLink>
@@ -251,6 +246,11 @@ const SidebarLayout: React.FC = ({ children }) => {
                                         <li>
                                             <NavLink to="/frotas/cadastrar" activeClassName="isActive" exact>
                                                 Cadastrar
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/frotas/garagem" activeClassName="isActive" exact>
+                                                Garagem
                                             </NavLink>
                                         </li>
                                         <li>

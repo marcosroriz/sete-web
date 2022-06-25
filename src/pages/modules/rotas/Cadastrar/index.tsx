@@ -17,7 +17,6 @@ import EscolasAtendidasIcon from "assets/icons/rotas/rotas-escolas-atendidas.svg
 import DadosBasicosIcon from "assets/icons/rotas/rotas-dados-basicos.png";
 import AlunosAtendidosIcon from "assets/icons/rotas/rotas-alunos-atendidos.png";
 import RotasCadastroIcon from "assets/icons/rotas/rotas-cadastro.png";
-import rotas from "routes/modules/rotas";
 
 type FormData = {
     nome: string;

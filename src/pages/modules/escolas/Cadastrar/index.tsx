@@ -5,6 +5,7 @@ import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHoo
 
 import { EscolasService } from "services/Escolas";
 import { Escola } from "entities/Escola";
+import { formatHelper } from "helpers/FormatHelper";
 
 import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
@@ -36,7 +37,7 @@ const Cadastrar: React.FC = () => {
             const escolasService = new EscolasService();
             const codigo_cidade = user?.codigo_cidade || 0;
             const body = getBody(data);
-
+          
             if (!!escolaId) {
                 const response = await escolasService.updateEscola(body, Number(escolaId), codigo_cidade);
 
