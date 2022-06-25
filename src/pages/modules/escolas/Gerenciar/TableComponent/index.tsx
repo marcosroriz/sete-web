@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-import { useEscolasTable } from "contexts/Tables/EscolasTableContext";
+import { useEscolasTable } from "tables/EscolasTable/context";
+//import { useEscolasTable } from "contexts/Tables/EscolasTableContext";
 
 import SeteTable from "components/micro/SeteTable";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";

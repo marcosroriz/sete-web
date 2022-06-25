@@ -56,12 +56,10 @@ class RotasService {
         });
 
         const data = (await response.data) as ListRotaResponse;
-        console.log("LIST", data);
         return data;
     }
 
     public async getRota(id_rota: number, codigo_cidade: number): Promise<GetRotaResponse> {
-        console.log("GET ROTA");
         const response = await this.api({
             method: "get",
             url: `/rotas/${codigo_cidade}/${id_rota}`,
@@ -126,7 +124,6 @@ class RotasService {
         });
 
         const data = (await response.data) as any;
-        console.log("oooooooooooooooooooo", data);
         return data;
     }
 }

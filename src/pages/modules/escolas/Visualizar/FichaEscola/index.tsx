@@ -97,6 +97,7 @@ const FichaEscola: React.FC = () => {
     };
 
     React.useEffect(() => {
+        console.log("ESCOLA DATA", escolaData);
         if (!!escolaData) {
             const data = {
                 ["Nome da escola"]: escolaData.nome,

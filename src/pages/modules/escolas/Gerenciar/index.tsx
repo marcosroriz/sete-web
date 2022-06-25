@@ -1,6 +1,6 @@
 import React from "react";
 
-import { EscolasTableProvider } from "contexts/Tables/EscolasTableContext";
+import { EscolasTableProvider } from "tables/EscolasTable/context";
 
 import TableComponent from "./TableComponent";
 

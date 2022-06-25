@@ -6,7 +6,7 @@ import { useNavCard } from "contexts/NavCard";
 
 import TableCard from "components/micro/Cards/TableCard";
 import SeteTable from "components/micro/SeteTable";
-import { escolasTableHelper } from "helpers/Tables/EscolasTableHelper";
+import { escolasTableHelper } from "tables/EscolasTable/helper";
 
 const EscolasAtendidas: React.FC = () => {
     const { aditionalData } = useNavCard();
@@ -19,7 +19,6 @@ const EscolasAtendidas: React.FC = () => {
     React.useEffect(() => {
         if (escolasData) {
             const treatedData = escolasTableHelper.treatDataEscolasAtendidas(escolasData.data);
-
             setTableData(treatedData);
         }
     }, [escolasData]);

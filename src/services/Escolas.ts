@@ -80,6 +80,7 @@ class EscolasService {
             url: `/escolas/${codigo_cidade}/${id_escola}/alunos`,
         });
         const data = await response.data;
+        console.log("DATA LIST BIND", data);
         return data;
     }
 }
