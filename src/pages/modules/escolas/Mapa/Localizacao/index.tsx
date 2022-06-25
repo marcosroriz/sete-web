@@ -68,6 +68,16 @@ const Localizacao: React.FC = () => {
     }, [escolasData]);
 
     React.useEffect(() => {
+        locations.some((location) => {
+            if (location.lat && location.lng) {
+                setCenter({ lat: location.lat, lng: location.lng });
+                return true;
+            }
+            return false;
+        });
+    }, [locations]);
+
+    React.useEffect(() => {
         if (!!selectedOption)
             if (selectedOption.lat && selectedOption.lng) {
                 setCenter({ lat: selectedOption.lat, lng: selectedOption.lng });
