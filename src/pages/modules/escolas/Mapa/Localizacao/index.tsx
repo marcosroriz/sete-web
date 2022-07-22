@@ -1,4 +1,6 @@
 import React from "react";
+import { Button } from "react-bootstrap";
+import { toPng } from "html-to-image";
 
 import { EscolaListObj } from "entities/Escola";
 
@@ -36,6 +38,8 @@ const Localizacao: React.FC = () => {
 
     const { aditionalData } = useNavCard();
     const [escolasData] = aditionalData?.escolasData as [EscolaListObj[]];
+
+    const ref = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (escolasData) {
@@ -90,6 +94,23 @@ const Localizacao: React.FC = () => {
         setSelectedOption(e);
     };
 
+    const exportMapPNG = React.useCallback(() => {
+        if (ref.current === null) {
+            return;
+        }
+
+        toPng(ref.current, { cacheBust: true })
+            .then((dataUrl) => {
+                const link = document.createElement("a");
+                link.download = "my-image-name.png";
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [ref]);
+
     return (
         <Container>
             <ContainerItem>
@@ -103,10 +124,12 @@ const Localizacao: React.FC = () => {
                     hasPlaceholderOption
                 />
             </ContainerItem>
-
-            <MapView title="LOCALIZAÇÃO ALUNOS" center={center}>
-                {locations.map((location) => location.lat && location.lng && <Marker lat={location.lat} lng={location.lng} icon={location.icon} />)}
-            </MapView>
+            <div ref={ref}>
+                <MapView title="LOCALIZAÇÃO ALUNOS" center={center}>
+                    {locations.map((location) => location.lat && location.lng && <Marker lat={location.lat} lng={location.lng} icon={location.icon} />)}
+                </MapView>
+            </div>
+            <Button onClick={exportMapPNG}>Download Imagem do Mapa</Button>
         </Container>
     );
 };
