@@ -33,6 +33,8 @@ type CreateMarkerDTO = {
     lng: number;
     icon: string;
     anchor?: [number, number];
+    population?: number;
+    rainfall?: number;
 };
 
 // [lng, lat]
@@ -190,11 +192,13 @@ class Map {
         }
     }
 
-    public createMarker({ icon, lat, lng, anchor }: CreateMarkerDTO): ol.Feature<geom.Point> {
+    public createMarker({ icon, lat, lng, anchor, population, rainfall }: CreateMarkerDTO): ol.Feature<geom.Point> {
         const positionMarker = new ol.Feature({
             type: "click",
             desc: "Description",
             geometry: new geom.Point([lng, lat]),
+            population: population,
+            rainfall: rainfall,
         });
         positionMarker.setStyle(
             new style.Style({
