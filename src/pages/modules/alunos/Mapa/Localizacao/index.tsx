@@ -141,7 +141,13 @@ const Localizacao: React.FC = () => {
                 <MapView title="LOCALIZAÇÃO ALUNOS" center={center} mapController={mapRef}>
                     {locations
                         .filter((loc) => checkedNivel.includes(loc.nivel.toString()) || checkedTurno.includes(loc.turno.toString()))
-                        .map((location) => location.lat && location.lng && <Marker lat={location.lat} lng={location.lng} icon={location.icon} />)}
+                        .map(
+                            (location) =>
+                                location.lat &&
+                                location.lng && (
+                                    <Marker lat={location.lat} lng={location.lng} icon={location.icon} nivel={location.nivel} turno={location.turno} />
+                                ),
+                        )}
                 </MapView>
             </div>
             <Button onClick={exportMapPNG}>Download Imagem do Mapa</Button>

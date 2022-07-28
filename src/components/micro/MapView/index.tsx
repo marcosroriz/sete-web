@@ -3,8 +3,10 @@
  */
 
 import React from "react";
+import { Overlay as OverlayBootstrap } from "react-bootstrap";
 import * as ol from "ol";
 import * as geom from "ol/geom";
+import Overlay from "ol/Overlay";
 
 import { Map, MapConstructorViewOptionsDTO, CreateMarkerDTO } from "helpers/Maps/Map";
 
@@ -45,33 +47,28 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, mapCo
     const divRef = React.useRef<HTMLDivElement | null>(null);
     const observer = React.useRef<IntersectionObserver>();
     const [map, setMap] = React.useState<Map>();
-
-    // React.useEffect(() => {
-    //     if (!mapController?.current) {
-    //         mapController!.current = new MapControlEvents("map");
-    //         const map = mapController?.current;
-    //         if (!!map) {
-
-    //         }
-    //     }
-    // }, []);
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [pupulation, setPopulation] = React.useState<Number>(0);
+    const [nivel, setNivel] = React.useState<Number>(0);
+    const popRef = React.useRef<HTMLDivElement | null>(null);
+    const mapRef = React.useRef<Map | null>(null);
 
     React.useEffect(() => {
         if (!map) {
-            setMap(new Map(id, { ...viewOptions }));
+            mapRef.current = new Map(id, { ...viewOptions });
+            setMap(mapRef.current);
         } else {
+            mapRef.current = map;
             observer.current = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
                     map.updateSize();
                 }
             });
-            map.mapInstance.on("singleclick", (event) => {
-                const [lng, lat] = event.coordinate;
-                console.log(lng, lat);
-            });
+
             if (divRef.current) {
                 observer.current.observe(divRef.current);
             }
+
             map.activateImageLayerSwitcher();
         }
         return () => {
@@ -87,12 +84,62 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, mapCo
         }
     }, [center]);
 
+    React.useEffect(() => {
+        if (!!map) {
+            const element = document.getElementById("popup");
+            const popup1 = new Overlay({
+                element: element as any,
+                positioning: "top",
+                stopEvent: false,
+            });
+            map.mapInstance.addOverlay(popup1);
+
+            map.mapInstance.on("click", function (evt) {
+                setIsOpen(false);
+                const feature = map.mapInstance.forEachFeatureAtPixel(evt.pixel, function (feature) {
+                    return feature;
+                });
+
+                if (feature) {
+                    console.log("evt", evt);
+                    console.log("feature", feature);
+                    popup1.setPosition(evt.coordinate);
+
+                    setIsOpen(true);
+                    setPopulation(feature.get("nivel"));
+                } else {
+                    setIsOpen(false);
+                }
+            });
+        }
+    }, [map]);
+
     return (
-        <Container>
-            <h3 className="map-title">{title}</h3>
-            <div id={id} className="map-container" ref={divRef}></div>
-            {React.Children.map(children, (child) => React.isValidElement(child) && React.cloneElement(child, { map }))}
-        </Container>
+        <>
+            <Container>
+                <h3 className="map-title">{title}</h3>
+                <div id={id} className="map-container" ref={divRef}>
+                    <div id="popup" ref={popRef}></div>
+                </div>
+                {React.Children.map(children, (child) => React.isValidElement(child) && React.cloneElement(child, { map }))}
+            </Container>
+            <OverlayBootstrap target={popRef.current} show={isOpen} placement="right">
+                <div
+                    style={{
+                        position: "absolute",
+                        backgroundColor: "rgba(255, 100, 100, 0.85)",
+                        padding: "2px 10px",
+                        color: "white",
+                        borderRadius: 3,
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    <div> Nivel: {pupulation}</div>
+                    <div> Turno: p{nivel}</div>
+                </div>
+            </OverlayBootstrap>
+        </>
     );
 };
 
