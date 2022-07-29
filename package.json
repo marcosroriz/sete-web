@@ -45,6 +45,7 @@
         "file-saver": "^2.0.5",
         "gpxparser": "^3.0.8",
         "hamburger-react": "^2.4.1",
+        "html-to-image": "^1.9.0",
         "jspdf": "^2.4.0",
         "md5": "^2.3.0",
         "ol": "^6.9.0",

@@ -9,6 +9,7 @@ import * as geom from "ol/geom";
 import Overlay from "ol/Overlay";
 
 import { Map, MapConstructorViewOptionsDTO, CreateMarkerDTO } from "helpers/Maps/Map";
+import { TurnoLabel, NivelLabel, NivelEnum, TurnoEnum } from "entities/Aluno";
 
 import { Container } from "./styles";
 
@@ -48,7 +49,7 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, mapCo
     const observer = React.useRef<IntersectionObserver>();
     const [map, setMap] = React.useState<Map>();
     const [isOpen, setIsOpen] = React.useState(false);
-    const [pupulation, setPopulation] = React.useState<Number>(0);
+    const [turno, setTurno] = React.useState<Number>(0);
     const [nivel, setNivel] = React.useState<Number>(0);
     const popRef = React.useRef<HTMLDivElement | null>(null);
     const mapRef = React.useRef<Map | null>(null);
@@ -106,7 +107,8 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, mapCo
                     popup1.setPosition(evt.coordinate);
 
                     setIsOpen(true);
-                    setPopulation(feature.get("nivel"));
+                    setTurno(feature.get("turno"));
+                    setNivel(feature.get("nivel"));
                 } else {
                     setIsOpen(false);
                 }
@@ -135,8 +137,8 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, mapCo
                         flexDirection: "column",
                     }}
                 >
-                    <div> Nivel: {pupulation}</div>
-                    <div> Turno: p{nivel}</div>
+                    <div> Nivel: {NivelLabel.get(nivel as NivelEnum) || "-"}</div>
+                    <div> Turno: {TurnoLabel.get(turno as TurnoEnum) || "-"}</div>
                 </div>
             </OverlayBootstrap>
         </>
