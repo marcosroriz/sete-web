@@ -16,8 +16,6 @@ import PrintDialog from "ol-ext/control/PrintDialog";
 import LayerSwitcherImage from "ol-ext/control/LayerSwitcherImage";
 
 import { ViewOptions } from "ol/View";
-import { NivelEnum } from "entities/Aluno";
-import { NOMEM } from "dns";
 
 type LayerObj = {
     source: source.Vector<geom.Geometry>;

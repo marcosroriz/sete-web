@@ -44,7 +44,7 @@ type MapViewProps = {
     mapController?: React.MutableRefObject<MapControlEvents | null>;
 };
 
-const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, mapController, center, children }) => {
+const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, center, children }) => {
     const divRef = React.useRef<HTMLDivElement | null>(null);
     const observer = React.useRef<IntersectionObserver>();
     const [map, setMap] = React.useState<Map>();
@@ -106,12 +106,9 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, mapCo
                 });
 
                 if (feature) {
-                    console.log("evt", evt);
-                    console.log("feature", feature);
                     popup1.setPosition(evt.coordinate);
 
                     setIsOpen(true);
-
                     setNome(feature.get("nome"));
                     setEscola(feature.get("escola"));
                     setRota(feature.get("rota"));
