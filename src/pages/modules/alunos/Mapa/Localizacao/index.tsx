@@ -1,5 +1,6 @@
 import React from "react";
-import { useDebounce } from "hooks/Debounce";
+import { Button } from "react-bootstrap";
+import { toPng } from "html-to-image";
 
 import { NivelEnum, NivelLabel, TurnoEnum, TurnoLabel } from "entities/Aluno";
 import { AlunoListObj } from "entities/Aluno";
@@ -15,9 +16,14 @@ import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
 import { Container, ContainerItem, mediaQuery } from "./styles";
 import { formatHelper } from "helpers/FormatHelper";
 
+import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+
 type AlunoLocation = {
     lat: number | null;
     lng: number | null;
+    nome: string;
+    escola: string;
+    rota: string;
     nivel: NivelEnum;
     turno: TurnoEnum;
     icon: string;
@@ -31,6 +37,9 @@ const Localizacao: React.FC = () => {
 
     const { aditionalData } = useNavCard();
     const [alunosData] = aditionalData?.alunosData as [AlunoListObj[]];
+
+    const mapRef = React.useRef<MapControlEvents | null>(null);
+    const ref = React.useRef<HTMLDivElement>(null);
 
     const handleCheckNivel = (event: React.ChangeEvent<HTMLInputElement>) => {
         let updatedList = [...checkedNivel];
@@ -85,8 +94,11 @@ const Localizacao: React.FC = () => {
                     icon: AlunosMarker,
                     lat: aluno.loc_latitude ? Number(aluno.loc_latitude) : null,
                     lng: aluno.loc_longitude ? Number(aluno.loc_longitude) : null,
-                    nivel: aluno.nivel!,
-                    turno: aluno.turno!,
+                    nome: aluno.nome,
+                    escola: aluno.escola,
+                    rota: aluno.rota,
+                    nivel: aluno.nivel,
+                    turno: aluno.turno,
                 })),
             );
         }
@@ -102,6 +114,23 @@ const Localizacao: React.FC = () => {
         });
     }, [locations]);
 
+    const exportMapPNG = React.useCallback(() => {
+        if (ref.current === null) {
+            return;
+        }
+
+        toPng(ref.current, { cacheBust: true })
+            .then((dataUrl) => {
+                const link = document.createElement("a");
+                link.download = "my-image-name.png";
+                link.href = dataUrl;
+                link.click();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [ref]);
+
     return (
         <Container>
             <ContainerItem>
@@ -114,11 +143,29 @@ const Localizacao: React.FC = () => {
                     {turnoOptions}
                 </MultiFormList>
             </ContainerItem>
-            <MapView title="LOCALIZAÇÃO ALUNOS" center={center}>
-                {locations
-                    .filter((loc) => checkedNivel.includes(loc.nivel.toString()) || checkedTurno.includes(loc.turno.toString()))
-                    .map((location) => location.lat && location.lng && <Marker lat={location.lat} lng={location.lng} icon={location.icon} />)}
-            </MapView>
+            <div ref={ref}>
+                <MapView title="LOCALIZAÇÃO ALUNOS" center={center} mapController={mapRef}>
+                    {locations
+                        .filter((loc) => checkedNivel.includes(loc.nivel.toString()) || checkedTurno.includes(loc.turno.toString()))
+                        .map(
+                            (location) =>
+                                location.lat &&
+                                location.lng && (
+                                    <Marker
+                                        lat={location.lat}
+                                        lng={location.lng}
+                                        icon={location.icon}
+                                        nome={location.nome}
+                                        escola={location.escola}
+                                        rota={location.rota}
+                                        nivel={location.nivel}
+                                        turno={location.turno}
+                                    />
+                                ),
+                        )}
+                </MapView>
+            </div>
+            <Button onClick={exportMapPNG}>Download Imagem do Mapa</Button>
         </Container>
     );
 };

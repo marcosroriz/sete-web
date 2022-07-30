@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-import { useAlunosTable } from "contexts/Tables/AlunosTableContext";
+import { useAlunosTable } from "tables/AlunosTable/context";
 
 import SeteTable from "components/micro/SeteTable";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";

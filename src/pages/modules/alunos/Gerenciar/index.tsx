@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AlunosTableProvider } from "contexts/Tables/AlunosTableContext";
+import { AlunosTableProvider } from "tables/AlunosTable/context";
 
 import TableCard from "components/micro/Cards/TableCard";
 

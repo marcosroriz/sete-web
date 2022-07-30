@@ -16,6 +16,8 @@ import PrintDialog from "ol-ext/control/PrintDialog";
 import LayerSwitcherImage from "ol-ext/control/LayerSwitcherImage";
 
 import { ViewOptions } from "ol/View";
+import { NivelEnum } from "entities/Aluno";
+import { NOMEM } from "dns";
 
 type LayerObj = {
     source: source.Vector<geom.Geometry>;
@@ -40,6 +42,12 @@ type CreateMarkerDTO = {
     icon: string;
     anchor?: [number, number];
     view?: boolean;
+    nome?: string;
+    sexo?: string;
+    rota?: string;
+    escola?: string;
+    nivel?: number;
+    turno?: number;
 };
 
 class Map {
@@ -195,9 +203,15 @@ class Map {
         }
     }
 
-    public createMarker({ lat, lng, icon, anchor = [12, 37] }: CreateMarkerDTO): ol.Feature<geom.Point> {
+    public createMarker({ lat, lng, icon, anchor = [12, 37], nome, sexo, rota, escola, nivel, turno }: CreateMarkerDTO): ol.Feature<geom.Point> {
         const marker = new ol.Feature({
             geometry: new geom.Point([lng, lat]),
+            nome: nome,
+            sexo: sexo,
+            escola: escola,
+            rota: rota,
+            nivel: nivel,
+            turno: nivel,
         });
         marker.setStyle(
             new style.Style({

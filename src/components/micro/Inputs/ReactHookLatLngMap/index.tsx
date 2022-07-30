@@ -31,6 +31,7 @@ const ReactHookLatLngMap: React.FC<ReactHookLatLngMapProps> = ({ title, mapContr
             const map = mapController?.current;
             map.mapInstance.on("singleclick", (event) => {
                 const [lng, lat] = event.coordinate;
+
                 setValue(name, [lat.toPrecision(8), lng.toPrecision(8)]);
             });
 

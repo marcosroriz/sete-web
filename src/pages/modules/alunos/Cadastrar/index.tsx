@@ -60,7 +60,11 @@ const Cadastrar: React.FC = () => {
                 createModal("success", { title: "Sucesso", html: "Aluno cadastrado com sucesso" });
             }
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar aluno" });
+            if (!!alunoId) {
+                errorHandler(err, { title: "Erro ao editar dados do aluno" });
+            } else {
+                errorHandler(err, { title: "Erro ao cadastrar aluno" });
+            }
         }
     };
 
