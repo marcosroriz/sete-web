@@ -14,3 +14,13 @@ export const Container = styled.div`
         border: 5px solid var(--color-grey-200);
     }
 `;
+
+export const OverlayContainer = styled.div`
+    position: absolute;
+    width: 360px;
+    font-size: 15px;
+    background: white;
+    padding: 0px 12px;
+    color: black;
+    border-radius: 4px;
+`;

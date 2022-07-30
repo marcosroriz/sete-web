@@ -21,6 +21,9 @@ import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 type AlunoLocation = {
     lat: number | null;
     lng: number | null;
+    nome: string;
+    escola: string;
+    rota: string;
     nivel: NivelEnum;
     turno: TurnoEnum;
     icon: string;
@@ -91,8 +94,11 @@ const Localizacao: React.FC = () => {
                     icon: AlunosMarker,
                     lat: aluno.loc_latitude ? Number(aluno.loc_latitude) : null,
                     lng: aluno.loc_longitude ? Number(aluno.loc_longitude) : null,
-                    nivel: aluno.nivel!,
-                    turno: aluno.turno!,
+                    nome: aluno.nome,
+                    escola: aluno.escola,
+                    rota: aluno.rota,
+                    nivel: aluno.nivel,
+                    turno: aluno.turno,
                 })),
             );
         }
@@ -145,7 +151,16 @@ const Localizacao: React.FC = () => {
                             (location) =>
                                 location.lat &&
                                 location.lng && (
-                                    <Marker lat={location.lat} lng={location.lng} icon={location.icon} nivel={location.nivel} turno={location.turno} />
+                                    <Marker
+                                        lat={location.lat}
+                                        lng={location.lng}
+                                        icon={location.icon}
+                                        nome={location.nome}
+                                        escola={location.escola}
+                                        rota={location.rota}
+                                        nivel={location.nivel}
+                                        turno={location.turno}
+                                    />
                                 ),
                         )}
                 </MapView>
