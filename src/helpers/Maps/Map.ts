@@ -46,6 +46,8 @@ type CreateMarkerDTO = {
     escola?: string;
     nivel?: number;
     turno?: number;
+    horarioFuncionamento?: string;
+    ensino?: string;
 };
 
 class Map {
@@ -201,7 +203,20 @@ class Map {
         }
     }
 
-    public createMarker({ lat, lng, icon, anchor = [12, 37], nome, sexo, rota, escola, nivel, turno }: CreateMarkerDTO): ol.Feature<geom.Point> {
+    public createMarker({
+        lat,
+        lng,
+        icon,
+        anchor = [12, 37],
+        nome,
+        sexo,
+        rota,
+        escola,
+        nivel,
+        turno,
+        horarioFuncionamento,
+        ensino,
+    }: CreateMarkerDTO): ol.Feature<geom.Point> {
         const marker = new ol.Feature({
             geometry: new geom.Point([lng, lat]),
             nome: nome,
@@ -209,7 +224,9 @@ class Map {
             escola: escola,
             rota: rota,
             nivel: nivel,
-            turno: nivel,
+            turno: turno,
+            horarioFuncionamento: horarioFuncionamento,
+            ensino: ensino,
         });
         marker.setStyle(
             new style.Style({

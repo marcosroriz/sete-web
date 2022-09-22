@@ -7,6 +7,8 @@ import { EscolaListObj } from "entities/Escola";
 import { useNavCard } from "contexts/NavCard";
 import { useAlertModal } from "hooks/AlertModal";
 
+import { formatHelper } from "helpers/FormatHelper";
+
 import InputSelect from "components/micro/Inputs/InputSelect";
 import { MapView, Marker } from "components/micro/MapView";
 
@@ -18,7 +20,9 @@ type EscolaLocation = {
     lat: number | null;
     lng: number | null;
     icon: string;
-    name: string;
+    nome: string;
+    ensino: string;
+    horarioFuncionamento: string;
 };
 
 type SelectOptions = {
@@ -48,7 +52,18 @@ const Localizacao: React.FC = () => {
                     icon: EscolasMarker,
                     lat: escola.loc_latitude ? Number(escola.loc_latitude) : null,
                     lng: escola.loc_longitude ? Number(escola.loc_longitude) : null,
-                    name: escola.nome,
+                    nome: escola.nome,
+                    ensino: [
+                        formatHelper.parseSNToString(escola.ensino_pre_escola, "Infantil"),
+                        formatHelper.parseSNToString(escola.ensino_fundamental, "Fundamental"),
+                        formatHelper.parseSNToString(escola.ensino_medio, "Médio"),
+                        formatHelper.parseSNToString(escola.ensino_superior, "Superior"),
+                    ].joinValid(", "),
+                    horarioFuncionamento: [
+                        formatHelper.parseSNToString(escola.horario_matutino, "Manhã"),
+                        formatHelper.parseSNToString(escola.horario_vespertino, "Tarde"),
+                        formatHelper.parseSNToString(escola.horario_noturno, "Noite"),
+                    ].joinValid(", "),
                 })),
             );
             setEscolasOptions(
@@ -126,7 +141,20 @@ const Localizacao: React.FC = () => {
             </ContainerItem>
             <div ref={ref}>
                 <MapView title="LOCALIZAÇÃO ALUNOS" center={center}>
-                    {locations.map((location) => location.lat && location.lng && <Marker lat={location.lat} lng={location.lng} icon={location.icon} />)}
+                    {locations.map(
+                        (location) =>
+                            location.lat &&
+                            location.lng && (
+                                <Marker
+                                    lat={location.lat}
+                                    lng={location.lng}
+                                    icon={location.icon}
+                                    nome={location.nome}
+                                    ensino={location.ensino}
+                                    horarioFuncionamento={location.horarioFuncionamento}
+                                />
+                            ),
+                    )}
                 </MapView>
             </div>
             <Button onClick={exportMapPNG}>Download Imagem do Mapa</Button>

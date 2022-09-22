@@ -131,7 +131,7 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, cente
                 {React.Children.map(children, (child) => React.isValidElement(child) && React.cloneElement(child, { map }))}
             </Container>
             <OverlayBootstrap target={popRef.current} show={isOpen} placement="top">
-                <OverlayContainer>
+                <OverlayContainer style={{ border: "2px #B0C4DE solid" }}>
                     <Row style={{ fontSize: "17px", fontWeight: "bold", padding: "7px 10px" }}>
                         <Col md={3}>Nome:</Col>
                         <Col md={9}>{nome}</Col>

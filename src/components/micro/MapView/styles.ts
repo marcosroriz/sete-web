@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Tooltip } from "react-bootstrap";
 
 export const Container = styled.div`
     .map-title {
