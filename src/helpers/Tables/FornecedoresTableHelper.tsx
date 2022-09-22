@@ -4,8 +4,12 @@ import { FornecedorListObj, FornecedorTableField } from "entities/Fornecedor";
 import { Link } from "react-router-dom";
 import { FaEdit, FaRegTimesCircle, FaSearch, FaUserAlt } from "react-icons/fa";
 
+type AdditionalOptions = {
+    delete: (escola: FornecedorListObj) => Promise<void>;
+};
+
 class FornecedoresTableHelper {
-    public treatData(data: FornecedorListObj[]): FornecedorTableField[] {
+    public treatData(data: FornecedorListObj[], addOptions?: AdditionalOptions): FornecedorTableField[] {
         return data.map((fornecedorObj) => ({
             nome: fornecedorObj.nome,
             telefone: fornecedorObj.telefone,
@@ -14,18 +18,22 @@ class FornecedoresTableHelper {
                 fornecedorObj.ramo_combustivel === "S" ? "Combustível" : "",
                 fornecedorObj.ramo_seguro === "S" ? "Seguro" : "",
             ]
-                .filter((val) => val !== "")
+                .filter((val) => val)
                 .join(", "),
-            numero_servicos: 1,
-            acoes: this.acoesComponent(fornecedorObj),
+            numero_servicos: [
+                fornecedorObj.ramo_mecanica === "S" ? "Mecânica" : "",
+                fornecedorObj.ramo_combustivel === "S" ? "Combustível" : "",
+                fornecedorObj.ramo_seguro === "S" ? "Seguro" : "",
+            ].filter((val) => val).length,
+            acoes: this.acoesComponent(fornecedorObj, addOptions),
         }));
     }
 
-    public acoesComponent(fornecedorObj: FornecedorListObj) {
+    public acoesComponent(fornecedorObj: FornecedorListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
-                    to={`/alunos/gerenciar/visualizar/${fornecedorObj.nome}`}
+                    to={`/fornecedores/gerenciar/visualizar/${fornecedorObj.id_fornecedor}`}
                     style={{
                         display: "block",
                         marginBottom: "-2px",
@@ -37,7 +45,7 @@ class FornecedoresTableHelper {
                     <FaSearch size={"16px"} color={"gray"} />
                 </Link>
                 <Link
-                    to={`/alunos/gerenciar/editar/${fornecedorObj.nome}`}
+                    to={`/fornecedores/gerenciar/editar/${fornecedorObj.id_fornecedor}`}
                     style={{
                         display: "block",
                         marginLeft: "6px",
@@ -54,7 +62,7 @@ class FornecedoresTableHelper {
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => console.log("Clicou4")}
+                    onClick={() => addOptions?.delete(fornecedorObj)}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
                 </button>

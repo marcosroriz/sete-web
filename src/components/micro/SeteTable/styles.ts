@@ -34,9 +34,11 @@ export const TableContainer = styled.div`
 
             tr {
                 text-align: center;
+                th {
+                    padding: 10px 5px;
+                }
                 :first-child {
                     th {
-                        padding: 2% 0 1%;
                         border-top: 3px solid #7e7c97;
                         border-bottom: 2px solid darkorange;
                     }
@@ -44,7 +46,6 @@ export const TableContainer = styled.div`
 
                 :last-child {
                     th {
-                        padding: 1% 0 2%;
                         border-bottom: 3px solid #7e7c97;
                     }
                 }
@@ -60,6 +61,10 @@ export const TableContainer = styled.div`
                 :hover {
                     cursor: pointer;
                 }
+                td {
+                    padding: 10px 5px;
+                    vertical-align: middle;
+                }
             }
 
             .selected {
@@ -71,10 +76,6 @@ export const TableContainer = styled.div`
                 }
 
                 border-top: 1px solid #e0e0e1;
-
-                td {
-                    padding: 0.9% 0;
-                }
             }
 
             .notSelected {
@@ -86,10 +87,6 @@ export const TableContainer = styled.div`
 
                 :hover {
                     background-color: #dedee3;
-                }
-
-                td {
-                    padding: 0.9% 0;
                 }
             }
         }

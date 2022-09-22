@@ -1,31 +1,60 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { Motorista } from "entities/Motorista";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
+import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 
 import { Container, mediaQuery } from "./styles";
 
+type MotoristaData = [Motorista | null, React.Dispatch<React.SetStateAction<Motorista | null>>];
+
 const DadosTransporte: React.FC = () => {
-    const { previousStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { previousStep, aditionalData } = useReactHookNavCard();
+
+    const [motoristaData] = aditionalData?.motoristaData as MotoristaData;
+
+    React.useEffect(() => {
+        if (!!motoristaData) {
+            setValue("salario", motoristaData?.salario || "");
+            setValue("cnh", motoristaData?.cnh || "");
+            setValue("data_validade_cnh", motoristaData?.data_validade_cnh || "");
+            setValue("turno[0]", motoristaData?.turno_manha === "S" ? true : false);
+            setValue("turno[1]", motoristaData?.turno_tarde === "S" ? true : false);
+            setValue("turno[2]", motoristaData?.turno_noite === "S" ? true : false);
+            setValue("tipo_cnh[0]", motoristaData?.tem_cnh_a === "S" ? true : false);
+            setValue("tipo_cnh[1]", motoristaData?.tem_cnh_b === "S" ? true : false);
+            setValue("tipo_cnh[2]", motoristaData?.tem_cnh_c === "S" ? true : false);
+            setValue("tipo_cnh[3]", motoristaData?.tem_cnh_d === "S" ? true : false);
+            setValue("tipo_cnh[4]", motoristaData?.tem_cnh_e === "S" ? true : false);
+        }
+    }, [motoristaData]);
+
     return (
         <Container>
-            <ReactHookFormItemCard name="numero_cnh" required>
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="SALÁRIO*" name="salario" prefix="R$" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard name="cnh" required>
                 <ReactHookInputNumberFormat
                     label="CARTEIRA NACIONAL DE HABILITAÇÃO (CNH)*"
-                    name="numero_cnh"
+                    name="cnh"
                     format="#########-##"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputNumberFormat label="DATA DE VENCIMENTO DA CNH*" name="vencimento_cnh" format="##/##/####" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputNumberFormat label="DATA DE VENCIMENTO DA CNH*" name="data_validade_cnh" format="##/##/####" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

@@ -22,34 +22,41 @@ import Localizacao from "./Localizacao";
 const Visualizar: React.FC = () => {
     const { id: escolaId } = useParams<{ id: string }>();
     const [escolaData, setEscolaData] = React.useState<Escola | null>(null);
+    const [alunosData, setAlunosData] = React.useState<any | null>(null);
 
     const { errorHandler } = useError();
     const { clearModal, createModal } = useAlertModal();
     const { user } = useAuth();
 
     React.useEffect(() => {
-        const fetchData = async () => {
+        const escolasService = new EscolasService();
+        const codigo_cidade = user?.codigo_cidade || 0;
+
+        (async () => {
             try {
                 createModal();
-                const codigo_cidade = user?.codigo_cidade || 0;
-                const escolasService = new EscolasService();
-                const veiculosResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
-                setEscolaData(veiculosResponse);
-                if (!veiculosResponse.result) {
-                    throw { ...veiculosResponse };
+                const escolasResponse = await escolasService.getEscola(Number(escolaId), codigo_cidade);
+                setEscolaData(escolasResponse);
+
+                if (!escolasResponse.result) {
+                    throw { ...escolasResponse };
                 }
                 clearModal();
             } catch (err) {
-                errorHandler(err, { title: "Erro ao buscar dados do veículo" });
+                errorHandler(err, { title: "Erro ao buscar dados da escola" });
             }
-        };
-        fetchData();
+        })();
+
+        (async () => {
+            const alunosVinculados = await escolasService.listBindAlunosToEscola(Number(escolaId), codigo_cidade);
+            setAlunosData(alunosVinculados);
+        })();
     }, []);
 
     return (
         <>
             <PageTitle message="Escolas Cadastradas" icon={EscolasCadastroIcon} />
-            <NavCardProvider aditionalData={{ escolaData: [escolaData, setEscolaData] }}>
+            <NavCardProvider aditionalData={{ escolaData: [escolaData, setEscolaData], alunosData: [alunosData, setAlunosData] }}>
                 <NavCardTab name="FICHA DA ESCOLA" icon={<img src={DadosBasicosIcon} alt="" aria-hidden="true" />}>
                     <FichaEscola />
                 </NavCardTab>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 
 import Routes from "routes";
 
@@ -14,9 +14,10 @@ import "@sweetalert2/theme-bootstrap-4";
 import "ol/ol.css";
 import "ol-ext/dist/ol-ext.css";
 
+const Router = (process.env.REACT_APP_APP_ENV === "desktop" ? HashRouter : BrowserRouter) as unknown as React.ElementType;
 const App: React.FC = () => {
     return (
-        <BrowserRouter>
+        <Router>
             <GlobalStyles />
             <AlertModalStyles />
             <AuthProvider>
@@ -24,7 +25,7 @@ const App: React.FC = () => {
                     <Routes />
                 </SidebarAccordionProvider>
             </AuthProvider>
-        </BrowserRouter>
+        </Router>
     );
 };
 

@@ -6,9 +6,19 @@ type StringObject = {
     [key: string]: string;
 };
 
+type ValueOf<T> = T[keyof T];
+
 class FormatHelper {
     public capitalize(str: string): string {
         return str.charAt(0).toUpperCase() + str.slice(1).toLocaleLowerCase();
+    }
+
+    public normalize(str: string): string {
+        return str
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s/g, "")
+            .toLocaleLowerCase();
     }
 
     public mergeArrayItemsWithBr(arr: string[]): string {
@@ -40,6 +50,22 @@ class FormatHelper {
     public concatUrlImg(img: string) {
         const backendUrl = process.env.REACT_APP_API_URL || "";
         return `${backendUrl}/${img}`;
+    }
+
+    public getNumbersEnumEntries<Enum extends object = {}>(enValues: Enum): [string, ValueOf<Enum>][] {
+        return Object.entries(enValues).filter((x) => typeof x === "number") as any;
+    }
+    public getNumbersEnumValues<Enum extends object = {}>(enValues: Enum): ValueOf<Enum>[] {
+        return Object.values(enValues).filter((x) => typeof x === "number") as any;
+    }
+    public parseBooleanToSN(bool?: boolean) {
+        return bool ? "S" : "N";
+    }
+    public parseSNToBoolean(str?: string) {
+        return str === "S";
+    }
+    public parseSNToString(sn?: string, str?: string) {
+        return this.parseSNToBoolean(sn) ? str : undefined;
     }
 }
 

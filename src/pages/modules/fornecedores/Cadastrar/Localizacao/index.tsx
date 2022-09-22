@@ -1,8 +1,13 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { MapControlEvents } from "helpers/Maps/MapControlEvents";
+
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+import { useAuth } from "contexts/Auth";
+import { FornecedoresService } from "services/Fornecedores";
+import { Fornecedor } from "entities/Fornecedor";
 
 import BlockTitle from "components/micro/BlockTitle";
 import ReactHookLatLngMap from "components/micro/Inputs/ReactHookLatLngMap";
@@ -14,9 +19,24 @@ import AlunosMarker from "assets/icons/alunos/alunos-marker.png";
 
 import { ButtonsContainer, Container, mediaQuery } from "./styles";
 
+type FornecedorData = [Fornecedor | null, React.Dispatch<React.SetStateAction<Fornecedor | null>>];
+
 const Localizacao: React.FC = () => {
     const mapRef = React.useRef<MapControlEvents | null>(null);
-    const { nextStep } = useReactHookNavCard();
+    const { user } = useAuth();
+    const { setValue } = useFormContext();
+    const { nextStep, previousStep, aditionalData } = useReactHookNavCard();
+
+    const [fornecedorData] = aditionalData?.fornecedorData as FornecedorData;
+
+    React.useEffect(() => {
+        if (!!fornecedorData) {
+            setValue("latlng[0]", fornecedorData?.loc_latitude || "");
+            setValue("latlng[1]", fornecedorData?.loc_longitude || "");
+            setValue("loc_endereco", fornecedorData?.loc_endereco || "");
+            setValue("loc_cep", fornecedorData?.loc_cep || "");
+        }
+    }, [fornecedorData]);
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO FORNECEDOR." />
@@ -28,10 +48,10 @@ const Localizacao: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputText label="ENDEREÇO DO FORNECEDOR" name="endereco" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="ENDEREÇO DO FORNECEDOR" name="loc_endereco" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputText label="CEP DO FORNECEDOR" name="cep" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="CEP DO FORNECEDOR" name="loc_cep" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>

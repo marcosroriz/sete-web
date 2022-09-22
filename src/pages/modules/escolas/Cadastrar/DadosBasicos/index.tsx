@@ -1,7 +1,13 @@
 import React from "react";
+import { useFormContext } from "react-hook-form";
+
 import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+
+import { formatHelper } from "helpers/FormatHelper";
+
+import { Escola, MecTpDependenciaEnum, MecTpDependenciaLabel } from "entities/Escola";
 
 import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
@@ -9,11 +15,34 @@ import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormLi
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import BlockTitle from "components/micro/BlockTitle";
+import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 
-import { ButtonsContainer, Container, mediaQuery } from "./styles";
+import { Container, mediaQuery } from "./styles";
+
+type EscolaData = [Escola | null, React.Dispatch<React.SetStateAction<Escola | null>>];
+
+const mec_tp_dependenciaOptions = formatHelper
+    .getNumbersEnumValues(MecTpDependenciaEnum)
+    .map((value) => (
+        <ReactHookInputRadio key={value} name="mec_tp_dependencia" label={MecTpDependenciaLabel.get(value) || ""} value={value.toString()} position="right" />
+    ));
 
 const DadosBasicos: React.FC = () => {
-    const { nextStep, previousStep } = useReactHookNavCard();
+    const { setValue } = useFormContext();
+    const { previousStep, nextStep, aditionalData } = useReactHookNavCard();
+
+    const [escolaData] = aditionalData?.escolaData as EscolaData;
+
+    React.useEffect(() => {
+        if (!!escolaData) {
+            setValue("nome", escolaData?.nome);
+            setValue("contato_responsavel", escolaData?.contato_responsavel);
+            setValue("contato_telefone", escolaData?.contato_telefone);
+            setValue("contato_email", escolaData?.contato_email);
+            setValue("mec_tp_dependencia", escolaData?.mec_tp_dependencia?.toString() || "");
+        }
+    }, [escolaData]);
+
     return (
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DA ESCOLA" />
@@ -36,16 +65,15 @@ const DadosBasicos: React.FC = () => {
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList label="A ESCOLA É:*" name="mec_tp_dependencia" isHorizontal={mediaQuery.desktop} fieldsHorizontal>
-                    <ReactHookInputRadio label="Federal" value="1" name="mec_tp_dependencia" position="right" />
-                    <ReactHookInputRadio label="Estadual" value="2" name="mec_tp_dependencia" position="right" />
-                    <ReactHookInputRadio label="Municipal" value="3" name="mec_tp_dependencia" position="right" />
-                    <ReactHookInputRadio label="Privatizada" value="4" name="mec_tp_dependencia" position="right" />
+                    {mec_tp_dependenciaOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer>
-                <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
-                    Voltar
-                </Button>
+            <ButtonsContainer position={!!escolaData ? "evenly" : "right"}>
+                {!!escolaData && (
+                    <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
+                        Voltar
+                    </Button>
+                )}
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo
                 </Button>

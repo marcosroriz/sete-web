@@ -1,6 +1,4 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
-import { cookie } from "helpers/Cookie";
-import { User } from "entities/User";
 import { Motorista, MotoristaListObj } from "entities/Motorista";
 
 type CreateMotoristaRequestBody = Motorista;
@@ -15,10 +13,13 @@ type ListMotoristaResponse = {
     total: number;
 };
 
-type GetMotoristaResponse = Motorista;
+type GetMotoristaResponse = Motorista & { result: boolean };
 
 type UpdateMotoristaRequestBody = Motorista;
-type UpdateMotoristaResponse = Motorista;
+type UpdateMotoristaResponse = {
+    messages: string | { [key: string]: any };
+    result: boolean;
+};
 
 class MotoristasService {
     private api: ApiInstance;
@@ -45,23 +46,32 @@ class MotoristasService {
         return data;
     }
 
-    public async getMotorista(codigo_cidade: number, cpf: string): Promise<GetMotoristaResponse> {
+    public async getMotorista(cpf_motorista: string, codigo_cidade: number): Promise<GetMotoristaResponse> {
+        console.log("CPF", cpf_motorista);
         const response = await this.api({
-            url: `/motoristas/${codigo_cidade}/${cpf}`,
+            url: `/motoristas/${codigo_cidade}/${cpf_motorista}`,
             method: "get",
         });
         const data = (await response.data) as GetMotoristaResponse;
         return data;
     }
 
-    public async updateMotorista(body: UpdateMotoristaRequestBody, codigo_cidade: number, cpf: string): Promise<UpdateMotoristaResponse> {
+    public async updateMotorista(body: UpdateMotoristaRequestBody, cpf_motorista: string, codigo_cidade: number): Promise<UpdateMotoristaResponse> {
         const response = await this.api({
-            url: `/motoristas/${codigo_cidade}/${cpf}`,
+            url: `/motoristas/${codigo_cidade}/${cpf_motorista}`,
             method: "put",
             data: body,
         });
         const data = (await response.data) as UpdateMotoristaResponse;
         return data;
+    }
+
+    public async deleteMotorista(cpf_motorista: string, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            url: `/motoristas/${codigo_cidade}/${cpf_motorista}`,
+            method: "delete",
+        });
+        const data = await response.data;
     }
 }
 

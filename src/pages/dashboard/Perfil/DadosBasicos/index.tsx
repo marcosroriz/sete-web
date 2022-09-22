@@ -104,7 +104,7 @@ const DadosBasicos: React.FC = () => {
                             <button className="user-data-password" type="button" onClick={handleOpenModal}>
                                 Alterar Senha
                             </button>
-                            <Button variant="warning" className="btn-fill" type="password">
+                            <Button variant="warning" className="btn-fill" type="submit">
                                 Salvar Alterações
                             </Button>
                         </div>

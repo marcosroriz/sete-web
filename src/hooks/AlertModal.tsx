@@ -3,16 +3,17 @@
  */
 
 import React from "react";
-import swal, { SweetAlertOptions } from "sweetalert2";
+import sweetalert, { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { createGlobalStyle } from "styled-components";
 
 import Spinner from "assets/icons/spinner.svg";
-import { createGlobalStyle } from "styled-components";
 
 type SwalOptions = SweetAlertOptions;
 
-type AlertTypesStrings = "loading" | "success" | "error" | "warning" | "info";
+const swal = withReactContent(sweetalert);
 
-const alertTypes: { [key: string]: SwalOptions } = {
+const alertTypes = {
     loading: {
         title: "Carregando...",
         text: "Procurando e carregando dados",
@@ -21,6 +22,30 @@ const alertTypes: { [key: string]: SwalOptions } = {
             popup: "swal2-custom-loading",
         },
         allowOutsideClick: false,
+    },
+    progress: {
+        title: "Carregando...",
+        html: `
+            <p>Enviando dados para o servidor</p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressbar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+        `,
+        iconHtml: `<img src="${Spinner}" alt="Carregando..." />`,
+        customClass: {
+            popup: "swal2-custom-loading swal2-custom-progress",
+        },
+        allowOutsideClick: false,
+    },
+    confirm_remove: {
+        icon: "warning",
+        title: "Atenção!",
+        confirmButtonText: "Remover",
+        confirmButtonColor: "var(--color-red-500)",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        cancelButtonColor: "var(--color-grey-650)",
+        reverseButtons: true,
     },
     success: {
         icon: "success",
@@ -34,15 +59,33 @@ const alertTypes: { [key: string]: SwalOptions } = {
     info: {
         icon: "info",
     },
-};
+} as const;
+
+type AlertTypesStrings = keyof typeof alertTypes;
 
 interface IAlertModal {
     createModal: (type?: AlertTypesStrings, options?: SwalOptions) => void;
     clearModal: () => void;
-    createModalAsync: (type?: AlertTypesStrings, options?: SwalOptions) => Promise<any>;
+    createModalAsync: (type?: AlertTypesStrings, options?: SwalOptions) => Promise<SweetAlertResult<any>>;
+    incrementProgress: (increment: number) => void;
 }
 
 const useAlertModal = (): IAlertModal => {
+    const progress = React.useRef<number>(0);
+
+    const incrementProgress = React.useCallback(
+        (increment: number) => {
+            const progressBar = document.querySelector("#progressbar") as any;
+            if (progressBar && progress.current < 100) {
+                const incrementSum = progress.current + Number(increment.toPrecision(2));
+                progress.current = incrementSum <= 100 ? incrementSum : 100;
+                progressBar.style.width = `${progress.current}%`;
+                progressBar.innerHTML = `${progress.current}%`;
+            }
+        },
+        [progress],
+    );
+
     const createModal = React.useCallback((type?: AlertTypesStrings, options?: SwalOptions): void => {
         const swalObject: SwalOptions = {
             ...alertTypes[type || "loading"],
@@ -51,7 +94,7 @@ const useAlertModal = (): IAlertModal => {
         swal.fire(swalObject);
     }, []);
 
-    const createModalAsync = React.useCallback(async (type?: AlertTypesStrings, options?: SwalOptions): Promise<any> => {
+    const createModalAsync = React.useCallback(async (type?: AlertTypesStrings, options?: SwalOptions): Promise<SweetAlertResult<any>> => {
         const swalObject = {
             ...alertTypes[type || "loading"],
             ...options,
@@ -61,9 +104,10 @@ const useAlertModal = (): IAlertModal => {
 
     const clearModal = React.useCallback((): void => {
         swal.close();
+        progress.current = 0;
     }, []);
 
-    return { createModal, clearModal, createModalAsync };
+    return { createModal, clearModal, createModalAsync, incrementProgress };
 };
 
 const AlertModalStyles = createGlobalStyle`
@@ -136,6 +180,13 @@ const AlertModalStyles = createGlobalStyle`
         }
         & > .swal2-actions {
             display: none !important;
+        }
+    }
+    .swal2-custom-progress {
+        width: 400px;
+        padding-top: 40px;
+        .progress {
+            margin-top: 10px;
         }
     }
 `;

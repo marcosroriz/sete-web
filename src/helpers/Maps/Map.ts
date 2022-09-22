@@ -9,7 +9,7 @@ import * as layer from "ol/layer";
 import * as geom from "ol/geom";
 import * as control from "ol/control";
 import * as source from "ol/source";
-import * as proj from "ol/proj";
+import * as style from "ol/style";
 
 import CanvasScaleLine from "ol-ext/control/CanvasScaleLine";
 import PrintDialog from "ol-ext/control/PrintDialog";
@@ -28,11 +28,28 @@ type LayersObj = {
 };
 
 // [lng, lat]
-type GoToLocation = [number, number];
+type GoToLocation = { lat: number; lng: number };
 
 type MapConstructorViewOptionsDTO = ViewOptions;
 
 type CreateMapViewOptionsDTO = MapConstructorViewOptionsDTO;
+
+type CreateMarkerDTO = {
+    lat: number;
+    lng: number;
+    icon: string;
+    anchor?: [number, number];
+    view?: boolean;
+    nome?: string;
+    sexo?: string;
+    rota?: string;
+    escola?: string;
+    nivel?: number;
+    turno?: number;
+    horarioFuncionamento?: string;
+    ensino?: string;
+};
+
 class Map {
     public mapInstance: ol.Map;
     public vectorLayer: layer.Vector<source.Vector<geom.Geometry>>;
@@ -133,8 +150,12 @@ class Map {
         }
     }
 
-    public goToLocation(location: GoToLocation): void {
-        this.mapInstance.getView().setCenter(location);
+    public goToLocation({ lat, lng }: GoToLocation): void {
+        this.mapInstance.getView().setCenter([lng, lat]);
+    }
+
+    public updateSize(): void {
+        this.mapInstance.updateSize();
     }
 
     public activatePrinting(): void {
@@ -181,7 +202,51 @@ class Map {
             this.layerSwitcherActivated = true;
         }
     }
+
+    public createMarker({
+        lat,
+        lng,
+        icon,
+        anchor = [12, 37],
+        nome,
+        sexo,
+        rota,
+        escola,
+        nivel,
+        turno,
+        horarioFuncionamento,
+        ensino,
+    }: CreateMarkerDTO): ol.Feature<geom.Point> {
+        const marker = new ol.Feature({
+            geometry: new geom.Point([lng, lat]),
+            nome: nome,
+            sexo: sexo,
+            escola: escola,
+            rota: rota,
+            nivel: nivel,
+            turno: turno,
+            horarioFuncionamento: horarioFuncionamento,
+            ensino: ensino,
+        });
+        marker.setStyle(
+            new style.Style({
+                image: new style.Icon({
+                    anchor: anchor,
+                    anchorXUnits: "pixels",
+                    anchorYUnits: "pixels",
+                    opacity: 1,
+                    src: icon,
+                }),
+            }),
+        );
+        this.vectorSource.addFeature(marker);
+        return marker;
+    }
+
+    public removeMarker(marker: ol.Feature<geom.Point>): void {
+        this.vectorSource.removeFeature(marker);
+    }
 }
 
 export { Map };
-export type { MapConstructorViewOptionsDTO, CreateMapViewOptionsDTO };
+export type { GoToLocation, MapConstructorViewOptionsDTO, CreateMapViewOptionsDTO, CreateMarkerDTO, LayerObj, LayersObj };

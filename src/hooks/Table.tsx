@@ -12,10 +12,16 @@ export const useSelection = (hooks: Hooks<any>) => {
             width: 45,
 
             // eslint-disable-next-line react/display-name
-            Header: ({ getToggleAllRowsSelectedProps }) => <input type="checkbox" {...getToggleAllRowsSelectedProps()} />,
+            Header: ({ getToggleAllRowsSelectedProps }) => {
+                const props = { ...getToggleAllRowsSelectedProps(), indeterminate: getToggleAllRowsSelectedProps()?.indeterminate?.toString() };
+                return <input type="checkbox" {...props} />;
+            },
 
             // eslint-disable-next-line react/display-name
-            Cell: ({ row }) => <input type="checkbox" {...row.getToggleRowSelectedProps()} />,
+            Cell: ({ row }) => {
+                const props = { ...row.getToggleRowSelectedProps(), indeterminate: row.getToggleRowSelectedProps()?.indeterminate?.toString() };
+                return <input type="checkbox" {...props} />;
+            },
         },
         ...columns,
     ]);
