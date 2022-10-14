@@ -90,20 +90,20 @@ const SexoLabel = new Map<SexoEnum, string>([
 ]);
 
 enum CorEnum {
-    NaoInformada = 0,
-    Amarelo = 1,
-    Branco = 2,
-    Indigena = 3,
-    Pardo = 4,
-    Preto = 5,
+    Amarelo = 0,
+    Branco = 1,
+    Indigena = 2,
+    Pardo = 3,
+    Preto = 4,
+    Naodeclarada = 5,
 }
 const CorLabel = new Map<CorEnum, string>([
-    [CorEnum.NaoInformada, "Não Informada"],
     [CorEnum.Amarelo, "Amarelo"],
     [CorEnum.Branco, "Branco"],
     [CorEnum.Indigena, "Indígena"],
     [CorEnum.Pardo, "Pardo"],
     [CorEnum.Preto, "Preto"],
+    [CorEnum.Naodeclarada, "Não declarada"],
 ]);
 
 enum GrauParentescoEnum {
@@ -115,7 +115,7 @@ enum GrauParentescoEnum {
 }
 const GrauParentescoLabel = new Map<GrauParentescoEnum, string>([
     [GrauParentescoEnum.NaoInformado, "Não Informado"],
-    [GrauParentescoEnum.PaiMae, "Pai, Mãe Padrasto ou Madrasta"],
+    [GrauParentescoEnum.PaiMae, "Pai, Mãe, Padrasto ou Madrasta"],
     [GrauParentescoEnum.Avo, "Avô ou Avó"],
     [GrauParentescoEnum.Irma, "Irmão ou Irmã"],
     [GrauParentescoEnum.OutroParente, "Outro parente"],
@@ -153,7 +153,7 @@ const NivelLabel = new Map<NivelEnum, string>([
     [NivelEnum.Infantil, "Infantil(Creche e Pré-Escola)"],
     [NivelEnum.Fundamental, "Fundamental"],
     [NivelEnum.Medio, "Médio"],
-    [NivelEnum.Superior, "Noite (Noturno)"],
+    [NivelEnum.Superior, "Superior"],
     [NivelEnum.Outro, "Outro"],
 ]);
 
