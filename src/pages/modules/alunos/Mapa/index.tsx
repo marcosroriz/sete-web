@@ -10,7 +10,7 @@ import { AlunosService } from "services/Alunos";
 import PageTitle from "components/micro/PageTitle";
 
 import AlunosListar from "assets/icons/alunos/alunos-listar.png";
-import LocalizacaoIcon from "assets/icons/alunos/alunos-localizacao.svg";
+import MapaIcon from "assets/icons/garagem/mapa-garagem.png";
 import { NavCardProvider, NavCardTab } from "contexts/NavCard";
 
 import Localizacao from "./Localizacao";
@@ -45,9 +45,9 @@ const Mapa: React.FC = () => {
 
     return (
         <>
-            <PageTitle message="Vizualizar dados do Aluno" icon={AlunosListar} />
+            <PageTitle message="VIZUALIZAR ALUNOS CADASTRADOS" icon={AlunosListar} />
             <NavCardProvider aditionalData={{ alunosData: [alunosData, setAlunosData] }}>
-                <NavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
+                <NavCardTab name="MAPA DE ALUNOS ATENDIDOS" icon={<img src={MapaIcon} alt="Icone mapa" />}>
                     <Localizacao />
                 </NavCardTab>
             </NavCardProvider>
