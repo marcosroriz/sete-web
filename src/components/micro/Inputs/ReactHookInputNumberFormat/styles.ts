@@ -37,4 +37,8 @@ export const Container = styled.div<ContainerProps>`
         font-size: 14px;
         color: var(--color-grey-500);
     }
+
+    .form-control {
+        padding: 8px;
+    }
 `;

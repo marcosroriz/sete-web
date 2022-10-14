@@ -53,7 +53,7 @@ export const TableContainer = styled.div`
         }
 
         tbody {
-            text-align: center;
+            text-align: left;
             color: #414550;
             font-size: 14px;
 
