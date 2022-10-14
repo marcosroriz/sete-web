@@ -55,20 +55,29 @@ const Localizacao: React.FC = () => {
                 mapController={mapRef}
                 icon={GaragemMarker}
             />
+
             <ReactHookFormItemCard placeItems="center" required>
-                <ReactHookMultiFormList name="latlng" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
-                    <ReactHookInputText label="LATITUDE:*" name="latlng[0]" isHorizontal={mediaQuery.desktop} />
-                    <ReactHookInputText label="LONGITUDE:*" name="latlng[1]" isHorizontal={mediaQuery.desktop} />
+                <ReactHookMultiFormList name="latlng" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="40px">
+                    <ReactHookInputText label="LATITUDE:*" name="latlng[0]" placeholder="Latitude:" isHorizontal={mediaQuery.desktop} />
+                    <ReactHookInputText label="LONGITUDE:*" name="latlng[1]" placeholder="Longitude:" isHorizontal={mediaQuery.desktop} />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ReactHookFormItemCard placeItems="center">
-                <ReactHookInputText label="ENDEREÇO:" name="loc_endereco" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard>
-            <ReactHookFormItemCard placeItems="center">
-                <ReactHookInputNumberFormat label="CEP:" name="loc_cep" format="#####-###" isHorizontal={mediaQuery.desktop} />
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="ENDEREÇO:" name="loc_endereco" placeholder="Digite o endereço da Garagem:" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
-            <ButtonsContainer position="right">
+            <ReactHookFormItemCard>
+                <ReactHookInputNumberFormat
+                    label="CEP:"
+                    name="loc_cep"
+                    format="#####-###"
+                    placeholder="Informe o CEP da Garagem:"
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+
+            <ButtonsContainer position="evenly">
                 <Button variant="danger" type="button" className="btn-fill" onClick={handleFormCancel}>
                     Cancelar Edição
                 </Button>
