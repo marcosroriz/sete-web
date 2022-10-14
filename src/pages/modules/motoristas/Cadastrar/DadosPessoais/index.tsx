@@ -41,37 +41,31 @@ const DadosPessoais: React.FC = () => {
         <Container>
             <BlockTitle message="Forneça as informações básicas a respeito do aluno sendo cadastrado." />
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="NOME DO MOTORISTA*" name="nome" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="NOME DO MOTORISTA *" name="nome" placeholder="Informe o nome do motorista:" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputNumberFormat label="CPF DO MOTORISTA*" name="cpf" format="###.###.###-##" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard>
-
-            <ReactHookFormItemCard required>
-                <ReactHookInputNumberFormat label="DATA DE NASCIMENTO*" name="data_nascimento" format="##/##/####" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard>
-
-            <ReactHookFormItemCard>
                 <ReactHookInputNumberFormat
-                    label="TELEFONE*"
-                    name="telefone"
-                    format={["(##) ####-#####", "(##) #####-####"]}
+                    label="CPF DO MOTORISTA *"
+                    name="cpf"
+                    placeholder="Informe o CPF do motorista:"
+                    format="###.###.###-##"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookMultiFormList label="VÍNCULO TRABALHISTA*" name="vinculo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
-                    <ReactHookInputRadio label="Servidor efetivo" value="1" name="vinculo" position="right" />
-                    <ReactHookInputRadio label="Servidor comissionado" value="2" name="vinculo" position="right" />
-                    <ReactHookInputRadio label="Servidor terceirizado" value="3" name="vinculo" position="right" />
-                    <ReactHookInputRadio label="Outro" value="4" name="vinculo" position="right" />
-                </ReactHookMultiFormList>
+                <ReactHookInputNumberFormat
+                    label="DATA DE NASCIMENTO *"
+                    name="data_nascimento"
+                    placeholder="Informe a data de nascimento do motorista:"
+                    format="##/##/####"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookMultiFormList label="SEXO DO MOTORISTA*" name="sexo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
+                <ReactHookMultiFormList label="SEXO DO MOTORISTA *" name="sexo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
                     <ReactHookInputRadio label="Masculino" value="1" name="sexo" position="right" />
                     <ReactHookInputRadio label="Feminino" value="2" name="sexo" position="right" />
                     <ReactHookInputRadio label="Não Informado" value="3" name="sexo" position="right" />
@@ -79,12 +73,40 @@ const DadosPessoais: React.FC = () => {
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="NÚMERO DO DOCUMENTO DE ANTECENDENTES CRIMINAIS*" name="ant_criminais" isHorizontal={mediaQuery.desktop} />
+                <ReactHookMultiFormList label="VÍNCULO TRABALHISTA" name="vinculo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile}>
+                    <ReactHookInputRadio label="Servidor efetivo" value="1" name="vinculo" position="right" />
+                    <ReactHookInputRadio label="Servidor comissionado" value="2" name="vinculo" position="right" />
+                    <ReactHookInputRadio label="Servidor terceirizado" value="3" name="vinculo" position="right" />
+                    <ReactHookInputRadio label="Outro" value="4" name="vinculo" position="right" />
+                </ReactHookMultiFormList>
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="SALÁRIO" name="salario" placeholder="Valor em Reais" prefix="R$" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputNumberFormat
+                    label="TELEFONE"
+                    name="telefone"
+                    placeholder="Telefone do motorista"
+                    format={["(##) ####-#####", "(##) #####-####"]}
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText
+                    label="NÚMERO DO DOCUMENTO DE ANTECENDENTES CRIMINAIS"
+                    name="ant_criminais"
+                    placeholder="Número do documento"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
                 <ReactHookInputMultiFiles
-                    label="ANEXAR PDF COM DOCUMENTOS PESSOAIS*"
+                    label="ANEXAR PDF COM DOCUMENTOS PESSOAIS"
                     name="arquivos"
                     accept="image/*, application/pdf"
                     isHorizontal={mediaQuery.desktop}

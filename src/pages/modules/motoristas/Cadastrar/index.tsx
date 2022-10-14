@@ -95,7 +95,7 @@ const Cadastrar: React.FC = () => {
                 </ReactHookNavCardTab>
 
                 <ReactHookNavCardTab
-                    name="DADOS DE TRANSPORTES"
+                    name="DADOS DE TRANSPORTE"
                     icon={<img src={DadosTransportesIcon} alt="" aria-hidden="true" />}
                     validationSchema={dadosTransportesSchema}
                 >
