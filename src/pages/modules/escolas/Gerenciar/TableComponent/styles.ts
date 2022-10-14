@@ -7,7 +7,7 @@ export const mediaQuery = {
 
 export const Container = styled.div`
     .btn-group {
-        width: 40%;
+        width: 50%;
         margin-top: 25px;
         button.btn-fill {
             padding-top: 6px;

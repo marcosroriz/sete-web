@@ -12,7 +12,7 @@ import EscolasCadastroIcon from "assets/icons/escolas/escolas-cadastro.png";
 const Gerenciar: React.FC = () => {
     return (
         <>
-            <PageTitle message="Cadastrar Escola" icon={EscolasCadastroIcon} />
+            <PageTitle message="Escolas Cadastradas" icon={EscolasCadastroIcon} />
             <EscolasTableProvider>
                 <TableCard>
                     <TableComponent />
