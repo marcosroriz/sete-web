@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-import { AssuntosEnum, AssuntosLabel } from "entities/Norma";
+import { formatHelper } from "helpers/FormatHelper";
+import { AssuntosEnum, AssuntosLabel, TiposNormasEnum, TiposNormasLabel, TransportesEnum, TransportesLabel } from "entities/Norma";
 
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
@@ -13,41 +14,20 @@ import ReactHookInputMultiSelect from "components/micro/Inputs/ReactHookInputMul
 import { Container, mediaQuery } from "./styles";
 import ReactHookInputFile from "components/micro/Inputs/ReactHookInputFile";
 
-const tipos_normas = [
-    { label: "Decreto", value: "0" },
-    { label: "Deliberação", value: "1" },
-    { label: "Instrução Normativa", value: "2" },
-    { label: "Lei", value: "3" },
-    { label: "Ordem de Serviço", value: "4" },
-    { label: "Portaria", value: "5" },
-    { label: "Resolução", value: "6" },
-    { label: "Outro", value: "7" },
-];
+const assuntosOptions = formatHelper.getNumbersEnumValues(AssuntosEnum).map((value) => ({
+    label: AssuntosLabel.get(value as AssuntosEnum) || "",
+    value: value.toString(),
+}));
 
-const aplicabilidade = [
-    { label: "Ônibus", value: "0" },
-    { label: "Bicicleta", value: "1" },
-    { label: "Lancha", value: "2" },
-    { label: "Todos", value: "3" },
-    { label: "Não se aplica", value: "4" },
-];
+const normasOptions = formatHelper.getNumbersEnumValues(TiposNormasEnum).map((value) => ({
+    label: TiposNormasLabel.get(value as TiposNormasEnum) || "",
+    value: value.toString(),
+}));
 
-const assuntosOptions = [
-    { label: "Campanhas educativas", value: "0" },
-    { label: "Condições de trabalho do motorista", value: "1" },
-    { label: "Conservação do veículo", value: "2" },
-    { label: "Critérios de manutenção compartilhada para bicicletas", value: "3" },
-    { label: "Distância máxima a ser percorrida - residência e embarque", value: "4" },
-    { label: "Estudante beneficiados", value: "5" },
-    { label: "Itinerários - menor tempo x maior segurança", value: "6" },
-    { label: "Ponto de embarque e desembarque", value: "7" },
-    { label: "Presença de monitores", value: "8" },
-    { label: "Prevê atendimento a atividade pedagógicas, esportivas e culturais", value: "9" },
-    { label: "Prevê atendimento a educação superior", value: "10" },
-    { label: "Regras de uso de bicicleta", value: "11" },
-    { label: "Segurança do estudante", value: "12" },
-    { label: "Outros", value: "13" },
-];
+const transportesOptions = formatHelper.getNumbersEnumValues(TransportesEnum).map((value) => ({
+    label: TransportesLabel.get(value as TransportesEnum) || "",
+    value: value.toString(),
+}));
 
 const DadosDaNorma: React.FC = () => {
     return (
@@ -68,7 +48,7 @@ const DadosDaNorma: React.FC = () => {
                 <ReactHookInputSelect
                     label="TIPO DA NORMA: *"
                     name="tipo_norma"
-                    options={tipos_normas}
+                    options={normasOptions}
                     hasPlaceholderOption={true}
                     isHorizontal={mediaQuery.desktop}
                 />
@@ -88,13 +68,13 @@ const DadosDaNorma: React.FC = () => {
                 <ReactHookInputSelect
                     label="A NORMA SE APLICA A ALGUM MODO DE TRANSPORTE ESPECÍFICO? *"
                     name="aplicabilidade"
-                    options={aplicabilidade}
+                    options={transportesOptions}
                     hasPlaceholderOption={true}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputFile label="ARQUIVO DA NORMA (PDF): *" name="arquivo" placeholder="Solte os arquivos aqui!" />
+                <ReactHookInputFile label="ARQUIVO DA NORMA (PDF): *" accept=".pdf" name="arquivo" placeholder="Solte os arquivos aqui!" />
             </ReactHookFormItemCard>
 
             <ButtonsContainer>

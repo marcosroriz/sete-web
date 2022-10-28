@@ -11,8 +11,8 @@ import { Norma } from "entities/Norma";
 import PageTitle from "components/micro/PageTitle";
 import DadosDaNorma from "./DadosDaNorma";
 
-import CadastrarIcon from "assets/icons/norma/normas-cadastrar.png";
-import ListarIcon from "assets/icons/norma/normas-listar.png";
+import CadastrarIcon from "assets/icons/normas/normas-cadastrar.png";
+import ListarIcon from "assets/icons/normas/normas-listar.png";
 
 type FormData = {
     titulo: string;

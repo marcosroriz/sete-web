@@ -13,7 +13,12 @@ type ListNormaResponse = {
     total: number;
 };
 
-type GetNormaResponse = Norma & { result: boolean };
+type GetNormasResponse = Norma;
+type GetTiposAssuntosResponse = {
+    data: { id: number; assunto: string }[];
+    result: boolean;
+    total: number;
+};
 
 type UpdateNormaRequestBody = Norma;
 type UpdateNormaResponse = {
@@ -43,6 +48,15 @@ class NormasService {
             data: body,
         });
         const data = (await response.data) as CreateNormaResponse;
+        return data;
+    }
+
+    public async getTiposAssuntos(): Promise<GetTiposAssuntosResponse> {
+        const response = await this.api({
+            url: "/veiculos/assunto",
+            method: "get",
+        });
+        const data = (await response.data) as GetTiposAssuntosResponse;
         return data;
     }
 
