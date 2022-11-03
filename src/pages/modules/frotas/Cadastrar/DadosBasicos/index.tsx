@@ -150,7 +150,7 @@ const DadosBasicos: React.FC = () => {
             <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="QUAL O TIPO DE VEÍCULO?*"
-                    name="tipo" //COLOCAR OPTIONS
+                    name="tipo"
                     options={optionsTipo[watch("modo")] || []}
                     isHorizontal={mediaQuery.desktop}
                 />
@@ -159,60 +159,23 @@ const DadosBasicos: React.FC = () => {
             <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="QUAL A MARCA DO VEÍCULO?*"
-                    name="marca" // Colocar OPTIONS
+                    name="marca"
                     options={optionsMarca[watch("modo")] || []}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
-            <ReactHookFormItemCard>
-                <ReactHookInputText
-                    label="POTÊNCIA DO MOTOR:"
-                    name="potencia"
-                    type="number"
-                    suffix="CAVALOS"
-                    placeholder="80"
-                    isHorizontal={mediaQuery.desktop}
-                />
-            </ReactHookFormItemCard>
-
-            <ReactHookFormItemCard>
-                <ReactHookInputSelect
-                    label="CASO TENHA ADQUIRIDO O VEÍCULO PELO PROGRAMA CAMINHO DA ESCOLA, SELECIONE O MODELO DO MESMO:"
-                    name="caminho_escola"
-                    options={caminho_escola}
-                    isHorizontal={mediaQuery.desktop}
-                />
-            </ReactHookFormItemCard>
-
             <ReactHookFormItemCard required>
-                <ReactHookInputText
-                    label="ANO DE AQUISIÇÃO DO VEÍCULO: *"
-                    name="ano"
-                    type="number"
-                    placeholder="Informe o ano de aquisição do veículo:"
-                    isHorizontal={mediaQuery.desktop}
-                />
-            </ReactHookFormItemCard>
-
-            <ReactHookFormItemCard>
-                <ReactHookInputText
-                    label="PREÇO DO VEÍCULO:"
-                    name="preco"
-                    type="number"
-                    prefix="R$"
-                    placeholder="Valor em Reais"
-                    isHorizontal={mediaQuery.desktop}
-                />
-            </ReactHookFormItemCard>
-
-            {/* <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="MODELO DO VEÍCULO?*"
                     name="modelo"
                     options={optionsModelo[watch("modo")] || []}
                     isHorizontal={mediaQuery.desktop}
                 />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard required>
+                <ReactHookInputText label="ANO DE AQUISIÇÃO DO VEÍCULO*" name="ano" type="number" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
 
             {check == 0 && (
@@ -225,7 +188,24 @@ const DadosBasicos: React.FC = () => {
                 <ReactHookFormItemCard>
                     <ReactHookInputText label="VIDA ÚTIL DO PNEU" name="vida_util_pneu" type="number" suffix="KM RODADOS" isHorizontal={mediaQuery.desktop} />
                 </ReactHookFormItemCard>
-            )} */}
+            )}
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="POTÊNCIA DO MOTOR" name="potencia" type="number" suffix="CAVALOS" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputSelect
+                    label="CASO TENHA ADIQUIRIDO O VEÍCULO PELO PORGRAMA CAMINHO DA ESCOLA, SELECIONE O MODELO DO MESMO:"
+                    name="caminho_escola"
+                    options={caminho_escola}
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard>
+                <ReactHookInputText label="PREÇO DO VEÍCULO" name="preco" type="number" prefix="R$" isHorizontal={mediaQuery.desktop} />
+            </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
