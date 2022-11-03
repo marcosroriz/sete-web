@@ -1,5 +1,6 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { Norma, NormaListObj } from "entities/Norma";
+import { boolean } from "yup";
 
 type CreateNormaRequestBody = Norma;
 type CreateNormaResponse = {
@@ -13,7 +14,8 @@ type ListNormaResponse = {
     total: number;
 };
 
-type GetNormasResponse = Norma;
+type GetNormasResponse = Norma & { result: boolean };
+
 type GetTiposAssuntosResponse = {
     data: { id: number; assunto: string }[];
     result: boolean;
@@ -57,6 +59,15 @@ class NormasService {
             method: "get",
         });
         const data = (await response.data) as GetTiposAssuntosResponse;
+        return data;
+    }
+
+    public async getNorma(normaId: number, codigo_cidade: number): Promise<GetNormasResponse> {
+        const response = await this.api({
+            method: "get",
+            url: `/normas/${codigo_cidade}/${normaId}`,
+        });
+        const data = (await response.data) as GetNormasResponse;
         return data;
     }
 

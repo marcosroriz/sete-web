@@ -36,6 +36,7 @@ const Cadastrar: React.FC = () => {
     const { errorHandler } = useError();
     const { createModal, clearModal } = useAlertModal();
 
+    const [normaData, setNormaData] = React.useState<any>(null);
     const handleFormSubmit = async (data: FormData) => {
         try {
             createModal();
@@ -62,10 +63,38 @@ const Cadastrar: React.FC = () => {
                 }
                 createModal("success", { title: "Sucesso", html: "Norma cadastrada com sucesso" });
             }
+            clearModal();
         } catch (err) {
-            errorHandler(err, { title: "Erro ao cadastrar norma" });
+            if (!!normaId) {
+                errorHandler(err, { title: "Erro ao editar norma" });
+            } else {
+                errorHandler(err, { title: "Erro ao cadastrar norma" });
+            }
         }
     };
+
+    React.useEffect(() => {
+        if (!!normaId) {
+            const fetchData = async () => {
+                try {
+                    createModal();
+                    const normasService = new NormasService();
+                    const codigo_cidade = user?.codigo_cidade || 0;
+                    const response = await normasService.getNorma(Number(normaId), codigo_cidade);
+
+                    setNormaData(response);
+                    if (!response.result) {
+                        throw { ...response };
+                    }
+                    clearModal();
+                } catch (err) {
+                    errorHandler(err, { title: "Erro ao buscar norma relacionada" });
+                }
+            };
+            fetchData();
+        }
+    }, []);
+
     return (
         <>
             <PageTitle message="Cadastro de Norma" icon={CadastrarIcon} />
@@ -74,6 +103,9 @@ const Cadastrar: React.FC = () => {
                 defaultValues={formData as unknown as FormData}
                 reValidateMode="onChange"
                 onSubmit={handleFormSubmit}
+                aditionalData={{
+                    normaData: [normaData, setNormaData],
+                }}
             >
                 <ReactHookNavCardTab name="DADOS DA NORMA" icon={<img src={ListarIcon} alt="" aria-hidden="true" />}>
                     <DadosDaNorma />
