@@ -1,5 +1,6 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
 import { Escola, EscolaListObj } from "entities/Escola";
+import { AlunoListObj } from "entities/Aluno";
 
 type CreateEscolaRequestBody = Escola;
 type CreateEscolaResponse = {
@@ -74,12 +75,32 @@ class EscolasService {
         await response.data;
     }
 
-    public async listBindAlunosToEscola(id_escola: number, codigo_cidade: number): Promise<void> {
+    public async listBindAlunosToEscola(id_escola: number, codigo_cidade: number): Promise<any> {
         const response = await this.api({
             method: "get",
             url: `/escolas/${codigo_cidade}/${id_escola}/alunos`,
         });
-        const data = await response.data;
+        const data = (await response.data) as any;
+        return data;
+    }
+
+    public async bindAlunosToEscola(body, id_escola: number, codigo_cidade: number): Promise<any> {
+        const response = await this.api({
+            method: "post",
+            url: `/escolas/${codigo_cidade}/${id_escola}/alunos`,
+            data: body,
+        });
+        const data = (await response.data) as any;
+        return data;
+    }
+
+    public async deleteAlunosOfEscola(body, id_escola: number, codigo_cidade: number): Promise<any> {
+        const response = await this.api({
+            method: "delete",
+            url: `/escolas/${codigo_cidade}/${id_escola}/alunos`,
+            data: body,
+        });
+        const data = (await response.data) as any;
         return data;
     }
 }

@@ -14,7 +14,8 @@ import { MapView, Marker } from "components/micro/MapView";
 
 import EscolasMarker from "assets/icons/escolas/escolas-marker.png";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { Container, ContainerItem } from "./styles";
+import { Container, ContainerItem, ContainerIcons } from "./styles";
+import { BsCircleFill } from "react-icons/bs";
 
 type EscolaLocation = {
     lat: number | null;
@@ -39,6 +40,7 @@ const Localizacao: React.FC = () => {
     const [locations, setLocations] = React.useState<EscolaLocation[]>([]);
     const [escolasOptions, setEscolasOptions] = React.useState<SelectOptions[]>([]);
     const [selectedOption, setSelectedOption] = React.useState<SelectOptions>();
+    const [helperCircle, setHelperCircle] = React.useState<Boolean | undefined>(false);
 
     const { aditionalData } = useNavCard();
     const [escolasData] = aditionalData?.escolasData as [EscolaListObj[]];
@@ -71,7 +73,7 @@ const Localizacao: React.FC = () => {
                     value: escola.nome,
                     label: (
                         <>
-                            {escola.nome}{" "}
+                            {escola.nome}
                             {escola.loc_latitude && escola.loc_longitude ? (
                                 <FaCheck style={{ marginBottom: "2px" }} color="green" size={17} />
                             ) : (
@@ -100,6 +102,7 @@ const Localizacao: React.FC = () => {
         if (!!selectedOption)
             if (selectedOption.lat && selectedOption.lng) {
                 setCenter({ lat: selectedOption.lat, lng: selectedOption.lng });
+                setHelperCircle(true);
             } else {
                 createModal("error", { title: "Ops... Tivemos um problema", html: "Essa escola ainda não foi georeferenciada" });
             }
@@ -140,7 +143,7 @@ const Localizacao: React.FC = () => {
                 />
             </ContainerItem>
             <div ref={ref}>
-                <MapView title="LOCALIZAÇÃO ALUNOS" center={center}>
+                <MapView title="LOCALIZAÇÃO ALUNOS" center={center} aux={helperCircle}>
                     {locations.map(
                         (location) =>
                             location.lat &&
@@ -157,6 +160,38 @@ const Localizacao: React.FC = () => {
                     )}
                 </MapView>
             </div>
+            <ContainerIcons>
+                <div>
+                    <BsCircleFill
+                        color="rgba(255,0,0,1)"
+                        size={20}
+                        style={{
+                            marginRight: "5px",
+                        }}
+                    />
+                    <strong> 15 km</strong>
+                </div>
+                <div>
+                    <BsCircleFill
+                        color="rgba(170,0,0,1)"
+                        size={20}
+                        style={{
+                            marginRight: "5px",
+                        }}
+                    />
+                    <strong> 10 km</strong>
+                </div>
+                <div>
+                    <BsCircleFill
+                        color="rgba(100,0,0,1)"
+                        size={20}
+                        style={{
+                            marginRight: "5px",
+                        }}
+                    />
+                    <strong>5 km</strong>
+                </div>
+            </ContainerIcons>
             <Button onClick={exportMapPNG}>Download Imagem do Mapa</Button>
         </Container>
     );

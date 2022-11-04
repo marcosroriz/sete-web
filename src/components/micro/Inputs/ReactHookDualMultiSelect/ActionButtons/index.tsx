@@ -12,12 +12,26 @@ type ActionButtonsProps = {
     notSelectedValues: string[];
     selectedValues: string[];
     resetSelectedValues: () => void;
+    selectedOptions?: MultiOptions[];
 };
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({ name, options, notSelectedValues, selectedValues, resetSelectedValues }) => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({ name, options, notSelectedValues, selectedValues, selectedOptions, resetSelectedValues }) => {
     const { setValue, getValues } = useFormContext();
+
+    React.useEffect(() => {
+        if (!!selectedOptions) {
+            const prev = (getValues(name) as string[]) || [];
+            setValue(name, [
+                ...options.filter((option) => selectedOptions.find((select) => select.value === option.value)).map((option) => option.value),
+                ...prev,
+            ]);
+            resetSelectedValues();
+        }
+    }, [selectedOptions]);
+
     const handleSelect = () => {
         const prev = (getValues(name) as string[]) || [];
+        console.log("options", notSelectedValues);
         setValue(name, [...options.filter((option) => notSelectedValues.find((select) => select === option.value)).map((option) => option.value), ...prev]);
         resetSelectedValues();
     };

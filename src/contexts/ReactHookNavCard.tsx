@@ -27,7 +27,8 @@ type ReactHookNavCardData = {
     previousStep: () => void;
 };
 
-type ReactHookNavCardProviderProps<FormValues> = UseFormProps<FormValues> & {
+// extends FieldValues
+type ReactHookNavCardProviderProps<FormValues extends FieldValues> = UseFormProps<FormValues> & {
     children: React.ReactNode;
     isDashboard?: boolean;
     aditionalData?: {

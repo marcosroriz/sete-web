@@ -57,6 +57,7 @@ class Map {
     public layerSwitcherActivated: boolean;
     public mapLayers: LayersObj;
     public mapGroupLayer: layer.Group | null;
+    public circles: ol.Feature<geom.Circle>[];
 
     constructor(mapId: string, viewOptions?: MapConstructorViewOptionsDTO) {
         this.vectorSource = new source.Vector();
@@ -72,6 +73,7 @@ class Map {
         };
         this.mapGroupLayer = null;
         this.layerSwitcherActivated = false;
+        this.circles = [];
     }
 
     public createMap(mapId: string, viewOptions?: CreateMapViewOptionsDTO): ol.Map {
@@ -152,6 +154,7 @@ class Map {
 
     public goToLocation({ lat, lng }: GoToLocation): void {
         this.mapInstance.getView().setCenter([lng, lat]);
+        this.mapInstance.getView().setZoom(15);
     }
 
     public updateSize(): void {
@@ -239,12 +242,148 @@ class Map {
                 }),
             }),
         );
+
+        console.log("create marker");
         this.vectorSource.addFeature(marker);
+
         return marker;
+    }
+
+    public createCircle({ lat, lng }: any): ol.Feature<geom.Circle> {
+        const circleFeature1 = new ol.Feature({
+            geometry: new geom.Circle([lng, lat], 0.015),
+        });
+        circleFeature1.setStyle(
+            new style.Style({
+                renderer(coordinates, state) {
+                    const x = coordinates[0][0];
+                    const y = coordinates[0][1];
+                    const x1 = coordinates[1][0];
+                    const y1 = coordinates[1][1];
+
+                    const ctx = state.context;
+                    const dx = x1 - x;
+                    const dy = y1 - y;
+                    const radius = Math.sqrt(dx * dx + dy * dy);
+
+                    const innerRadius = 0;
+                    const outerRadius = radius * 1.4;
+
+                    const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+                    gradient.addColorStop(0, "rgba(255,0,0,0)");
+                    gradient.addColorStop(0.6, "rgba(255,0,0,0.2)");
+                    gradient.addColorStop(1, "rgba(255,0,0,0.8)");
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.strokeStyle = "rgba(255,0,0,1)";
+                    ctx.stroke();
+                },
+            }),
+            // new style.Style({
+            //     stroke: new style.Stroke({
+            //         color: "blue",
+            //         width: 3,
+            //     }),
+            //     fill: new style.Fill({
+            //         color: "rgba(0, 0, 255, 0.1)",
+            //     }),
+            // }),
+        );
+        const circleFeature2 = new ol.Feature({
+            geometry: new geom.Circle([lng, lat], 0.01),
+        });
+        circleFeature2.setStyle(
+            new style.Style({
+                renderer(coordinates, state) {
+                    const x = coordinates[0][0];
+                    const y = coordinates[0][1];
+                    const x1 = coordinates[1][0];
+                    const y1 = coordinates[1][1];
+
+                    const ctx = state.context;
+                    const dx = x1 - x;
+                    const dy = y1 - y;
+                    const radius = Math.sqrt(dx * dx + dy * dy);
+
+                    const innerRadius = 0;
+                    const outerRadius = radius * 1.4;
+
+                    const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+                    gradient.addColorStop(0, "rgba(170,0,0,0)");
+                    gradient.addColorStop(0.6, "rgba(170,0,0,0.2)");
+                    gradient.addColorStop(1, "rgba(170,0,0,0.8)");
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.strokeStyle = "rgba(170,0,0,1)";
+                    ctx.stroke();
+                },
+            }),
+        );
+        const circleFeature3 = new ol.Feature({
+            geometry: new geom.Circle([lng, lat], 0.005),
+        });
+        circleFeature3.setStyle(
+            new style.Style({
+                renderer(coordinates, state) {
+                    const x = coordinates[0][0];
+                    const y = coordinates[0][1];
+                    const x1 = coordinates[1][0];
+                    const y1 = coordinates[1][1];
+
+                    const ctx = state.context;
+                    const dx = x1 - x;
+                    const dy = y1 - y;
+                    const radius = Math.sqrt(dx * dx + dy * dy);
+
+                    const innerRadius = 0;
+                    const outerRadius = radius * 1.4;
+
+                    const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+                    gradient.addColorStop(0, "rgba(100,0,0,0)");
+                    gradient.addColorStop(0.6, "rgba(100,0,0,0.2)");
+                    gradient.addColorStop(1, "rgba(100,0,0,0.8)");
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.strokeStyle = "rgba(100,0,0,1)";
+                    ctx.stroke();
+                },
+            }),
+        );
+
+        this.vectorSource.addFeature(circleFeature1);
+        this.vectorSource.addFeature(circleFeature2);
+        this.vectorSource.addFeature(circleFeature3);
+
+        this.circles.push(circleFeature1);
+        this.circles.push(circleFeature2);
+        this.circles.push(circleFeature3);
+
+        return circleFeature1;
     }
 
     public removeMarker(marker: ol.Feature<geom.Point>): void {
         this.vectorSource.removeFeature(marker);
+    }
+
+    public removeCircles(): void {
+        if (this.circles) {
+            this.circles.forEach((c) => {
+                this.vectorSource.removeFeature(c);
+            });
+            this.circles = [];
+        }
     }
 }
 

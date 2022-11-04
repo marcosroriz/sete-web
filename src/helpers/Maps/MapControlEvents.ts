@@ -21,12 +21,14 @@ class MapControlEvents extends Map {
     private positionMarker: ol.Feature<geom.Point> | null;
     private translateMarker: interaction.Translate | null;
     private positionsMarkers: ol.Feature<geom.Point>[];
+    private positionsCircles: ol.Feature<geom.Circle>[];
 
     constructor(mapId: string, viewOptions?: MapConstructorViewOptionsDTO) {
         super(mapId, viewOptions);
         this.positionMarker = null;
         this.translateMarker = null;
         this.positionsMarkers = [];
+        this.positionsCircles = [];
     }
 
     public handleMarkerInstance({ lat, lng, icon, anchor = [12, 37] }: GenerateMarkerDTO) {
@@ -64,35 +66,35 @@ class MapControlEvents extends Map {
         return this.translateMarker;
     }
 
-    public handleMarkerInstanceMapView({ lat, lng, icon, anchor = [12, 37] }: GenerateMarkerDTO) {
-        this.positionMarker = new ol.Feature({
-            geometry: new geom.Point([lng, lat]),
-        });
-        this.positionMarker.setStyle(
-            new style.Style({
-                image: new style.Icon({
-                    anchor: anchor,
-                    anchorXUnits: "pixels",
-                    anchorYUnits: "pixels",
-                    opacity: 1,
-                    src: icon,
-                }),
-            }),
-        );
+    // public handleMarkerInstanceMapView({ lat, lng, icon, anchor = [12, 37] }: GenerateMarkerDTO) {
+    //     this.positionMarker = new ol.Feature({
+    //         geometry: new geom.Point([lng, lat]),
+    //     });
+    //     this.positionMarker.setStyle(
+    //         new style.Style({
+    //             image: new style.Icon({
+    //                 anchor: anchor,
+    //                 anchorXUnits: "pixels",
+    //                 anchorYUnits: "pixels",
+    //                 opacity: 1,
+    //                 src: icon,
+    //             }),
+    //         }),
+    //     );
 
-        this.positionsMarkers.push(this.positionMarker);
-        this.vectorSource.addFeature(this.positionMarker);
-    }
+    //     this.positionsMarkers.push(this.positionMarker);
+    //     this.vectorSource.addFeature(this.positionMarker);
+    //     console.log("create marker2");
+    // }
 
-    public removeMarkers() {
-        //console.log("positionsMarkers", this, this.positionsMarkers);
-        if (this.positionsMarkers) {
-            this.positionsMarkers.forEach((marker) => {
-                this.vectorSource.removeFeature(marker);
-            });
-            this.positionsMarkers = [];
-        }
-    }
+    // public removeMarkers() {
+    //     if (this.positionsMarkers) {
+    //         this.positionsMarkers.forEach((marker) => {
+    //             this.vectorSource.removeFeature(marker);
+    //         });
+    //         this.positionsMarkers = [];
+    //     }
+    // }
 }
 
 export { MapControlEvents };

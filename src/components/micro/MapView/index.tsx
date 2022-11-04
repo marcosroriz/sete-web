@@ -41,13 +41,14 @@ type MapViewProps = {
     title?: string;
     viewOptions?: MapConstructorViewOptionsDTO;
     center?: { lat: number; lng: number };
+    aux?: Boolean;
     mapController?: React.MutableRefObject<MapControlEvents | null>;
 };
 
-const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, center, children }) => {
+const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, center, aux, children }) => {
     const divRef = React.useRef<HTMLDivElement | null>(null);
     const observer = React.useRef<IntersectionObserver>();
-    const [map, setMap] = React.useState<Map>();
+    const [map, setMap] = React.useState<Map | null>();
     const [isOpen, setIsOpen] = React.useState(false);
     const popRef = React.useRef<HTMLDivElement | null>(null);
     const mapRef = React.useRef<Map | null>(null);
@@ -86,6 +87,8 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, cente
     React.useEffect(() => {
         if (map && center) {
             map.goToLocation(center);
+            map.removeCircles();
+            map.createCircle(center);
         }
     }, [center]);
 
@@ -128,7 +131,7 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, cente
                 <div id={id} className="map-container" ref={divRef}>
                     <div id="popup" ref={popRef}></div>
                 </div>
-                {React.Children.map(children, (child) => React.isValidElement(child) && React.cloneElement(child, { map }))}
+                {React.Children.map(children, (child) => React.isValidElement(child) && React.cloneElement(child, { map } as any))}
             </Container>
             <OverlayBootstrap target={popRef.current} show={isOpen} placement="top">
                 <OverlayContainer style={{ border: "2px #B0C4DE solid" }}>

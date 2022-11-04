@@ -49,6 +49,15 @@ const ReactHookInputMultiSelect: React.FC<ReactHookInputMultiSelectProps> = ({
     });
     const [selectedOptions, setSelectedOptions] = useState<SelectOptions[]>([]);
 
+    const customStyles = {
+        control: (base) => ({
+            ...base,
+            "&:hover": {
+                background: "#797979",
+            },
+        }),
+    };
+
     return (
         <Container
             className={containerClassName}
@@ -72,6 +81,7 @@ const ReactHookInputMultiSelect: React.FC<ReactHookInputMultiSelectProps> = ({
                         // };
                         return (
                             <Select
+                                styles={customStyles}
                                 camponents={makeAnimated()}
                                 aria-labelledby={`label-${name}`}
                                 id={name}

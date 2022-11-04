@@ -20,7 +20,7 @@ type ReactHookDualMultiSelectProps = {
 };
 
 const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ name, options, selectedOptions, texts }) => {
-    const { register } = useFormContext();
+    const { register, setValue } = useFormContext();
     const selected = (useWatch({ name }) as string[]) || [];
     const [notSelectedValues, setNotSelectedValues] = React.useState<string[]>([]);
     const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
@@ -59,6 +59,7 @@ const ReactHookDualMultiSelect: React.FC<ReactHookDualMultiSelectProps> = ({ nam
                     options={options}
                     notSelectedValues={notSelectedValues}
                     selectedValues={selectedValues}
+                    selectedOptions={selectedOptions}
                     resetSelectedValues={resetSelectedValues}
                 />
             </div>

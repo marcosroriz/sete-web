@@ -132,3 +132,12 @@ export const ContainerItem = styled.div<ContainerProps>`
         }
     }
 `;
+
+export const ContainerIcons = styled.div<ContainerProps>`
+    display: flex;
+
+    & > div + div {
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+`;
