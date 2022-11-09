@@ -1,7 +1,7 @@
 interface Norma {
     id_norma?: number;
     codigo_cidade?: number;
-    titulo?: string;
+    titulo_norma?: string;
     data_norma?: string;
     tipo_norma?: string;
     assunto?: string;

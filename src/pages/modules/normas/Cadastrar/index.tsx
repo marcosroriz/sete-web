@@ -6,7 +6,6 @@ import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { NormasService } from "services/Norma";
-import { Norma } from "entities/Norma";
 
 import PageTitle from "components/micro/PageTitle";
 import DadosDaNorma from "./DadosDaNorma";
@@ -37,6 +36,7 @@ const Cadastrar: React.FC = () => {
     const { createModal, clearModal } = useAlertModal();
 
     const [normaData, setNormaData] = React.useState<any>(null);
+
     const handleFormSubmit = async (data: FormData) => {
         try {
             createModal();

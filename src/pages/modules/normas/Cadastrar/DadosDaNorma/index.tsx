@@ -1,18 +1,22 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFormContext } from "react-hook-form";
 
 import { formatHelper } from "helpers/FormatHelper";
-import { AssuntosEnum, AssuntosLabel, TiposNormasEnum, TiposNormasLabel, TransportesEnum, TransportesLabel } from "entities/Norma";
+import { Norma, AssuntosEnum, AssuntosLabel, TiposNormasEnum, TiposNormasLabel, TransportesEnum, TransportesLabel } from "entities/Norma";
 
-import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
+import ReactHookInputMultiSelect from "components/micro/Inputs/ReactHookInputMultiSelect";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
+import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
+import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
+import ReactHookInputFile from "components/micro/Inputs/ReactHookInputFile";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import BlockTitle from "components/micro/BlockTitle";
-import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
-import ReactHookInputMultiSelect from "components/micro/Inputs/ReactHookInputMultiSelect";
 
 import { Container, mediaQuery } from "./styles";
-import ReactHookInputFile from "components/micro/Inputs/ReactHookInputFile";
+import { useReactHookNavCard } from "contexts/ReactHookNavCard";
+
+type NormaData = any;
 
 const assuntosOptions = formatHelper.getNumbersEnumValues(AssuntosEnum).map((value) => ({
     label: AssuntosLabel.get(value as AssuntosEnum) || "",
@@ -30,6 +34,21 @@ const transportesOptions = formatHelper.getNumbersEnumValues(TransportesEnum).ma
 }));
 
 const DadosDaNorma: React.FC = () => {
+    const { setValue } = useFormContext();
+    const { aditionalData } = useReactHookNavCard();
+
+    const [normaData] = aditionalData?.normaData as NormaData;
+
+    React.useEffect(() => {
+        if (!!normaData) {
+            setValue("titulo_norma", normaData?.titulo_norma.toString() || "");
+            setValue("data_norma", normaData?.data_norma.toString() || "");
+            setValue("tipo_norma", normaData?.tipo_norma.toString() || "");
+            setValue("assunto_norma", normaData?.assunto_norma.toString() || "");
+            setValue("aplicabilidade", normaData?.aplicabilidade.toString() || "");
+        }
+    }, [normaData]);
+
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A GARAGEM DO MUNICÍPIO. VOCÊ PODE CLICAR NO MAPA PARA MUDAR A LOCALIZAÇÃO DA GARAGEM." />
