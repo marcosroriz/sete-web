@@ -115,7 +115,7 @@ export const Container = styled.div<ContainerProps>`
     .form-item-content {
         ${({ hasOnlyChild }) => (hasOnlyChild ? "margin-bottom: -15px;" : "margin-bottom: 0px;")}
         margin-left: 30px;
-        ${({ placeItems }) => placeItems && placeItemsCss[placeItems || "left"]}
+        ${({ placeItems }) => placeItems && placeItemsCss[placeItems || "left"]}]
     }
 
     @media ${mediaQuery.mobile} {

@@ -7,6 +7,7 @@ type ContainerProps = {
 
 export const Container = styled.div<ContainerProps>`
     width: 100%;
+
     ${({ isHorizontal, horizontalMedia }) =>
         isHorizontal
             ? css`
@@ -57,6 +58,7 @@ export const InputField = styled.div<InputFieldProps>`
         font-size: 14px;
         line-height: 1.5;
 
+        cursor: pointer;
         ${({ isInvalid }) => !isInvalid && "border-color: #e3e3e3;"}
         ${({ isPlaceholder }) => isPlaceholder && ".form-control__single-value { color: rgba(65, 69, 80, 0.4); font-weight: 500; }"}
         ${({ thinBorder }) => (thinBorder ? "&, &:focus { border-width: 1px; }" : "&, &:focus { border-width: 2px; }")}
@@ -97,8 +99,18 @@ export const InputField = styled.div<InputFieldProps>`
             padding: 0px 8px;
         }
     }
+    .select .form-control__control:hover {
+        background-color: #797979;
+        border-color: #797979;
+
+        transition: background-color 0.2s;
+    }
+    .select .form-control__control .form-control__placeholder:hover {
+        color: #ffffff;
+    }
     .form-control__option {
         font-size: 14px;
+        cursor: pointer;
     }
     .form-error {
         width: 100%;

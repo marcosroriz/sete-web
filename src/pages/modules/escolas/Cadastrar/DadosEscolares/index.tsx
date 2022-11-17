@@ -58,7 +58,7 @@ const DadosEscolares: React.FC = () => {
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
-                    label="EM RELAÇÃO AO NÍVEL A ESCOLA OFERECE ENSINO:*"
+                    label="EM RELAÇÃO AO NÍVEL, A ESCOLA OFERECE ENSINO:*"
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="20px"

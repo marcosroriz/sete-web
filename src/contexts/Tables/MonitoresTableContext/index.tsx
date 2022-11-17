@@ -47,8 +47,6 @@ const MonitoresTableProvider = ({ children }: MonitoresTableProviderProps) => {
 
             const monitoresService = new MonitoresService();
             const codigo_cidade = user?.codigo_cidade || 0;
-
-            await monitoresService.deleteMonitor(monitor.cpf, codigo_cidade);
         } catch (err) {
             errorHandler(err, { title: "Erro ao remover Monitor" });
         }

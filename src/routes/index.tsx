@@ -10,6 +10,7 @@ import EscolasRoutes from "./modules/escolas";
 import FornecedoresRoutes from "./modules/fornecedores";
 import RotasRoutes from "./modules/rotas";
 import MonitoresRoutes from "./modules/monitores";
+import NormasRoutes from "./modules/normas";
 
 const Routes: React.FC = () => {
     return (
@@ -23,6 +24,7 @@ const Routes: React.FC = () => {
             {FornecedoresRoutes}
             {RotasRoutes}
             {MonitoresRoutes}
+            {NormasRoutes}
             <Route render={() => <Redirect to="/" />} />
         </Switch>
     );

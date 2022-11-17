@@ -87,7 +87,7 @@ const DadosEscolares: React.FC = () => {
             <BlockTitle message="A RESPEITO DOS DADOS ESCOLARES DO ALUNO, RESPONDA:" />
             <ReactHookFormItemCard required>
                 <ReactHookInputSelect
-                    label="QUAL A ESCOLA DO ALUNO?"
+                    label="QUAL A ESCOLA DO ALUNO?*"
                     name="escola"
                     placeholder="Escolha uma escola"
                     options={escolaOptions}
@@ -97,7 +97,7 @@ const DadosEscolares: React.FC = () => {
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookInputSelect
-                    label="QUAL A ROTA DO ALUNO?"
+                    label="QUAL A ROTA DO ALUNO?*"
                     name="rota"
                     options={rotaOptions}
                     placeholder="Escolha uma rota"
@@ -120,14 +120,12 @@ const DadosEscolares: React.FC = () => {
                     {nivelOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
-            <ButtonsContainer position={!!alunoData ? "evenly" : "right"}>
-                {!!alunoData && (
-                    <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
-                        Voltar
-                    </Button>
-                )}
+            <ButtonsContainer position="evenly">
+                <Button variant="default" type="button" className="btn-fill" onClick={previousStep}>
+                    Voltar
+                </Button>
                 <Button variant="info" type="submit" className="btn-fill">
-                    Concluír
+                    Concluir
                 </Button>
             </ButtonsContainer>
         </Container>

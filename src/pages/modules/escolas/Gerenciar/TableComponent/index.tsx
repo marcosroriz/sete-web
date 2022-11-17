@@ -16,7 +16,7 @@ const Gerenciar: React.FC = () => {
             <SeteTable columns={columns} name="Escolas" data={tableData} onSelectedDataChange={handleSelectedData} />
             <ButtonsContainer containerClassName="dt-buttons btn-group">
                 <Button variant="danger" className="btn-fill" onClick={handleDeleteSelectedEscolas}>
-                    Remover alunos
+                    Remover escolas
                 </Button>
                 <Button variant="" className="btn-fill btn-excel" onClick={handleExportExcel}>
                     Exportar para Planilha

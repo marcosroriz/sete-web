@@ -27,6 +27,7 @@ import IconMotoristas from "assets/icons/sidebar/sidebar-motoristas.svg";
 import IconRelatorios from "assets/icons/sidebar/sidebar-relatorios.svg";
 import IconRotas from "assets/icons/sidebar/sidebar-rotas.svg";
 import IconSenso from "assets/icons/sidebar/sidebar-senso.png";
+import IconNormas from "assets/icons/sidebar/sidebar-normas.svg";
 
 import { Container, NavContainer, NavOverlay, Section, ChildrenContainer, NavItem, NavItemBody, HamburgerContainer, mediaQuery } from "./styles";
 
@@ -317,6 +318,29 @@ const SidebarLayout: React.FC = ({ children }) => {
                                         <li>
                                             <NavLink to="/rotas/importar" activeClassName="isActive" exact>
                                                 Importar
+                                            </NavLink>
+                                        </li>
+                                    </NavItemBody>
+                                </Accordion.Collapse>
+                            </NavItem>
+
+                            <NavItem>
+                                <AccordionButton
+                                    onClick={() => changeAccordionKey(SidebarItemKeys.normas)}
+                                    icon={IconNormas}
+                                    name="NORMAS E RESOLUÇÕES"
+                                    isActive={activeAccordionKey === SidebarItemKeys.normas}
+                                />
+                                <Accordion.Collapse eventKey={SidebarItemKeys.normas}>
+                                    <NavItemBody>
+                                        <li>
+                                            <NavLink to="/normas/cadastrar" activeClassName="isActive" exact>
+                                                Cadastrar
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/normas/gerenciar" activeClassName="isActive">
+                                                Gerenciar
                                             </NavLink>
                                         </li>
                                     </NavItemBody>

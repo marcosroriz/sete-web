@@ -9,8 +9,8 @@ import { EscolasService } from "services/Escolas";
 
 import PageTitle from "components/micro/PageTitle";
 
-import EscolasListar from "assets/icons/escolas/escolas-localizacao.svg";
-import LocalizacaoIcon from "assets/icons/escolas/escolas-localizacao.svg";
+import EscolaIcon from "assets/icons/escolas/escolas-cadastro.png";
+import MapaIcon from "assets/icons/garagem/mapa-garagem.png";
 import { NavCardProvider, NavCardTab } from "contexts/NavCard";
 
 import Localizacao from "./Localizacao";
@@ -45,9 +45,9 @@ const Mapa: React.FC = () => {
 
     return (
         <>
-            <PageTitle message="Vizualizar dados das Escolas" icon={EscolasListar} />
+            <PageTitle message="Visualizar Escolas Cadastradas" icon={EscolaIcon} />
             <NavCardProvider aditionalData={{ escolasData: [escolasData, setEscolasData] }}>
-                <NavCardTab name="LOCALIZAÇÃO" icon={<img src={LocalizacaoIcon} alt="" />}>
+                <NavCardTab name="Mapa da Escola (E Alunos Atendidos)" icon={<img src={MapaIcon} alt="Icone Mapa" />}>
                     <Localizacao />
                 </NavCardTab>
             </NavCardProvider>
