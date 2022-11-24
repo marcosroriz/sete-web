@@ -79,7 +79,7 @@ const AlunosTableProvider = ({ children }: AlunosTableProviderProps) => {
                 throw { message: errorStudents.map((aluno) => `Não foi possível remover o(a) aluno(a): ${aluno.nome}`) };
             }
             await fetchData();
-            createModal("success", { title: "Sucesso!", html: "Alunos removicos com sucesso" });
+            createModal("success", { title: "Sucesso!", html: "Alunos removidos com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Falha ao remover Alunos" });
         }
