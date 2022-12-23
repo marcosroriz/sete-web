@@ -69,7 +69,7 @@ const AdminsTableProvider = ({ children }: AdminsTableProviderProps) => {
     const fetchData = async () => {
         const adminsService = new AdminsService();
         const codigo_cidade = user?.codigo_cidade || 0;
-        const response = await adminsService.listAdmins(codigo_cidade);
+        const response = await adminsService.listAdmin(codigo_cidade);
         const treatedData = adminsTableHelper.treatData(response.data, { delete: handleDeleteAdmin });
         setTableData(treatedData);
     };

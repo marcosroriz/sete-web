@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth } from "contexts/Auth";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useAdminsTable } from "tables/AdminTable/context";
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
@@ -13,7 +14,6 @@ import { Container } from "./styles";
 
 const Usuarios: React.FC = () => {
     const { user } = useAuth();
-    const codigo_cidade = user?.codigo_cidade || 0;
     const { tableData, columns, handleSelectedData, handleDeleteSelectedAdmins } = useAdminsTable();
     return (
         <Container>
@@ -22,7 +22,7 @@ const Usuarios: React.FC = () => {
                 <Button variant="danger" className="btn-fill" onClick={handleDeleteSelectedAdmins}>
                     Remover Usuários
                 </Button>
-                <Link to={`/usuarios/editar/${codigo_cidade}`}>
+                <Link to={`/usuarios/editar`}>
                     <Button variant="add" className="btn-fill btn-info">
                         Adicionar Usuários
                     </Button>

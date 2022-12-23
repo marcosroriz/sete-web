@@ -5,24 +5,21 @@ import { useAlertModal } from "hooks/AlertModal";
 import { useError } from "hooks/Errors";
 
 import { useAuth } from "contexts/Auth";
-import { ReactHookNavCardProvider } from "contexts/ReactHookNavCard";
+import { ReactHookNavCardProvider, ReactHookNavCardTab } from "contexts/ReactHookNavCard";
+import { dadosUsuarioSchema } from "forms/AdminsForm";
 
 import { AdminsService } from "services/Admins";
 import { Admin } from "entities/Admins";
+import Usuario from "./Usuario";
 
 import IconUsuarios from "assets/icons/alunos/alunos-cadastro.svg";
 
 import PageTitle from "components/micro/PageTitle";
-import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
-import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
-
-import { Container, mediaQuery } from "./styles";
 
 type FormData = {
     id_admin: string;
     email: string;
     nome: string;
-    sexo: number;
     telefone: string;
     cpf: string;
     senha: string;
@@ -32,6 +29,7 @@ type FormData = {
 const formData = {
     id_admin: "",
     email: "",
+    nome: "",
     telefone: "",
     cpf: "",
     senha: "",
@@ -55,56 +53,47 @@ const Cadastrar: React.FC = () => {
             const body = {
                 id_admin: data.id_admin,
                 nome: data.nome,
-                sexo: data.sexo,
                 email: data.email,
                 telefone: data.telefone,
                 cpf: data.cpf,
                 senha: data.senha,
                 papel_usuario: data.papel_usuario,
             };
-
             if (!!adminId) {
-                const response = await adminsService.updateAdmin(body, Number(adminId), codigo_cidade);
-                if (!response.result) {
-                    throw { ...response };
+                const adminsResponse = await adminsService.updateAdmin(body, adminId, codigo_cidade);
+                if (!adminsResponse.result) {
+                    throw { ...adminsResponse };
                 }
                 createModal("success", { title: "Sucesso", html: "Usuário editado com sucesso" });
             } else {
-                const response = await adminsService.createAdmin(body, codigo_cidade);
-
-                if (!response.result) {
-                    throw { ...response };
+                const adminsResponse = await adminsService.createAdmin(body, codigo_cidade);
+                if (!adminsResponse.result) {
+                    throw { ...adminsResponse };
                 }
                 createModal("success", { title: "Sucesso", html: "Usuário cadastrado com sucesso" });
             }
         } catch (err) {
-            if (!!adminId) {
-                errorHandler(err, { title: "Erro ao editar dados do usuário" });
-            } else {
-                errorHandler(err, { title: "Erro ao cadastrar usuário" });
-            }
+            errorHandler(err, { title: "Erro ao cadastrar usuário" });
         }
     };
 
     return (
-        <Container>
+        <>
             <PageTitle message="Cadastro de Usuário" icon={IconUsuarios} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
-                defaultValues={formData as unknown as FormData}
+                defaultValues={formData as FormData}
                 reValidateMode="onChange"
                 onSubmit={handleSubmit}
+                aditionalData={{
+                    adminData: [adminData, setAdminData],
+                }}
             >
-                <ReactHookFormItemCard>
-                    <ReactHookInputText
-                        label="TÍTULO DA NORMA: *"
-                        name="titulo_norma"
-                        placeholder="Exemplo: RESOLUÇÃO ABC de 20XX"
-                        isHorizontal={mediaQuery.desktop}
-                    />
-                </ReactHookFormItemCard>
+                <ReactHookNavCardTab name="" icon="" validationSchema={dadosUsuarioSchema}>
+                    <Usuario />
+                </ReactHookNavCardTab>
             </ReactHookNavCardProvider>
-        </Container>
+        </>
     );
 };
 

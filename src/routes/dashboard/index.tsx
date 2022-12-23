@@ -13,7 +13,7 @@ export default [
     <AuthRoute path="/" component={Home} permission="reader" isPrivate exact key="home" />,
     <AuthRoute path="/perfil" component={Perfil} permission="reader" isPrivate exact key="perfil" />,
     <AuthRoute path="/usuarios" component={Usuarios} permission="reader" isPrivate exact key="usuarios" />,
-    <AuthRoute path="/usuarios/editar/:id" component={Cadastrar} permission="reader" key="editar/:id" isPrivate exact />,
+    <AuthRoute path="/usuarios/editar/" component={Cadastrar} permission="reader" key="editar" isPrivate exact />,
     <AuthRoute path="/censo" component={Censo} permission="reader" isPrivate exact key="censo" />,
     <AuthRoute path="/pdf" component={PdfTest} permission="reader" isPrivate exact key="pdf" />,
 ];

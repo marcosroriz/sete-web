@@ -56,7 +56,7 @@ class AdminsService {
         return data;
     }
 
-    public async updateAdmin(body: UpdateAdminRequestBody, adminId: number, codigo_cidade: number): Promise<UpdateAdminResponse> {
+    public async updateAdmin(body: UpdateAdminRequestBody, adminId: string, codigo_cidade: number): Promise<UpdateAdminResponse> {
         const response = await this.api({
             url: `/usuarios/${codigo_cidade}/${adminId}`,
             method: "put",
@@ -64,6 +64,13 @@ class AdminsService {
         });
         const data = (await response.data) as UpdateAdminResponse;
         return data;
+    }
+
+    public async deleteAdmin(id_admin: number, codigo_cidade: number): Promise<void> {
+        await this.api({
+            url: `/usuarios/${codigo_cidade}/${id_admin}`,
+            method: "delete",
+        });
     }
 }
 

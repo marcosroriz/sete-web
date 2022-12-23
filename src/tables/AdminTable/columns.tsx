@@ -20,7 +20,7 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
     },
     {
         Header: "PAPEL",
-        accessor: "papel",
+        accessor: "papel_usuario",
         Filter: SelectColumnFilter,
         filter: "includes",
     },
