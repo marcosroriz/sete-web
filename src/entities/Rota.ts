@@ -46,4 +46,34 @@ interface RotaTableField {
     escolas_atendidas: number;
 }
 
+enum TiposVeiculosEnum {
+    EscolherDepois = -1,
+    AnimalTracao = 0,
+    BarcoAluminio = 1,
+    Bicicleta = 2,
+    MicroOnibusKWI = 3,
+    MicroOnibusKWY = 4,
+    OnibusAAA = 5,
+    OnibusADS = 6,
+    OnibusKEO = 7,
+    OnibusNLA = 8,
+    Outro = 9,
+    Van = 10,
+}
+const TiposVeiculosLabel = new Map<TiposVeiculosEnum, string>([
+    [TiposVeiculosEnum.EscolherDepois, "Escolher veículo depois"],
+    [TiposVeiculosEnum.AnimalTracao, "Animal de Tração (JZZ-4639)"],
+    [TiposVeiculosEnum.BarcoAluminio, "Barco de Alumínio (LLL-1111)"],
+    [TiposVeiculosEnum.Bicicleta, "Bicicleta (AAA-2222)"],
+    [TiposVeiculosEnum.MicroOnibusKWI, "Micro-Ônibus (KWI-7I10)"],
+    [TiposVeiculosEnum.MicroOnibusKWY, "Micro-Ônibus (KWY-7I10)"],
+    [TiposVeiculosEnum.OnibusAAA, "Ônibus (AAA-9999)"],
+    [TiposVeiculosEnum.OnibusADS, "Ônibus (ADS-FASA)"],
+    [TiposVeiculosEnum.OnibusKEO, "Ônibus (KEO-9180)"],
+    [TiposVeiculosEnum.OnibusNLA, "Ônibus (NLA-6606)"],
+    [TiposVeiculosEnum.Outro, "Outro (AAA-1221)"],
+    [TiposVeiculosEnum.Van, "Van (NLA-6616)"],
+]);
+
+export { TiposVeiculosEnum, TiposVeiculosLabel };
 export type { Rota, RotaListObj, RotaTableField };
