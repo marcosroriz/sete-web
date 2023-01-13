@@ -40,6 +40,8 @@ type CreateMarkerDTO = {
     icon: string;
     anchor?: [number, number];
     view?: boolean;
+    idAluno?: number;
+    idEscola?: number;
     nome?: string;
     sexo?: string;
     rota?: string;
@@ -48,6 +50,7 @@ type CreateMarkerDTO = {
     turno?: number;
     horarioFuncionamento?: string;
     ensino?: string;
+    numeroAlunos?: string;
 };
 
 class Map {
@@ -154,7 +157,11 @@ class Map {
 
     public goToLocation({ lat, lng }: GoToLocation): void {
         this.mapInstance.getView().setCenter([lng, lat]);
-        this.mapInstance.getView().setZoom(15);
+    }
+
+    public goToLocationEscola({ lat, lng }: GoToLocation): void {
+        this.mapInstance.getView().setCenter([lng, lat]);
+        this.mapInstance.getView().setZoom(17);
     }
 
     public updateSize(): void {
@@ -219,9 +226,14 @@ class Map {
         turno,
         horarioFuncionamento,
         ensino,
+        numeroAlunos,
+        idAluno,
+        idEscola,
     }: CreateMarkerDTO): ol.Feature<geom.Point> {
         const marker = new ol.Feature({
             geometry: new geom.Point([lng, lat]),
+            idAluno: idAluno,
+            idEscola: idEscola,
             nome: nome,
             sexo: sexo,
             escola: escola,
@@ -230,6 +242,7 @@ class Map {
             turno: turno,
             horarioFuncionamento: horarioFuncionamento,
             ensino: ensino,
+            numeroAlunos: numeroAlunos,
         });
         marker.setStyle(
             new style.Style({
@@ -270,28 +283,22 @@ class Map {
                     const outerRadius = radius * 1.4;
 
                     const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
-                    gradient.addColorStop(0, "rgba(255,0,0,0)");
-                    gradient.addColorStop(0.6, "rgba(255,0,0,0.2)");
-                    gradient.addColorStop(1, "rgba(255,0,0,0.8)");
+
+                    gradient.addColorStop(1, "rgba(227, 74, 51, 0.8)");
+                    gradient.addColorStop(0.5, "rgba(227, 74, 51, 0.2)");
+                    gradient.addColorStop(0, "rgba(255,0,0,0");
+
                     ctx.beginPath();
                     ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
                     ctx.fillStyle = gradient;
                     ctx.fill();
 
                     ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
-                    ctx.strokeStyle = "rgba(255,0,0,1)";
+                    ctx.strokeStyle = "rgb(227, 74, 51)";
+                    ctx.lineWidth = 3;
                     ctx.stroke();
                 },
             }),
-            // new style.Style({
-            //     stroke: new style.Stroke({
-            //         color: "blue",
-            //         width: 3,
-            //     }),
-            //     fill: new style.Fill({
-            //         color: "rgba(0, 0, 255, 0.1)",
-            //     }),
-            // }),
         );
         const circleFeature2 = new ol.Feature({
             geometry: new geom.Circle([lng, lat], 0.01),
@@ -313,16 +320,17 @@ class Map {
                     const outerRadius = radius * 1.4;
 
                     const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
-                    gradient.addColorStop(0, "rgba(170,0,0,0)");
-                    gradient.addColorStop(0.6, "rgba(170,0,0,0.2)");
-                    gradient.addColorStop(1, "rgba(170,0,0,0.8)");
+                    gradient.addColorStop(1, "rgba(253, 187, 132, 0.8)");
+                    gradient.addColorStop(0.5, "rgba(253, 187, 132, 0.2)");
+                    gradient.addColorStop(0, "rgba(255,0,0,0");
                     ctx.beginPath();
                     ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
                     ctx.fillStyle = gradient;
                     ctx.fill();
 
                     ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
-                    ctx.strokeStyle = "rgba(170,0,0,1)";
+                    ctx.strokeStyle = "rgba(253, 187, 132, 1)";
+                    ctx.lineWidth = 3;
                     ctx.stroke();
                 },
             }),
@@ -347,16 +355,18 @@ class Map {
                     const outerRadius = radius * 1.4;
 
                     const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+
+                    gradient.addColorStop(1, "rgba(254, 232, 200, 0.8)");
+                    gradient.addColorStop(0.5, "rgba(254, 232, 200, 0.3)");
                     gradient.addColorStop(0, "rgba(100,0,0,0)");
-                    gradient.addColorStop(0.6, "rgba(100,0,0,0.2)");
-                    gradient.addColorStop(1, "rgba(100,0,0,0.8)");
                     ctx.beginPath();
                     ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
                     ctx.fillStyle = gradient;
                     ctx.fill();
 
                     ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
-                    ctx.strokeStyle = "rgba(100,0,0,1)";
+                    ctx.strokeStyle = "rgba(254, 232, 200, 1)";
+                    ctx.lineWidth = 3;
                     ctx.stroke();
                 },
             }),

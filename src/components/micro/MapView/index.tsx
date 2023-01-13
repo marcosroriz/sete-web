@@ -7,9 +7,14 @@ import { Overlay as OverlayBootstrap, Row, Col } from "react-bootstrap";
 import * as ol from "ol";
 import * as geom from "ol/geom";
 import Overlay from "ol/Overlay";
+import { Link } from "react-router-dom";
+
+import { FaSearch, FaEdit, FaTrash } from "react-icons/fa";
 
 import { Map, MapConstructorViewOptionsDTO, CreateMarkerDTO } from "helpers/Maps/Map";
 import { TurnoLabel, NivelLabel, NivelEnum, TurnoEnum } from "entities/Aluno";
+
+import { formatHelper } from "helpers/FormatHelper";
 
 import { Container, OverlayContainer } from "./styles";
 
@@ -41,11 +46,30 @@ type MapViewProps = {
     title?: string;
     viewOptions?: MapConstructorViewOptionsDTO;
     center?: { lat: number; lng: number };
-    aux?: Boolean;
+    centerEscola?: { lat: number; lng: number };
     mapController?: React.MutableRefObject<MapControlEvents | null>;
+    escola?: boolean;
+    aluno?: boolean;
 };
 
-const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, center, aux, children }) => {
+type AlunoOverlay = {
+    idAluno: number;
+    nome: string;
+    escola: string;
+    rota: string;
+    turno: number;
+    nivel: number;
+};
+
+type EscolaOverlay = {
+    idEscola: number;
+    nome: string;
+    ensino: string;
+    horarioFunc: string;
+    numeroAlunos: string;
+};
+
+const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, center, centerEscola, children, escola, aluno }) => {
     const divRef = React.useRef<HTMLDivElement | null>(null);
     const observer = React.useRef<IntersectionObserver>();
     const [map, setMap] = React.useState<Map | null>();
@@ -53,11 +77,8 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, cente
     const popRef = React.useRef<HTMLDivElement | null>(null);
     const mapRef = React.useRef<Map | null>(null);
 
-    const [nome, setNome] = React.useState<string>();
-    const [escola, setEscola] = React.useState<string>();
-    const [rota, setRota] = React.useState<string>();
-    const [turno, setTurno] = React.useState<Number>(0);
-    const [nivel, setNivel] = React.useState<Number>(0);
+    const [alunoOverlay, setAlunoOverlay] = React.useState<AlunoOverlay>({ idAluno: 0, nome: "", escola: "", rota: "", turno: 0, nivel: 0 });
+    const [escolaOverlay, setEscolaOverlay] = React.useState<EscolaOverlay>({ idEscola: 0, ensino: "", nome: "", horarioFunc: "", numeroAlunos: "" });
 
     React.useEffect(() => {
         if (!map) {
@@ -87,10 +108,16 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, cente
     React.useEffect(() => {
         if (map && center) {
             map.goToLocation(center);
-            map.removeCircles();
-            map.createCircle(center);
         }
     }, [center]);
+
+    React.useEffect(() => {
+        if (map && centerEscola) {
+            map.removeCircles();
+            map.createCircle(centerEscola);
+            map.goToLocationEscola(centerEscola);
+        }
+    }, [centerEscola]);
 
     React.useEffect(() => {
         if (!!map) {
@@ -112,11 +139,23 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, cente
                     popup1.setPosition(evt.coordinate);
 
                     setIsOpen(true);
-                    setNome(feature.get("nome"));
-                    setEscola(feature.get("escola"));
-                    setRota(feature.get("rota"));
-                    setTurno(feature.get("turno"));
-                    setNivel(feature.get("nivel"));
+
+                    const idAluno = feature.get("idAluno");
+                    const nomeAluno = feature.get("nome");
+                    const escolaAluno = feature.get("escola");
+                    const rotaAluno = feature.get("rota");
+                    const turnoAluno = feature.get("turno");
+                    const nivelAluno = feature.get("nivel");
+
+                    setAlunoOverlay({ idAluno: idAluno, nome: nomeAluno, escola: escolaAluno, rota: rotaAluno, turno: turnoAluno, nivel: nivelAluno });
+
+                    const idEscola = feature.get("idEscola");
+                    const ensinoEscola = feature.get("ensino");
+                    const nomeEscola = feature.get("nome");
+                    const horarioFunc = feature.get("horarioFuncionamento");
+                    const numeroAlunos = feature.get("numeroAlunos");
+
+                    setEscolaOverlay({ idEscola: idEscola, ensino: ensinoEscola, nome: nomeEscola, horarioFunc: horarioFunc, numeroAlunos: numeroAlunos });
                 } else {
                     setIsOpen(false);
                 }
@@ -135,27 +174,134 @@ const MapView: React.FC<MapViewProps> = ({ id = "map", title, viewOptions, cente
             </Container>
             <OverlayBootstrap target={popRef.current} show={isOpen} placement="top">
                 <OverlayContainer style={{ border: "2px #B0C4DE solid" }}>
-                    <Row style={{ fontSize: "17px", fontWeight: "bold", padding: "7px 10px" }}>
-                        <Col md={3}>Nome:</Col>
-                        <Col md={9}>{nome}</Col>
-                    </Row>
-
-                    <Row style={{ backgroundColor: "#F0F0F0", padding: "7px 10px" }}>
-                        <Col md={3}>Escola:</Col>
-                        <Col md={9}>{escola} </Col>
-                    </Row>
-                    <Row style={{ padding: "7px 10px" }}>
-                        <Col md={3}>Rota</Col>
-                        <Col md={9}>{rota}</Col>
-                    </Row>
-                    <Row style={{ backgroundColor: "#F0F0F0", padding: "7px 10px" }}>
-                        <Col md={3}>Nivel:</Col>
-                        <Col md={9}>{NivelLabel.get(nivel as NivelEnum) || "-"}</Col>
-                    </Row>
-                    <Row style={{ padding: "7px 10px" }}>
-                        <Col md={3}>Turno:</Col>
-                        <Col md={9}>{TurnoLabel.get(turno as TurnoEnum) || "-"}</Col>
-                    </Row>
+                    {aluno && (
+                        <>
+                            <Row style={{ fontSize: "17px", fontWeight: "bold", padding: "7px 10px" }}>
+                                <Col md={3}>Nome:</Col>
+                                <Col md={9}>{alunoOverlay.nome}</Col>
+                            </Row>
+                            <Row style={{ backgroundColor: "#F0F0F0", padding: "7px 10px" }}>
+                                <Col md={3}>Escola:</Col>
+                                <Col md={9}>{alunoOverlay.escola} </Col>
+                            </Row>
+                            <Row style={{ padding: "7px 10px" }}>
+                                <Col md={3}>Rota:</Col>
+                                <Col md={9}>{alunoOverlay.rota}</Col>
+                            </Row>
+                            <Row style={{ backgroundColor: "#F0F0F0", padding: "7px 10px" }}>
+                                <Col md={3}>Nivel:</Col>
+                                <Col md={9}>{NivelLabel.get(alunoOverlay.nivel as NivelEnum) || "-"}</Col>
+                            </Row>
+                            <Row style={{ padding: "7px 10px" }}>
+                                <Col md={3}>Turno:</Col>
+                                <Col md={9}>{TurnoLabel.get(alunoOverlay.turno as TurnoEnum) || "-"}</Col>
+                            </Row>
+                            <Row style={{ padding: "7px 10px" }}>
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                    <Link
+                                        to={`/alunos/gerenciar/visualizar/${alunoOverlay.idAluno}`}
+                                        style={{
+                                            display: "block",
+                                            marginBottom: "-2px",
+                                            border: "none",
+                                            backgroundColor: "transparent",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        <FaSearch size={"30px"} color={"gray"} />
+                                    </Link>
+                                    <Link
+                                        to={`/alunos/gerenciar/editar/${alunoOverlay.idAluno}`}
+                                        style={{
+                                            display: "block",
+                                            marginLeft: "6px",
+                                            border: "none",
+                                            backgroundColor: "transparent",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        <FaEdit size={"32px"} color={"orange"} />
+                                    </Link>
+                                    <button
+                                        style={{
+                                            border: "none",
+                                            backgroundColor: "transparent",
+                                            cursor: "pointer",
+                                        }}
+                                        onClick={(e) => {
+                                            console.log("excluir escola");
+                                            // e.stopPropagation();
+                                            // addOptions?.delete(escolaObj);
+                                        }}
+                                    >
+                                        <FaTrash size={"30px"} color={"red"} />
+                                    </button>
+                                </div>
+                            </Row>
+                        </>
+                    )}
+                    {escola && (
+                        <>
+                            <Row style={{ fontSize: "17px", fontWeight: "bold", padding: "7px 10px" }}>
+                                <Col md={3}>Nome:</Col>
+                                <Col md={9}>{escolaOverlay.nome}</Col>
+                            </Row>
+                            <Row style={{ backgroundColor: "#F0F0F0", padding: "7px 10px" }}>
+                                <Col md={5}>Horario de Func.:</Col>
+                                <Col md={7}>{escolaOverlay.horarioFunc}</Col>
+                            </Row>
+                            <Row style={{ backgroundColor: "#F0F0F0", padding: "7px 10px" }}>
+                                <Col md={5}>Ensino:</Col>
+                                <Col md={7}>{escolaOverlay.ensino}</Col>
+                            </Row>
+                            <Row style={{ padding: "7px 10px" }}>
+                                <Col md={6}>Número de alunos</Col>
+                                <Col md={6}>{escolaOverlay.numeroAlunos}</Col>
+                            </Row>
+                            <Row style={{ padding: "7px 10px" }}>
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                    <Link
+                                        to={`/escolas/gerenciar/visualizar/${escolaOverlay.idEscola}`}
+                                        style={{
+                                            display: "block",
+                                            marginBottom: "-2px",
+                                            border: "none",
+                                            backgroundColor: "transparent",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        <FaSearch size={"30px"} color={"gray"} />
+                                    </Link>
+                                    <Link
+                                        to={`/escolas/gerenciar/editar/${escolaOverlay.idEscola}`}
+                                        style={{
+                                            display: "block",
+                                            marginLeft: "6px",
+                                            border: "none",
+                                            backgroundColor: "transparent",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        <FaEdit size={"32px"} color={"orange"} />
+                                    </Link>
+                                    <button
+                                        style={{
+                                            border: "none",
+                                            backgroundColor: "transparent",
+                                            cursor: "pointer",
+                                        }}
+                                        onClick={(e) => {
+                                            console.log("excluir escola");
+                                            // e.stopPropagation();
+                                            // addOptions?.delete(escolaObj);
+                                        }}
+                                    >
+                                        <FaTrash size={"30px"} color={"red"} />
+                                    </button>
+                                </div>
+                            </Row>
+                        </>
+                    )}
                 </OverlayContainer>
             </OverlayBootstrap>
         </>

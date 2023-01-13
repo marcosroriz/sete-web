@@ -21,6 +21,7 @@ import { MapControlEvents } from "helpers/Maps/MapControlEvents";
 type AlunoLocation = {
     lat: number | null;
     lng: number | null;
+    id_aluno: number;
     nome: string;
     escola: string;
     rota: string;
@@ -42,6 +43,7 @@ const Localizacao: React.FC = () => {
     const ref = React.useRef<HTMLDivElement>(null);
 
     const handleCheckNivel = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("nivel", checkedNivel);
         let updatedList = [...checkedNivel];
         if (event.target.checked) {
             updatedList = [...checkedNivel, event.target.value];
@@ -52,6 +54,7 @@ const Localizacao: React.FC = () => {
     };
 
     const handleCheckTurno = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("turno", checkedTurno);
         let updatedList = [...checkedTurno];
         if (event.target.checked) {
             updatedList = [...checkedTurno, event.target.value];
@@ -94,6 +97,7 @@ const Localizacao: React.FC = () => {
                     icon: AlunosMarker,
                     lat: aluno.loc_latitude ? Number(aluno.loc_latitude) : null,
                     lng: aluno.loc_longitude ? Number(aluno.loc_longitude) : null,
+                    id_aluno: aluno.id_aluno,
                     nome: aluno.nome,
                     escola: aluno.escola,
                     rota: aluno.rota,
@@ -144,7 +148,7 @@ const Localizacao: React.FC = () => {
                 </MultiFormList>
             </ContainerItem>
             <div ref={ref}>
-                <MapView title="LOCALIZAÇÃO ALUNOS" center={center} mapController={mapRef}>
+                <MapView title="LOCALIZAÇÃO ALUNOS" center={center} mapController={mapRef} aluno>
                     {locations
                         .filter((loc) => checkedNivel.includes(loc.nivel.toString()) || checkedTurno.includes(loc.turno.toString()))
                         .map(
@@ -155,6 +159,7 @@ const Localizacao: React.FC = () => {
                                         lat={location.lat}
                                         lng={location.lng}
                                         icon={location.icon}
+                                        idAluno={location.id_aluno}
                                         nome={location.nome}
                                         escola={location.escola}
                                         rota={location.rota}

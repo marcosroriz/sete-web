@@ -21,6 +21,7 @@ type EscolaLocation = {
     lat: number | null;
     lng: number | null;
     icon: string;
+    id_escola: number;
     nome: string;
     ensino: string;
     horarioFuncionamento: string;
@@ -37,6 +38,7 @@ const Localizacao: React.FC = () => {
     const { createModal, clearModal } = useAlertModal();
 
     const [center, setCenter] = React.useState<{ lat: number; lng: number } | undefined>();
+    const [centerEscola, setCenterEscola] = React.useState<{ lat: number; lng: number } | undefined>();
     const [locations, setLocations] = React.useState<EscolaLocation[]>([]);
     const [escolasOptions, setEscolasOptions] = React.useState<SelectOptions[]>([]);
     const [selectedOption, setSelectedOption] = React.useState<SelectOptions>();
@@ -54,6 +56,7 @@ const Localizacao: React.FC = () => {
                     icon: EscolasMarker,
                     lat: escola.loc_latitude ? Number(escola.loc_latitude) : null,
                     lng: escola.loc_longitude ? Number(escola.loc_longitude) : null,
+                    id_escola: escola.id_escola,
                     nome: escola.nome,
                     ensino: [
                         formatHelper.parseSNToString(escola.ensino_pre_escola, "Infantil"),
@@ -74,6 +77,7 @@ const Localizacao: React.FC = () => {
                     label: (
                         <>
                             {escola.nome}
+
                             {escola.loc_latitude && escola.loc_longitude ? (
                                 <FaCheck style={{ marginBottom: "2px" }} color="green" size={17} />
                             ) : (
@@ -101,7 +105,7 @@ const Localizacao: React.FC = () => {
     React.useEffect(() => {
         if (!!selectedOption)
             if (selectedOption.lat && selectedOption.lng) {
-                setCenter({ lat: selectedOption.lat, lng: selectedOption.lng });
+                setCenterEscola({ lat: selectedOption.lat, lng: selectedOption.lng });
                 setHelperCircle(true);
             } else {
                 createModal("error", { title: "Ops... Tivemos um problema", html: "Essa escola ainda não foi georeferenciada" });
@@ -143,7 +147,7 @@ const Localizacao: React.FC = () => {
                 />
             </ContainerItem>
             <div ref={ref}>
-                <MapView title="LOCALIZAÇÃO ALUNOS" center={center} aux={helperCircle}>
+                <MapView title="LOCALIZAÇÃO ALUNOS" center={center} centerEscola={centerEscola} escola>
                     {locations.map(
                         (location) =>
                             location.lat &&
@@ -152,6 +156,7 @@ const Localizacao: React.FC = () => {
                                     lat={location.lat}
                                     lng={location.lng}
                                     icon={location.icon}
+                                    idEscola={location.id_escola}
                                     nome={location.nome}
                                     ensino={location.ensino}
                                     horarioFuncionamento={location.horarioFuncionamento}
@@ -163,7 +168,7 @@ const Localizacao: React.FC = () => {
             <ContainerIcons>
                 <div>
                     <BsCircleFill
-                        color="rgba(255,0,0,1)"
+                        color="#e34a33"
                         size={20}
                         style={{
                             marginRight: "5px",
@@ -173,7 +178,7 @@ const Localizacao: React.FC = () => {
                 </div>
                 <div>
                     <BsCircleFill
-                        color="rgba(170,0,0,1)"
+                        color="#fdbb84"
                         size={20}
                         style={{
                             marginRight: "5px",
@@ -183,7 +188,7 @@ const Localizacao: React.FC = () => {
                 </div>
                 <div>
                     <BsCircleFill
-                        color="rgba(100,0,0,1)"
+                        color="#fee8c8"
                         size={20}
                         style={{
                             marginRight: "5px",
@@ -192,7 +197,7 @@ const Localizacao: React.FC = () => {
                     <strong>5 km</strong>
                 </div>
             </ContainerIcons>
-            <Button onClick={exportMapPNG}>Download Imagem do Mapa</Button>
+            <Button onClick={exportMapPNG}>Download Imagem do Mapa (JPEG)</Button>
         </Container>
     );
 };
