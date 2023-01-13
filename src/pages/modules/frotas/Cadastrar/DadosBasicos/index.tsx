@@ -17,7 +17,6 @@ import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard"
 import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, ButtonsContainer, mediaQuery } from "./styles";
-import { copyFileSync } from "fs";
 
 type SelectOptionsObj = {
     1: { label: string; value: string }[];

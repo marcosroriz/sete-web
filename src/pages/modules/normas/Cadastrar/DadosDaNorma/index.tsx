@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useFormContext } from "react-hook-form";
 
 import { formatHelper } from "helpers/FormatHelper";
-import { Norma, AssuntosEnum, AssuntosLabel, TiposNormasEnum, TiposNormasLabel, TransportesEnum, TransportesLabel } from "entities/Norma";
+import { AssuntosEnum, AssuntosLabel, TiposNormasEnum, TiposNormasLabel, TransportesEnum, TransportesLabel } from "entities/Norma";
 
 import ReactHookInputMultiSelect from "components/micro/Inputs/ReactHookInputMultiSelect";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";

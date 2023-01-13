@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
-
+import { formatHelper } from "helpers/FormatHelper";
 import BlockTitle from "components/micro/BlockTitle";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
@@ -13,14 +13,12 @@ import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 
 import { Container, mediaQuery } from "./styles";
+import { TiposVeiculosEnum, TiposVeiculosLabel } from "entities/Rota";
 
-const veiculoOptions = [
-    { label: "Escolher veículo depois", value: "0" },
-    { label: "Caminhão (NLA-6006)", value: "1" },
-    { label: "Motocicleta (NLA-6606)", value: "2" },
-    { label: "Ônibus (ADS-FASA)", value: "3" },
-    { label: "Van (NLA-6616)", value: "4" },
-];
+const veiculosOptions = formatHelper.getNumbersEnumValues(TiposVeiculosEnum).map((value) => ({
+    label: TiposVeiculosLabel.get(value as TiposVeiculosEnum) || "",
+    value: value.toString(),
+}));
 
 const motoristasOptions = [
     { label: "Escolher motorista depois", value: "0" },
@@ -41,13 +39,13 @@ const DadosBasicos: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="NOME DA ROTA*" name="nome" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="NOME DA ROTA*" name="nome" isHorizontal={mediaQuery.desktop} placeholder="Exemplo: Rota Gávea Tijuca" />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
                 <ReactHookInputSelect
                     label="INFORME O VEÍCULO (E PLACA) UTILIZADO PARA REALIZAR ESSA ROTA:"
                     name="veiculo_utilizado"
-                    options={veiculoOptions}
+                    options={veiculosOptions}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
@@ -74,7 +72,7 @@ const DadosBasicos: React.FC = () => {
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
                 <ReactHookMultiFormList
-                    label="A ROTA PASSA POR ALGUM LOCAL DE DIFÍCIL ACESSO? SE SIM, MARQUE AS DIFICULDADES"
+                    label="A ROTA PASSA POR ALGUM LOCAL DE DIFÍCIL ACESSO? SE SIM, MARQUE AS DIFICULDADES:"
                     formListSpacing="30px"
                     fieldsHorizontal={mediaQuery.mobile}
                 >
@@ -86,10 +84,46 @@ const DadosBasicos: React.FC = () => {
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="INFORME A QUILOMETRAGEM ESTIMADA PARA ESTA ROTA:" type="number" name="km" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="INFORME A QUILOMETRAGEM ESTIMADA PARA ESSA ROTA (IDA + VOLTA)"
+                    type="number"
+                    suffix="KM"
+                    name="km"
+                    placeholder="Kilometragem estimada"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="INFORME O TEMPO ESTIMADO PARA ESTA ROTA:" type="number" name="tempo" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="INFORME O TEMPO ESTIMADO PARA ESSA ROTA (IDA + VOLTA):"
+                    type="number"
+                    suffix="MIN"
+                    name="tempo"
+                    placeholder="Tempo estimado"
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+            <ReactHookFormItemCard placeItems="center">
+                <ReactHookMultiFormList
+                    label="INFORME O HORÁRIO DE INÍCIO E TÉRMINO DA VIAGEM DE IDA"
+                    name="horariosIda"
+                    fieldsHorizontal={mediaQuery.mobile}
+                    formListSpacing="40px"
+                >
+                    <ReactHookInputText label="HORÁRIO DE INÍCIO*" name="inicioIda" placeholder="09:00" isHorizontal={mediaQuery.desktop} dontShowError />
+                    <ReactHookInputText label="HORÁRIO DE TÉRMINO*" name="terminoIda" placeholder="12:15" isHorizontal={mediaQuery.desktop} dontShowError />
+                </ReactHookMultiFormList>
+            </ReactHookFormItemCard>
+            <ReactHookFormItemCard placeItems="center">
+                <ReactHookMultiFormList
+                    label="INFORME O HORÁRIO DE INÍCIO E TÉRMINO DA VIAGEM DE VOLTA"
+                    name="horariosVolta"
+                    fieldsHorizontal={mediaQuery.mobile}
+                    formListSpacing="40px"
+                >
+                    <ReactHookInputText label="HORÁRIO DE INÍCIO*" name="inicioVolta" placeholder="09:00" isHorizontal={mediaQuery.desktop} dontShowError />
+                    <ReactHookInputText label="HORÁRIO DE TÉRMINO*" name="terminoVolta" placeholder="12:15" isHorizontal={mediaQuery.desktop} dontShowError />
+                </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
