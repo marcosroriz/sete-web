@@ -15,6 +15,7 @@ import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, mediaQuery } from "./styles";
 import { Veiculo } from "entities/Veiculo";
+import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 
 type VeiculoData = [Veiculo | null, React.Dispatch<React.SetStateAction<Veiculo | null>>];
 
@@ -52,28 +53,50 @@ const DetalhesVeiculo: React.FC = () => {
         <Container>
             <BlockTitle message="POR FIM, INFORME OS DADOS CADASTRAIS DO VEÍCULO." />
             <ReactHookFormItemCard required>
-                <ReactHookInputMask label="PLACA DO VEÍCULO*" name="placa" format="aaa-9999" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputMask
+                    label="PLACA DO VEÍCULO: *"
+                    name="placa"
+                    format="aaa-9999"
+                    placeholder="FORMATO AAA-0000"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="RENAVAM DO VEÍCULO*" name="renavam" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputNumberFormat
+                    label="RENAVAM DO VEÍCULO: *"
+                    name="renavam"
+                    format="##########-#"
+                    placeholder="Informe o RENAVAM do veículo:"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="QUILOMETRAGEM INICIAL DO VEÍCULO*" name="km_inicial" type="number" suffix="KM" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard>
-
-            <ReactHookFormItemCard>
-                <ReactHookInputText label="QUILOMETRAGEM ATUAL DO VEÍCULO*" name="km_atual" type="number" suffix="KM" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="QUILOMETRAGEM ATUAL DO VEÍCULO:"
+                    name="km_atual"
+                    type="number"
+                    suffix="KM"
+                    placeholder="Informe a quilometragem do veículo:"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="CAPACIDADE DO VEÍCULO*" name="capacidade" type="number" suffix="PASSAGEIROS" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="CAPACIDADE DO VEÍCULO: *"
+                    name="capacidade"
+                    type="number"
+                    suffix="PASSAGEIROS"
+                    placeholder="Informe a capacidade do veículo:"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
-                    label="O VEÍCULO ESTÁ ATUALMENTE EM MANUTANÇÃO?*"
+                    label="O VEÍCULO ESTÁ ATUALMENTE EM MANUTENÇÃO?*"
                     name="manutencao"
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
@@ -86,33 +109,47 @@ const DetalhesVeiculo: React.FC = () => {
 
             <ReactHookFormItemCard>
                 <ReactHookInputText
-                    label="VALOR DO IPVA DO VEÍCULO (ANUAL E COM LICENSIAMENTO)"
+                    label="VALOR DO IPVA DO VEÍCULO (ANUAL E COM LICENCIAMENTO)"
                     name="ipva"
                     type="number"
                     prefix={"R$"}
+                    placeholder="Valor em Reais"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="VALOR ANUAL DO DPVAT DO VEÍCULO" name="dpvat" type="number" prefix="R$" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="VALOR ANUAL DO DPVAT DO VEÍCULO"
+                    name="dpvat"
+                    type="number"
+                    prefix="R$"
+                    placeholder="Valor em Reais"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputText label="SEGURO ANUAL DO VEÍCULO" name="seguro_anual" type="number" prefix="R$" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="SEGURO ANUAL DO VEÍCULO"
+                    name="seguro_anual"
+                    type="number"
+                    prefix="R$"
+                    placeholder="Valor em Reais"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
-            {check == 1 && (
-                <ReactHookFormItemCard>
-                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" suffix="KM/L" isHorizontal={mediaQuery.desktop} />
-                </ReactHookFormItemCard>
-            )}
-
-            {check == 2 && (
-                <ReactHookFormItemCard>
-                    <ReactHookInputText label="CONSUMO DO VEÍCULO" name="consumo" type="number" suffix="L/HORA" isHorizontal={mediaQuery.desktop} />
-                </ReactHookFormItemCard>
-            )}
+            <ReactHookFormItemCard>
+                <ReactHookInputText
+                    label="CONSUMO DO VEÍCULO (KM/L)"
+                    name="consumo"
+                    type="number"
+                    suffix="KM/L"
+                    placeholder="Informe o consumo do veículo:"
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
                 <ReactHookMultiFormList

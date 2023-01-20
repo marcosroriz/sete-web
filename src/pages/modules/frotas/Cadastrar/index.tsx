@@ -74,7 +74,7 @@ const Cadastrar: React.FC = () => {
 
     return (
         <>
-            <PageTitle message="Cadastro de Veículo" icon={PageIconOnibus} iconRight={PageIconLancha} />
+            <PageTitle message="Cadastro de Veículos" icon={PageIconOnibus} iconRight={PageIconLancha} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
                 defaultValues={defaultValues}
@@ -89,7 +89,7 @@ const Cadastrar: React.FC = () => {
                 </ReactHookNavCardTab>
 
                 <ReactHookNavCardTab
-                    name="DADOS DO VEÍCULO"
+                    name="DETALHES DO VEÍCULO"
                     icon={<img src={DetalhesVeiculoIcon} alt="" aria-hidden="true" />}
                     validationSchema={detalhesVeiculoSchema}
                 >

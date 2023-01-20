@@ -40,6 +40,8 @@ type CreateMarkerDTO = {
     icon: string;
     anchor?: [number, number];
     view?: boolean;
+    idAluno?: number;
+    idEscola?: number;
     nome?: string;
     sexo?: string;
     rota?: string;
@@ -48,6 +50,7 @@ type CreateMarkerDTO = {
     turno?: number;
     horarioFuncionamento?: string;
     ensino?: string;
+    numeroAlunos?: string;
 };
 
 class Map {
@@ -57,6 +60,7 @@ class Map {
     public layerSwitcherActivated: boolean;
     public mapLayers: LayersObj;
     public mapGroupLayer: layer.Group | null;
+    public circles: ol.Feature<geom.Circle>[];
 
     constructor(mapId: string, viewOptions?: MapConstructorViewOptionsDTO) {
         this.vectorSource = new source.Vector();
@@ -72,6 +76,7 @@ class Map {
         };
         this.mapGroupLayer = null;
         this.layerSwitcherActivated = false;
+        this.circles = [];
     }
 
     public createMap(mapId: string, viewOptions?: CreateMapViewOptionsDTO): ol.Map {
@@ -154,6 +159,11 @@ class Map {
         this.mapInstance.getView().setCenter([lng, lat]);
     }
 
+    public goToLocationEscola({ lat, lng }: GoToLocation): void {
+        this.mapInstance.getView().setCenter([lng, lat]);
+        this.mapInstance.getView().setZoom(17);
+    }
+
     public updateSize(): void {
         this.mapInstance.updateSize();
     }
@@ -216,9 +226,14 @@ class Map {
         turno,
         horarioFuncionamento,
         ensino,
+        numeroAlunos,
+        idAluno,
+        idEscola,
     }: CreateMarkerDTO): ol.Feature<geom.Point> {
         const marker = new ol.Feature({
             geometry: new geom.Point([lng, lat]),
+            idAluno: idAluno,
+            idEscola: idEscola,
             nome: nome,
             sexo: sexo,
             escola: escola,
@@ -227,6 +242,7 @@ class Map {
             turno: turno,
             horarioFuncionamento: horarioFuncionamento,
             ensino: ensino,
+            numeroAlunos: numeroAlunos,
         });
         marker.setStyle(
             new style.Style({
@@ -239,12 +255,145 @@ class Map {
                 }),
             }),
         );
+
+        console.log("create marker");
         this.vectorSource.addFeature(marker);
+
         return marker;
+    }
+
+    public createCircle({ lat, lng }: any): ol.Feature<geom.Circle> {
+        const circleFeature1 = new ol.Feature({
+            geometry: new geom.Circle([lng, lat], 0.015),
+        });
+        circleFeature1.setStyle(
+            new style.Style({
+                renderer(coordinates, state) {
+                    const x = coordinates[0][0];
+                    const y = coordinates[0][1];
+                    const x1 = coordinates[1][0];
+                    const y1 = coordinates[1][1];
+
+                    const ctx = state.context;
+                    const dx = x1 - x;
+                    const dy = y1 - y;
+                    const radius = Math.sqrt(dx * dx + dy * dy);
+
+                    const innerRadius = 0;
+                    const outerRadius = radius * 1.4;
+
+                    const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+
+                    gradient.addColorStop(1, "rgba(227, 74, 51, 0.8)");
+                    gradient.addColorStop(0.5, "rgba(227, 74, 51, 0.2)");
+                    gradient.addColorStop(0, "rgba(255,0,0,0");
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.strokeStyle = "rgb(227, 74, 51)";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                },
+            }),
+        );
+        const circleFeature2 = new ol.Feature({
+            geometry: new geom.Circle([lng, lat], 0.01),
+        });
+        circleFeature2.setStyle(
+            new style.Style({
+                renderer(coordinates, state) {
+                    const x = coordinates[0][0];
+                    const y = coordinates[0][1];
+                    const x1 = coordinates[1][0];
+                    const y1 = coordinates[1][1];
+
+                    const ctx = state.context;
+                    const dx = x1 - x;
+                    const dy = y1 - y;
+                    const radius = Math.sqrt(dx * dx + dy * dy);
+
+                    const innerRadius = 0;
+                    const outerRadius = radius * 1.4;
+
+                    const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+                    gradient.addColorStop(1, "rgba(253, 187, 132, 0.8)");
+                    gradient.addColorStop(0.5, "rgba(253, 187, 132, 0.2)");
+                    gradient.addColorStop(0, "rgba(255,0,0,0");
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.strokeStyle = "rgba(253, 187, 132, 1)";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                },
+            }),
+        );
+        const circleFeature3 = new ol.Feature({
+            geometry: new geom.Circle([lng, lat], 0.005),
+        });
+        circleFeature3.setStyle(
+            new style.Style({
+                renderer(coordinates, state) {
+                    const x = coordinates[0][0];
+                    const y = coordinates[0][1];
+                    const x1 = coordinates[1][0];
+                    const y1 = coordinates[1][1];
+
+                    const ctx = state.context;
+                    const dx = x1 - x;
+                    const dy = y1 - y;
+                    const radius = Math.sqrt(dx * dx + dy * dy);
+
+                    const innerRadius = 0;
+                    const outerRadius = radius * 1.4;
+
+                    const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+
+                    gradient.addColorStop(1, "rgba(254, 232, 200, 0.8)");
+                    gradient.addColorStop(0.5, "rgba(254, 232, 200, 0.3)");
+                    gradient.addColorStop(0, "rgba(100,0,0,0)");
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+                    ctx.strokeStyle = "rgba(254, 232, 200, 1)";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+                },
+            }),
+        );
+
+        this.vectorSource.addFeature(circleFeature1);
+        this.vectorSource.addFeature(circleFeature2);
+        this.vectorSource.addFeature(circleFeature3);
+
+        this.circles.push(circleFeature1);
+        this.circles.push(circleFeature2);
+        this.circles.push(circleFeature3);
+
+        return circleFeature1;
     }
 
     public removeMarker(marker: ol.Feature<geom.Point>): void {
         this.vectorSource.removeFeature(marker);
+    }
+
+    public removeCircles(): void {
+        if (this.circles) {
+            this.circles.forEach((c) => {
+                this.vectorSource.removeFeature(c);
+            });
+            this.circles = [];
+        }
     }
 }
 

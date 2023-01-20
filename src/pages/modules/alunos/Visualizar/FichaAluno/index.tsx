@@ -121,7 +121,7 @@ const FichaAluno: React.FC = () => {
                         .join(", ") || "Não",
                 ["Nome do responsável"]: alunoData.nome_responsavel,
                 ["Grau de parentesco"]: GrauParentescoLabel.get(alunoData.grau_responsavel as GrauParentescoEnum),
-                ["Telefonde do responsável"]: alunoData.telefone_responsavel || "Telefone de contato não informado",
+                ["Telefone do responsável"]: alunoData.telefone_responsavel || "Telefone de contato não informado",
                 ["Endereço do Aluno"]: alunoData.loc_endereco || "-",
                 ["CEP da residência"]: alunoData.loc_cep,
                 ["Dificuldade de Acesso"]:
@@ -156,7 +156,7 @@ const FichaAluno: React.FC = () => {
                 <Button variant="info" type="button" className="btn-fill" onClick={handleVoltarClick}>
                     Voltar
                 </Button>
-                <Button variant="" className="btn-fill btn-excel" onClick={handleDownloadExcelClick}>
+                <Button variant="secondary" className="btn-fill btn-excel" onClick={handleDownloadExcelClick}>
                     Exportar para Excel/LibreOffice
                 </Button>
                 <Button variant="secondary" className="btn-fill" onClick={handleDownloadPdfClick}>

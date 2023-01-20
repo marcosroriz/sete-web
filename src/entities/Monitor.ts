@@ -16,9 +16,9 @@ interface Monitor {
 }
 
 interface MonitorListObj {
-    nome: string;
-    telefone: string;
-    cpf: string;
+    nome?: string;
+    telefone?: string;
+    cpf?: string;
     turno_manha?: string;
     turno_tarde?: string;
     turno_noite?: string;

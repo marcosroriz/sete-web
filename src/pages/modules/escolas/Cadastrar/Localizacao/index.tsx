@@ -113,11 +113,11 @@ const Localizacao: React.FC = () => {
     return (
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A LOCALIZAÇÃO DO ALUNO." />
-            <ReactHookLatLngMap title="LOCALIZAÇÃO DA RESIDÊNCIA DO ALUNO (CLIQUE NO MAPA)" name="latlng" mapController={mapRef} icon={EscolasMarker} />
+            <ReactHookLatLngMap title="LOCALIZAÇÃO DA ESCOLA (CLIQUE NO MAPA)" name="latlng" mapController={mapRef} icon={EscolasMarker} />
             <ReactHookFormItemCard placeItems="center">
                 <ReactHookMultiFormList name="modo" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
-                    <ReactHookInputText label="LATITUDE:" name="latlng[0]" isHorizontal={mediaQuery.desktop} dontShowError />
-                    <ReactHookInputText label="LONGITUDE:" name="latlng[1]" isHorizontal={mediaQuery.desktop} dontShowError />
+                    <ReactHookInputText label="LATITUDE:" name="latlng[0]" placeholder="Latitude:" isHorizontal={mediaQuery.desktop} dontShowError />
+                    <ReactHookInputText label="LONGITUDE:" name="latlng[1]" placeholder="Longitude:" isHorizontal={mediaQuery.desktop} dontShowError />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
@@ -139,10 +139,21 @@ const Localizacao: React.FC = () => {
                 />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputText label="ENDEREÇO DA ESCOLA" name="loc_endereco" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="ENDEREÇO DA ESCOLA"
+                    name="loc_endereco"
+                    placeholder="Digite o endereço da escola"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputNumberFormat label="CEP" name="loc_cep" format="#####-###" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputNumberFormat
+                    label="CEP"
+                    name="loc_cep"
+                    format="#####-###"
+                    placeholder="Informe o CEP da Escola(caso possua)"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
@@ -165,6 +176,7 @@ const Localizacao: React.FC = () => {
                     {mec_tp_localizacao_diferenciadaOptions}
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
+
             <ButtonsContainer position={!!escolaData ? "evenly" : "right"}>
                 {!!escolaData && (
                     <Button variant="danger" type="button" className="btn-fill" onClick={handleCancelEditClick}>

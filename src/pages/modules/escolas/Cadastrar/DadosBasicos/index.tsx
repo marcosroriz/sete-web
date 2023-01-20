@@ -47,21 +47,41 @@ const DadosBasicos: React.FC = () => {
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DA ESCOLA" />
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="NOME DA ESCOLA*" name="nome" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText label="NOME DA ESCOLA *" name="nome" placeholder="Informe o nome da Escola:" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
-            <ReactHookFormItemCard>
-                <ReactHookInputText label="NOME PARA CONTATO*" name="contato_responsavel" isHorizontal={mediaQuery.desktop} />
-            </ReactHookFormItemCard>
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookInputNumberFormat
-                    label="TELEFONE PARA CONTATO*"
-                    name="contato_telefone"
-                    format={["(##) ####-#####", "(##) #####-####"]}
+                    label="CODIGO INEP *"
+                    name="codigo_inep"
+                    format="########"
+                    placeholder="Código INEP da escola"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard>
-                <ReactHookInputText label="EMAIL PARA CONTATO*" name="contato_email" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputText
+                    label="NOME PARA CONTATO"
+                    name="contato_responsavel"
+                    placeholder="Informe o nome para contato na Escola:"
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+            <ReactHookFormItemCard>
+                <ReactHookInputNumberFormat
+                    label="TELEFONE PARA CONTATO"
+                    name="contato_telefone"
+                    format={["(##) ####-#####", "(##) #####-####"]}
+                    placeholder="Informe o telefone de contato da Escola:"
+                    isHorizontal={mediaQuery.desktop}
+                />
+            </ReactHookFormItemCard>
+            <ReactHookFormItemCard>
+                <ReactHookInputText
+                    label="E-MAIL PARA CONTATO"
+                    name="contato_email"
+                    placeholder="Informe o e-mail de contato da Escola/Gestor:"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList label="A ESCOLA É:*" name="mec_tp_dependencia" isHorizontal={mediaQuery.desktop} fieldsHorizontal>

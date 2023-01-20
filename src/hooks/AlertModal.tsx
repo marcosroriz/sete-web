@@ -68,6 +68,7 @@ interface IAlertModal {
     clearModal: () => void;
     createModalAsync: (type?: AlertTypesStrings, options?: SwalOptions) => Promise<SweetAlertResult<any>>;
     incrementProgress: (increment: number) => void;
+    queueModal: (alerts: any[]) => void;
 }
 
 const useAlertModal = (): IAlertModal => {
@@ -94,6 +95,27 @@ const useAlertModal = (): IAlertModal => {
         swal.fire(swalObject);
     }, []);
 
+    const queueModal = React.useCallback((alerts: any[]): void => {
+        const steps = ["1", "2", "3"];
+        const Queue = swal.mixin({
+            progressSteps: steps,
+            confirmButtonText: "Próximo >",
+            // optional classes to avoid backdrop blinking between steps
+            showClass: { backdrop: "swal2-noanimation" },
+            hideClass: { backdrop: "swal2-noanimation" },
+        });
+
+        if (!!alerts && alerts.length > 0)
+            alerts.forEach(async (alert, index) => {
+                console.log(alert);
+                await Queue.fire({
+                    title: alert.title,
+                    currentProgressStep: index,
+                    confirmButtonText: "OK",
+                });
+            });
+    }, []);
+
     const createModalAsync = React.useCallback(async (type?: AlertTypesStrings, options?: SwalOptions): Promise<SweetAlertResult<any>> => {
         const swalObject = {
             ...alertTypes[type || "loading"],
@@ -107,7 +129,7 @@ const useAlertModal = (): IAlertModal => {
         progress.current = 0;
     }, []);
 
-    return { createModal, clearModal, createModalAsync, incrementProgress };
+    return { createModal, clearModal, createModalAsync, incrementProgress, queueModal };
 };
 
 const AlertModalStyles = createGlobalStyle`

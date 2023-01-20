@@ -4,19 +4,29 @@ import { useFormContext } from "react-hook-form";
 
 import { useReactHookNavCard } from "contexts/ReactHookNavCard";
 import { Motorista } from "entities/Motorista";
+import { useAuth } from "contexts/Auth";
+
+import { RotasService } from "services/Rotas";
 
 import ReactHookMultiFormList from "components/micro/Inputs/ReactHookMultiFormList";
 import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import ReactHookInputCheckbox from "components/micro/Inputs/ReactHookInputCheckbox";
 import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
-import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
+import ReactHookInputMultiSelect from "components/micro/Inputs/ReactHookInputMultiSelect";
+import BlockTitle from "components/micro/BlockTitle";
 
 import { Container, mediaQuery } from "./styles";
+
+type SelectOptions = {
+    value: string;
+    label: string;
+};
 
 type MotoristaData = [Motorista | null, React.Dispatch<React.SetStateAction<Motorista | null>>];
 
 const DadosTransporte: React.FC = () => {
+    const { user } = useAuth();
     const { setValue } = useFormContext();
     const { previousStep, aditionalData } = useReactHookNavCard();
 
@@ -38,23 +48,55 @@ const DadosTransporte: React.FC = () => {
         }
     }, [motoristaData]);
 
+    const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
+
+    const fetchData = async () => {
+        try {
+            const codigo_cidade = user?.codigo_cidade || 0;
+            const rotasService = new RotasService();
+            const rotasResponse = await rotasService.listRotas(codigo_cidade);
+            setRotaOptions(rotasResponse.data.map((rota) => ({ value: rota.id_rota.toString(), label: rota.nome })));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <Container>
+            <BlockTitle message="A RESPEITO DOS DADOS DE TRANSPORTE DO MOTORISTA, INFORME:" />
             <ReactHookFormItemCard>
-                <ReactHookInputText label="SALÁRIO*" name="salario" prefix="R$" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputMultiSelect
+                    label="O MOTORISTA ATUA EM QUAIS ROTAS?"
+                    name="rotas"
+                    options={rotaOptions}
+                    placeholder="Escolha pelo menos uma rota"
+                    isHorizontal={mediaQuery.desktop}
+                    thinBorder={false}
+                    menuPlacement="bottom"
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard name="cnh" required>
                 <ReactHookInputNumberFormat
                     label="CARTEIRA NACIONAL DE HABILITAÇÃO (CNH)*"
                     name="cnh"
+                    placeholder="Informe o número de registro da CNH do motorista"
                     format="#########-##"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard>
-                <ReactHookInputNumberFormat label="DATA DE VENCIMENTO DA CNH*" name="data_validade_cnh" format="##/##/####" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputNumberFormat
+                    label="DATA DE VENCIMENTO DA CNH"
+                    name="data_validade_cnh"
+                    placeholder="Informe a data de vencimento da CNH"
+                    format="##/##/####"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
 
             <ReactHookFormItemCard required>

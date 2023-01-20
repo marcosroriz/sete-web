@@ -8,7 +8,8 @@ enum SidebarItemKeys {
     frotas = "6",
     fornecedores = "7",
     rotas = "8",
-    relatorios = "9",
+    normas = "9",
+    relatorios = "10",
 }
 
 export { SidebarItemKeys };

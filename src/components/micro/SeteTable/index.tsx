@@ -14,6 +14,8 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import { TableContainer, Pagination } from "./styles";
 
 import { useSelection } from "hooks/Table";
+import { Button } from "react-bootstrap";
+import ButtonsContainer from "../Buttons/ButtonsContainer";
 
 const hooks = [useFilters, useSortBy, usePagination, useRowSelect, useSelection];
 

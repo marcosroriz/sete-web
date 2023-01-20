@@ -60,6 +60,7 @@ const FichaEscola: React.FC = () => {
 
     const handleDownloadPdfClick = async () => {
         try {
+            console.log("down", downloadData);
             createModal("loading");
             await filesHelper.delay(600);
             const blob = await pdf(

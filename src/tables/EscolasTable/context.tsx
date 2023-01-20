@@ -7,7 +7,7 @@ import { useError } from "hooks/Errors";
 import { useAuth } from "contexts/Auth";
 import { EscolasService } from "services/Escolas";
 import { EscolaListObj, EscolaTableField } from "entities/Escola";
-import { escolasTableHelper } from "helpers/Tables/EscolasTableHelper";
+import { escolasTableHelper } from "./helper";
 import { filesHelper } from "helpers/FilesHelper";
 
 import TableDocument from "components/micro/Pdf/TableDocument";
