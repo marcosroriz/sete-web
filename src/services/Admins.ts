@@ -30,7 +30,7 @@ class AdminsService {
 
     public async listAdmin(codigo_cidade: number): Promise<ListAdminResponse> {
         const response = await this.api({
-            url: `/usuarios/${codigo_cidade}`,
+            url: `/users/sete/${codigo_cidade}`,
             method: "get",
         });
         const data = (await response.data) as ListAdminResponse;
@@ -39,7 +39,7 @@ class AdminsService {
 
     public async createAdmin(body: CreateAdminRequestBody, codigo_cidade: number): Promise<CreateAdminResponse> {
         const response = await this.api({
-            url: `/usuarios/${codigo_cidade}`,
+            url: `/users/sete/${codigo_cidade}`,
             method: "post",
             data: body,
         });
@@ -50,7 +50,7 @@ class AdminsService {
     public async getAdmin(adminId: number, codigo_cidade: number): Promise<GetAdminsResponse> {
         const response = await this.api({
             method: "get",
-            url: `/usuarios/${codigo_cidade}/${adminId}`,
+            url: `/users/sete/${codigo_cidade}/${adminId}`,
         });
         const data = (await response.data) as GetAdminsResponse;
         return data;
@@ -58,7 +58,7 @@ class AdminsService {
 
     public async updateAdmin(body: UpdateAdminRequestBody, adminId: string, codigo_cidade: number): Promise<UpdateAdminResponse> {
         const response = await this.api({
-            url: `/usuarios/${codigo_cidade}/${adminId}`,
+            url: `/users/sete/${codigo_cidade}/${adminId}`,
             method: "put",
             data: body,
         });
@@ -68,7 +68,7 @@ class AdminsService {
 
     public async deleteAdmin(id_admin: number, codigo_cidade: number): Promise<void> {
         await this.api({
-            url: `/usuarios/${codigo_cidade}/${id_admin}`,
+            url: `/users/sete/${codigo_cidade}/${id_admin}`,
             method: "delete",
         });
     }

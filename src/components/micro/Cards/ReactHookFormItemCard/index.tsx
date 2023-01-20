@@ -12,9 +12,10 @@ type ReactHookFormItemCardProps = {
     required?: boolean;
     placeItems?: "left" | "center";
     containerClassName?: string;
+    noLabel?: boolean;
 };
 
-const ReactHookFormItemCard: React.FC<ReactHookFormItemCardProps> = ({ required, name, placeItems = "left", containerClassName, children }) => {
+const ReactHookFormItemCard: React.FC<ReactHookFormItemCardProps> = ({ required, name, placeItems = "left", containerClassName, noLabel, children }) => {
     const firstChild = React.Children.only(children) as React.ReactElement<{ name: string }>;
     const {
         formState: { errors },
@@ -27,9 +28,11 @@ const ReactHookFormItemCard: React.FC<ReactHookFormItemCardProps> = ({ required,
             className={containerClassName ? containerClassName : ""}
             hasOnlyChild={true}
         >
-            <div className="form-item-label">
-                <span>{required ? "OBRIGATÓRIO" : "OPTATIVO"}</span>
-            </div>
+            {!noLabel && (
+                <div className="form-item-label">
+                    <span>{required ? "OBRIGATÓRIO" : "OPTATIVO"}</span>
+                </div>
+            )}
             <div className="form-item-content">{children}</div>
         </Container>
     );

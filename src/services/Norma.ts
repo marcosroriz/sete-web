@@ -80,6 +80,13 @@ class NormasService {
         const data = (await response.data) as UpdateNormaResponse;
         return data;
     }
+
+    public async deleteNorma(id_norma: number, codigo_cidade: number): Promise<void> {
+        await this.api({
+            url: `/normas/${codigo_cidade}/${id_norma}`,
+            method: "delete",
+        });
+    }
 }
 
 export { NormasService };

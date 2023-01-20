@@ -13,11 +13,19 @@ interface Norma {
 }
 
 interface NormaListObj {
+    id_norma: number;
     titulo?: string;
     data_norma?: string;
-    tipo_norma?: string;
+    tipo_norma: number;
     assunto?: string;
     aplicabilidade?: string;
+}
+
+interface NormaTableField {
+    id_norma: number;
+    titulo?: string;
+    data?: string;
+    tipo?: string;
 }
 
 enum TiposNormasEnum {
@@ -75,6 +83,7 @@ const AssuntosLabel = new Map<AssuntosEnum, string>([
     [AssuntosEnum.assunto12, "Segurança do estudante"],
     [AssuntosEnum.assunto13, "Outros"],
 ]);
+
 const aplicabilidade = [
     { label: "Ônibus", value: "0" },
     { label: "Bicicleta", value: "1" },
@@ -100,4 +109,4 @@ const TransportesLabel = new Map<TransportesEnum, string>([
 ]);
 
 export { AssuntosEnum, AssuntosLabel, TiposNormasEnum, TiposNormasLabel, TransportesEnum, TransportesLabel };
-export type { Norma, NormaListObj };
+export type { Norma, NormaListObj, NormaTableField };

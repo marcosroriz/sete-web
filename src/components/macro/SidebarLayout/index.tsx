@@ -320,6 +320,16 @@ const SidebarLayout: React.FC = ({ children }) => {
                                                 Importar
                                             </NavLink>
                                         </li>
+                                        <li>
+                                            <NavLink to="/rotas/malha_viaria" activeClassName="isActive" exact>
+                                                Malha Viária
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to="/rotas/sugerir" activeClassName="isActive" exact>
+                                                Sugerir
+                                            </NavLink>
+                                        </li>
                                     </NavItemBody>
                                 </Accordion.Collapse>
                             </NavItem>
