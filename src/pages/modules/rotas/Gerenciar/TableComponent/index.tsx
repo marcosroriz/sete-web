@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { useRotasTable } from "contexts/Tables/RotasTableContext";
+import { useRotasTable } from "tables/RotasTable/context";
 
 import SeteTable from "components/micro/SeteTable";
 

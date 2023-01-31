@@ -6,7 +6,7 @@ import { useAuth } from "contexts/Auth";
 import { useError } from "hooks/Errors";
 import { useAlertModal } from "hooks/AlertModal";
 import { RotasService } from "services/Rotas";
-import { Rota } from "entities/Rota";
+import { Rotas } from "entities/Rotas";
 import { Aluno } from "entities/Aluno";
 import { Escola } from "entities/Escola";
 
@@ -23,7 +23,7 @@ import Localizacao from "./Localizacao";
 
 const Visualizar: React.FC = () => {
     const { id: rotaId } = useParams<{ id: string }>();
-    const [rotaData, setRotaData] = React.useState<Rota | null>(null);
+    const [rotaData, setRotaData] = React.useState<Rotas | null>(null);
     const [alunosData, setAlunosData] = React.useState<Aluno[] | null>(null);
     const [escolasData, setEscolasData] = React.useState<Escola[] | null>(null);
 
@@ -37,7 +37,7 @@ const Visualizar: React.FC = () => {
                 createModal();
                 const codigo_cidade = user?.codigo_cidade || 0;
                 const rotasService = new RotasService();
-                const rotasResponse = await rotasService.getRota(Number(rotaId), codigo_cidade);
+                const rotasResponse = await rotasService.getRota(rotaId, codigo_cidade);
                 const alunosVinculados = await rotasService.listBindAlunosToRota(Number(rotaId), codigo_cidade);
                 //const escolasVinculadas = await rotasService.listBindEscolasToRota(Number(rotaId), codigo_cidade);
 
