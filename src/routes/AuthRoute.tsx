@@ -21,7 +21,7 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ permission = "reader", isPrivate 
         <Route
             {...rest}
             render={({ location }) =>
-                isPrivate === isAuthenticated && authRouteHelper.checkPermission(permission, user?.tipo_permissao as Permission) ? (
+                true ? ( // isPrivate === isAuthenticated && authRouteHelper.checkPermission(permission, user?.tipo_permissao as Permission)
                     <LayoutComponent>
                         <Component />
                     </LayoutComponent>
