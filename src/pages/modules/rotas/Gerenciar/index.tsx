@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RotasTableProvider } from "contexts/Tables/RotasTableContext";
+import { RotasTableProvider } from "tables/RotasTable/context";
 
 import TableComponent from "./TableComponent";
 

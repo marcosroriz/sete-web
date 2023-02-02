@@ -153,7 +153,7 @@ const EscolasTableProvider = ({ children }: EscolasTableProviderProps) => {
 const useEscolasTable = () => {
     const context = React.useContext(EscolasTableContext);
     if (!context) {
-        throw new Error("useEscolasTable deve ser usado entre um provider");
+        throw new Error("useRotasTable deve ser usado entre um provider");
     }
     return context;
 };

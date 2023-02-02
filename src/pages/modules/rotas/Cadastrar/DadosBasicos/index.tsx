@@ -13,42 +13,105 @@ import ReactHookInputRadio from "components/micro/Inputs/ReactHookInputRadio";
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 
 import { Container, mediaQuery } from "./styles";
-import { TiposVeiculosEnum, TiposVeiculosLabel } from "entities/Rota";
+import { TiposVeiculosEnum, TiposVeiculosLabel, TiposRotasEnum, TiposRotasLabel, TiposMotoristasEnum, TiposMotoristasLabel, Rotas } from "entities/Rotas";
+import { useFormContext } from "react-hook-form";
+import { useAuth } from "contexts/Auth";
+import { RotasService } from "services/Rotas";
+
+type RotaData = [Rotas | null, React.Dispatch<React.SetStateAction<Rotas | null>>];
+
+type SelectOptions = {
+    value: string;
+    label: string;
+};
 
 const veiculosOptions = formatHelper.getNumbersEnumValues(TiposVeiculosEnum).map((value) => ({
     label: TiposVeiculosLabel.get(value as TiposVeiculosEnum) || "",
     value: value.toString(),
 }));
 
-const motoristasOptions = [
-    { label: "Escolher motorista depois", value: "0" },
-    { label: "Exemplo", value: "1" },
-    { label: "Fulano", value: "2" },
-];
+const motoristasOptions = formatHelper.getNumbersEnumValues(TiposMotoristasEnum).map((value) => ({
+    label: TiposMotoristasLabel.get(value as TiposMotoristasEnum) || "",
+    value: value.toString(),
+}));
+
+const tiposRotasOptions = formatHelper
+    .getNumbersEnumValues(TiposRotasEnum)
+    .map((value) => <ReactHookInputRadio key={value} name="tipo_rotas" label={TiposRotasLabel.get(value) || ""} value={value.toString()} position="right" />);
 
 const DadosBasicos: React.FC = () => {
-    const { nextStep } = useReactHookNavCard();
+    const { user } = useAuth();
+    const { setValue } = useFormContext();
+    const { nextStep, aditionalData } = useReactHookNavCard();
+
+    const [RotaData] = aditionalData?.rotaData as RotaData;
+
+    React.useEffect(() => {
+        if (!!RotaData) {
+            setValue("nome", RotaData?.nome || "");
+            setValue("tipo_rotas", RotaData?.tipo_rotas?.toString() || "");
+            setValue("turno[0]", RotaData?.turno_matutino === "S" ? true : false);
+            setValue("turno[1]", RotaData?.turno_vespertino === "S" ? true : false);
+            setValue("turno[2]", RotaData?.turno_noturno === "S" ? true : false);
+            setValue("obstaculos[0]", RotaData?.da_porteira === "S" ? true : false);
+            setValue("obstaculos[1]", RotaData?.da_mataburro === "S" ? true : false);
+            setValue("obstaculos[2]", RotaData?.da_colchete === "S" ? true : false);
+            setValue("obstaculos[3]", RotaData?.da_atoleiro === "S" ? true : false);
+            setValue("obstaculos[4]", RotaData?.da_ponterustica === "S" ? true : false);
+            setValue("quilometragem", RotaData?.quilometragem || "");
+            setValue("tempo_estimado", RotaData?.tempo_estimado || "");
+            setValue("inicioIda", RotaData?.hora_ida_inicio || "");
+            setValue("terminoIda", RotaData?.hora_ida_termino || "");
+            setValue("inicioVolta", RotaData?.hora_volta_inicio || "");
+            setValue("terminoVolta", RotaData?.hora_volta_termino || "");
+        }
+    }, [RotaData]);
+
+    const [rotaOptions, setRotaOptions] = React.useState<SelectOptions[]>([]);
+
+    const fetchData = async () => {
+        try {
+            const codigo_cidade = user?.codigo_cidade || 0;
+            const rotasService = new RotasService();
+            const rotasResponse = await rotasService.listRotas(codigo_cidade);
+            setRotaOptions(rotasResponse.data.map((rota) => ({ value: rota.id_rota.toString(), label: rota.nome })));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    React.useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <Container>
             <BlockTitle message="FORNEÇA AS INFORMAÇÕES BÁSICAS A RESPEITO DA ROTA SENDO CADASTRADA" />
             <ReactHookFormItemCard required>
-                <ReactHookMultiFormList label="TIPO DE ROTA*" isHorizontal={mediaQuery.desktop} fieldsHorizontal={mediaQuery.mobile} formListSpacing="20px">
-                    <ReactHookInputRadio label="Rodoviária" value="1" name="tipo" position="right" />
-                    <ReactHookInputRadio label="Aquaviária" value="2" name="tipo" position="right" />
-                    <ReactHookInputRadio label="Mista" value="3" name="tipo" position="right" />
-                </ReactHookMultiFormList>
-            </ReactHookFormItemCard>
-            <ReactHookFormItemCard required>
                 <ReactHookInputText label="NOME DA ROTA*" name="nome" isHorizontal={mediaQuery.desktop} placeholder="Exemplo: Rota Gávea Tijuca" />
             </ReactHookFormItemCard>
+
+            <ReactHookFormItemCard required>
+                <ReactHookMultiFormList
+                    label="TIPO DE ROTA:*"
+                    name="tipo_rotas"
+                    isHorizontal={mediaQuery.desktop}
+                    fieldsHorizontal={mediaQuery.mobile}
+                    formListSpacing="20px"
+                >
+                    {tiposRotasOptions}
+                </ReactHookMultiFormList>
+            </ReactHookFormItemCard>
+
             <ReactHookFormItemCard>
                 <ReactHookInputSelect
                     label="INFORME O VEÍCULO (E PLACA) UTILIZADO PARA REALIZAR ESSA ROTA:"
-                    name="veiculo_utilizado"
+                    name="tipo_veiculo"
                     options={veiculosOptions}
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
+
             <ReactHookFormItemCard>
                 <ReactHookInputSelect
                     label="INFORME OS MOTORISTAS RESPONSÁVEIS POR ESSA ROTA:"
@@ -57,52 +120,58 @@ const DadosBasicos: React.FC = () => {
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
+
             <ReactHookFormItemCard required>
                 <ReactHookMultiFormList
                     label="EM RELAÇÃO AO HORÁRIO DE FUNCIONAMENTO, A ROTA FUNCIONA NO PERÍODO DA:*"
-                    formListSpacing="30px"
+                    name="turno"
                     isHorizontal={mediaQuery.desktop}
                     fieldsHorizontal={mediaQuery.mobile}
-                    name="turno"
+                    formListSpacing="30px"
                 >
                     <ReactHookInputCheckbox label="Manhã" name="turno[0]" />
                     <ReactHookInputCheckbox label="Tarde" name="turno[1]" />
                     <ReactHookInputCheckbox label="Noite" name="turno[2]" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
+
             <ReactHookFormItemCard>
                 <ReactHookMultiFormList
                     label="A ROTA PASSA POR ALGUM LOCAL DE DIFÍCIL ACESSO? SE SIM, MARQUE AS DIFICULDADES:"
-                    formListSpacing="30px"
+                    name="obstaculos"
                     fieldsHorizontal={mediaQuery.mobile}
+                    formListSpacing="30px"
                 >
-                    <ReactHookInputCheckbox label="Porteira" name="da_porteira" />
-                    <ReactHookInputCheckbox label="Mata-Burro" name="da_mataburro" />
-                    <ReactHookInputCheckbox label="Colchete" name="da_colchete" />
-                    <ReactHookInputCheckbox label="Atoleiro" name="da_atoleiro" />
-                    <ReactHookInputCheckbox label="Ponte Rústica" name="da_ponterustica" />
+                    <ReactHookInputCheckbox label="Porteira" name="obstaculos[0]" />
+                    <ReactHookInputCheckbox label="Mata-Burro" name="obstaculos[1]" />
+                    <ReactHookInputCheckbox label="Colchete" name="obstaculos[2]" />
+                    <ReactHookInputCheckbox label="Atoleiro" name="obstaculos[3]" />
+                    <ReactHookInputCheckbox label="Ponte Rústica" name="obstaculos[4]" />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
+
             <ReactHookFormItemCard required>
                 <ReactHookInputText
                     label="INFORME A QUILOMETRAGEM ESTIMADA PARA ESSA ROTA (IDA + VOLTA)"
                     type="number"
                     suffix="KM"
-                    name="km"
+                    name="quilometragem"
                     placeholder="Kilometragem estimada"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
+
             <ReactHookFormItemCard required>
                 <ReactHookInputText
                     label="INFORME O TEMPO ESTIMADO PARA ESSA ROTA (IDA + VOLTA):"
                     type="number"
                     suffix="MIN"
-                    name="tempo"
+                    name="tempo_estimado"
                     placeholder="Tempo estimado"
                     isHorizontal={mediaQuery.desktop}
                 />
             </ReactHookFormItemCard>
+
             <ReactHookFormItemCard placeItems="center">
                 <ReactHookMultiFormList
                     label="INFORME O HORÁRIO DE INÍCIO E TÉRMINO DA VIAGEM DE IDA"
@@ -114,6 +183,7 @@ const DadosBasicos: React.FC = () => {
                     <ReactHookInputText label="HORÁRIO DE TÉRMINO*" name="terminoIda" placeholder="12:15" isHorizontal={mediaQuery.desktop} dontShowError />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
+
             <ReactHookFormItemCard placeItems="center">
                 <ReactHookMultiFormList
                     label="INFORME O HORÁRIO DE INÍCIO E TÉRMINO DA VIAGEM DE VOLTA"
@@ -125,6 +195,7 @@ const DadosBasicos: React.FC = () => {
                     <ReactHookInputText label="HORÁRIO DE TÉRMINO*" name="terminoVolta" placeholder="12:15" isHorizontal={mediaQuery.desktop} dontShowError />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
+
             <ButtonsContainer>
                 <Button variant="info" type="button" className="btn-fill" onClick={nextStep}>
                     Próximo

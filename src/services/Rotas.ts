@@ -1,23 +1,23 @@
 import { ApiInstance, EnvOptions, getApiClient } from "./apiClient";
-import { Rota, RotaListObj } from "entities/Rota";
+import { Rotas, RotasListObj } from "entities/Rotas";
 import { Console } from "console";
 
-type CreateRotaRequestBody = Rota;
-type CreateRotaResponse = {
+type CreateRotasRequestBody = Rotas;
+type CreateRotasResponse = {
     messages: string;
     result: boolean;
 };
 
-type ListRotaResponse = {
-    data: RotaListObj[];
-    total: number;
+type ListRotasResponse = {
+    data: RotasListObj[];
     result: boolean;
+    total: number;
 };
 
-type GetRotaResponse = Rota & { result: boolean };
+type GetRotasResponse = Rotas & { result: boolean };
 
-type UpdateRotaRequestBody = Rota;
-type UpdateRotaResponse = {
+type UpdateRotasRequestBody = Rotas;
+type UpdateRotasResponse = {
     messages: string | { [key: string]: any };
     result: boolean;
 };
@@ -37,48 +37,54 @@ class RotasService {
         this.api = getApiClient(env);
     }
 
-    public async createRota(body: CreateRotaRequestBody, codigo_cidade: number): Promise<CreateRotaResponse> {
-        console.log("CREATE ROTA", body);
+    public async createRota(body: CreateRotasRequestBody, codigo_cidade: number): Promise<CreateRotasResponse> {
         const response = await this.api({
             method: "post",
             url: `/rotas/${codigo_cidade}`,
             data: body,
         });
-        const data = (await response.data) as CreateRotaResponse;
-        console.log("RESPONSE rota", data);
+        const data = (await response.data) as CreateRotasResponse;
         return data;
     }
 
-    public async listRotas(codigo_cidade: number): Promise<ListRotaResponse> {
+    public async listRotas(codigo_cidade: number): Promise<ListRotasResponse> {
         const response = await this.api({
             method: "get",
             url: `/rotas/${codigo_cidade}`,
         });
 
-        const data = (await response.data) as ListRotaResponse;
+        const data = (await response.data) as ListRotasResponse;
         return data;
     }
 
-    public async getRota(id_rota: number, codigo_cidade: number): Promise<GetRotaResponse> {
+    public async getRota(id_rota: string, codigo_cidade: number): Promise<GetRotasResponse> {
         const response = await this.api({
             method: "get",
             url: `/rotas/${codigo_cidade}/${id_rota}`,
         });
 
-        const data = (await response.data) as GetRotaResponse;
+        const data = (await response.data) as GetRotasResponse;
         console.log(data);
         return data;
     }
 
-    public async updateRota(body: UpdateRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<UpdateRotaResponse> {
+    public async updateRota(body: UpdateRotasRequestBody, id_rota: string, codigo_cidade: number): Promise<UpdateRotasResponse> {
         const response = await this.api({
             method: "put",
             url: `/rotas/${codigo_cidade}/${id_rota}`,
             data: body,
         });
 
-        const data = (await response.data) as UpdateRotaResponse;
+        const data = (await response.data) as UpdateRotasResponse;
         return data;
+    }
+
+    public async deleteRota(id_rota: number, codigo_cidade: number): Promise<void> {
+        const response = await this.api({
+            method: "delete",
+            url: `/rotas/${codigo_cidade}/${id_rota}`,
+        });
+        const data = await response.data;
     }
 
     public async bindEscolasToRota(body: BindEscolasToRotaRequestBody, id_rota: number, codigo_cidade: number): Promise<any> {
