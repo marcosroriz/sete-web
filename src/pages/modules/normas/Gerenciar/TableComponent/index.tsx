@@ -13,7 +13,7 @@ const Gerenciar: React.FC = () => {
     const { tableData, columns, handleSelectedData, handleDeleteSelectedNormas, handleExportExcel, handleExportPdf } = useNormasTable();
     return (
         <Container>
-            <SeteTable columns={columns} name="Escolas" data={tableData} onSelectedDataChange={handleSelectedData} />
+            <SeteTable columns={columns} name="Normas" data={tableData} onSelectedDataChange={handleSelectedData} />
             <ButtonsContainer containerClassName="dt-buttons btn-group">
                 <Button variant="danger" className="btn-fill" onClick={handleDeleteSelectedNormas}>
                     Remover normas
