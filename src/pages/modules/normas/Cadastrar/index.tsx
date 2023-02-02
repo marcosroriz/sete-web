@@ -24,25 +24,26 @@ const Cadastrar: React.FC = () => {
 
     const handleFormSubmit = async (data: FormData) => {
         try {
+            console.log("data submit", data);
             createModal();
             const normasService = new NormasService();
             const codigo_cidade = user?.codigo_cidade || 0;
 
             const body = getBody(data);
 
-            if (!!normaId) {
-                const response = await normasService.updateNorma(body, normaId, codigo_cidade);
-                if (!response.result) {
-                    throw { ...response };
-                }
-                createModal("success", { title: "Sucesso", html: "Norma editada com sucesso" });
-            } else {
-                const response = await normasService.createNorma(body, codigo_cidade);
-                if (!response.result) {
-                    throw { ...response };
-                }
-                createModal("success", { title: "Sucesso", html: "Norma cadastrada com sucesso" });
-            }
+            // if (!!normaId) {
+            //     const response = await normasService.updateNorma(body, normaId, codigo_cidade);
+            //     if (!response.result) {
+            //         throw { ...response };
+            //     }
+            //     createModal("success", { title: "Sucesso", html: "Norma editada com sucesso" });
+            // } else {
+            //     const response = await normasService.createNorma(body, codigo_cidade);
+            //     if (!response.result) {
+            //         throw { ...response };
+            //     }
+            //     createModal("success", { title: "Sucesso", html: "Norma cadastrada com sucesso" });
+            // }
             clearModal();
         } catch (err) {
             if (!!normaId) {

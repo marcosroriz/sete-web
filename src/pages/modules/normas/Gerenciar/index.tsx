@@ -10,9 +10,6 @@ import TableCard from "components/micro/Cards/TableCard";
 import MotoristaCadastroIcon from "assets/icons/motoristas/motorista-cadastro.png";
 
 const Gerenciar: React.FC = () => {
-    React.useEffect(() => {
-        console.log("auiwqiduwowoehgfljrgfkj");
-    }, []);
     return (
         <>
             <PageTitle message="Normas Cadastradas" icon={MotoristaCadastroIcon} />

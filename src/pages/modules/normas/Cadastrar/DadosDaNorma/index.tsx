@@ -41,11 +41,11 @@ const DadosDaNorma: React.FC = () => {
 
     React.useEffect(() => {
         if (!!normaData) {
-            setValue("titulo_norma", normaData?.titulo_norma.toString() || "");
+            setValue("titulo", normaData?.titulo.toString() || "");
             setValue("data_norma", normaData?.data_norma.toString() || "");
-            setValue("tipo_norma", normaData?.tipo_norma.toString() || "");
-            setValue("assunto_norma", normaData?.assunto_norma.toString() || "");
-            setValue("aplicabilidade", normaData?.aplicabilidade.toString() || "");
+            setValue("id_tipo", normaData?.id_tipo.toString() || "");
+            setValue("id_assunto", normaData?.id_assunto.toString() || "");
+            setValue("tipo_veiculo", normaData?.tipo_veiculo.toString() || "");
         }
     }, [normaData]);
 
@@ -53,12 +53,7 @@ const DadosDaNorma: React.FC = () => {
         <Container>
             <BlockTitle message="PREENCHA OS DADOS REFERENTES A GARAGEM DO MUNICÍPIO. VOCÊ PODE CLICAR NO MAPA PARA MUDAR A LOCALIZAÇÃO DA GARAGEM." />
             <ReactHookFormItemCard required>
-                <ReactHookInputText
-                    label="TÍTULO DA NORMA: *"
-                    name="titulo_norma"
-                    placeholder="Exemplo: RESOLUÇÃO ABC de 20XX"
-                    isHorizontal={mediaQuery.desktop}
-                />
+                <ReactHookInputText label="TÍTULO DA NORMA: *" name="titulo" placeholder="Exemplo: RESOLUÇÃO ABC de 20XX" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookInputText label="DATA DA NORMA: *" name="data_norma" placeholder="dd/mm/aaaa" isHorizontal={mediaQuery.desktop} />
@@ -66,7 +61,7 @@ const DadosDaNorma: React.FC = () => {
             <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="TIPO DA NORMA: *"
-                    name="tipo_norma"
+                    name="id_tipo"
                     options={normasOptions}
                     hasPlaceholderOption={true}
                     isHorizontal={mediaQuery.desktop}
@@ -75,7 +70,7 @@ const DadosDaNorma: React.FC = () => {
             <ReactHookFormItemCard required>
                 <ReactHookInputMultiSelect
                     label="ASSUNTO DA NORMA: *"
-                    name="assunto_norma"
+                    name="id_assunto"
                     options={assuntosOptions}
                     placeholder="Marque todos que se aplique"
                     thinBorder={false}
@@ -86,7 +81,7 @@ const DadosDaNorma: React.FC = () => {
             <ReactHookFormItemCard required>
                 <ReactHookInputSelect
                     label="A NORMA SE APLICA A ALGUM MODO DE TRANSPORTE ESPECÍFICO? *"
-                    name="aplicabilidade"
+                    name="tipo_veiculo"
                     options={transportesOptions}
                     hasPlaceholderOption={true}
                     isHorizontal={mediaQuery.desktop}

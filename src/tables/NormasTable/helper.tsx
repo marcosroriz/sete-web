@@ -12,9 +12,9 @@ type AdditionalOptions = {
 class NormasTableHelper {
     public treatData(data: NormaListObj[], addOptions?: AdditionalOptions): NormaTableField[] {
         return data.map((normaObj) => ({
-            id_norma: normaObj.id_norma,
+            id_norma: normaObj.id,
             data: normaObj.data_norma,
-            tipo: TiposNormasLabel.get(normaObj.tipo_norma) || "-",
+            tipo: TiposNormasLabel.get(normaObj.id_tipo) || "-",
             titulo: normaObj.titulo,
             acoes: this.acoesComponent(normaObj, addOptions),
         }));
@@ -24,7 +24,7 @@ class NormasTableHelper {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
-                    to={`/normas/gerenciar/visualizar/${normaObj.id_norma}`}
+                    to={`/normas/gerenciar/visualizar/${normaObj.id}`}
                     style={{
                         display: "block",
                         marginBottom: "-2px",
@@ -36,7 +36,7 @@ class NormasTableHelper {
                     <FaSearch size={"16px"} color={"gray"} />
                 </Link>
                 <Link
-                    to={`/normas/gerenciar/editar/${normaObj.id_norma}`}
+                    to={`/normas/gerenciar/editar/${normaObj.id}`}
                     style={{
                         display: "block",
                         marginLeft: "6px",

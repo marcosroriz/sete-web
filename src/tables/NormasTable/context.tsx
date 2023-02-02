@@ -119,7 +119,7 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
             createModal();
             const normasService = new NormasService();
             const codigo_cidade = user?.codigo_cidade || 0;
-            await normasService.deleteNorma(norma.id_norma, codigo_cidade);
+            await normasService.deleteNorma(norma.id, codigo_cidade);
             clearModal();
         } catch (err) {
             errorHandler(err, { title: "Erro ao remover Escola" });
@@ -127,7 +127,6 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
     };
 
     const fetchData = async () => {
-        console.log("========================>");
         const normasService = new NormasService();
         const codigo_cidade = user?.codigo_cidade || 0;
         const data = await normasService.listNormas(codigo_cidade);
@@ -137,7 +136,6 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
     };
 
     React.useEffect(() => {
-        console.log("==========================");
         fetchData();
     }, []);
 
