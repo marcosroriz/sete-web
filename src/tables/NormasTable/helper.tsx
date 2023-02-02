@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { formatHelper } from "helpers/FormatHelper";
 
 type AdditionalOptions = {
-    delete: (escola: NormaListObj) => Promise<void>;
+    delete: (norma: NormaListObj) => Promise<void>;
 };
 
 class NormasTableHelper {

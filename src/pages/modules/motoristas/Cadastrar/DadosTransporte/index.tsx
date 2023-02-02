@@ -89,7 +89,7 @@ const DadosTransporte: React.FC = () => {
                 />
             </ReactHookFormItemCard>
 
-            <ReactHookFormItemCard>
+            <ReactHookFormItemCard required>
                 <ReactHookInputNumberFormat
                     label="DATA DE VENCIMENTO DA CNH"
                     name="data_validade_cnh"

@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 import { RotasService } from "services/Rotas";
 
@@ -18,100 +19,94 @@ import DadosBasicosIcon from "assets/icons/rotas/rotas-dados-basicos.png";
 import AlunosAtendidosIcon from "assets/icons/rotas/rotas-alunos-atendidos.png";
 import RotasCadastroIcon from "assets/icons/rotas/rotas-cadastro.png";
 
-type FormData = {
-    nome: string;
-    km: string;
-    tipo: number;
-    turno: boolean[];
-    da_porteira: boolean;
-    da_mataburro: boolean;
-    da_colchete: boolean;
-    da_atoleiro: boolean;
-    da_ponterustica: boolean;
-    tempo: string;
-    alunos: number[];
-    escolas: number[];
-};
-
-const formData = {
-    nome: "",
-    km: null,
-    tipo: null,
-    turno: [false, false, false],
-    da_porteira: true,
-    da_mataburro: false,
-    da_colchete: false,
-    da_atoleiro: false,
-    da_ponterustica: false,
-    tempo: null,
-    alunos: [],
-    escolas: [],
-};
+import { formData, FormData } from "forms/Rotas";
+import { Rotas } from "entities/Rotas";
 
 const Cadastrar: React.FC = () => {
+    const { id: rotaId } = useParams<{ id: string }>();
     const { user } = useAuth();
     const { errorHandler } = useError();
-    const { createModal } = useAlertModal();
+    const { createModal, clearModal } = useAlertModal();
+
+    const [rotaData, setRotaData] = React.useState<Rotas | null>(null);
 
     const handleFormSubmit = async (data: FormData) => {
         try {
             createModal();
             const rotasService = new RotasService();
             const codigo_cidade = user?.codigo_cidade || 0;
+
             const body = {
                 nome: data.nome,
-                km: Number(data.km),
-                tipo: Number(data.tipo),
-                turno_matutino: data.turno[0] === true ? "S" : "N",
-                turno_vespertino: data.turno[1] === true ? "S" : "N",
-                turno_noturno: data.turno[2] === true ? "S" : "N",
-                da_porteira: data.da_porteira === true ? "S" : "N",
-                da_mataburro: data.da_mataburro === true ? "S" : "N",
-                da_colchete: data.da_colchete === true ? "S" : "N",
-                da_atoleiro: data.da_atoleiro === true ? "S" : "N",
-                da_ponterustica: data.da_ponterustica === true ? "S" : "N",
-                shape: "shape",
-                hora_ida_inicio: "string",
-                hora_ida_termino: "string",
-                hora_volta_inicio: "string",
-                hora_volta_termino: "string",
-                tempo: Number(data.tempo),
-                //alunos: data.alunos,
-                //escolas: data.escolas,
+                tipo_rotas: Number(data.tipo_rotas),
+                turno_matutino: data.turno[0] ? "S" : "N",
+                turno_vespertino: data.turno[1] ? "S" : "N",
+                turno_noturno: data.turno[2] ? "S" : "N",
+                da_porteira: data.obstaculos[0] ? "S" : "N",
+                da_mataburro: data.obstaculos[1] ? "S" : "N",
+                da_colchete: data.obstaculos[2] ? "S" : "N",
+                da_atoleiro: data.obstaculos[3] ? "S" : "N",
+                da_ponterustica: data.obstaculos[4] ? "S" : "N",
+                quilometragem: data.quilometragem,
+                tempo_estimado: data.tempo_estimado,
+                hora_ida_inicio: data.hora_ida_inicio,
+                hora_ida_termino: data.hora_ida_termino,
+                hora_volta_inicio: data.hora_volta_inicio,
+                hora_volta_termino: data.hora_volta_termino,
             };
 
-            const response = await rotasService.createRota(body, codigo_cidade);
+            if (!!rotaId) {
+                const response = await rotasService.updateRota(body, rotaId, codigo_cidade);
 
-            if (data.escolas.length > 0) {
-                for (let i = 0; data.escolas[i] != null; i++) {
-                    data.escolas[i] = Number(data.escolas[i]);
+                if (!response.result) {
+                    throw { ...response };
                 }
-                await rotasService.bindEscolasToRota({ escolas: data.escolas }, (response.messages as any)?.id, codigo_cidade);
-            }
-            if (data.alunos.length > 0) {
-                for (let i = 0; data.alunos[i] != null; i++) {
-                    data.alunos[i] = Number(data.alunos[i]);
+                createModal("success", { title: "Sucesso", html: "Rota editada com sucesso" });
+            } else {
+                const response = await rotasService.createRota(body, codigo_cidade);
+
+                if (!response.result) {
+                    throw { ...response };
                 }
-                await rotasService.bindAlunosToRota({ alunos: data.escolas }, (response.messages as any)?.id, codigo_cidade);
+                createModal("success", { title: "Sucesso", html: "Rota cadastrada com sucesso" });
             }
-
-            if (!response.result) {
-                throw { ...response };
-            }
-
-            createModal("success", { title: "Sucesso", html: "Rota cadastrada com sucesso" });
         } catch (err) {
             errorHandler(err, { title: "Erro ao cadastrar rota" });
         }
     };
+
+    React.useEffect(() => {
+        if (!!rotaId) {
+            const fetchData = async () => {
+                try {
+                    createModal();
+                    const codigo_cidade = user?.codigo_cidade || 0;
+                    const rotasService = new RotasService();
+                    const response = await rotasService.getRota(rotaId, codigo_cidade);
+
+                    setRotaData(response);
+                    if (!response.result) {
+                        throw { ...response };
+                    }
+                    clearModal();
+                } catch (err) {
+                    errorHandler(err, { title: "Erro ao buscar dados da rota" });
+                }
+            };
+            fetchData();
+        }
+    }, []);
     return (
         <>
-            <PageTitle message="Cadastrar Escola" icon={RotasCadastroIcon} />
+            <PageTitle message="Cadastro de Rota" icon={RotasCadastroIcon} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
                 defaultValues={formData as unknown as FormData}
                 reValidateMode="onChange"
                 onSubmit={handleFormSubmit}
+                aditionalData={{
+                    rotaData: [rotaData, setRotaData],
+                }}
             >
                 <ReactHookNavCardTab name="Dados Básicos" icon={<img src={DadosBasicosIcon} alt="" />}>
                     <DadosBasicos />
