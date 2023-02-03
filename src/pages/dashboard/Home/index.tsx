@@ -2,12 +2,12 @@ import React from "react";
 
 import { Container } from "./styles";
 
-import DualMultiSelect from "components/micro/Inputs/DualMultiSelect";
+import RelatorioTabs from "components/micro/Lists/Tabs";
 
 const Home: React.FC = () => {
     return (
         <Container>
-            <DualMultiSelect />
+            <RelatorioTabs />
         </Container>
     );
 };
