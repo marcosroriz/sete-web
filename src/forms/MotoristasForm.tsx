@@ -50,16 +50,16 @@ export type FormData = {
     nome: string;
     cpf: string;
     data_nascimento: string;
-    ant_criminais: string;
     sexo: string;
-    telefone: string;
-    cnh: string;
-    data_validade_cnh: string;
     vinculo: string;
     salario: string;
+    telefone: string;
+    ant_criminais: string;
+    arquivos: FileData[];
+    cnh: string;
+    data_validade_cnh: string;
     tipo_cnh: boolean[];
     turno: boolean[];
-    arquivos: FileData[];
 };
 
 const defaultValues = {

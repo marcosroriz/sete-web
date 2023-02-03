@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Rota } from "entities/Rota";
+import { Rotas } from "entities/Rotas";
 
 import { useNavCard } from "contexts/NavCard";
 
 import RecordTable from "components/micro/RecordTable";
 
-type RotaData = [Rota | null, React.Dispatch<React.SetStateAction<Rota | null>>];
+type RotaData = [Rotas | null, React.Dispatch<React.SetStateAction<Rotas | null>>];
 
 const FichaRota: React.FC = () => {
     const { aditionalData } = useNavCard();

@@ -9,25 +9,10 @@ import { NormasService } from "services/Norma";
 
 import PageTitle from "components/micro/PageTitle";
 import DadosDaNorma from "./DadosDaNorma";
+import { defaultValues, FormData, getBody } from "forms/NormasForm";
 
 import CadastrarIcon from "assets/icons/normas/normas-cadastrar.png";
 import ListarIcon from "assets/icons/normas/normas-listar.png";
-
-type FormData = {
-    titulo: string;
-    data_norma: string;
-    tipo_norma: string;
-    assunto: string;
-    aplicabilidade: string;
-};
-
-const formData = {
-    titulo: "",
-    data_norma: "",
-    tipo_norma: "",
-    assunto: "",
-    aplicabilidade: "",
-};
 
 const Cadastrar: React.FC = () => {
     const { id: normaId } = useParams<{ id: string }>();
@@ -39,30 +24,26 @@ const Cadastrar: React.FC = () => {
 
     const handleFormSubmit = async (data: FormData) => {
         try {
+            console.log("data submit", data);
             createModal();
             const normasService = new NormasService();
             const codigo_cidade = user?.codigo_cidade || 0;
 
-            const body = {
-                titulo: data.titulo,
-                data_norma: data.data_norma,
-                tipo_norma: data.tipo_norma,
-                assunto: data.assunto,
-                aplicabilidade: data.aplicabilidade,
-            };
-            if (!!normaId) {
-                const response = await normasService.updateNorma(body, normaId, codigo_cidade);
-                if (!response.result) {
-                    throw { ...response };
-                }
-                createModal("success", { title: "Sucesso", html: "Norma editada com sucesso" });
-            } else {
-                const response = await normasService.createNorma(body, codigo_cidade);
-                if (!response.result) {
-                    throw { ...response };
-                }
-                createModal("success", { title: "Sucesso", html: "Norma cadastrada com sucesso" });
-            }
+            const body = getBody(data);
+
+            // if (!!normaId) {
+            //     const response = await normasService.updateNorma(body, normaId, codigo_cidade);
+            //     if (!response.result) {
+            //         throw { ...response };
+            //     }
+            //     createModal("success", { title: "Sucesso", html: "Norma editada com sucesso" });
+            // } else {
+            //     const response = await normasService.createNorma(body, codigo_cidade);
+            //     if (!response.result) {
+            //         throw { ...response };
+            //     }
+            //     createModal("success", { title: "Sucesso", html: "Norma cadastrada com sucesso" });
+            // }
             clearModal();
         } catch (err) {
             if (!!normaId) {
@@ -100,7 +81,7 @@ const Cadastrar: React.FC = () => {
             <PageTitle message="Cadastro de Norma" icon={CadastrarIcon} />
             <ReactHookNavCardProvider<FormData>
                 mode="onSubmit"
-                defaultValues={formData as unknown as FormData}
+                defaultValues={defaultValues}
                 reValidateMode="onChange"
                 onSubmit={handleFormSubmit}
                 aditionalData={{

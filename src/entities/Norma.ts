@@ -1,24 +1,33 @@
 interface Norma {
-    id_norma?: number;
+    id?: number;
     codigo_cidade?: number;
-    titulo_norma?: string;
+    titulo?: string;
+    id_tipo?: number;
+    tipo_veiculo?: number;
+    outro_tipo?: string;
     data_norma?: string;
-    tipo_norma?: string;
-    assunto?: string;
-    aplicabilidade?: string;
-    _links?: {
-        _self?: string;
-    };
+
+    // Atributos conflitantes no Swagger
+    id_assunto?: number[];
+    assuntos?: number[];
+    outro_assunto: string;
+    // Atributos conflitantes no Swagger
+
     result?: boolean;
 }
 
 interface NormaListObj {
-    id_norma: number;
+    id: number;
     titulo?: string;
+    id_tipo: number;
+    outro_tipo?: string;
     data_norma?: string;
-    tipo_norma: number;
-    assunto?: string;
-    aplicabilidade?: string;
+    assuntos?: string[];
+    result?: boolean;
+    total?: number;
+    _links: {
+        _self: string;
+    };
 }
 
 interface NormaTableField {

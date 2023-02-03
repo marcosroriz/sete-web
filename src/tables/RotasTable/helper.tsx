@@ -1,29 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { RotaListObj, RotaTableField } from "entities/Rota";
+import { RotasListObj, RotasTableField } from "entities/Rotas";
 import { RotasService } from "services/Rotas";
+
+import { formatHelper } from "helpers/FormatHelper";
 
 import { FaUserAlt, FaSearch, FaEdit, FaRegTimesCircle } from "react-icons/fa";
 
 type AdditionalOptions = {
-    delete: (escola: RotaListObj) => Promise<void>;
+    delete: (rota: RotasListObj) => Promise<void>;
 };
 
 class RotasTableHelper {
-    public treatData(data: RotaListObj[], userCodigoCidade: number, addOptions?: AdditionalOptions): RotaTableField[] {
+    public treatData(data: RotasListObj[], addOptions?: AdditionalOptions): RotasTableField[] {
         return data.map((rotaObj) => ({
-            nome: rotaObj.nome || "-",
-            gps: rotaObj.gps || "-",
-            quilometragem: rotaObj.km || 0,
-            turno: [rotaObj.turno_matutino ? "Matutino" : "", rotaObj.turno_vespertino ? "Vespertino" : ""].map((item) => item).join(", "),
-            alunos_atendidos: 0, //this.NumberAlunosAtendidos(Number(rotaObj.id_rota), userCodigoCidade),
-            escolas_atendidas: 0,
+            id_rota: rotaObj.id_rota,
+            nome: rotaObj.nome,
+            km: rotaObj.km,
+            turno: [
+                formatHelper.parseSNToString(rotaObj.turno_matutino, "Matutino"),
+                formatHelper.parseSNToString(rotaObj.turno_vespertino, "Vespertino"),
+                formatHelper.parseSNToString(rotaObj.turno_noturno, "Noturno"),
+            ].joinValid(", "),
+            alunos_atendidos: rotaObj.alunos_atendidos, //this.NumberAlunosAtendidos(Number(rotaObj.id_rota), userCodigoCidade),
+            escolas_atendidas: rotaObj.escolas_atendidas,
             acoes: this.acoesComponent(rotaObj, addOptions),
         }));
     }
 
-    public acoesComponent(rotaObj: RotaListObj, addOptions?: AdditionalOptions) {
+    public acoesComponent(rotaObj: RotasListObj, addOptions?: AdditionalOptions) {
         return (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Link
@@ -50,16 +56,19 @@ class RotasTableHelper {
                 >
                     <FaEdit size={"18px"} color={"orange"} />
                 </Link>
-                {/* <button
+                <button
                     style={{
                         border: "none",
                         backgroundColor: "transparent",
                         cursor: "pointer",
                     }}
-                    onClick={() => addOptions?.delete(rotaObj)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        addOptions?.delete(rotaObj);
+                    }}
                 >
                     <FaRegTimesCircle size={"17px"} color={"red"} />
-                </button> */}
+                </button>
             </div>
         );
     }

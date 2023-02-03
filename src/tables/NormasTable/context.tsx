@@ -52,7 +52,7 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
 
     const handleDeleteSelectedNormas = async () => {
         try {
-            const { isConfirmed } = await createModalAsync("confirm_remove", { html: "Deseja remover os escolas selecionados?" });
+            const { isConfirmed } = await createModalAsync("confirm_remove", { html: "Deseja remover as normas selecionadas?" });
             if (!isConfirmed) {
                 return;
             }
@@ -75,9 +75,9 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
                 throw { message: errorStudents.map((norma) => `Não foi possível remover a norma: ${norma.titulo}`) };
             }
             await fetchData();
-            createModal("success", { title: "Sucesso!", html: "Escolas removicos com sucesso" });
+            createModal("success", { title: "Sucesso!", html: "Normas removidas com sucesso" });
         } catch (err) {
-            errorHandler(err, { title: "Falha ao remover Escolas" });
+            errorHandler(err, { title: "Falha ao remover Normas" });
         }
     };
 
@@ -86,7 +86,7 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
 
         const blob = filesHelper.processXslxFile(xlsxData);
 
-        filesHelper.downloadFile(blob, "Escolas.xlsx");
+        filesHelper.downloadFile(blob, "Normas.xlsx");
     };
 
     const handleExportPdf = async () => {
@@ -96,12 +96,12 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
             const blob = await pdf(
                 <TableDocument
                     titleCity="Aparecida de Goiânia (Goiás)"
-                    titleRecords={`${selectedData.length}/${tableData.length} Escolas Cadastradas`}
+                    titleRecords={`${selectedData.length}/${tableData.length} Normas Cadastradas`}
                     data={selectedData}
                     columns={pdfColumns}
                 />,
             ).toBlob();
-            filesHelper.downloadFile(blob, "Escolas.pdf");
+            filesHelper.downloadFile(blob, "Normas.pdf");
             clearModal();
         } catch (err) {
             errorHandler(err, { title: "Falha ao fazer download do pdf" });
@@ -111,7 +111,7 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
     const handleDeleteNorma = async (norma: NormaListObj) => {
         try {
             const { isConfirmed } = await createModalAsync("confirm_remove", {
-                html: `Deseja remover a Normas:<br /> <b>${norma.titulo}</b>?`,
+                html: `Deseja remover a Norma:<br /> <b>${norma.titulo}</b>?`,
             });
             if (!isConfirmed) {
                 return;
@@ -119,15 +119,14 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
             createModal();
             const normasService = new NormasService();
             const codigo_cidade = user?.codigo_cidade || 0;
-            await normasService.deleteNorma(norma.id_norma, codigo_cidade);
+            await normasService.deleteNorma(norma.id, codigo_cidade);
             clearModal();
         } catch (err) {
-            errorHandler(err, { title: "Erro ao remover Escola" });
+            errorHandler(err, { title: "Erro ao remover Norma" });
         }
     };
 
     const fetchData = async () => {
-        console.log("========================>");
         const normasService = new NormasService();
         const codigo_cidade = user?.codigo_cidade || 0;
         const data = await normasService.listNormas(codigo_cidade);
@@ -137,7 +136,6 @@ const NormasTableProvider = ({ children }: NormasTableProviderProps) => {
     };
 
     React.useEffect(() => {
-        console.log("==========================");
         fetchData();
     }, []);
 

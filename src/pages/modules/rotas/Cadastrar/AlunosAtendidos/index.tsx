@@ -43,7 +43,7 @@ const AlunosAtendidos: React.FC = () => {
                     Voltar
                 </Button>
                 <Button variant="info" type="submit" className="btn-fill">
-                    Próximo
+                    Concluir
                 </Button>
             </ButtonsContainer>
         </Container>

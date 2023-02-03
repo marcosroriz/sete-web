@@ -16,7 +16,6 @@ class MotoristasTableHelper {
                 .map((item) => item)
                 .join(", "),
             cnh: motoristaObj.cnh || "-",
-            data_validade_cnh: motoristaObj.data_validade_cnh || "-",
             rotas_dirigidas: "-",
             acoes: this.acoesComponent(motoristaObj, addOptions),
         }));
