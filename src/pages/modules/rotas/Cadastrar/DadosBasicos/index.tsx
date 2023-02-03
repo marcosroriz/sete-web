@@ -37,7 +37,7 @@ const motoristasOptions = formatHelper.getNumbersEnumValues(TiposMotoristasEnum)
 
 const tiposRotasOptions = formatHelper
     .getNumbersEnumValues(TiposRotasEnum)
-    .map((value) => <ReactHookInputRadio key={value} name="tipo_rotas" label={TiposRotasLabel.get(value) || ""} value={value.toString()} position="right" />);
+    .map((value) => <ReactHookInputRadio key={value} name="tipo" label={TiposRotasLabel.get(value) || ""} value={value.toString()} position="right" />);
 
 const DadosBasicos: React.FC = () => {
     const { user } = useAuth();
@@ -49,7 +49,7 @@ const DadosBasicos: React.FC = () => {
     React.useEffect(() => {
         if (!!RotaData) {
             setValue("nome", RotaData?.nome || "");
-            setValue("tipo_rotas", RotaData?.tipo_rotas?.toString() || "");
+            setValue("tipo_rotas", RotaData?.tipo?.toString() || "");
             setValue("turno[0]", RotaData?.turno_matutino === "S" ? true : false);
             setValue("turno[1]", RotaData?.turno_vespertino === "S" ? true : false);
             setValue("turno[2]", RotaData?.turno_noturno === "S" ? true : false);
@@ -58,12 +58,12 @@ const DadosBasicos: React.FC = () => {
             setValue("obstaculos[2]", RotaData?.da_colchete === "S" ? true : false);
             setValue("obstaculos[3]", RotaData?.da_atoleiro === "S" ? true : false);
             setValue("obstaculos[4]", RotaData?.da_ponterustica === "S" ? true : false);
-            setValue("quilometragem", RotaData?.quilometragem || "");
-            setValue("tempo_estimado", RotaData?.tempo_estimado || "");
-            setValue("inicioIda", RotaData?.hora_ida_inicio || "");
-            setValue("terminoIda", RotaData?.hora_ida_termino || "");
-            setValue("inicioVolta", RotaData?.hora_volta_inicio || "");
-            setValue("terminoVolta", RotaData?.hora_volta_termino || "");
+            setValue("km", RotaData?.km || "");
+            setValue("tempo", RotaData?.tempo || "");
+            setValue("hora_ida_inicio", RotaData?.hora_ida_inicio || "");
+            setValue("hora_ida_termino", RotaData?.hora_ida_termino || "");
+            setValue("hora_volta_inicio", RotaData?.hora_volta_inicio || "");
+            setValue("hora_volta_termino", RotaData?.hora_volta_termino || "");
         }
     }, [RotaData]);
 
@@ -155,7 +155,7 @@ const DadosBasicos: React.FC = () => {
                     label="INFORME A QUILOMETRAGEM ESTIMADA PARA ESSA ROTA (IDA + VOLTA)"
                     type="number"
                     suffix="KM"
-                    name="quilometragem"
+                    name="km"
                     placeholder="Kilometragem estimada"
                     isHorizontal={mediaQuery.desktop}
                 />
@@ -166,7 +166,7 @@ const DadosBasicos: React.FC = () => {
                     label="INFORME O TEMPO ESTIMADO PARA ESSA ROTA (IDA + VOLTA):"
                     type="number"
                     suffix="MIN"
-                    name="tempo_estimado"
+                    name="tempo"
                     placeholder="Tempo estimado"
                     isHorizontal={mediaQuery.desktop}
                 />
@@ -179,8 +179,14 @@ const DadosBasicos: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="40px"
                 >
-                    <ReactHookInputText label="HORÁRIO DE INÍCIO*" name="inicioIda" placeholder="09:00" isHorizontal={mediaQuery.desktop} dontShowError />
-                    <ReactHookInputText label="HORÁRIO DE TÉRMINO*" name="terminoIda" placeholder="12:15" isHorizontal={mediaQuery.desktop} dontShowError />
+                    <ReactHookInputText label="HORÁRIO DE INÍCIO*" name="hora_ida_inicio" placeholder="09:00" isHorizontal={mediaQuery.desktop} dontShowError />
+                    <ReactHookInputText
+                        label="HORÁRIO DE TÉRMINO*"
+                        name="hora_ida_termino"
+                        placeholder="12:15"
+                        isHorizontal={mediaQuery.desktop}
+                        dontShowError
+                    />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 
@@ -191,8 +197,20 @@ const DadosBasicos: React.FC = () => {
                     fieldsHorizontal={mediaQuery.mobile}
                     formListSpacing="40px"
                 >
-                    <ReactHookInputText label="HORÁRIO DE INÍCIO*" name="inicioVolta" placeholder="09:00" isHorizontal={mediaQuery.desktop} dontShowError />
-                    <ReactHookInputText label="HORÁRIO DE TÉRMINO*" name="terminoVolta" placeholder="12:15" isHorizontal={mediaQuery.desktop} dontShowError />
+                    <ReactHookInputText
+                        label="HORÁRIO DE INÍCIO*"
+                        name="hora_volta_inicio"
+                        placeholder="09:00"
+                        isHorizontal={mediaQuery.desktop}
+                        dontShowError
+                    />
+                    <ReactHookInputText
+                        label="HORÁRIO DE TÉRMINO*"
+                        name="hora_volta_termino"
+                        placeholder="12:15"
+                        isHorizontal={mediaQuery.desktop}
+                        dontShowError
+                    />
                 </ReactHookMultiFormList>
             </ReactHookFormItemCard>
 

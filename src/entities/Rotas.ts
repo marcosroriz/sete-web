@@ -2,7 +2,7 @@ interface Rotas {
     id_rota?: number;
     nome?: string;
     tipo_veiculo?: number;
-    tipo_rotas?: number;
+    tipo?: number;
     motoristas_responsaveis?: number;
     monitores?: string;
     escolas_atendidas?: number;
@@ -16,12 +16,13 @@ interface Rotas {
     da_colchete?: string; // 'S' ou 'N'
     da_atoleiro?: string; // 'S' ou 'N'
     da_ponterustica?: string; // 'S' ou 'N'
-    quilometragem?: string;
-    tempo_estimado?: string;
+    km?: number;
+    tempo?: number;
     hora_ida_inicio: string;
     hora_ida_termino: string;
     hora_volta_inicio: string;
     hora_volta_termino: string;
+    shape: string;
     _links?: {
         _self?: string;
     };
@@ -31,7 +32,7 @@ interface RotasListObj {
     id_rota: number;
     nome: string;
     codigo_cidade: number;
-    quilometragem?: string;
+    km?: string;
     turno_matutino?: string;
     turno_vespertino?: string;
     turno_noturno?: string;
@@ -45,7 +46,7 @@ interface RotasListObj {
 interface RotasTableField {
     id_rota: number;
     nome: string;
-    quilometragem?: string;
+    km?: string;
     turno: string;
     escolas_atendidas?: number;
     alunos_atendidos?: number;

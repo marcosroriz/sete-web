@@ -17,7 +17,7 @@ class RotasTableHelper {
         return data.map((rotaObj) => ({
             id_rota: rotaObj.id_rota,
             nome: rotaObj.nome,
-            quilometragem: rotaObj.quilometragem,
+            km: rotaObj.km,
             turno: [
                 formatHelper.parseSNToString(rotaObj.turno_matutino, "Matutino"),
                 formatHelper.parseSNToString(rotaObj.turno_vespertino, "Vespertino"),

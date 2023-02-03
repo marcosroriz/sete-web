@@ -31,11 +31,11 @@ const saveRouteSchema = yup.object().shape({
 
 export type FormData = {
     nome: string;
-    tipo_rotas: string;
+    tipo: string;
     turno: boolean[];
     obstaculos: boolean[];
-    quilometragem: string;
-    tempo_estimado: string;
+    km: string;
+    tempo: string;
     hora_ida_inicio: string;
     hora_ida_termino: string;
     hora_volta_inicio: string;
@@ -44,13 +44,13 @@ export type FormData = {
     escolas: number[];
 };
 
-export const formData = {
+const defaultValues: FormData = {
     nome: "",
-    tipo_rotas: "",
+    tipo: "",
     turno: [false, false, false],
     obstaculos: [false, false, false, false, false],
-    quilometragem: "",
-    tempo_estimado: "",
+    km: "",
+    tempo: "",
     hora_ida_inicio: "",
     hora_ida_termino: "",
     hora_volta_inicio: "",
@@ -59,4 +59,27 @@ export const formData = {
     escolas: [],
 };
 // Busca dados do backend e os transforma em dados do formulário react
-//function getFields(data: Escola): FormData {}
+function getBody(data: FormData): Rotas {
+    return {
+        nome: data.nome,
+        tipo: Number(data.tipo),
+        turno_matutino: data.turno[0] ? "S" : "N",
+        turno_vespertino: data.turno[1] ? "S" : "N",
+        turno_noturno: data.turno[2] ? "S" : "N",
+        da_porteira: data.obstaculos[0] ? "S" : "N",
+        da_mataburro: data.obstaculos[1] ? "S" : "N",
+        da_colchete: data.obstaculos[2] ? "S" : "N",
+        da_atoleiro: data.obstaculos[3] ? "S" : "N",
+        da_ponterustica: data.obstaculos[4] ? "S" : "N",
+        km: Number(data.km),
+        tempo: Number(data.tempo),
+        hora_ida_inicio: data.hora_ida_inicio,
+        hora_ida_termino: data.hora_ida_termino,
+        hora_volta_inicio: data.hora_volta_inicio,
+        hora_volta_termino: data.hora_volta_termino,
+        // Falta Implementação
+        shape: "",
+    };
+}
+
+export { defaultValues, getBody };

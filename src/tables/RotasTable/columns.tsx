@@ -15,7 +15,7 @@ export const COLUMNS: ColumnWithLooseAccessor[] = [
     },
     {
         Header: "QUILOMETRAGEM",
-        accessor: "quilometragem",
+        accessor: "km",
         disableFilters: true,
     },
     {
