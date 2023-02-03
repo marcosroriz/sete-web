@@ -14,7 +14,7 @@ class NormasTableHelper {
         return data.map((normaObj) => ({
             id_norma: normaObj.id_norma,
             data: normaObj.data_norma,
-            tipo: TiposNormasLabel.get(normaObj.tipo_norma) || "-",
+            tipo: TiposNormasLabel.get(normaObj.id_tipo) || "-",
             titulo: normaObj.titulo,
             acoes: this.acoesComponent(normaObj, addOptions),
         }));

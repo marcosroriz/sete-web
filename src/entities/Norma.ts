@@ -17,9 +17,9 @@ interface Norma {
 }
 
 interface NormaListObj {
-    id?: number;
+    id_norma: number;
     titulo?: string;
-    id_tipo?: number;
+    id_tipo: number;
     outro_tipo?: string;
     data_norma?: string;
     assuntos?: string[];
