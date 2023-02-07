@@ -51,7 +51,7 @@ const DadosDaNorma: React.FC = () => {
 
     return (
         <Container>
-            <BlockTitle message="PREENCHA OS DADOS REFERENTES A GARAGEM DO MUNICÍPIO. VOCÊ PODE CLICAR NO MAPA PARA MUDAR A LOCALIZAÇÃO DA GARAGEM." />
+            <BlockTitle message="FORNEÇA AS INFORMAÇÕES A RESPEITO DA NORMA SENDO CADASTRADA." />
             <ReactHookFormItemCard required>
                 <ReactHookInputText label="TÍTULO DA NORMA: *" name="titulo" placeholder="Exemplo: RESOLUÇÃO ABC de 20XX" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
