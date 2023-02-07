@@ -10,6 +10,7 @@ import ReactHookFormItemCard from "components/micro/Cards/ReactHookFormItemCard"
 import ReactHookInputSelect from "components/micro/Inputs/ReactHookInputSelect";
 import ReactHookInputText from "components/micro/Inputs/ReactHookInputText";
 import ReactHookInputFile from "components/micro/Inputs/ReactHookInputFile";
+import ReactHookInputNumberFormat from "components/micro/Inputs/ReactHookInputNumberFormat";
 import ButtonsContainer from "components/micro/Buttons/ButtonsContainer";
 import BlockTitle from "components/micro/BlockTitle";
 
@@ -56,7 +57,13 @@ const DadosDaNorma: React.FC = () => {
                 <ReactHookInputText label="TÍTULO DA NORMA: *" name="titulo" placeholder="Exemplo: RESOLUÇÃO ABC de 20XX" isHorizontal={mediaQuery.desktop} />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
-                <ReactHookInputText label="DATA DA NORMA: *" name="data_norma" placeholder="dd/mm/aaaa" isHorizontal={mediaQuery.desktop} />
+                <ReactHookInputNumberFormat
+                    label="DATA DA NORMA: *"
+                    name="data_norma"
+                    format="##/##/####"
+                    placeholder="dd/mm/aaaa"
+                    isHorizontal={mediaQuery.desktop}
+                />
             </ReactHookFormItemCard>
             <ReactHookFormItemCard required>
                 <ReactHookInputSelect
