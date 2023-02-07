@@ -1,6 +1,15 @@
 import { Norma } from "entities/Norma";
 import * as yup from "yup";
 
+const dadosDaNormaSchema = yup.object().shape({
+    titulo: yup.string().required("Esse campo é obrigatório"),
+    data_norma: yup.string().min(10).required("Esse campo é obrigatório"),
+    id_tipo: yup.string().required("Esse campo é obrigatório"),
+    //id_assunto: yup.string().required("Assunto é obrigatório"),    AJUSTAR VALIDAÇÃO
+    tipo_veiculo: yup.string().required("Esse campo é obrigatório"),
+    arquivo: yup.string().required("Esse campo é obrigatório"),
+});
+
 // Nem sempre os dados do formulário vão ser os mesmo dos da API.
 export type FormData = {
     id_tipo: string;
@@ -38,4 +47,4 @@ function getBody(data: FormData): Norma {
 // Busca dados do backend e os transforma em dados do formulário react
 //function getFields(data: Aluno): FormData {}
 
-export { defaultValues, getBody };
+export { dadosDaNormaSchema, defaultValues, getBody };

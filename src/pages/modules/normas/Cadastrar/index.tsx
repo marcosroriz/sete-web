@@ -9,7 +9,7 @@ import { NormasService } from "services/Norma";
 
 import PageTitle from "components/micro/PageTitle";
 import DadosDaNorma from "./DadosDaNorma";
-import { defaultValues, FormData, getBody } from "forms/NormasForm";
+import { dadosDaNormaSchema, defaultValues, FormData, getBody } from "forms/NormasForm";
 
 import CadastrarIcon from "assets/icons/normas/normas-cadastrar.png";
 import ListarIcon from "assets/icons/normas/normas-listar.png";
@@ -88,7 +88,7 @@ const Cadastrar: React.FC = () => {
                     normaData: [normaData, setNormaData],
                 }}
             >
-                <ReactHookNavCardTab name="DADOS DA NORMA" icon={<img src={ListarIcon} alt="" aria-hidden="true" />}>
+                <ReactHookNavCardTab name="DADOS DA NORMA" icon={<img src={ListarIcon} alt="" aria-hidden="true" />} validationSchema={dadosDaNormaSchema}>
                     <DadosDaNorma />
                 </ReactHookNavCardTab>
             </ReactHookNavCardProvider>
